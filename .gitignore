@@ -1,0 +1,16 @@
+desktop.ini
+
+**/Debug
+*.atsuo
+
+Interface/Scripts/toSoundCard/bin
+Interface/Scripts/toSoundCard/obj
+Interface/LibWinUsb/bin
+Interface/LibWinUsb/obj
+Interface/bin
+Interface/obj
+*.suo
+
+Firmware.PIC32/firmware/SoundCard.X/dist
+Firmware.PIC32/firmware/SoundCard.X/debug
+Firmware.PIC32/firmware/SoundCard.X/build
