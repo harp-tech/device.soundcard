@@ -1,0 +1,6 @@
+hw1.0-ass1
+
+	- R79 and R79 were replaced by 1uF capacitor
+	- Added a 95.3k in series on the lines EN_N12V and EN_P12V (consider to reduce to 10k on the next version)
+	- Added a pullup of 3.16k to the line BUSY
+	- Added a pulldow of 10k to the line UC_IO3

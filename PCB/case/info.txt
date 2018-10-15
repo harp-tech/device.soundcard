@@ -1,0 +1,7 @@
+Files original designed with Solidworks.
+
+Main project files:
+	\soundcard_case\HARP_Sound_Card.SLDASM
+
+The file with extension .STEP contais the case only, not the PCB and/or the
+electronic parts.
