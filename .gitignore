@@ -5,6 +5,8 @@ desktop.ini
 
 Interface/Scripts/toSoundCard/bin
 Interface/Scripts/toSoundCard/obj
+Interface/Scripts/fromSoundCard/bin
+Interface/Scripts/fromSoundCard/obj
 Interface/LibWinUsb/bin
 Interface/LibWinUsb/obj
 Interface/bin
