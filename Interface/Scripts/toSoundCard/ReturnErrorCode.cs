@@ -18,18 +18,21 @@ namespace HarpSoundCard
         NotAbleToSendData,
         NotAbleToReadDataCommandReply,
         DataCommandReplyNotCorrect,
+        NotAbleToSendReadMetadata,
+        NotAbleToReadReadMetadataCommandRepply,
+        ReadMetadataCommandReplyNotCorrect,
 
-        BadSoundIndex = -1010,
+        BadSoundIndex = -1020,
         BadSoundLength,
         BadSampleRate,
         BadDataType,
         DataTypeDoNotMatch,
         BadDataIndex,
 
-        ProducingSound = -1020,
+        ProducingSound = -1030,
         StartedProducingSound,
 
-        NotAbleToOpenFile = -1030
+        NotAbleToOpenFile = -1040
     }
 
     public class CheckError
