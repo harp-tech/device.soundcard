@@ -68,13 +68,9 @@ namespace HarpSoundCard
                  ************************************/
                 var currentDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
                 var toDirectory = System.IO.Path.Combine(currentDirectory, "toSoundCard");
-                //var fromDirectory = System.IO.Path.Combine(currentDirectory, "fromSoundCard");
                 
                 if (Directory.Exists(toDirectory) == false)
                     System.IO.Directory.CreateDirectory(toDirectory);
-
-                //if (Directory.Exists(fromDirectory) == false)
-                    //System.IO.Directory.CreateDirectory(fromDirectory);
 
                 #endregion
 
@@ -86,14 +82,14 @@ namespace HarpSoundCard
                     Console.WriteLine("User input not correct.");
                     Console.WriteLine("The format should be one of the next options:");
                     Console.WriteLine("");
-                    Console.WriteLine("  toSOundCard \"sound_filename\" [index] [type] [sample rate]");
+                    Console.WriteLine("  toSoundCard \"sound_filename\" [index] [type] [sample rate]");
                     Console.WriteLine("  toSOundCard \"sound_filename\" [index] [type] [sample rate] -metadata \"metadata_filename\"");
                     Console.WriteLine("");
-                    Console.WriteLine("  -> [index]        from 0 to 31");
-                    Console.WriteLine("  -> [type]         0: Int32, 1: Float32");
+                    Console.WriteLine("  -> [index]        from 0 to 31             -- 0 and 1 not implemented yet");
+                    Console.WriteLine("  -> [type]         0: Int32, 1: Float32     -- Float32 not implemented yet");
                     Console.WriteLine("  -> [sample rate]  96000 or 192000");
                     Console.WriteLine("");
-                    Console.WriteLine("  Note: Both \"sound_filename\" and \"metadata_filename\" should have an extension.");
+                    Console.WriteLine("  Note: It's recommended that both \"sound_filename\" and \"metadata_filename\" should have an extension.");
                     return (int) SoundCardErrorCode.BadUserInput;
                 }
 
@@ -129,7 +125,7 @@ namespace HarpSoundCard
                 int commandsToBeSent = (int)soundFileSizeInSamples * 4 / 32768 + (((((int)soundFileSizeInSamples * 4) % 32768) != 0) ? 1 : 0);
 
                 if (soundFileStream == null) throw new Exception("NotAbleToOpenFile");
-                if (soundFileSizeInSamples == 0) throw new Exception("NotAbleToOpenFile");
+                if (soundFileSizeInSamples == 0) throw new Exception("FileIsEmpty");
 
                 fileName = Path.GetFileName(fileName);
                 if (fileName == string.Empty || fileName == null) throw new Exception("NotAbleToOpenFile");
@@ -277,7 +273,7 @@ namespace HarpSoundCard
                 int errorReceived;
 
                 int writeTimeout = 2000;
-                int redTimeout = 2000;
+                int readTimeout = 2000;
 
                 Random randomInt = new Random();
 
@@ -292,7 +288,7 @@ namespace HarpSoundCard
                 if (ec != ErrorCode.None) throw new Exception("NotAbleToSendMetadata");
                 //Console.WriteLine("Sound metadata sent (" + bytesSent + " bytes sent). Random sent: " + randomSent);
 
-                ec = reader.Read(commandReply, redTimeout, out bytesRead);
+                ec = reader.Read(commandReply, readTimeout, out bytesRead);
                 if (ec != ErrorCode.None) throw new Exception("NotAbleToReadMetadataCommandReply");
 
                 randomReceived = BitConverter.ToInt32(commandReply, 4);
@@ -336,7 +332,7 @@ namespace HarpSoundCard
                     if (ec != ErrorCode.None) throw new Exception("NotAbleToSendData");
                     //Console.WriteLine("Sound data sent (" + bytesSent + " bytes sent). Random sent: " + randomSent);
 
-                    ec = reader.Read(commandReply, redTimeout, out bytesRead);
+                    ec = reader.Read(commandReply, readTimeout, out bytesRead);
                     if (ec != ErrorCode.None) throw new Exception("NotAbleToReadDataCommandReply");
 
                     randomReceived = BitConverter.ToInt32(commandReply, 4);
@@ -371,82 +367,7 @@ namespace HarpSoundCard
                 //Console.WriteLine("Ticks: " + stopwatch.ElapsedTicks);
                 Console.WriteLine("Elapsed time: " + stopwatch.ElapsedMilliseconds + " ms");
                 //Console.WriteLine("Bandwidth: " + bandwidth_MBps.ToString("0.000") + " MB/s");
-                Console.WriteLine("Bandwidth: " + bandwidth_Mbps.ToString("0.0") + " Mb/s");
-
-
-                /*
-                while (ec == ErrorCode.None)
-                {
-                    //int bytesRead;
-
-                    // If the device hasn't sent data in the last 100 milliseconds,
-                    // a timeout error (ec = IoTimedOut) will occur. 
-                    ec = reader.Read(commandReply, 10000, out bytesRead);
-                    Console.WriteLine("Sound metadata reply received (" + bytesRead + " bytes read).");
-
-                    if (bytesRead == 0) throw new Exception("No more bytes!");
-
-                    // Write that output to the console.
-                    Console.Write(commandReply);
-                }
-
-                /*
-                if (errorReceived != 0)
-                {
-                    Console.WriteLine("Error " + errorReceived + ".");
-                    return errorReceived;
-                }
-                */
-
-                /*
-
-                 //rgbArray = soundHeader.ToByteArray();
-
-
-                 // Remove the exepath/startup filename text from the begining of the CommandLine.
-                 string cmdLine = Regex.Replace(
-                     Environment.CommandLine, "^\".+?\"^.*? |^.*? ", "", RegexOptions.Singleline);
-
-                 //if (!String.IsNullOrEmpty(cmdLine))
-                 {
-                     var myArray = new byte[65536];
-
-                     for (int i = 0; i < 65536; i++)
-                         myArray[i] = (byte)i;
-                     myArray[0] = 0xAA;
-                     myArray[myArray.Length - 1] = 0x55;
-
-                     //ec = writer.Write(Encoding.Default.GetBytes(cmdLine), 2000, out bytesWritten);
-                     //ec = writer.Write(myArray, 2000, out bytesWritten);
-                     myArray[63] = 0x11;
-                     ec = writer.Write(myArray, 0, 64,  2000, out bytesSent);
-                     Console.WriteLine(bytesSent);
-                     //ec = writer.Write(myArray, 2000, out bytesWritten);
-                     myArray[63] = 0x00;
-                     ec = writer.Write(myArray, 0, myArray.Length, 2000, out bytesSent);
-                     Console.WriteLine(bytesSent);
-                     if (ec != ErrorCode.None) throw new Exception(UsbDevice.LastErrorString);
-
-                     byte[] readBuffer = new byte[64];//1024];
-                     while (ec == ErrorCode.None)
-                     {
-                         //int bytesRead;
-
-                         // If the device hasn't sent data in the last 100 milliseconds,
-                         // a timeout error (ec = IoTimedOut) will occur. 
-                         ec = reader.Read(readBuffer, 10000, out bytesRead);
-
-                         if (bytesRead == 0) throw new Exception("No more bytes!");
-
-                         // Write that output to the console.
-                         Console.Write(Encoding.Default.GetString(readBuffer, 0, bytesRead));
-                     }
-
-                     Console.WriteLine("\r\nDone!\r\n");
-
-                 }*/
-                //else
-                //throw new Exception("Nothing to do.");
+                Console.WriteLine("Bandwidth: " + bandwidth_Mbps.ToString("0.0") + " Mb/s");                
             }
             catch (Exception ex)
             {

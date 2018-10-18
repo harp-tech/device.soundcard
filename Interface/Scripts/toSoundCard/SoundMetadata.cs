@@ -62,7 +62,7 @@ namespace HarpSoundCard
 
         public SoundCardErrorCode CheckData()
         {
-            if (this.soundIndex < 0 || this.soundIndex > 32)
+            if (this.soundIndex < 2 || this.soundIndex > 32)
             {
                 //Console.WriteLine("Sound index is too big. Must be beween 0 and 32.");
                 return SoundCardErrorCode.BadSoundIndex;
@@ -75,7 +75,7 @@ namespace HarpSoundCard
 
             if (this.sampleRate != SampleRate._96000Hz && this.sampleRate != SampleRate._192000Hz)
             {
-                //Console.WriteLine("The sample rate is not correct. Available options are 96 and 192.");
+                //Console.WriteLine("The sample rate is not correct. Available options are 96000 and 192000.");
                 return SoundCardErrorCode.BadSampleRate;
             }
 
