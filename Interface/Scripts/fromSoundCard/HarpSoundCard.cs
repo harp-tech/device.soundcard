@@ -198,9 +198,19 @@ namespace HarpSoundCard
                 StreamWriter sw;
 
                 sw = File.CreateText(System.IO.Path.Combine(directory, soundFilename + ".metadata.txt"));
-                sw.WriteLine("SOUND_INDEX = " + soundIndex);
-                sw.WriteLine("SOUND_LENGTH_SAMPLES = " + soundLength);
-                sw.WriteLine("SOUND_LENGTH_MS = " + soundLength/2/((float)sampleRate)*1000);
+
+                sw.Write("SOUND_INDEX = " + soundIndex);
+
+                var usedPositions = (int)Math.Ceiling(soundLength / (33554432.0*2.0/32.0)) - 1;
+                for (int i = 0; i < usedPositions; i++)
+                {
+                    sw.Write(", " + (soundIndex + i + 1));
+                }
+                sw.Write("\n");
+
+
+                sw.WriteLine("TOTAL_SAMPLES = " + soundLength);
+                sw.WriteLine("TOTAL_LENGTH_MS = " + soundLength/2/((float)sampleRate)*1000);
                 sw.WriteLine("SAMPLE_RATE = " + sampleRate);
 
                 if (dataType == 0)
@@ -338,6 +348,12 @@ namespace HarpSoundCard
                 //Console.Write(soundIndex);
 
                 /*************************************
+                 * Start stopwatch
+                 ************************************/
+                Stopwatch stopwatch = new Stopwatch();
+                stopwatch.Start();
+
+                /*************************************
                  * Delete all files
                  ************************************/
                 if (isDeleteAll)
@@ -376,12 +392,12 @@ namespace HarpSoundCard
                 //if (ec != ErrorCode.None) throw new Exception("NotAbleToSendData");
 
                 /*************************************
-                 * All data was sent
+                 * All data was received
                  ************************************/
                 //double bandwidth_MBps = (fileSizeInSamples *  4.0) / (stopwatch.ElapsedMilliseconds / 1000.0) / 1024 / 1024;
                 //double bandwidth_Mbps = (soundFileSizeInSamples * 32.0) / (stopwatch.ElapsedMilliseconds / 1000.0) / 1024 / 1024;
                 //Console.WriteLine("Ticks: " + stopwatch.ElapsedTicks);
-                //Console.WriteLine("Elapsed time: " + stopwatch.ElapsedMilliseconds + " ms");
+                Console.WriteLine("Elapsed time: " + stopwatch.ElapsedMilliseconds + " ms");
                 //Console.WriteLine("Bandwidth: " + bandwidth_MBps.ToString("0.000") + " MB/s");
                 //Console.WriteLine("Bandwidth: " + bandwidth_Mbps.ToString("0.0") + " Mb/s");
 
