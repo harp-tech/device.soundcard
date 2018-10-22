@@ -27,14 +27,17 @@ namespace HarpSoundCard
             UsbEndpointReader reader,
             int index,
             Array metadataArray,
+            ref string description,
             ref UInt32 bitMask,
             ref int soundLength,
             ref int dataType,
             ref int sampleRate,
             ref string soundFilename,
             ref string metadataFilename,
+            ref string descriptionFilename,
             ref bool hasSound,
-            ref bool hasMetadata)
+            ref bool hasMetadata,
+            ref bool hasDescription)
         {
             /*************************************
             * Create byte arrays for command
@@ -108,18 +111,29 @@ namespace HarpSoundCard
 
             soundLength = BitConverter.ToInt32(readMetadataReply, 16);
             sampleRate = BitConverter.ToInt32(readMetadataReply, 20);
-            dataType = BitConverter.ToInt32(readMetadataReply, 24);                        
-            System.Buffer.BlockCopy(readMetadataReply, 28 + 256 + 256, metadataArray, 0, 2048 - 256 - 256);
-            soundFilename = System.Text.Encoding.Default.GetString(readMetadataReply, 28, 256).TrimEnd((char)0);
+            dataType = BitConverter.ToInt32(readMetadataReply, 24);
+            soundFilename = System.Text.Encoding.Default.GetString(readMetadataReply, 28, 170).TrimEnd((char)0);
 
-            if (readMetadataReply[28 + 256] != 0)
+            if (readMetadataReply[28 + 170] != 0)
             {
                 hasMetadata = true;
-                metadataFilename = System.Text.Encoding.Default.GetString(readMetadataReply, 28 + 256, 256).TrimEnd((char)0);
+                System.Buffer.BlockCopy(readMetadataReply, 28 + 512, metadataArray, 0, 1024);
+                metadataFilename = System.Text.Encoding.Default.GetString(readMetadataReply, 28 + 170, 170).TrimEnd((char)0);
             }
             else
             {
                 hasMetadata = false;
+            }
+
+            if (readMetadataReply[28 + 170 + 170] != 0)
+            {
+                hasDescription = true;
+                description = System.Text.Encoding.Default.GetString(readMetadataReply, 28 + 512 + 1024, 512).TrimEnd((char)0);
+                descriptionFilename = System.Text.Encoding.Default.GetString(readMetadataReply, 28 + 170 + 170, 170).TrimEnd((char)0);
+            }
+            else
+            {
+                hasDescription = false;
             }
 
             //Console.Write(" bitMask: " + Convert.ToString(bitMask, 2));
@@ -136,33 +150,41 @@ namespace HarpSoundCard
             UsbEndpointReader reader,
             int soundIndex,
             bool isMetadata,
+            bool isDescription,
             bool isSound,
             string directory)
         {
-            var metadataArray = new byte[2048 - 256 - 256];
+            var metadataArray = new byte[1024];
+            string description = String.Empty;
             UInt32 bitMask = 0;
             int soundLength = 0;
             int dataType = 0;
             int sampleRate = 0;
             string soundFilename = String.Empty;
             string metadataFilename = String.Empty;
+            string descriptionFilename = String.Empty;
             bool hasSound = false;
             bool hasMetadata = false;
-            
+            bool hasDescription = false;
+
+
 
             readMetadataFromDevice(
                 writer,
                 reader,
                 soundIndex,
                 metadataArray,
+                ref description,
                 ref bitMask,
                 ref soundLength,
                 ref dataType,
                 ref sampleRate,
                 ref soundFilename,
                 ref metadataFilename,
+                ref descriptionFilename,
                 ref hasSound,
-                ref hasMetadata);
+                ref hasMetadata,
+                ref hasDescription);
 
             string suffix = "i";
             if (soundIndex< 9)
@@ -174,25 +196,32 @@ namespace HarpSoundCard
                 soundFilename = suffix + soundFilename;
             if (metadataFilename.IndexOf(suffix) != 0)
                 metadataFilename = suffix + metadataFilename;
+            if (descriptionFilename.IndexOf(suffix) != 0)
+                descriptionFilename = suffix + descriptionFilename;
 
             if (hasSound & isSound)
             {
-                FileStream fs;
-
-                fs = File.Open(System.IO.Path.Combine(directory, soundFilename), FileMode.Create);
+                FileStream fs = File.Open(System.IO.Path.Combine(directory, soundFilename), FileMode.Create);
                 //Read the sound
                 fs.Close();
             }
 
             if (hasMetadata && isMetadata)
             {
-                FileStream fs;
-
-                fs = File.Open(System.IO.Path.Combine(directory, metadataFilename), FileMode.Create);
-                fs.Write(metadataArray, 0, 2048 - 256 - 256);
+                FileStream fs = File.Open(System.IO.Path.Combine(directory, metadataFilename), FileMode.Create);
+                fs.Write(metadataArray, 0, metadataArray.Length);
                 fs.Close();
             }
-            
+
+            if (hasDescription && isDescription)
+            {
+                FileStream fs = File.Open(System.IO.Path.Combine(directory, descriptionFilename), FileMode.Create);
+                StreamWriter textWriter = new StreamWriter(fs);
+                textWriter.Write(description);
+                textWriter.Close();
+                fs.Close();
+            }
+
             if (hasSound)
             {
                 StreamWriter sw;
@@ -223,6 +252,10 @@ namespace HarpSoundCard
                 if (hasMetadata)
                 {
                     sw.WriteLine("USER_METADATA_FILENAME = " + metadataFilename);
+                }
+                if (hasDescription)
+                {
+                    sw.WriteLine("USER_DESCRIPTION_FILENAME = " + descriptionFilename);
                 }
 
                 sw.Close();
@@ -288,6 +321,7 @@ namespace HarpSoundCard
                  ************************************/
                 bool isAll = false;
                 bool isMetadata = false;
+                bool isDescription = false;
                 bool isSound = false;
                 bool isDeleteAll = false;
                 int soundIndex = 2;
@@ -295,12 +329,14 @@ namespace HarpSoundCard
                 if (args.GetLength(0) == 2 || args.GetLength(0) == 3)
                 {
                     isMetadata = (args[0].IndexOf("-u") != -1);
+                    isDescription = (args[0].IndexOf("-d") != -1);
                     isSound = (args[0].IndexOf("-s") != -1);
                     isAll = (args[1].IndexOf("a") != -1);
 
-                    if (args[0].IndexOf("-b") != -1)
+                    if (args[0].IndexOf("-a") != -1)
                     {
                         isMetadata = true;
+                        isDescription = true;
                         isSound = true;
                     }
 
@@ -329,8 +365,9 @@ namespace HarpSoundCard
                     Console.WriteLine("  fromSoundCard [command] [index] [option]");
                     Console.WriteLine("");
                     Console.WriteLine("  -> [command]      -usermetadata");
+                    Console.WriteLine("                    -description");
                     Console.WriteLine("                    -sound               -- not implemented yet");
-                    Console.WriteLine("                    -both");
+                    Console.WriteLine("                    -all");
                     Console.WriteLine("  -> [index]        from 0 to 31         -- 0 and 1 not implemented yet");
                     Console.WriteLine("  -> [option]       -deleteAll (deletes all files in the folder \\fromSoundCard)");
                     return (int) SoundCardErrorCode.BadUserInput;
@@ -373,15 +410,15 @@ namespace HarpSoundCard
 
                 if (isAll)
                 {
-                    bitMask = SaveToFiles(writer, reader, 2, isMetadata, isSound, fromDirectory);
+                    bitMask = SaveToFiles(writer, reader, 2, isMetadata, isDescription, isSound, fromDirectory);
 
                     for (int i = 3; i < 32; i++)
                         if ((bitMask & ((UInt32)1 << i)) == ((UInt32)1 << i))
-                            SaveToFiles(writer, reader, i, isMetadata, isSound, fromDirectory);
+                            SaveToFiles(writer, reader, i, isMetadata, isDescription, isSound, fromDirectory);
                 }
                 else
                 {
-                    SaveToFiles(writer, reader, soundIndex, isMetadata, isSound, fromDirectory);
+                    SaveToFiles(writer, reader, soundIndex, isMetadata, isDescription, isSound, fromDirectory);
                 }
 
 

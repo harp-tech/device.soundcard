@@ -77,19 +77,42 @@ namespace HarpSoundCard
                 /*************************************
                  * User input
                  ************************************/
-                if (args.GetLength(0) != 4 && args.GetLength(0) != 6)
+                bool userInputOK = true;
+
+                if (args.GetLength(0) == 6)
+                {
+                    if ((args[4].IndexOf("-m") == -1) && (args[4].IndexOf("-d") == -1))
+                        userInputOK = false;
+                }
+
+                if (args.GetLength(0) == 8)
+                {
+                    if ((args[4].IndexOf("-m") == -1) && (args[6].IndexOf("-m") == -1))
+                        userInputOK = false;
+                    if ((args[4].IndexOf("-d") == -1) && (args[6].IndexOf("-d") == -1))
+                        userInputOK = false;
+                }
+
+                if (args.GetLength(0) != 4 && args.GetLength(0) != 6 && args.GetLength(0) != 8)
+                {
+                    userInputOK = false;
+                }
+
+                if (userInputOK == false)
                 {
                     Console.WriteLine("User input not correct.");
                     Console.WriteLine("The format should be one of the next options:");
                     Console.WriteLine("");
                     Console.WriteLine("  toSoundCard \"sound_filename\" [index] [type] [sample rate]");
                     Console.WriteLine("  toSOundCard \"sound_filename\" [index] [type] [sample rate] -metadata \"metadata_filename\"");
+                    Console.WriteLine("  toSOundCard \"sound_filename\" [index] [type] [sample rate] -description \"description_filename\"");
+                    Console.WriteLine("  toSOundCard \"sound_filename\" [index] [type] [sample rate] -metadata \"metadata_filename\" -description \"description_filename\"");
                     Console.WriteLine("");
                     Console.WriteLine("  -> [index]        from 0 to 31             -- 0 and 1 not implemented yet");
                     Console.WriteLine("  -> [type]         0: Int32, 1: Float32     -- Float32 not implemented yet");
                     Console.WriteLine("  -> [sample rate]  96000 or 192000");
                     Console.WriteLine("");
-                    Console.WriteLine("  Note: It's recommended that both \"sound_filename\" and \"metadata_filename\" should have an extension.");
+                    Console.WriteLine("  Note: It's recommended that \"filenames\" should have an extension.");
                     return (int) SoundCardErrorCode.BadUserInput;
                 }
 
@@ -103,13 +126,30 @@ namespace HarpSoundCard
                 DataType dataType = (DataType)Convert.ToInt32(args[2]);
                 SampleRate sampleRate = (SampleRate)Convert.ToInt32(args[3]);
 
-                var userMetadataExists = (args.GetLength(0) == 6);
+                var userMetadataExists = ((args.GetLength(0) == 6) && (args[4].IndexOf("-m") != -1)) || (args.GetLength(0) == 8);
                 string userMetadataFileName = string.Empty;
 
                 if (userMetadataExists)
                 {
-                    if (args[4].IndexOf("-m") == -1) throw new Exception("BadUserInput");
-                    userMetadataFileName = args[5];
+                    if (args[4].IndexOf("-m") != -1)
+                        userMetadataFileName = args[5];
+
+                    if (args.GetLength(0) == 8)
+                        if (args[6].IndexOf("-m") != -1)
+                            userMetadataFileName = args[7];
+                }
+
+                var userDescriptionExists = ((args.GetLength(0) == 6) && (args[4].IndexOf("-d") != -1)) || (args.GetLength(0) == 8);
+                string userDescriptionFileName = string.Empty;
+
+                if (userDescriptionExists)
+                {
+                    if (args[4].IndexOf("-d") != -1)
+                        userDescriptionFileName = args[5];
+
+                    if (args.GetLength(0) == 8)
+                        if (args[6].IndexOf("-d") != -1)
+                            userDescriptionFileName = args[7];
                 }
 
                 //Console.WriteLine(args[0]);
@@ -135,21 +175,35 @@ namespace HarpSoundCard
                 //Console.WriteLine("fileSizeInBytes: " + (int)fileSizeInSamples * 4);
 
                 /*************************************
-                 * Open file that contains the metadata
+                 * Open files that contains the users' metadata and description
                  ************************************/
-                long metadataFileSize = 0;
+                long fileSize = 0;
                 FileStream metadataFileStream = null;
+                FileStream descriptionFileStream = null;
 
                 if (userMetadataExists)
                 {
-                    metadataFileSize = new FileInfo(userMetadataFileName).Length;
+                    fileSize = new FileInfo(userMetadataFileName).Length;
                     metadataFileStream = new FileStream(userMetadataFileName, FileMode.Open);
 
                     if (metadataFileStream == null) throw new Exception("NotAbleToOpenFile");
-                    if (metadataFileSize == 0) throw new Exception("NotAbleToOpenFile");
+                    if (fileSize == 0) throw new Exception("NotAbleToOpenFile");
 
                     userMetadataFileName = Path.GetFileName(userMetadataFileName);
                     if (userMetadataFileName == string.Empty || userMetadataFileName == null) throw new Exception("NotAbleToOpenFile");
+
+                }
+
+                if (userDescriptionExists)
+                {
+                    fileSize = new FileInfo(userDescriptionFileName).Length;
+                    descriptionFileStream = new FileStream(userDescriptionFileName, FileMode.Open);
+
+                    if (descriptionFileStream == null) throw new Exception("NotAbleToOpenFile");
+                    if (fileSize == 0) throw new Exception("NotAbleToOpenFile");
+
+                    userDescriptionFileName = Path.GetFileName(userDescriptionFileName);
+                    if (userDescriptionFileName == string.Empty || userDescriptionFileName == null) throw new Exception("NotAbleToOpenFile");
 
                 }
 
@@ -172,9 +226,14 @@ namespace HarpSoundCard
 
                 if (userMetadataExists)
                 {
-                    System.Buffer.BlockCopy(Encoding.ASCII.GetBytes(userMetadataFileName), 0, userMetadata, 256, userMetadataFileName.Length);
-                    
-                    metadataFileStream.Read(userMetadata, 512, 1024 + 512);
+                    System.Buffer.BlockCopy(Encoding.ASCII.GetBytes(userMetadataFileName), 0, userMetadata, 170, userMetadataFileName.Length);                    
+                    metadataFileStream.Read(userMetadata, 512, 1024);
+                }
+
+                if (userDescriptionExists)
+                {
+                    System.Buffer.BlockCopy(Encoding.ASCII.GetBytes(userDescriptionFileName), 0, userMetadata, 340, userDescriptionFileName.Length);
+                    descriptionFileStream.Read(userMetadata, 512 + 1024, 512);
                 }
 
                 /*************************************
