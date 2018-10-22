@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 
-[assembly: AssemblyTitle("toSoundCard")]
+[assembly: AssemblyTitle("fromSoundCard")]
 [assembly: AssemblyDescription("Script to send data to the Harp Sound Card")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("toSoundCard")]
+[assembly: AssemblyProduct("fromSoundCard")]
 [assembly: AssemblyCopyright("Copyright © Filipe Carvalho 2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
