@@ -756,14 +756,14 @@ void APP_Tasks ( void )
         if (++dma_i2s_handle0_timeout == 20000) // Around 30 ms
         {
             clr_AUDIO_RESET;
-            while (1) tgl_TP1;
+            //while (1) tgl_TP1;    // Debug only
             reset_PIC32();
             while(1);
         }
         if (++dma_i2s_handle1_timeout == 20000) // Around 30 ms
         {
             clr_AUDIO_RESET;
-            while (1) tgl_TP1;
+            //while (1) tgl_TP1;    // Debug only
             reset_PIC32();
             while(1);
         }
@@ -874,6 +874,9 @@ void APP_Tasks ( void )
                                 Sound_Metadata * ptr = (Sound_Metadata*)(receivedDataBuffer + 8);
                                 int *error = (int*)(transmitDataBuffer + 8);
                                 int i;
+                                
+                                ptr->sound_length = ptr->sound_length & 0xFFFFFFFC; // Samples must be multiple of 4
+                                                                                    // The DMA stops if loaded with 2 samples at 192KHz
                                 
                                 *error = ERROR_NOERROR;
                                 if (ptr->sound_index < 0 || ptr->sound_index > get_available_sounds()) *error = ERROR_BADSOUNDINDEX;
