@@ -217,9 +217,12 @@ namespace HarpSoundCard
                 /*************************************
                  * Create user metadata byte array with 2048 bytes
                  ************************************/
-                /* [0:255]    sound_filename            */
-                /* [256:511]  metadata_filename         */
-                /* [512:2047] metadata_filename content */
+                /* [0:169]     sound_filename               */
+                /* [170:339]   metadata_filename            */
+                /* [340:511]   description_filename         */
+                /* [512:1535]  metadata_filename content    */
+                /* [1536:2047] description_filename content */
+
                 var userMetadata = new byte[2048];
 
                 System.Buffer.BlockCopy(Encoding.ASCII.GetBytes(fileName), 0, userMetadata, 0, fileName.Length);
