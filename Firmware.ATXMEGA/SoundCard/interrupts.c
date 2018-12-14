@@ -16,41 +16,41 @@ extern AppRegs app_regs;
 // ISR(TCD0_OVF_vect, ISR_NAKED)
 // ISR(TCE0_OVF_vect, ISR_NAKED)
 // ISR(TCF0_OVF_vect, ISR_NAKED)
-// 
+//
 // ISR(TCC0_CCA_vect, ISR_NAKED)
 // ISR(TCD0_CCA_vect, ISR_NAKED)
 // ISR(TCE0_CCA_vect, ISR_NAKED)
 // ISR(TCF0_CCA_vect, ISR_NAKED)
-// 
+//
 // ISR(TCD1_OVF_vect, ISR_NAKED)
-// 
+//
 // ISR(TCD1_CCA_vect, ISR_NAKED)
 
-/************************************************************************/ 
+/************************************************************************/
 /* DIN0                                                                 */
 /************************************************************************/
 ISR(PORTB_INT0_vect, ISR_NAKED)
 {
-	reti();
+   reti();
 }
 
-/************************************************************************/ 
+/************************************************************************/
 /* DIN1                                                                 */
 /************************************************************************/
 ISR(PORTD_INT0_vect, ISR_NAKED)
 {
-	reti();
+   reti();
 }
 
-/************************************************************************/ 
+/************************************************************************/
 /* DIN2                                                                 */
 /************************************************************************/
 ISR(PORTC_INT0_vect, ISR_NAKED)
 {
-	reti();
+   reti();
 }
 
-/************************************************************************/ 
+/************************************************************************/
 /* PIC32_READY                                                          */
 /************************************************************************/
 #define PIC32_BOOTLOADER_STATE__STANDBY 0
@@ -61,7 +61,7 @@ ISR(PORTC_INT0_vect, ISR_NAKED)
 uint8_t PIC32_READY_state = 0;
 
 ISR(TCD1_OVF_vect, ISR_NAKED)
-{  
+{
    if (PIC32_READY_state == PIC32_BOOTLOADER_STATE__WAITING_250MS_FOR_TX_COMPLETE)
    {
       PIC32_READY_state = PIC32_BOOTLOADER_STATE__WAITING_1SEC_DEBOUNCE;
@@ -72,7 +72,7 @@ ISR(TCD1_OVF_vect, ISR_NAKED)
    
    if (PIC32_READY_state == PIC32_BOOTLOADER_STATE__WAITING_1SEC_DEBOUNCE)
    {
-      PIC32_READY_state = PIC32_BOOTLOADER_STATE__WAITING_FOR_FINISH;      
+      PIC32_READY_state = PIC32_BOOTLOADER_STATE__WAITING_FOR_FINISH;
       timer_type1_stop(&TCD1);
       reti();
    }
@@ -85,7 +85,7 @@ ISR(PORTD_INT1_vect, ISR_NAKED)
    
    if (PIC32_READY_state == PIC32_BOOTLOADER_STATE__START_BOOTLOADER_PROCESS)
    {
-      PIC32_READY_state = PIC32_BOOTLOADER_STATE__WAITING_250MS_FOR_TX_COMPLETE;      
+      PIC32_READY_state = PIC32_BOOTLOADER_STATE__WAITING_250MS_FOR_TX_COMPLETE;
       timer_type1_enable(&TCD1, TIMER_PRESCALER_DIV1024, 31250/4, INT_LEVEL_LOW);   // 250 ms
    }
    
@@ -94,7 +94,7 @@ ISR(PORTD_INT1_vect, ISR_NAKED)
       app_regs.REG_BOOTLOADER = 0;
       clr_BOOTLOADER_EN;
       PIC32_READY_state = PIC32_BOOTLOADER_STATE__STANDBY;
-   }      
-      
-	reti();
+   }
+   
+   reti();
 }

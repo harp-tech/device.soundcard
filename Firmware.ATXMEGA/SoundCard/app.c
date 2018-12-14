@@ -5,9 +5,8 @@
 #include "app.h"
 #include "app_funcs.h"
 #include "app_ios_and_regs.h"
-
-#include "uart1.h"
 #include "parallel_bus.h"
+#include "uart1.h"
 
 /************************************************************************/
 /* Declare application registers                                        */
@@ -28,24 +27,24 @@ static const uint8_t default_device_name[] = "SoundCard";
 
 void hwbp_app_initialize(void)
 {
-	   /* Define versions */
-    uint8_t hwH = 1;
-    uint8_t hwL = 0;
-    uint8_t fwH = MAJOR_FW_VERSION;
-    uint8_t fwL = 1;
-    uint8_t ass = 1;
-    
-   	/* Start core */
-    core_func_start_core(
-        1280,
-        hwH, hwL,
-        fwH, fwL,
-        ass,
-        (uint8_t*)(&app_regs),
-        APP_NBYTES_OF_REG_BANK,
-        APP_REGS_ADD_MAX - APP_REGS_ADD_MIN + 1,
-        default_device_name
-    );
+   /* Define versions */
+   uint8_t hwH = 1;
+   uint8_t hwL = 0;
+   uint8_t fwH = MAJOR_FW_VERSION;
+   uint8_t fwL = 1;
+   uint8_t ass = 1;
+   
+   /* Start core */
+   core_func_start_core(
+   1280,
+   hwH, hwL,
+   fwH, fwL,
+   ass,
+   (uint8_t*)(&app_regs),
+   APP_NBYTES_OF_REG_BANK,
+   APP_REGS_ADD_MAX - APP_REGS_ADD_MIN + 1,
+   default_device_name
+   );
 }
 
 /************************************************************************/
@@ -146,40 +145,21 @@ void uart1_rcv_byte_callback(uint8_t byte)
    }
 }
 
-
-/*
-void update_enabled_pwmx(void)
-{
-	if (!core_bool_is_visual_enabled())
-	return;
-	
-	if (!(app_regs.REG_CH_CONFEN & B_USEEN0) || ((app_regs.REG_CH_CONFEN & B_USEEN0) && (app_regs.REG_CH_ENABLE & B_EN0)))
-		set_ENABLED_PWM0;
-	else
-		clr_ENABLED_PWM0;
-}
-
-ISR(PORTB_INT0_vect, ISR_NAKED)
-{
-	reti();
-}
-*/
-
 /************************************************************************/
 /* Initialization Callbacks                                             */
 /************************************************************************/
-uint8_t reply[1+4+1+10+1];
 void core_callback_1st_config_hw_after_boot(void)
 {
 	/* Initialize IOs */
 	/* Don't delete this function!!! */
 	init_ios();
-   
-   /* Initialize BPod serial communication with 1.312.500 bps*/
-   uart1_init(67, -7, false);
-   uart1_enable();
-   
-   temperature_initialize_ADC(&ADCA);
+	
+	/* SYNC OUTx */
+	//io_pin2out(&PORTC, 1, OUT_IO_DIGITAL, IN_EN_IO_DIS);
+
+	/* TRIG_IN0 */
+	//io_pin2in(&PORTF, 5, PULL_IO_TRISTATE, SENSE_IO_EDGES_BOTH);
+	//io_set_int(&PORTF, INT_LEVEL_LOW, 0, (1<<5), true);
 }
 
 void core_callback_reset_registers(void)
@@ -255,7 +235,7 @@ void core_callback_device_to_speed(void) {}
 /************************************************************************/
 void core_callback_t_before_exec(void) {}
 void core_callback_t_after_exec(void) {}
-void core_callback_t_new_second(void) {/*uint8_t temperature = temperature_read(&ADCA);*/}
+void core_callback_t_new_second(void) {}
 void core_callback_t_500us(void) {}
 void core_callback_t_1ms(void) {}
 
