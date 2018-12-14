@@ -20,8 +20,11 @@
 /************************************************************************/
 /* Prototypes                                                           */
 /************************************************************************/
-void par_cmd_start_sound(uint8_t sound_index);
-void par_cmd_stop(uint8_t sound_index);
+void par_cmd_stop(void);
+bool par_cmd_stop_callback (void);
+
+void par_cmd_start_sound(uint8_t sound_index, int16_t amplitude_left, int16_t amplitude_right);
+bool par_cmd_start_sound_callback (void);
 
 
 #endif /* _PARALLEL_BUS_H_ */

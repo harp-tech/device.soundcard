@@ -2,32 +2,64 @@
 #include "app_ios_and_regs.h"
 
 /************************************************************************/
-/* Simple functions for the first tests                                 */
+/* Protocol                                                             */
 /************************************************************************/
-void par_cmd_start_sound(uint8_t sound_index)
-{
-   PORTA_OUT = sound_index;
-   set_CMD_WRITE;
-   //while (!read_CMD_LATCHED);
-   //clr_CMD_WRITE;
-}
+/* STOP                 11110000                                             checksum(1)
+ * START                11110001  index(1)   A_left(2)  A_right(2)           checksum(1)
+ * START W/ FREQUENCY   11110010             A_left(2)  A_right(2)  Freq(2)  checksum(1)
+ * UPDATE               11111001             A_left(2)  A_right(2)           checksum(1)
+ * UPDATE AMP. & FREQ.  11111010             A_left(2)  A_right(2)  Freq(2)  checksum(1)
+ * UPDATE FREQUENCY     11110011                                    Freq(2)  checksum(1)
+ */
+#define CMD_STOP 0xF0
+#define CMD_START 0xF1
+#define CMD_START_W_FREQUENCY 0xF2
+#define CMD_UPDATE 0xF9
+#define CMD_UPDATE_ANPLITUDE_AND_FREQUENCY 0xFA
+#define CMD_UPDATE_FREQUENCY 0xFB
 
-void par_cmd_stop(uint8_t sound_index)
-{
-   PORTA_OUT = 127;
-   set_CMD_WRITE;
-   //while (!read_CMD_LATCHED);
-   //clr_CMD_WRITE;
-}
+#define CMD_STOP_LEN 2
+#define CMD_START_LEN 7
+
+uint8_t cmd_stop[CMD_STOP_LEN]   = {CMD_STOP, 0};
+uint8_t cmd_start[CMD_START_LEN] = {CMD_START, 0, 0, 0, 0, 0, 0};
+
+bool command_available = false;
+uint8_t command_to_send;
+
+#define send_byte(byte) PORTA_OUT = byte; \
+                        set_CMD_WRITE; \
+                        while (!read_CMD_LATCHED); \
+                        clr_CMD_WRITE; \
+                        while (read_CMD_LATCHED)
 
 /************************************************************************/
 /* CMD_LATCHED & SOUND_IS_ON                                            */
 /************************************************************************/
 bool sound_is_on_state = false;
+
 ISR(PORTC_INT1_vect, ISR_NAKED)
 {
    if (read_CMD_LATCHED)
-      clr_CMD_WRITE;
+   {  
+      if (command_available)
+      {
+         while (!read_CMD_LATCHED);
+         clr_CMD_WRITE;      
+         while (read_CMD_LATCHED);
+
+         /* Choose callback */
+         switch (command_to_send)
+         {
+            case CMD_START:
+               par_cmd_start_sound_callback();
+               break;
+         }
+           
+         /* Update global */
+         command_available = false;
+      }
+   }      
    
    if (read_SOUND_IS_ON)
    {
@@ -57,6 +89,82 @@ ISR(TCC0_OVF_vect, ISR_NAKED)
    timer_type0_stop(&TCC0);
    reti();
 }
+
+ISR(TCD0_OVF_vect, ISR_NAKED)
+{     
+   timer_type0_stop(&TCD0);
+   
+   PORTA_OUT = command_to_send;
+   set_CMD_WRITE;
+   
+   set_DOUT1;
+   reti();
+}
+
+
+/************************************************************************/
+/* COMMAND: STOP                                                        */
+/************************************************************************/
+void par_cmd_stop(void)
+{
+   /* Calculate checksum */
+   cmd_stop[CMD_STOP_LEN - 1] = cmd_stop[0];
+   
+   /* Update globals */
+   command_available = true;
+   command_to_send = CMD_STOP;
+   
+   /* Create an interrupt to be addressed as soon as possible */
+   timer_type0_enable(&TCD0, TIMER_PRESCALER_DIV1, 1, INT_LEVEL_LOW);
+}
+
+bool par_cmd_stop_callback (void)
+{
+   send_byte(cmd_stop[CMD_STOP_LEN - 1]);
+   return true;
+}
+
+/************************************************************************/
+/* COMMAND: START                                                       */
+/************************************************************************/
+void par_cmd_start_sound(uint8_t sound_index, int16_t amplitude_left, int16_t amplitude_right)
+{  
+   /* Prepare command */
+   cmd_start[1] = sound_index;
+   cmd_start[2] = *(((uint8_t*)(&amplitude_left)) + 0);
+   cmd_start[3] = *(((uint8_t*)(&amplitude_left)) + 1);
+   cmd_start[4] = *(((uint8_t*)(&amplitude_right)) + 0);
+   cmd_start[5] = *(((uint8_t*)(&amplitude_right)) + 1);
+   
+   /* Calculate checksum */
+   cmd_start[CMD_START_LEN - 1] = cmd_start[0];
+   for (uint8_t i = CMD_START_LEN - 1; i != 1; i--)
+   {
+      cmd_start[CMD_START_LEN - 1] += cmd_start[i-1];
+   }      
+   
+   /* Update globals */
+   command_available = true;
+   command_to_send = CMD_START;
+   
+   /* Create an interrupt to be addressed as soon as possible */
+   timer_type0_enable(&TCD0, TIMER_PRESCALER_DIV1, 1, INT_LEVEL_LOW);
+}
+
+bool par_cmd_start_sound_callback (void)
+{     
+   send_byte(cmd_start[1]);
+   send_byte(cmd_start[2]);
+   send_byte(cmd_start[3]);
+   send_byte(cmd_start[4]);
+   send_byte(cmd_start[5]);
+   send_byte(cmd_start[6]);
+   
+   clr_DOUT1;
+   return true;
+}
+
+
 
 
 /************************************************************************/

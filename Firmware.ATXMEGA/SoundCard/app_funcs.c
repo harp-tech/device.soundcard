@@ -154,7 +154,7 @@ bool app_write_REG_PLAY_SOUND_INDEX(void *a)
 {
 	uint8_t reg = *((uint8_t*)a);
    
-   par_cmd_start_sound(reg);
+   par_cmd_start_sound(reg, 0, 0);
 
 	app_regs.REG_PLAY_SOUND_INDEX = reg;
 	return true;

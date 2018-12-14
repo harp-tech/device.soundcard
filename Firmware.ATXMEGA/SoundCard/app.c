@@ -22,7 +22,7 @@ extern bool (*app_func_wr_pointer[])(void*);
 /************************************************************************/
 /* Initialize app                                                       */
 /************************************************************************/
-static const uint8_t default_device_name[] = "SoundBoard";
+static const uint8_t default_device_name[] = "SoundCard";
 
 #define MAJOR_FW_VERSION 0
 
@@ -116,7 +116,7 @@ uint8_t temperature_read(ADC_t* adc)
    return (uint8_t) (( ((uint32_t) temperature) * 85) / tempsense);
 }
 
-#define BPOD_MODULE_INFO_LENGTH 1+4+1+10+1
+#define BPOD_MODULE_INFO_LENGTH 1+4+1+9+1
 
 void uart1_rcv_byte_callback(uint8_t byte)
 {
@@ -127,7 +127,7 @@ void uart1_rcv_byte_callback(uint8_t byte)
       
       *((int32_t*)(&reply[1])) = MAJOR_FW_VERSION; // 4-byte firwmare version as 32-bit unsigned
       reply[5] = 10;                               // Length of module's name
-      for (uint8_t i = 0; i < 10; i++)
+      for (uint8_t i = 0; i < 9; i++)
          reply[i+6] = default_device_name[i];      // Module's name
          
       reply[BPOD_MODULE_INFO_LENGTH-1] = 0;        // 1 if more info follows. 0 if not
@@ -137,12 +137,12 @@ void uart1_rcv_byte_callback(uint8_t byte)
    
    if (byte < 31)
    {
-      par_cmd_start_sound(byte);
+      par_cmd_start_sound(byte, 0, 0);
    }
    
    if (byte == 0x88)
    {
-      par_cmd_start_sound(128);
+      par_cmd_stop();
    }
 }
 

@@ -6,6 +6,7 @@
 #include "ios.h"
 #include "memory.h"
 #include "sounds_allocation.h"
+#include "parallel_bus.h"
 
 // *****************************************************************************
 // *****************************************************************************
@@ -102,7 +103,6 @@ void I2SBufferEventHandler( DRV_I2S_BUFFER_EVENT event,
                     audio_buffer0_state = AUDIO_BUFFER_IS_EMPTY;
                 
                 dma_i2s_handle0_timeout = 0;
-                tgl_TP1;
             }
             if (bufferHandle == i2sBufferHandle1)
             {
@@ -110,7 +110,6 @@ void I2SBufferEventHandler( DRV_I2S_BUFFER_EVENT event,
                     audio_buffer1_state = AUDIO_BUFFER_IS_EMPTY;
                 
                 dma_i2s_handle1_timeout = 0;
-                tgl_TP1;
             }
         }
     }
@@ -729,22 +728,26 @@ void APP_Initialize ( void )
   Remarks:
     See prototype in app.h.
  */
-int a = 0;
-int b = 0;
-int command_received = 0xFF;
+
+int command_received = 0;
+
 void APP_Tasks ( void )
 {   
     update_sound_buffers();
-    command_received = par_bus_check_for_command();
     
-    if (command_received > 0)
+    if (command_received != 0)
     {
-        if (command_received < 32)
+        switch(command_received)
         {
-            // Start a sound
-            launch_sound_v3(command_received);
+            case CMD_START:
+                launch_sound_v3(par_bus_process_command_start());
+                break;
         }
+        
+        command_received = 0;
     }
+    
+    command_received = par_bus_check_if_command_is_available();
     
     /* 
      * Checks if the I2S DMA is working.
@@ -756,32 +759,16 @@ void APP_Tasks ( void )
         if (++dma_i2s_handle0_timeout == 20000) // Around 30 ms
         {
             clr_AUDIO_RESET;
-            //while (1) tgl_TP1;    // Debug only
             reset_PIC32();
             while(1);
         }
         if (++dma_i2s_handle1_timeout == 20000) // Around 30 ms
         {
             clr_AUDIO_RESET;
-            //while (1) tgl_TP1;    // Debug only
             reset_PIC32();
             while(1);
         }
-    }    
-    
-    a++;
-    if (a == 0x80000 && b == 0)
-    {
-        //set_LED_AUDIO;
-        //launch_sound_v2(17);
-    }
-    
-    if (a == 0x7FFFFF && b == 0)
-    {
-        //set_LED_AUDIO;
-        //launch_sound_v2(17);
-        b = 1;
-    }   
+    } 
     
     /* Check the application's current state. */
     switch ( appData.state )
