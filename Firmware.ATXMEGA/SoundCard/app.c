@@ -148,18 +148,40 @@ void uart1_rcv_byte_callback(uint8_t byte)
 /************************************************************************/
 /* Initialization Callbacks                                             */
 /************************************************************************/
+uint16_t AdcOffset;
+
 void core_callback_1st_config_hw_after_boot(void)
 {
 	/* Initialize IOs */
 	/* Don't delete this function!!! */
 	init_ios();
 	
-	/* SYNC OUTx */
-	//io_pin2out(&PORTC, 1, OUT_IO_DIGITAL, IN_EN_IO_DIS);
+	/* Initialize ADC */
+	PR_PRPA &= ~(PR_ADC_bm);									// Remove power reduction
+	ADCA_CTRLA = ADC_ENABLE_bm;								// Enable ADCA
+	ADCA_CTRLB = ADC_CURRLIMIT_HIGH_gc;						// High current limit, max. sampling rate 0.5MSPS
+	ADCA_CTRLB  |= ADC_RESOLUTION_12BIT_gc;				// 12-bit result, right adjusted
+	ADCA_REFCTRL = ADC_REFSEL_INTVCC_gc;					// VCC/1.6 = 3.3/1.6 = 2.0625 V
+	ADCA_PRESCALER = ADC_PRESCALER_DIV128_gc;				// 250 ksps
+	// Propagation Delay = (1 + 12[bits]/2 + 1[gain]) / fADC[125k] = 32 us
+	// Note: For single measurements, Propagation Delay is equal to Conversion Time
+	
+	ADCA_CH0_CTRL = ADC_CH_INPUTMODE_SINGLEENDED_gc;	// Single-ended positive input signal
+	ADCA_CH0_INTCTRL = ADC_CH_INTMODE_COMPLETE_gc;		// Rise interrupt flag when conversion is complete
+	ADCA_CH0_INTCTRL |= ADC_CH_INTLVL_OFF_gc;				// Interrupt is not used
+	
+	/* Wait 100 us to stabilization before measure the first time */
+	timer_type0_enable(&TCD0, TIMER_PRESCALER_DIV2, 1600, INT_LEVEL_OFF);
+	while(!timer_type0_get_flag(&TCD0));
+	timer_type0_stop(&TCD0);
+	
+	AdcOffset = 180;
 
-	/* TRIG_IN0 */
-	//io_pin2in(&PORTF, 5, PULL_IO_TRISTATE, SENSE_IO_EDGES_BOTH);
-	//io_set_int(&PORTF, INT_LEVEL_LOW, 0, (1<<5), true);
+	/* Point ADC to the ADC0 analog input */
+	ADCA_CH0_MUXCTRL = 10 << 3;							   // Select pin for further conversions
+	ADCA_CH0_CTRL |= ADC_CH_START_bm;						// Force the first conversion
+	while(!(ADCA_CH0_INTFLAGS & ADC_CH_CHIF_bm));		// Wait for conversion to finish
+	ADCA_CH0_INTFLAGS = ADC_CH_CHIF_bm;						// Clear interrupt bit
 }
 
 void core_callback_reset_registers(void)
@@ -237,7 +259,30 @@ void core_callback_t_before_exec(void) {}
 void core_callback_t_after_exec(void) {}
 void core_callback_t_new_second(void) {}
 void core_callback_t_500us(void) {}
-void core_callback_t_1ms(void) {}
+void core_callback_t_1ms(void)
+{
+   /* Read ADC0 */
+   ADCA_CH0_MUXCTRL = 10 << 3;							   // Select pin
+   ADCA_CH0_CTRL |= ADC_CH_START_bm;						// Start conversion
+   while(!(ADCA_CH0_INTFLAGS & ADC_CH_CHIF_bm));		// Wait for conversion to finish
+   ADCA_CH0_INTFLAGS = ADC_CH_CHIF_bm;						// Clear interrupt bit
+   if (ADCA_CH0_RES > AdcOffset)
+      app_regs.REG_ADC_VALUES[0] = (ADCA_CH0_RES & 0x0FFF) - AdcOffset;
+   else
+      app_regs.REG_ADC_VALUES[0] = 0;
+      
+   /* Read ADC1 */
+   ADCA_CH0_MUXCTRL = 9 << 3;							      // Select pin
+   ADCA_CH0_CTRL |= ADC_CH_START_bm;						// Start conversion
+   while(!(ADCA_CH0_INTFLAGS & ADC_CH_CHIF_bm));		// Wait for conversion to finish
+   ADCA_CH0_INTFLAGS = ADC_CH_CHIF_bm;						// Clear interrupt bit
+   if (ADCA_CH0_RES > AdcOffset)
+      app_regs.REG_ADC_VALUES[1] = (ADCA_CH0_RES & 0x0FFF) - AdcOffset;
+   else
+      app_regs.REG_ADC_VALUES[1] = 0;
+      
+   core_func_send_event(ADD_REG_ADC_VALUES, true);   
+}
 
 /************************************************************************/
 /* Callbacks: uart control                                              */
