@@ -7,6 +7,7 @@
 #include "app_ios_and_regs.h"
 #include "parallel_bus.h"
 #include "uart1.h"
+#include "bpod_cmds.h"
 
 /************************************************************************/
 /* Declare application registers                                        */
@@ -36,14 +37,14 @@ void hwbp_app_initialize(void)
    
    /* Start core */
    core_func_start_core(
-   1280,
-   hwH, hwL,
-   fwH, fwL,
-   ass,
-   (uint8_t*)(&app_regs),
-   APP_NBYTES_OF_REG_BANK,
-   APP_REGS_ADD_MAX - APP_REGS_ADD_MIN + 1,
-   default_device_name
+      1280,
+      hwH, hwL,
+      fwH, fwL,
+      ass,
+      (uint8_t*)(&app_regs),
+      APP_NBYTES_OF_REG_BANK,
+      APP_REGS_ADD_MAX - APP_REGS_ADD_MIN + 1,
+      default_device_name
    );
 }
 
@@ -115,35 +116,7 @@ uint8_t temperature_read(ADC_t* adc)
    return (uint8_t) (( ((uint32_t) temperature) * 85) / tempsense);
 }
 
-#define BPOD_MODULE_INFO_LENGTH 1+4+1+9+1
 
-void uart1_rcv_byte_callback(uint8_t byte)
-{
-   if (byte == 255)
-   {
-      uint8_t reply[BPOD_MODULE_INFO_LENGTH];
-      reply[0] = 65;                               // Acknowledge
-      
-      *((int32_t*)(&reply[1])) = MAJOR_FW_VERSION; // 4-byte firwmare version as 32-bit unsigned
-      reply[5] = 10;                               // Length of module's name
-      for (uint8_t i = 0; i < 9; i++)
-         reply[i+6] = default_device_name[i];      // Module's name
-         
-      reply[BPOD_MODULE_INFO_LENGTH-1] = 0;        // 1 if more info follows. 0 if not
-      
-      uart1_xmit(reply, (uint8_t) BPOD_MODULE_INFO_LENGTH);
-   }
-   
-   if (byte < 31)
-   {
-      par_cmd_start_sound(byte, 0, 0);
-   }
-   
-   if (byte == 0x88)
-   {
-      par_cmd_stop();
-   }
-}
 
 /************************************************************************/
 /* Initialization Callbacks                                             */
@@ -155,6 +128,13 @@ void core_callback_1st_config_hw_after_boot(void)
 	/* Initialize IOs */
 	/* Don't delete this function!!! */
 	init_ios();
+   
+   /* Initialize BPod serial communication with 1.312.500 bps*/
+   uart1_init(67, -7, false);
+   uart1_enable();
+   
+   /* Initialize BPod reply */
+   load_device_name_to_bpod_cmds(MAJOR_FW_VERSION, default_device_name, 9);
 	
 	/* Initialize ADC */
 	PR_PRPA &= ~(PR_ADC_bm);									// Remove power reduction
@@ -184,51 +164,9 @@ void core_callback_1st_config_hw_after_boot(void)
 	ADCA_CH0_INTFLAGS = ADC_CH_CHIF_bm;						// Clear interrupt bit
 }
 
-void core_callback_reset_registers(void)
-{
-	/* Initialize registers */
-	/*
-	app_regs.REG_CH0_FREQ = 10.0;
-	app_regs.REG_CH0_DUTYCYCLE = 50;
-	
-	if ((app_regs.REG_MODE0 & B_M0) == GM_USB_MODE)
-	{
-		app_regs.REG_OUT0 = 0;
-	}
-
-	if ((app_regs.REG_MODE1AND2 & B_M1AND2) == GM_USB_MODE)
-	{
-		app_regs.REG_OUT1 = 0;
-		app_regs.REG_OUT2 = 0;
-	}
-	*/
-}
-
-void core_callback_registers_were_reinitialized(void)
-{
-	/* Check if the user indication is valid */
-	//update_enabled_pwmx();
-	
-	/* Update state register */
-	//app_regs.REG_TRIG_STATE = (read_TRIG_IN0) ? B_LTRG0 : 0;
-	//app_regs.REG_TRIG_STATE |= (read_TRIG_IN1) ? B_LTRG1 : 0;
-
-	/* Reset start bits */
-	//app_regs.REG_TRG0_START = 0;
-	//app_regs.REG_TRG1_START = 0;
-
-	/*
-	if ((app_regs.REG_MODE0 & B_M0) == GM_BNC_MODE)
-	{
-		app_regs.REG_OUT0 = app_regs.REG_CTRL0;
-		set_OUT0(app_regs.REG_OUT0);
-	}
-	else
-	{
-		set_OUT0(app_regs.REG_OUT0);
-	}
-	*/
-}
+void core_callback_reset_registers(void) {}
+   
+void core_callback_registers_were_reinitialized(void) {}
 
 /************************************************************************/
 /* Callbacks: Visualization                                             */

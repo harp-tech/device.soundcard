@@ -48,7 +48,7 @@
         <InterfaceName>PDI</InterfaceName>
       </ToolOptions>
       <ToolType>com.atmel.avrdbg.tool.atmelice</ToolType>
-      <ToolNumber>J41800031896</ToolNumber>
+      <ToolNumber>J41800039803</ToolNumber>
       <ToolName>Atmel-ICE</ToolName>
     </com_atmel_avrdbg_tool_atmelice>
   </PropertyGroup>
@@ -153,6 +153,9 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="app_ios_and_regs.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="bpod_cmds.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="interrupts.c">
