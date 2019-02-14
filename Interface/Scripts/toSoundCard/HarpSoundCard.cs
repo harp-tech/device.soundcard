@@ -27,8 +27,8 @@ namespace HarpSoundCard
         {
             ErrorCode ec = ErrorCode.None;
 
-            bool debug = true;
-            bool ignoreInputs = true;
+            bool debug = false;
+            bool ignoreInputs = false;
 
             try
             {
@@ -141,7 +141,6 @@ namespace HarpSoundCard
                 //string fileName = (!ignoreInputs) ? args[0] : "..\\..\\100ms1KHz.bin";
                 string fileName = (!ignoreInputs) ? args[0] : "..\\..\\1s1KHz.bin";
                 //string fileName = (!ignoreInputs) ? args[0] : "..\\..\\10s1KHz.bin";
-                //string fileName = (!ignoreInputs) ? args[0] : "..\\..\\100s1KHz.bin";
                 int soundIndex = (!ignoreInputs) ? Convert.ToInt32(args[1]) : 2;
                 DataType dataType = (!ignoreInputs) ? (DataType)Convert.ToInt32(args[2]) : DataType.Int32;
                 SampleRate sampleRate = (!ignoreInputs) ? (SampleRate)Convert.ToInt32(args[3]) : SampleRate._96000Hz;
