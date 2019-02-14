@@ -235,7 +235,7 @@ namespace HarpSoundCard
                 {
                     sw.Write(", " + (soundIndex + i + 1));
                 }
-                sw.Write("\n");
+                sw.WriteLine("");
 
 
                 sw.WriteLine("TOTAL_SAMPLES = " + soundLength);
@@ -269,8 +269,14 @@ namespace HarpSoundCard
         {
             ErrorCode ec = ErrorCode.None;
 
+            bool debug = false;
+            bool ignoreInputs = false;
+
             try
             {
+                /*************************************
+                 * Open USB device and endpoints
+                 ************************************/
                 #region Open USB device and endpoints
 
                 // Find and open the usb device.
@@ -304,6 +310,9 @@ namespace HarpSoundCard
 
                 #endregion
 
+                /*************************************
+                 * Create folders if don't exist
+                 ************************************/
                 #region Create folders if don't exist
                 /*************************************
                  * Create folders if don't exist
@@ -350,13 +359,16 @@ namespace HarpSoundCard
                         isDeleteAll = (args[2].IndexOf("-d") != -1);
                     }
                 }
-                
-                //isMetadata = true;
-                //isAll = false;
-                //isDeleteAll = false;
-                //soundIndex = 2;
 
-                if ((args.GetLength(0) != 2 && args.GetLength(0) != 3) || (isSound == false && isMetadata == false))
+                if (ignoreInputs)
+                {
+                    isMetadata = true;
+                    isAll = true;
+                    isDeleteAll = true;
+                    soundIndex = 2;
+                }
+
+                if (((args.GetLength(0) != 2 && args.GetLength(0) != 3) || (isSound == false && isMetadata == false)) && (ignoreInputs == false) )
                 {
                     Console.WriteLine("User input not correct.");
                     Console.WriteLine("The format should be one of the next options:");
@@ -472,8 +484,11 @@ namespace HarpSoundCard
                 }
 
                 // Wait for user input..
-                //Console.WriteLine("Done.");               
-                //Console.ReadKey();
+                if (ignoreInputs)
+                {
+                    Console.WriteLine("Done.");
+                    Console.ReadKey();
+                }
             }
 
             return 0;
