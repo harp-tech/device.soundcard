@@ -27,8 +27,21 @@ namespace HarpSoundCard
         {
             ErrorCode ec = ErrorCode.None;
 
+            bool debug = true;
+            bool ignoreInputs = true;
+
             try
             {
+                /*************************************
+                 * Start timing measurements
+                 ************************************/
+                Stopwatch stopwatch = new Stopwatch();
+                stopwatch.Start();
+
+
+                /*************************************
+                 * Open USB device and endpoints
+                 ************************************/
                 #region Open USB device and endpoints
 
                 // Find and open the usb device.
@@ -62,10 +75,13 @@ namespace HarpSoundCard
 
                 #endregion
 
-                #region Create folders if don't exist
+                if (debug) Console.WriteLine("Elapsed time (open USB connection): " + stopwatch.ElapsedMilliseconds + " ms");
+
+
                 /*************************************
                  * Create folders if don't exist
                  ************************************/
+                #region Create folders if don't exist
                 var currentDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
                 var toDirectory = System.IO.Path.Combine(currentDirectory, "toSoundCard");
                 
@@ -73,6 +89,7 @@ namespace HarpSoundCard
                     System.IO.Directory.CreateDirectory(toDirectory);
 
                 #endregion
+
 
                 /*************************************
                  * User input
@@ -98,7 +115,7 @@ namespace HarpSoundCard
                     userInputOK = false;
                 }
 
-                if (userInputOK == false)
+                if (userInputOK == false && ignoreInputs == false)
                 {
                     Console.WriteLine("User input not correct.");
                     Console.WriteLine("The format should be one of the next options:");
@@ -121,10 +138,13 @@ namespace HarpSoundCard
                 //fileName = "..\\..\\9600_samples.bin";
                 //fileName = "..\\..\\96000_samples.bin";                
 
-                string fileName = args[0];
-                int soundIndex = Convert.ToInt32(args[1]);
-                DataType dataType = (DataType)Convert.ToInt32(args[2]);
-                SampleRate sampleRate = (SampleRate)Convert.ToInt32(args[3]);
+                //string fileName = (!ignoreInputs) ? args[0] : "..\\..\\100ms1KHz.bin";
+                string fileName = (!ignoreInputs) ? args[0] : "..\\..\\1s1KHz.bin";
+                //string fileName = (!ignoreInputs) ? args[0] : "..\\..\\10s1KHz.bin";
+                //string fileName = (!ignoreInputs) ? args[0] : "..\\..\\100s1KHz.bin";
+                int soundIndex = (!ignoreInputs) ? Convert.ToInt32(args[1]) : 2;
+                DataType dataType = (!ignoreInputs) ? (DataType)Convert.ToInt32(args[2]) : DataType.Int32;
+                SampleRate sampleRate = (!ignoreInputs) ? (SampleRate)Convert.ToInt32(args[3]) : SampleRate._96000Hz;
 
                 var userMetadataExists = ((args.GetLength(0) == 6) && (args[4].IndexOf("-m") != -1)) || (args.GetLength(0) == 8);
                 string userMetadataFileName = string.Empty;
@@ -157,9 +177,13 @@ namespace HarpSoundCard
                 //Console.WriteLine(dataType);
                 //Console.WriteLine(sampleRate);
 
+
                 /*************************************
                  * Open file that contains the sound or fade
                  ************************************/
+                stopwatch.Reset();
+                stopwatch.Start();
+
                 long soundFileSizeInSamples = new FileInfo(fileName).Length / 4;
                 var soundFileStream = new FileStream(fileName, FileMode.Open);
                 int commandsToBeSent = (int)soundFileSizeInSamples * 4 / 32768 + (((((int)soundFileSizeInSamples * 4) % 32768) != 0) ? 1 : 0);
@@ -173,6 +197,7 @@ namespace HarpSoundCard
                 //Console.WriteLine("fileSizeInSamples: " + (int) fileSizeInSamples);
                 //Console.WriteLine("commandsToBeSent: (" + (int)fileSizeInSamples * 4 / 32768.0 + ") " + commandsToBeSent);
                 //Console.WriteLine("fileSizeInBytes: " + (int)fileSizeInSamples * 4);
+
 
                 /*************************************
                  * Open files that contains the users' metadata and description
@@ -207,7 +232,7 @@ namespace HarpSoundCard
 
                 }
 
-
+                if (debug) Console.WriteLine("Elapsed time (open files): " + stopwatch.ElapsedMilliseconds + " ms");
 
                 //Console.WriteLine("fileSizeInSamples: " + (int) fileSizeInSamples);
                 //Console.WriteLine("commandsToBeSent: (" + (int)fileSizeInSamples * 4 / 32768.0 + ") " + commandsToBeSent);
@@ -239,6 +264,7 @@ namespace HarpSoundCard
                     descriptionFileStream.Read(userMetadata, 512 + 1024, 512);
                 }
 
+
                 /*************************************
                  * Build sound header
                  ************************************/
@@ -247,6 +273,7 @@ namespace HarpSoundCard
                 soundMetadata.soundLength = (int) soundFileSizeInSamples; // samples per sound 1048576;
                 soundMetadata.sampleRate = sampleRate;
                 soundMetadata.dataType = dataType;
+
 
                 /*************************************
                  * Create byte arrays for commands
@@ -264,6 +291,7 @@ namespace HarpSoundCard
                 byte metadataCmdHeader = 0x80;
                 byte dataCmdHeader     = 0x81;
                 byte resetCmdHeader    = 0x88;
+
 
                 /*************************************
                  * Create byte array to receive replies
@@ -292,6 +320,7 @@ namespace HarpSoundCard
                 System.Buffer.BlockCopy(userMetadata, 0, metadataCmd, 8 + soundMetadata.GetSize() + 32768, userMetadata.Length);
                 metadataCmd[metadataCmd.Length - 1] = Convert.ToByte('f');
 
+
                 /*************************************
                  * Prepare data command
                  ************************************/
@@ -300,6 +329,7 @@ namespace HarpSoundCard
                 dataCmd[2] = Convert.ToByte('d');
                 dataCmd[3] = dataCmdHeader;
                 dataCmd[dataCmd.Length - 1] = Convert.ToByte('f');
+
 
                 /*************************************
                  * Prepare reset command
@@ -310,11 +340,12 @@ namespace HarpSoundCard
                 resetCmd[3] = resetCmdHeader;
                 resetCmd[4] = Convert.ToByte('f');
 
+
                 /*************************************
                  * Start stopwatch
                  ************************************/
-                Stopwatch stopwatch = new Stopwatch();
-                stopwatch.Start();
+                //Stopwatch stopwatch = new Stopwatch();
+                //stopwatch.Start();
 
                 /*
                 while (stopwatch.ElapsedMilliseconds < 1250)    // A Warmup of 1000-1500 mS 
@@ -326,9 +357,13 @@ namespace HarpSoundCard
                 stopwatch.Start();
                 */
 
+
                 /*************************************
                  * Send metadata command and receive reply
                  ************************************/
+                stopwatch.Reset();
+                stopwatch.Start();
+
                 int bytesSent;
                 int bytesRead;
                 int randomReceived;
@@ -342,20 +377,44 @@ namespace HarpSoundCard
                 int randomSent = randomInt.Next();
                 System.Buffer.BlockCopy(BitConverter.GetBytes(randomSent), 0, metadataCmd, 4, sizeof(int));
 
+                //stopwatch.Reset();
                 soundFileStream.Read(metadataCmd, metadataCmdDataIndex, 32768);
+                //Console.WriteLine("Elapsed time (get 32KB from the file): " + stopwatch.ElapsedMilliseconds + " ms");
 
                 reader.Flush();                
 
                 ec = writer.Write(metadataCmd, 0, metadataCmd.Length, writeTimeout, out bytesSent);
                 if (ec != ErrorCode.None) throw new Exception("NotAbleToSendMetadata");
-                //Console.WriteLine("Sound metadata sent (" + bytesSent + " bytes sent). Random sent: " + randomSent);
+                if (debug) Console.WriteLine("Sound metadata sent (" + bytesSent + " bytes sent). Random sent: " + randomSent);
+
+                if (debug)
+                {
+                    Console.Write("Hexadecimal:\t");
+                    for (int i = 0; i < 8; i++)
+                        Console.Write("[" + i + "]" + String.Format("{0:X2} ", metadataCmd[i]));
+                    Console.Write("\nDecimal:\t");
+                    for (int i = 0; i < 8; i++)
+                        Console.Write("[" + i + "]" + metadataCmd[i] + " ");
+                    Console.WriteLine();
+                }
 
                 ec = reader.Read(commandReply, readTimeout, out bytesRead);
                 if (ec != ErrorCode.None) throw new Exception("NotAbleToReadMetadataCommandReply");
 
                 randomReceived = BitConverter.ToInt32(commandReply, 4);
                 errorReceived = BitConverter.ToInt32(commandReply, 8);
-                //Console.WriteLine("Sound metadata reply received (" + bytesRead + " bytes read). Error received: " + errorReceived + " Random received: " + randomReceived);
+                if (debug) Console.WriteLine("Sound metadata reply received (" + bytesRead + " bytes read). Error received: " + errorReceived + " Random received: " + randomReceived);
+
+                if (debug)
+                {
+                    Console.Write("Hexadecimal:\t");
+                    for (int i = 0; i < bytesRead; i++)
+                        Console.Write("[" + i + "]" + String.Format("{0:X2} ", commandReply[i]));
+                    Console.Write("\nDecimal:\t");
+                    for (int i = 0; i < bytesRead; i++)
+                        Console.Write("[" + i + "]" + commandReply[i] + " ");
+                    Console.WriteLine("\nString:\t\t" + Encoding.Default.GetString(commandReply) + "\n");
+                }
 
                 if (randomSent != randomReceived) throw new Exception("MetadataCommandReplyNotCorrect");
                 for (int i = 0; i < 8; i++)
@@ -366,6 +425,7 @@ namespace HarpSoundCard
                     Console.WriteLine("Error: " + (SoundCardErrorCode) errorReceived);
                     return (int)soundMetadata.CheckData();
                 }
+
 
                 /*************************************
                  * Send data commands and receive replies
@@ -379,7 +439,9 @@ namespace HarpSoundCard
 
                     System.Buffer.BlockCopy(BitConverter.GetBytes(++dataIndex), 0, dataCmd, 8, sizeof(int));
 
+                    //stopwatch.Reset();
                     bytesFromFile = soundFileStream.Read(dataCmd, dataCmdDataIndex, 32768);
+                    //Console.WriteLine("Elapsed time (get 32KB from the file): " + stopwatch.ElapsedMilliseconds + " ms");
 
                     /* NOT NEEDED -- THE DEVICE MUST HANDLE THIS
                     if (bytesFromFile != 32768)
@@ -392,14 +454,14 @@ namespace HarpSoundCard
 
                     ec = writer.Write(dataCmd, 0, dataCmd.Length, writeTimeout, out bytesSent);
                     if (ec != ErrorCode.None) throw new Exception("NotAbleToSendData");
-                    //Console.WriteLine("Sound data sent (" + bytesSent + " bytes sent). Random sent: " + randomSent);
+                    if (debug) Console.WriteLine("Sound data sent (" + bytesSent + " bytes sent). Random sent: " + randomSent);
 
                     ec = reader.Read(commandReply, readTimeout, out bytesRead);
                     if (ec != ErrorCode.None) throw new Exception("NotAbleToReadDataCommandReply");
 
                     randomReceived = BitConverter.ToInt32(commandReply, 4);
                     errorReceived = BitConverter.ToInt32(commandReply, 8);
-                    //Console.WriteLine("Sound metadata reply received (" + bytesRead + " bytes read). Error received: " + errorReceived + " Random received: " + randomReceived);
+                    if (debug) Console.WriteLine("Sound data reply received (" + bytesRead + " bytes read). Error received: " + errorReceived + " Random received: " + randomReceived);
 
                     if (randomSent != randomReceived) throw new Exception("DataCommandReplyNotCorrect");
                     for (int i = 0; i < 8; i++)
@@ -412,14 +474,16 @@ namespace HarpSoundCard
                     }
                 }
 
+
                 /*************************************
                  * Send reset command
                  ************************************/
-                ec = writer.Write(resetCmd, 0, resetCmd.Length, writeTimeout, out bytesSent);
-                if (ec != ErrorCode.None) throw new Exception("NotAbleToSendData");
-                //Console.WriteLine("Sound data sent (" + bytesSent + " bytes sent). Random sent: " + randomSent);
+                //ec = writer.Write(resetCmd, 0, resetCmd.Length, writeTimeout, out bytesSent);
+                //if (ec != ErrorCode.None) throw new Exception("NotAbleToSendData");
+                //if (debug) Console.WriteLine("Sound data sent (" + bytesSent + " bytes sent). Random sent: " + randomSent);
 
                 // ADD DELAY TO ACCOMODATE THE PIC32 BOOT???
+
 
                 /*************************************
                  * All data was sent
@@ -464,8 +528,11 @@ namespace HarpSoundCard
                 }
 
                 // Wait for user input..
-                //Console.WriteLine("Done.");               
-                //Console.ReadKey();
+                if (ignoreInputs)
+                {
+                    Console.WriteLine("Done.");
+                    Console.ReadKey();
+                }
             }
 
             return 0;
