@@ -18,6 +18,15 @@ DRV_I2S_BUFFER_EVENT_HANDLER i2sBufferEventHandler;
 DRV_I2S_BUFFER_HANDLE i2sBufferHandle0;
 DRV_I2S_BUFFER_HANDLE i2sBufferHandle1;
 
+/* Allocate memory for the envelopes.
+ * 32KBytes -> ~167 ms @ 192KHz
+ * 32KBytes -> ~334 ms @ 96KHz
+ */
+#define ENVELOPE_LENGTH 1024*32
+uint16_t envelope_internal[ENVELOPE_LENGTH];
+uint16_t envelope_user[ENVELOPE_LENGTH];
+
+
 #define AUDIO_BUFFER_LEN 2048/4
 int audio_first_buffer[AUDIO_BUFFER_LEN] __attribute__((coherent));
 int audio_buffer0[AUDIO_BUFFER_LEN] __attribute__((coherent));
@@ -63,6 +72,16 @@ volatile int dma_i2s_handle0_timeout = 0;
 volatile int dma_i2s_handle1_timeout = 0;
 
 bool usb_is_receiving_data = false;
+
+bool metadataCmd_received = false;
+bool dataCmd_received = false;
+bool readMetadataCmd_received = false;
+
+void handle_USB_writing(void);
+void process_metadataCmd(void);
+void process_dataCmd(void);
+void prepare_metadataCmd(void);
+void prepare_dataCmd(void);
 
 int current_sample_rate = 96000;
 
@@ -220,6 +239,24 @@ void reset_PIC32(void)
     PLIB_DMA_SuspendEnable(DMA_ID_0); // only required if you are using DMA
     // use the System Service Library Function to initiate the reset
     SYS_RESET_SoftwareReset(); // to perform the reset
+}
+
+void populate_envelope_internal(void)
+{
+    float pi = 3.14159265359;
+    float sample;
+    int i = 0;
+
+    for (i; i < ENVELOPE_LENGTH; i++)
+    {
+        //envelope_internal[i] = 0.5 * (1 - cos((2 * pi * i) / (ENVELOPE_LENGTH - 1 )));
+        sample = sin((pi * i) / (ENVELOPE_LENGTH * 2 - 1 )) * sin((pi * i) / (ENVELOPE_LENGTH * 2 - 1 )) * 32767;
+        envelope_internal[i] = sample;
+        
+        if (sample - ((uint16_t) sample) >= 0.5)
+            envelope_internal[i]++;
+                
+    }
 }
     
 int launch_sound(int index)
@@ -479,6 +516,8 @@ void update_sound_buffers (void)
                     DRV_I2S_BufferAddWrite(i2sDriverHandle, &i2sBufferHandle0, audio_buffer0, AUDIO_BUFFER_LEN * 4);
                     sound_length_produced += AUDIO_BUFFER_LEN;
                     audio_buffer0_state = AUDIO_BUFFER_HAS_DATA;
+            
+                    handle_USB_writing();
                 }
                 else
                 {
@@ -518,6 +557,8 @@ void update_sound_buffers (void)
                     DRV_I2S_BufferAddWrite(i2sDriverHandle, &i2sBufferHandle1, audio_buffer1, AUDIO_BUFFER_LEN * 4);
                     sound_length_produced += AUDIO_BUFFER_LEN;
                     audio_buffer1_state = AUDIO_BUFFER_HAS_DATA;
+            
+                    handle_USB_writing();
                 }
                 else
                 {
@@ -548,21 +589,27 @@ void update_sound_buffers (void)
         if (audio_buffer0_state == AUDIO_BUFFER_IS_EMPTY)
         {
             if (current_sample_rate == 96000)
-                DRV_I2S_BufferAddWrite(i2sDriverHandle, &i2sBufferHandle0, audio_buffer_zeros, 32 * 4);
+                //DRV_I2S_BufferAddWrite(i2sDriverHandle, &i2sBufferHandle0, audio_buffer_zeros, 32 * 4);
+                DRV_I2S_BufferAddWrite(i2sDriverHandle, &i2sBufferHandle0, audio_buffer_zeros, 64 * 4);
             else
                 DRV_I2S_BufferAddWrite(i2sDriverHandle, &i2sBufferHandle0, audio_buffer_zeros, 64 * 4); // 8 works well
             
+            tgl_TP0;
             audio_buffer0_state = AUDIO_BUFFER_HAS_DATA;
         }
         
         if (audio_buffer1_state == AUDIO_BUFFER_IS_EMPTY)
         {
             if (current_sample_rate == 96000)
-                DRV_I2S_BufferAddWrite(i2sDriverHandle, &i2sBufferHandle1, audio_buffer_zeros, 32 * 4);
+                //DRV_I2S_BufferAddWrite(i2sDriverHandle, &i2sBufferHandle1, audio_buffer_zeros, 32 * 4);
+                DRV_I2S_BufferAddWrite(i2sDriverHandle, &i2sBufferHandle1, audio_buffer_zeros, 64 * 4);
             else
                 DRV_I2S_BufferAddWrite(i2sDriverHandle, &i2sBufferHandle1, audio_buffer_zeros, 64 * 4); // 8 works well
             
+            tgl_TP1;
             audio_buffer1_state = AUDIO_BUFFER_HAS_DATA;
+            
+            handle_USB_writing();
         }
     }
 }
@@ -599,18 +646,252 @@ void fill_audio_user_metadata()
     }
 }
 
-void clean_memory (void)
+void reply_USB(int nBytes)
 {
-    int i = 0;
+     USB_DEVICE_EndpointWrite ( appData.usbDevHandle, &appData.writeTranferHandle,
+                            appData.endpointTx, &transmitDataBuffer[0],
+                            nBytes,
+                            USB_DEVICE_TRANSFER_FLAGS_MORE_DATA_PENDING);
+
+    appData.epDataReadPending = true ;
+
+    /* Place a new read request. */
+    USB_DEVICE_EndpointRead ( appData.usbDevHandle, &appData.readTranferHandle,
+                        appData.endpointRx, &receivedDataBuffer[0],
+                        sizeof(receivedDataBuffer) );
     
-    for (; i < get_available_sounds(); i++)
-        block_erase(i * BLOCKS_PER_SOUND);
+    clr_LED_USB;
+}
+
+void handle_USB_writing(void)
+{
+    if (dataCmd_received == true)
+        process_dataCmd();
+
+    if (metadataCmd_received == true)
+        process_metadataCmd();
+}
+
+#define METADATACMD_STATE_SAVE_USER_METADATA 0
+#define METADATACMD_STATE_SAVE_PREPARE_MEMORY 1
+#define METADATACMD_STATE_SAVE_ALLOCATE_METADATA 2
+int prepare_metadataCmd_state;
+
+int prepare_metadataCmd_sound_index;
+
+void prepare_metadataCmd(void)
+{
+    int i;
+                                
+    Sound_Metadata * ptr = (Sound_Metadata*)(receivedDataBuffer + 8);
+    prepare_metadataCmd_sound_index = ptr->sound_index;
+    int *error = (int*)(transmitDataBuffer + 8);
+    *error = ERROR_NOERROR;
+
+    ptr->sound_length = ptr->sound_length & 0xFFFFFFFC; // Samples must be multiple of 4
+                                                        // The DMA stops if loaded with 2 samples at 192KHz
+
+    if (ptr->sound_index < 0 || ptr->sound_index > get_available_sounds()) *error = ERROR_BADSOUNDINDEX;
+    if (ptr->sound_length < 16) *error = ERROR_BADSOUNDLENGTH;
+    if (ptr->sample_rate != 96000 && ptr->sample_rate != 192000) *error = ERROR_BADSAMPLERATE;
+    if (ptr->data_type != 0 && ptr->data_type != 1) *error = ERROR_BADDATATYPE;
+    if (ptr->sound_index == 0 && ptr->data_type != 1) *error = ERROR_BADDATATYPEMATCH;
+    if (ptr->sound_index == 1 && ptr->data_type != 1) *error = ERROR_BADDATATYPEMATCH;
+    if (ptr->sound_index > 1 && ptr->data_type != 0) *error = ERROR_BADDATATYPEMATCH;
+
+    //if (sound_is_playing) *error = ERROR_PRODUCINGSOUND;
     
-    while(1)
+    if (prepare_memory_check(ptr->sound_index, ptr->sound_length) == false) *error = ERROR_BADSOUNDLENGTH;
+    
+    for (i = 8; i != 0; i--)
+        transmitDataBuffer[i-1] = receivedDataBuffer[i-1];
+
+    if (*error == ERROR_NOERROR)
     {
-        _ms_delay(100);
-        tgl_LED_MEMORY;
+        prepare_metadataCmd_state = METADATACMD_STATE_SAVE_USER_METADATA;
+        usb_is_receiving_data = true;        
+        
+        audio_all_metadata[ptr->sound_index] = *ptr;
+        audio_sound_exists[ptr->sound_index] = true;
+        audio_sound_exists_bitmask |= (1 << ptr->sound_index);
+        
+        for (i = 2048; i != 0; i--)
+            audio_user_metadata[ptr->sound_index][i-1] = receivedDataBuffer[4+4+16+32768+i-1];
+                
+        for (i = AUDIO_BUFFER_LEN; i != 0; i--)
+            audio_all_first_buffers[ptr->sound_index][i-1] = receivedDataBuffer[4+4+16+i-1];
+        
+        for (i = AUDIO_BUFFER_LEN; i != 0; i--)
+            audio_all_second_buffers[ptr->sound_index][i-1] = receivedDataBuffer[4+4+16+AUDIO_BUFFER_LEN+i-1];
+        
+        //set_LED_MEMORY;
+
+        //save_user_metadata(ptr->sound_index, &receivedDataBuffer[4+4+16+32768]);
+
+        /* Erase memory that will be used for the sound data */
+        //if (prepare_memory(ptr->sound_index, ptr->sound_length) == -1) *error = ERROR_BADSOUNDLENGTH;
+
+        //allocate_metadata_command (*ptr, &receivedDataBuffer[4+4+16]);
+
+        //clr_LED_MEMORY;
+
+        sound_index_to_write = ptr->sound_index;
+        max_sound_data_index = 0x7FFFFFFF;  // Code to be done        
+        
+        metadataCmd_received = true;
     }
+    else
+    {
+        sound_index_to_write = -1;
+        
+        reply_USB(12);
+    }
+    
+    //reply_USB(8);
+}
+
+void process_metadataCmd(void)
+{
+    set_LED_MEMORY;
+    
+    if(prepare_metadataCmd_state == METADATACMD_STATE_SAVE_USER_METADATA)
+    {
+        if (save_user_metadata(prepare_metadataCmd_sound_index, &receivedDataBuffer[4+4+16+32768]) == true)
+        {
+            prepare_metadataCmd_state = METADATACMD_STATE_SAVE_PREPARE_MEMORY;
+        }
+        
+        return;
+    }
+    
+    if (prepare_metadataCmd_state == METADATACMD_STATE_SAVE_PREPARE_MEMORY)
+    {
+        if (prepare_memory_erase() == true)
+        {
+            prepare_metadataCmd_state = METADATACMD_STATE_SAVE_ALLOCATE_METADATA;
+        }
+        
+        return;
+    }
+    
+    if (prepare_metadataCmd_state == METADATACMD_STATE_SAVE_ALLOCATE_METADATA)
+    {
+        Sound_Metadata * ptr = (Sound_Metadata*)(receivedDataBuffer + 8);
+        allocate_metadata_command (*ptr, &receivedDataBuffer[4+4+16]);
+        
+        metadataCmd_received = false;
+
+        usb_is_receiving_data = false;  // This variable is needed?
+        clr_LED_MEMORY;
+        clr_LED_USB;
+
+        reply_USB(12);    
+    }
+}
+
+int process_dataCmd_data_index;
+
+void prepare_dataCmd(void)
+{
+    int i;
+    
+    int *error = (int*)(transmitDataBuffer + 8); 
+    process_dataCmd_data_index = *((int*)(receivedDataBuffer + 8));
+    *error = ERROR_NOERROR;
+   
+    if (process_dataCmd_data_index > max_sound_data_index) *error = ERROR_BADDATAINDEX;    
+    //if (sound_is_playing) *error = ERROR_PRODUCINGSOUND;
+    
+    for (i = 8; i != 0; i--)
+        transmitDataBuffer[i-1] = receivedDataBuffer[i-1];
+
+    if (*error == ERROR_NOERROR)
+    {
+        allocate_data_command_reset();
+        dataCmd_received = true;
+    }
+    else
+    {
+        reply_USB(12);
+    }
+}
+
+void process_dataCmd(void)
+{
+    set_LED_MEMORY;
+    
+    if (allocate_data_command(sound_index_to_write, process_dataCmd_data_index, &receivedDataBuffer[4+4+4]) == 32768/BYTES_PER_PAGE)
+    {
+        dataCmd_received = false;
+        
+        usb_is_receiving_data = false;  // This variable is needed?
+        clr_LED_MEMORY;
+        clr_LED_USB;
+        
+        reply_USB(12);
+    }
+}
+
+void process_readMetadataCmd(void)
+{
+    usb_is_receiving_data = true;
+    
+    int i;
+    int *error = (int*)(transmitDataBuffer + 8);
+    int *index = (int*)(receivedDataBuffer + 8);
+    *error = ERROR_NOERROR;
+    
+    if (*index < 0 || *index > 31) *error = ERROR_BADSOUNDINDEX;                                
+    //if (sound_is_playing) *error = ERROR_PRODUCINGSOUND;
+
+    if (*error == ERROR_NOERROR)
+    {
+        /* Load user's metadata */
+        for (i = 2048; i != 0; i--)
+            transmitDataBuffer[28 + i-1] = audio_user_metadata[*index][i-1];
+
+        /* Load audio exists bitmask */
+        *((unsigned int*)(&transmitDataBuffer[12])) = audio_sound_exists_bitmask;
+
+        /* Load sound's metadata */
+        for (i = 3*4; i != 0; i--)
+            transmitDataBuffer[16 + i-1] = *( ((unsigned char *)(&audio_all_metadata[*index])) + 4 + i-1);
+    }
+
+    for (i = 8; i != 0; i--)
+        transmitDataBuffer[i-1] = receivedDataBuffer[i-1];
+
+
+    USB_DEVICE_EndpointWrite ( appData.usbDevHandle, &appData.writeTranferHandle,
+        appData.endpointTx, &transmitDataBuffer[0],
+        2076,
+        USB_DEVICE_TRANSFER_FLAGS_MORE_DATA_PENDING);
+
+    appData.epDataReadPending = true ;
+
+    /* Place a new read request. */
+    USB_DEVICE_EndpointRead ( appData.usbDevHandle, &appData.readTranferHandle,
+                        appData.endpointRx, &receivedDataBuffer[0],
+                        sizeof(receivedDataBuffer) );
+
+    usb_is_receiving_data = false;
+    clr_LED_USB;
+}
+
+void process_resetCmd(void)
+{                                
+    clr_AUDIO_RESET;
+    reset_PIC32();
+    while(1);
+}
+
+void process_cleanupCmd(void)
+{                   
+    clean_memory();
+
+    clr_AUDIO_RESET;
+    reset_PIC32();
+    while(1);
 }
 
 // *****************************************************************************
@@ -664,8 +945,6 @@ void APP_Initialize ( void )
      */
     initialize_ios((int) reasonType);   // Will leave all LEDs on
     
-    set_TP0;
-    
     initialize_audio_ios((int) reasonType);
     clr_LED_AUDIO;                      // There is no way to check the audio circuit
                                         // Turn AUDIO LED off         
@@ -693,6 +972,11 @@ void APP_Initialize ( void )
      * Configure audio DAC IC.
      */
     config_audio_dac(current_sample_rate);
+    
+    /* 
+     * Initialize internal envelope.
+     */
+    populate_envelope_internal();
     
     /* 
      * Clean all metadata in the memory.
@@ -730,6 +1014,7 @@ void APP_Initialize ( void )
  */
 
 int command_received = 0;
+//
 
 void APP_Tasks ( void )
 {   
@@ -746,6 +1031,20 @@ void APP_Tasks ( void )
         
         command_received = 0;
     }
+    
+    
+    
+    /*
+    set_TP1;
+    int i = 0;
+    for (; i < 512; i++)
+    {
+        audio_buffer0[i] = audio_all_first_buffers[2][i] * (envelope_user[i] / 32768);
+        audio_buffer1[i] = audio_all_first_buffers[3][i] * (envelope_internal[i] / 32768);
+    }
+    clr_TP1;
+    */
+        
     
     command_received = par_bus_check_if_command_is_available();
     
@@ -768,7 +1067,26 @@ void APP_Tasks ( void )
             reset_PIC32();
             while(1);
         }
-    } 
+    }
+    
+    //if (send_USB_packet)
+    //{
+        //send_USB_packet = false;
+        /*
+        USB_DEVICE_EndpointWrite ( appData.usbDevHandle, &appData.writeTranferHandle,
+                                    appData.endpointTx, &transmitDataBuffer[0],
+                                    12,
+                                    USB_DEVICE_TRANSFER_FLAGS_MORE_DATA_PENDING);
+                                
+        appData.epDataReadPending = true ;
+                                
+        /* Place a new read request. */
+        /*
+        USB_DEVICE_EndpointRead ( appData.usbDevHandle, &appData.readTranferHandle,
+                            appData.endpointRx, &receivedDataBuffer[0],
+                            sizeof(receivedDataBuffer) );
+        */
+    //}
     
     /* Check the application's current state. */
     switch ( appData.state )
@@ -856,71 +1174,16 @@ void APP_Tasks ( void )
                             if (receivedDataBuffer[32792+2048] == 'f')
                             {
                                 set_LED_USB;
-                                usb_is_receiving_data = true;
-                                
-                                Sound_Metadata * ptr = (Sound_Metadata*)(receivedDataBuffer + 8);
-                                int *error = (int*)(transmitDataBuffer + 8);
-                                int i;
-                                
-                                ptr->sound_length = ptr->sound_length & 0xFFFFFFFC; // Samples must be multiple of 4
-                                                                                    // The DMA stops if loaded with 2 samples at 192KHz
-                                
-                                *error = ERROR_NOERROR;
-                                if (ptr->sound_index < 0 || ptr->sound_index > get_available_sounds()) *error = ERROR_BADSOUNDINDEX;
-                                if (ptr->sound_length < 16) *error = ERROR_BADSOUNDLENGTH;
-                                if (ptr->sample_rate != 96000 && ptr->sample_rate != 192000) *error = ERROR_BADSAMPLERATE;
-                                if (ptr->data_type != 0 && ptr->data_type != 1) *error = ERROR_BADDATATYPE;
-                                if (ptr->sound_index == 0 && ptr->data_type != 1) *error = ERROR_BADDATATYPEMATCH;
-                                if (ptr->sound_index == 1 && ptr->data_type != 1) *error = ERROR_BADDATATYPEMATCH;
-                                if (ptr->sound_index > 1 && ptr->data_type != 0) *error = ERROR_BADDATATYPEMATCH;
-                                
-                                if (sound_is_playing) *error = ERROR_PRODUCINGSOUND;
-                                
-                                if (*error == ERROR_NOERROR)
-                                {
-                                    set_LED_MEMORY;
-                                    
-                                    save_user_metadata(ptr->sound_index, &receivedDataBuffer[4+4+16+32768]);
-                                    
-                                    /* Erase memory that will be used for the sound data */
-                                    if (prepare_memory(ptr->sound_index, ptr->sound_length) == -1) *error = ERROR_BADSOUNDLENGTH;
-
-                                    allocate_metadata_command (*ptr, &receivedDataBuffer[4+4+16]);
-                                    
-                                    clr_LED_MEMORY;
-
-                                    sound_index_to_write = ptr->sound_index;
-                                    max_sound_data_index = 0x7FFFFFFF;  // Code to be done
-                                }
-                                else
-                                {
-                                    sound_index_to_write = -1;
-                                }
-                                
-                                for (i = 8; i != 0; i--)
-                                    transmitDataBuffer[i-1] = receivedDataBuffer[i-1];                    
+                                prepare_metadataCmd();
                                 
                                 receivedDataBuffer[0] = 0;
                                 receivedDataBuffer[1] = 0;
                                 receivedDataBuffer[2] = 0;
                                 receivedDataBuffer[3] = 0;
-                                receivedDataBuffer[12] = 0;
-                                receivedDataBuffer[32780] = 0;
-                                receivedDataBuffer[32792] = 0;
-                                
-                                USB_DEVICE_EndpointWrite ( appData.usbDevHandle, &appData.writeTranferHandle,
-                                    appData.endpointTx, &transmitDataBuffer[0],
-                                    12,
-                                    USB_DEVICE_TRANSFER_FLAGS_MORE_DATA_PENDING);
-                                
-                                appData.epDataReadPending = true ;
-                                
-                                /* Place a new read request. */
-                                USB_DEVICE_EndpointRead ( appData.usbDevHandle, &appData.readTranferHandle,
-                                                    appData.endpointRx, &receivedDataBuffer[0],
-                                                    sizeof(receivedDataBuffer) );
-                                
-                                clr_LED_USB;
+                                //receivedDataBuffer[12] = 0;
+                                //receivedDataBuffer[32780] = 0;
+                                //receivedDataBuffer[32792] = 0;
+                                receivedDataBuffer[32792+2048] = 0;
                             }    
                             
                             break;
@@ -928,48 +1191,17 @@ void APP_Tasks ( void )
                         case 0x81:
                             if (receivedDataBuffer[32780] == 'f')
                             {
-                                set_LED_USB;
-                                
-                                int dataIndex = *((int*)(receivedDataBuffer + 8));
-                                int *error = (int*)(transmitDataBuffer + 8);
-                                int i;
-                                
-                                *error = ERROR_NOERROR;
-                                if (dataIndex > max_sound_data_index) *error = ERROR_BADDATAINDEX;
-                                
-                                if (sound_is_playing) *error = ERROR_STARTEDPRODUCINGSOUND;
-                                
-                                if (*error == ERROR_NOERROR)
-                                {
-                                    set_LED_MEMORY;
-                                    allocate_data_command (sound_index_to_write, dataIndex, &receivedDataBuffer[4+4+4]);
-                                    clr_LED_MEMORY;
-                                }
-                                
-                                for (i = 8; i != 0; i--)
-                                    transmitDataBuffer[i-1] = receivedDataBuffer[i-1];                    
+                                set_LED_USB;                                
+                                prepare_dataCmd();
                                 
                                 receivedDataBuffer[0] = 0;
                                 receivedDataBuffer[1] = 0;
                                 receivedDataBuffer[2] = 0;
                                 receivedDataBuffer[3] = 0;
-                                receivedDataBuffer[12] = 0;
+                                //receivedDataBuffer[12] = 0;
                                 receivedDataBuffer[32780] = 0;
-                                receivedDataBuffer[32792] = 0;
-                                
-                                USB_DEVICE_EndpointWrite ( appData.usbDevHandle, &appData.writeTranferHandle,
-                                    appData.endpointTx, &transmitDataBuffer[0],
-                                    12,
-                                    USB_DEVICE_TRANSFER_FLAGS_MORE_DATA_PENDING);
-                                
-                                appData.epDataReadPending = true ;
-                                
-                                /* Place a new read request. */
-                                USB_DEVICE_EndpointRead ( appData.usbDevHandle, &appData.readTranferHandle,
-                                                    appData.endpointRx, &receivedDataBuffer[0],
-                                                    sizeof(receivedDataBuffer) );
-                                
-                                clr_LED_USB;
+                                //receivedDataBuffer[32792] = 0;
+                                //receivedDataBuffer[32792+2048] = 0;
                             }    
                             
                             break;
@@ -978,67 +1210,49 @@ void APP_Tasks ( void )
                             if (receivedDataBuffer[12] == 'f')
                             {
                                 set_LED_USB;
-                                usb_is_receiving_data = true;
-                                
-                                int i;
-                                int *error = (int*)(transmitDataBuffer + 8);
-                                int *index = (int*)(receivedDataBuffer + 8);                                
-                                
-                                *error = ERROR_NOERROR;
-                                if (*index < 0 || *index > 31) *error = ERROR_BADSOUNDINDEX;                                
-                                if (sound_is_playing) *error = ERROR_PRODUCINGSOUND;
-                                
-                                if (*error == ERROR_NOERROR)
-                                {
-                                    /* Load user's metadata */
-                                    for (i = 2048; i != 0; i--)
-                                        transmitDataBuffer[28 + i-1] = audio_user_metadata[*index][i-1];
-                                    
-                                    /* Load audio exists bitmask */
-                                    *((unsigned int*)(&transmitDataBuffer[12])) = audio_sound_exists_bitmask;
-                                    
-                                    /* Load sound's metadata */
-                                    for (i = 3*4; i != 0; i--)
-                                        transmitDataBuffer[16 + i-1] = *( ((unsigned char *)(&audio_all_metadata[*index])) + 4 + i-1);
-                                }
-                                
-                                for (i = 8; i != 0; i--)
-                                    transmitDataBuffer[i-1] = receivedDataBuffer[i-1];
+                                process_readMetadataCmd();
                                 
                                 receivedDataBuffer[0] = 0;
                                 receivedDataBuffer[1] = 0;
                                 receivedDataBuffer[2] = 0;
                                 receivedDataBuffer[3] = 0;
                                 receivedDataBuffer[12] = 0;
-                                receivedDataBuffer[32780] = 0;
-                                receivedDataBuffer[32792] = 0;
-                                
-                                USB_DEVICE_EndpointWrite ( appData.usbDevHandle, &appData.writeTranferHandle,
-                                    appData.endpointTx, &transmitDataBuffer[0],
-                                    2076,
-                                    USB_DEVICE_TRANSFER_FLAGS_MORE_DATA_PENDING);
-                                
-                                appData.epDataReadPending = true ;
-                                
-                                /* Place a new read request. */
-                                USB_DEVICE_EndpointRead ( appData.usbDevHandle, &appData.readTranferHandle,
-                                                    appData.endpointRx, &receivedDataBuffer[0],
-                                                    sizeof(receivedDataBuffer) );
-                                
-                                usb_is_receiving_data = false;
-                                clr_LED_USB;
+                                //receivedDataBuffer[32780] = 0;
+                                //receivedDataBuffer[32792] = 0;
+                                //receivedDataBuffer[32792+2048] = 0;
                             }    
                             
                             break;
                         
+                        /* Reset device */
                         case 0x88:
                             if (receivedDataBuffer[4] == 'f')
                             {
+                                receivedDataBuffer[0] = 0;
+                                receivedDataBuffer[1] = 0;
+                                receivedDataBuffer[2] = 0;
+                                receivedDataBuffer[3] = 0;
+                                receivedDataBuffer[4] = 0;
+    
                                 set_LED_USB;
-                                clr_AUDIO_RESET;
-                                reset_PIC32();
-                                while(1);
-                            }    
+                                process_resetCmd();
+                            }
+                            
+                            break;
+                        
+                        /* Clean up memory and reset device */
+                        case 0x89:
+                            if (receivedDataBuffer[4] == 'f')
+                            {
+                                receivedDataBuffer[0] = 0;
+                                receivedDataBuffer[1] = 0;
+                                receivedDataBuffer[2] = 0;
+                                receivedDataBuffer[3] = 0;
+                                receivedDataBuffer[4] = 0;
+    
+                                set_LED_USB;
+                                process_cleanupCmd();
+                            }
                             
                             break;
                     }

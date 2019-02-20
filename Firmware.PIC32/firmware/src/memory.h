@@ -7,6 +7,7 @@
 #define PAGES_PER_BLOCK 64
 
 #include <xc.h>
+#include <stdbool.h>
 
 // CLE @ RD13 as output
 #define cfg_MEM_CLE TRISDCLR = (1 << 13)
@@ -70,6 +71,9 @@ int check_memory_connection (void);
 int test_read_routines (void);
 int read_memory_size (void);
 unsigned char block_erase (int block_index);
+void block_erase_start (int block_index);
+bool block_erase_check (void);
+unsigned char block_erase_finish (void);
 unsigned char program_memory (int page_address, unsigned char *page, unsigned char *spare);
 unsigned char program_memory_without_spare (int page_address, unsigned char *page);
 void read_memory (int page_address, unsigned char *page, unsigned char *spare);

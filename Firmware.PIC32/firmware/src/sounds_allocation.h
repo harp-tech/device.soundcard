@@ -36,16 +36,22 @@ typedef struct {
 
 int get_available_sounds(void);
 
-int save_user_metadata(int sound_index, unsigned char * user_metadata);
+bool save_user_metadata(int sound_index, unsigned char * user_metadata);
 int read_user_metadata(int sound_index, unsigned char * user_metadata);
 
+bool prepare_memory_check(int sound_index, int sound_size);
+bool prepare_memory_erase(void);
 int prepare_memory(int sound_index, int sound_size);
 
 int read_first_sound_page(int sound_index, int *page, Sound_Metadata * metadata);
 void set_page_and_sound_index(int page_index, int sound_index);
 void read_next_sound_page(int *page);
 
-void allocate_metadata_command (Sound_Metadata metadata, unsigned char *sound_array);
-void allocate_data_command (int sound_index, int data_index, unsigned char *sound_array);
+bool allocate_metadata_command (Sound_Metadata metadata, unsigned char *sound_array);
+
+int allocate_data_command (int sound_index, int data_index, unsigned char *sound_array);
+void allocate_data_command_reset (void);
+
+void clean_memory (void);
 
 #endif	/* SOUNDS_ALLOCATION_H */

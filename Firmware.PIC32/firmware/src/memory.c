@@ -1,4 +1,5 @@
 #include <xc.h>
+#include <stdbool.h>
 #include "memory.h"
 
 /*
@@ -281,9 +282,104 @@ unsigned char block_erase (int block_index)
     return byte & 0x03;
 }
 
+void block_erase_start (int block_index)
+{
+    int block_address = block_index * 64;
+    
+    unsigned char row_add_1 = block_address & 0xFF;
+    unsigned char row_add_2 = (block_address >> 8) & 0xFF;
+    unsigned char row_add_3 = (block_address >> 16) & 0xFF;
+    
+    /* Configure data port to output */
+    to_output_MEM_DATA;
+
+    /* Select memory */
+    clr_MEM_CE;
+    
+    /* Write command */
+    set_MEM_CLE;    // Enable Command Latch Enable
+    clr_MEM_WE;
+    write_MEM_DATA(MEM_REG_BLOCK_ERASE);
+    set_MEM_WE;        
+    clr_MEM_CLE;    // Disable Command Latch Enable
+    
+    /* Write Address Row Address 1 */
+    set_MEM_ALE;    // Enable Address Latch Enable
+    clr_MEM_WE;
+    write_MEM_DATA(row_add_1);
+    set_MEM_WE;        
+    clr_MEM_ALE;    // Disable Address Latch Enable
+    
+    /* Write Address Row Address 2 */
+    set_MEM_ALE;    // Enable Address Latch Enable
+    clr_MEM_WE;
+    write_MEM_DATA(row_add_2);
+    set_MEM_WE;        
+    clr_MEM_ALE;    // Disable Address Latch Enable
+    
+    /* Write Address Row Address 3 */
+    set_MEM_ALE;    // Enable Address Latch Enable
+    clr_MEM_WE;
+    write_MEM_DATA(row_add_3);
+    set_MEM_WE;        
+    clr_MEM_ALE;    // Disable Address Latch Enable
+    
+    /* Write command second cycle */
+    set_MEM_CLE;    // Enable Command Latch Enable
+    clr_MEM_WE;
+    write_MEM_DATA(0xD0);
+    set_MEM_WE;        
+    clr_MEM_CLE;    // Disable Command Latch Enable
+    
+    /* Wait tWB (max. 100 ns) */
+    clr_MEM_CLE;    // Each instruction is 20 ns
+    clr_MEM_CLE;    // Each instruction is 20 ns
+    clr_MEM_CLE;    // Each instruction is 20 ns
+    clr_MEM_CLE;    // Each instruction is 20 ns
+    clr_MEM_CLE;    // Each instruction is 20 ns
+}
+
+bool block_erase_check (void)
+{
+    return read_MEM_BUSY ? true : false;
+}
+
+unsigned char block_erase_finish (void)
+{
+    /* Write command to read the status register */
+    set_MEM_CLE;    // Enable Command Latch Enable
+    clr_MEM_WE;
+    write_MEM_DATA(MEM_REG_READ_STATUS_REG);
+    set_MEM_WE;        
+    clr_MEM_CLE;
+      
+    /* Wait tWHR (min. 60 ns) */
+    clr_MEM_CLE;    // Each instruction is 20 ns
+    clr_MEM_CLE;    // Each instruction is 20 ns
+    clr_MEM_CLE;    // Each instruction is 20 ns
+    
+    /* Configure data port to input */
+    to_input_MEM_DATA;
+    
+    /* Read Byte 3 */
+    unsigned char byte;
+    to_input_MEM_DATA;
+    clr_MEM_RE;
+    clr_MEM_RE;
+    clr_MEM_RE;
+    byte = read_MEM_DATA;
+    set_MEM_RE;
+    
+    /* De-select memory */
+    set_MEM_CE;
+    
+    /* Return status */
+    return byte & 0x03;
+}
+
 /*
  * Writes a Page.
- * 496 us @ 200MHz
+ * 298 us @ 200MHz
  */
 unsigned char program_memory (int page_address, unsigned char *page, unsigned char *spare)
 {
@@ -411,7 +507,7 @@ unsigned char program_memory (int page_address, unsigned char *page, unsigned ch
 
 /*
  * Writes a Page.
- * 492 us @ 200MHz
+ * 296 us @ 200MHz
  */
 unsigned char program_memory_without_spare (int page_address, unsigned char *page)
 {
