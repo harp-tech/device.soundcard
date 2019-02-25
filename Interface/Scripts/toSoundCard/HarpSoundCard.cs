@@ -138,9 +138,9 @@ namespace HarpSoundCard
                 //fileName = "..\\..\\9600_samples.bin";
                 //fileName = "..\\..\\96000_samples.bin";                
 
-                //string fileName = (!ignoreInputs) ? args[0] : "..\\..\\100ms1KHz.bin";
-                string fileName = (!ignoreInputs) ? args[0] : "..\\..\\1s1KHz.bin";
-                //string fileName = (!ignoreInputs) ? args[0] : "..\\..\\10s1KHz.bin";
+                //string fileName = (!ignoreInputs) ? args[0] : "..\\..\\96KHz_100ms1KHz.bin";
+                string fileName = (!ignoreInputs) ? args[0] : "..\\..\\96KHz_1s1KHz.bin";
+                //string fileName = (!ignoreInputs) ? args[0] : "..\\..\\96KHz_10s1KHz.bin";
                 int soundIndex = (!ignoreInputs) ? Convert.ToInt32(args[1]) : 2;
                 DataType dataType = (!ignoreInputs) ? (DataType)Convert.ToInt32(args[2]) : DataType.Int32;
                 SampleRate sampleRate = (!ignoreInputs) ? (SampleRate)Convert.ToInt32(args[3]) : SampleRate._96000Hz;
