@@ -592,7 +592,7 @@ void update_sound_buffers (void)
                 //DRV_I2S_BufferAddWrite(i2sDriverHandle, &i2sBufferHandle0, audio_buffer_zeros, 32 * 4);
                 DRV_I2S_BufferAddWrite(i2sDriverHandle, &i2sBufferHandle0, audio_buffer_zeros, 64 * 4);
             else
-                DRV_I2S_BufferAddWrite(i2sDriverHandle, &i2sBufferHandle0, audio_buffer_zeros, 64 * 4); // 8 works well
+                DRV_I2S_BufferAddWrite(i2sDriverHandle, &i2sBufferHandle0, audio_buffer_zeros, 128 * 4); // 8 works well
             
             tgl_TP0;
             audio_buffer0_state = AUDIO_BUFFER_HAS_DATA;
@@ -604,7 +604,7 @@ void update_sound_buffers (void)
                 //DRV_I2S_BufferAddWrite(i2sDriverHandle, &i2sBufferHandle1, audio_buffer_zeros, 32 * 4);
                 DRV_I2S_BufferAddWrite(i2sDriverHandle, &i2sBufferHandle1, audio_buffer_zeros, 64 * 4);
             else
-                DRV_I2S_BufferAddWrite(i2sDriverHandle, &i2sBufferHandle1, audio_buffer_zeros, 64 * 4); // 8 works well
+                DRV_I2S_BufferAddWrite(i2sDriverHandle, &i2sBufferHandle1, audio_buffer_zeros, 128 * 4); // 8 works well
             
             tgl_TP1;
             audio_buffer1_state = AUDIO_BUFFER_HAS_DATA;
@@ -717,12 +717,14 @@ void prepare_metadataCmd(void)
         
         for (i = 2048; i != 0; i--)
             audio_user_metadata[ptr->sound_index][i-1] = receivedDataBuffer[4+4+16+32768+i-1];
-                
-        for (i = AUDIO_BUFFER_LEN; i != 0; i--)
-            audio_all_first_buffers[ptr->sound_index][i-1] = receivedDataBuffer[4+4+16+i-1];
         
+        int * first_buffer_index = ((int*)(&receivedDataBuffer[4+4+16]));
         for (i = AUDIO_BUFFER_LEN; i != 0; i--)
-            audio_all_second_buffers[ptr->sound_index][i-1] = receivedDataBuffer[4+4+16+AUDIO_BUFFER_LEN+i-1];
+        {
+            audio_all_first_buffers[ptr->sound_index][i-1] = *(first_buffer_index +i-1);
+        }
+        for (i = AUDIO_BUFFER_LEN; i != 0; i--)
+            audio_all_second_buffers[ptr->sound_index][i-1] = *( ((int*)(&receivedDataBuffer[4+4+16+AUDIO_BUFFER_LEN*4])) +i-1);
         
         //set_LED_MEMORY;
 
@@ -777,15 +779,16 @@ void process_metadataCmd(void)
     if (prepare_metadataCmd_state == METADATACMD_STATE_SAVE_ALLOCATE_METADATA)
     {
         Sound_Metadata * ptr = (Sound_Metadata*)(receivedDataBuffer + 8);
-        allocate_metadata_command (*ptr, &receivedDataBuffer[4+4+16]);
-        
-        metadataCmd_received = false;
+        if (allocate_metadata_command (*ptr, &receivedDataBuffer[4+4+16]) == true)
+        {        
+            metadataCmd_received = false;
 
-        usb_is_receiving_data = false;  // This variable is needed?
-        clr_LED_MEMORY;
-        clr_LED_USB;
+            usb_is_receiving_data = false;  // This variable is needed?
+            clr_LED_MEMORY;
+            clr_LED_USB;
 
-        reply_USB(12);    
+            reply_USB(12);
+        }
     }
 }
 

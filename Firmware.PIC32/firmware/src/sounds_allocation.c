@@ -1,5 +1,6 @@
 #include "sounds_allocation.h"
 #include "memory.h"
+#include "ios.h"
 
 int get_available_sounds(void)
 {
@@ -34,10 +35,6 @@ bool save_user_metadata(int sound_index, unsigned char * user_metadata)
             {
                 block_erase_finish();
                 save_user_metadata_state = SAVE_METADATA_STATE_ERASE_IS_DONE;
-            }
-            else
-            {
-                save_user_metadata_state = SAVE_METADATA_STATE_CHECK_ERASE;
             }
             break;
         
@@ -97,6 +94,7 @@ bool prepare_memory_check(int sound_index, int sound_size)
     
     sound_index_to_erase = sound_index;
     number_of_blocks_index = 0;
+    prepare_memory_state = PREPARE_MEMORY_STATE_STANDBY;
     
     if (sound_index * PAGES_PER_SOUND + number_of_pages > get_available_sounds() * PAGES_PER_SOUND)
         return false;
@@ -118,7 +116,7 @@ bool prepare_memory_erase(void)
             {
                 block_erase_finish();
                 prepare_memory_state = PREPARE_MEMORY_STATE_STANDBY;
-                
+                tgl_LED_USB;
                 number_of_blocks_index++;
                 
                 if (number_of_blocks_to_erase == number_of_blocks_index)
