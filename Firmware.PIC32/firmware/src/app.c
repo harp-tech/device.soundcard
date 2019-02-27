@@ -1072,6 +1072,16 @@ void APP_Tasks ( void )
         }
     }
     
+    /* 
+     * Check for bootloader enable.
+     */
+    if (read_BOOTLOADER_EN)
+    {
+        clr_AUDIO_RESET;
+        reset_PIC32();
+        while(1);        
+    }
+    
     //if (send_USB_packet)
     //{
         //send_USB_packet = false;

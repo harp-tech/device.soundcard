@@ -1054,6 +1054,15 @@ void app_read_REG_BOOTLOADER(void) {}
 
 bool app_write_REG_BOOTLOADER(void *a)
 {
+   uint8_t reg = *((uint8_t*)a);
+    
+   if (reg)
+      set_BOOTLOADER_EN;
+   else
+      clr_BOOTLOADER_EN;
+      
+   return true;
+    
    if ((*((uint8_t*)a) & 1) == B_EN_BOOT)
    {
       app_regs.REG_EVNT_ENABLE = B_EN_BOOT;

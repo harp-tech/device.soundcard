@@ -84,7 +84,9 @@ PROVIDE(_ebase_address = 0x9D001000);
  * _GEN_EXCPT_ADDR                -- General Exception Vector
  *************************************************************************/
 
-_RESET_ADDR                    = 0x9D000000;
+_RESET_ADDR                    = (0x9D000000 + 0x1000 + 0x970);
+_BEV_EXCPT_ADDR                = (0x9D000000 + 0x1000 + 0x970 + 0x380);
+_DBG_EXCPT_ADDR                = (0x9D000000 + 0x1000 + 0x970 + 0x480);
 _SIMPLE_TLB_REFILL_EXCPT_ADDR  = _ebase_address + 0;
 _CACHE_ERR_EXCPT_ADDR          = _ebase_address + 0x100;
 _GEN_EXCPT_ADDR                = _ebase_address + 0x180;
@@ -102,9 +104,10 @@ _GEN_EXCPT_ADDR                = _ebase_address + 0x180;
  *************************************************************************/
 MEMORY
 {
-    kseg1_boot_mem          : ORIGIN = 0x9D000000, LENGTH = 0x480
-    kseg0_program_mem  (rx) : ORIGIN = 0x9D000000 + 0x480, LENGTH = 0x200000 - 0x480 /* All C files will be located here */
-    kseg0_boot_mem          : ORIGIN = 0x9D000000, LENGTH = 0x0   
+    exceptiom_mem           : ORIGIN = 0x9D000000, LENGTH = 0x1000
+    kseg1_boot_mem          : ORIGIN = (0x9D000000 + 0x1000 + 0x970), LENGTH = 0x480
+    kseg0_program_mem  (rx) : ORIGIN = (0x9D000000 + 0x1000 + 0x970 + 0x480), LENGTH = (0x200000 - (0x1000 + 0x970 + 0x480)) /* All C files will be located here */
+    kseg0_boot_mem          : ORIGIN = (0x9D000000 + 0x1000), LENGTH = 0x970   
   kseg0_data_mem       (w!x)  : ORIGIN = 0x80000000, LENGTH = 0x80000
   sfrs                        : ORIGIN = 0xBF800000, LENGTH = 0x100000
   kseg2_ebi_data_mem          : ORIGIN = 0xC0000000, LENGTH = 0x4000000

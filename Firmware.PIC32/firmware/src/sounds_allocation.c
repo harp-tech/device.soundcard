@@ -107,7 +107,7 @@ bool prepare_memory_erase(void)
     switch (prepare_memory_state)
     {   
         case PREPARE_MEMORY_STATE_STANDBY:
-            block_erase_start(sound_index_to_erase * BLOCKS_PER_SOUND + number_of_blocks_index);            
+            block_erase_start(sound_index_to_erase * BLOCKS_PER_SOUND + number_of_blocks_index);
             prepare_memory_state = PREPARE_MEMORY_STATE_CHECK_ERASE;
             break;
         

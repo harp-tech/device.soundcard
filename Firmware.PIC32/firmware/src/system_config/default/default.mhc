@@ -6,7 +6,7 @@
 #     Harmony version: 2.04
 #
 #
-# from C:\Users\Filipe Carvalho\Desktop\Bitbucket.Harp.Device.Soundcard\Firmware.PIC32\firmware\SoundCard.hconfig
+# from C:\Users\Filipe Carvalho\Desktop\Bitbucket.Soundcard\Firmware.PIC32\firmware\SoundCard.hconfig
 #
 CONFIG_APP_INSTANCES=1
 #
@@ -16,7 +16,7 @@ CONFIG_APP_MENU_IDX0=y
 CONFIG_APP_NAME_0="app"
 CONFIG_APP_AUTO_GENERATE_CODE0=n
 #
-# from C:\Users\Filipe Carvalho\Desktop\Bitbucket.Harp.Device.Soundcard\Firmware.PIC32\firmware\SoundCard.hconfig
+# from C:\Users\Filipe Carvalho\Desktop\Bitbucket.Soundcard\Firmware.PIC32\firmware\SoundCard.hconfig
 #
 CONFIG_USE_EXCEPTION_HANDLER=y
 CONFIG_EXCEPTION_USE_SYS_DEBUG=y
@@ -28,7 +28,10 @@ CONFIG_USE_BLUETOOTH_LIBRARIES=n
 #
 # from $HARMONY_VERSION_PATH\framework\bootloader\config\bootloader_pic32m.hconfig
 #
-CONFIG_USE_BOOTLOADER=n
+CONFIG_USE_BOOTLOADER=y
+CONFIG_BOOTLOADER_TYPE="USART"
+CONFIG_CUSTOM_BOOTLOADER_PROGRAM_SPACE=y
+CONFIG_USE_BOOTLOADER_LIBRARY=n
 #
 # from $HARMONY_VERSION_PATH\framework\classb\config\classb.hconfig
 #

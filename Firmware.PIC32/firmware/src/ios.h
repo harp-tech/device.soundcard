@@ -3,6 +3,10 @@
 
 #include <xc.h>
 
+// BOOTLOADER_EN @ RB1 as input
+#define cfg_BOOTLOADER_EN TRISBSET = (1 << 1); ANSELB  &= ~(1 << 1)
+#define read_BOOTLOADER_EN (PORTB & (1 << 1))
+
 // DOUT0 @ RG6 as output
 #define cfg_SOUND_IS_ON TRISGCLR = (1 << 6)
 #define set_SOUND_IS_ON  LATGSET = (1 << 6)
