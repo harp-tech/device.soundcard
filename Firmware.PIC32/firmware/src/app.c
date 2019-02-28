@@ -71,8 +71,6 @@ int max_sound_data_index;
 volatile int dma_i2s_handle0_timeout = 0;
 volatile int dma_i2s_handle1_timeout = 0;
 
-bool usb_is_receiving_data = false;
-
 bool metadataCmd_received = false;
 bool dataCmd_received = false;
 bool readMetadataCmd_received = false;
@@ -699,7 +697,9 @@ void prepare_metadataCmd(void)
     if (ptr->sound_index == 1 && ptr->data_type != 1) *error = ERROR_BADDATATYPEMATCH;
     if (ptr->sound_index > 1 && ptr->data_type != 0) *error = ERROR_BADDATATYPEMATCH;
 
-    //if (sound_is_playing) *error = ERROR_PRODUCINGSOUND;
+    if (current_sample_rate == 192000)
+        if (sound_is_playing)
+            *error = ERROR_PRODUCINGSOUND;
     
     if (prepare_memory_check(ptr->sound_index, ptr->sound_length) == false) *error = ERROR_BADSOUNDLENGTH;
     
@@ -709,7 +709,6 @@ void prepare_metadataCmd(void)
     if (*error == ERROR_NOERROR)
     {
         prepare_metadataCmd_state = METADATACMD_STATE_SAVE_USER_METADATA;
-        usb_is_receiving_data = true;        
         
         audio_all_metadata[ptr->sound_index] = *ptr;
         audio_sound_exists[ptr->sound_index] = true;
@@ -756,6 +755,22 @@ void process_metadataCmd(void)
 {
     set_LED_MEMORY;
     
+    int *error = (int*)(transmitDataBuffer + 8);
+    
+    if (current_sample_rate == 192000)
+        if (sound_is_playing)
+        {
+            *error = ERROR_PRODUCINGSOUND;
+            
+            metadataCmd_received = false;
+            
+            clr_LED_MEMORY;
+            clr_LED_USB;
+
+            reply_USB(12);
+            return;
+        }
+    
     if(prepare_metadataCmd_state == METADATACMD_STATE_SAVE_USER_METADATA)
     {
         if (save_user_metadata(prepare_metadataCmd_sound_index, &receivedDataBuffer[4+4+16+32768]) == true)
@@ -782,8 +797,7 @@ void process_metadataCmd(void)
         if (allocate_metadata_command (*ptr, &receivedDataBuffer[4+4+16]) == true)
         {        
             metadataCmd_received = false;
-
-            usb_is_receiving_data = false;  // This variable is needed?
+            
             clr_LED_MEMORY;
             clr_LED_USB;
 
@@ -802,8 +816,11 @@ void prepare_dataCmd(void)
     process_dataCmd_data_index = *((int*)(receivedDataBuffer + 8));
     *error = ERROR_NOERROR;
    
-    if (process_dataCmd_data_index > max_sound_data_index) *error = ERROR_BADDATAINDEX;    
-    //if (sound_is_playing) *error = ERROR_PRODUCINGSOUND;
+    /*if (process_dataCmd_data_index > max_sound_data_index) *error = ERROR_BADDATAINDEX;    
+    if (current_sample_rate == 192000)
+        if (sound_is_playing)
+            *error = ERROR_PRODUCINGSOUND;
+    */
     
     for (i = 8; i != 0; i--)
         transmitDataBuffer[i-1] = receivedDataBuffer[i-1];
@@ -823,11 +840,26 @@ void process_dataCmd(void)
 {
     set_LED_MEMORY;
     
+    int *error = (int*)(transmitDataBuffer + 8);
+    
+    if (current_sample_rate == 192000)
+        if (sound_is_playing)
+        {
+            *error = ERROR_PRODUCINGSOUND;
+            
+            dataCmd_received = false;
+            
+            clr_LED_MEMORY;
+            clr_LED_USB;
+
+            reply_USB(12);
+            return;
+        }
+    
     if (allocate_data_command(sound_index_to_write, process_dataCmd_data_index, &receivedDataBuffer[4+4+4]) == 32768/BYTES_PER_PAGE)
     {
         dataCmd_received = false;
         
-        usb_is_receiving_data = false;  // This variable is needed?
         clr_LED_MEMORY;
         clr_LED_USB;
         
@@ -836,9 +868,7 @@ void process_dataCmd(void)
 }
 
 void process_readMetadataCmd(void)
-{
-    usb_is_receiving_data = true;
-    
+{    
     int i;
     int *error = (int*)(transmitDataBuffer + 8);
     int *index = (int*)(receivedDataBuffer + 8);
@@ -876,8 +906,7 @@ void process_readMetadataCmd(void)
     USB_DEVICE_EndpointRead ( appData.usbDevHandle, &appData.readTranferHandle,
                         appData.endpointRx, &receivedDataBuffer[0],
                         sizeof(receivedDataBuffer) );
-
-    usb_is_receiving_data = false;
+    
     clr_LED_USB;
 }
 
@@ -1056,20 +1085,17 @@ void APP_Tasks ( void )
      * Issue a software reset if not.
      * Usually, this test is performed each ~1.5 us
      */
-    if (usb_is_receiving_data == false)
+    if (++dma_i2s_handle0_timeout == 20000) // Around 30 ms
     {
-        if (++dma_i2s_handle0_timeout == 20000) // Around 30 ms
-        {
-            clr_AUDIO_RESET;
-            reset_PIC32();
-            while(1);
-        }
-        if (++dma_i2s_handle1_timeout == 20000) // Around 30 ms
-        {
-            clr_AUDIO_RESET;
-            reset_PIC32();
-            while(1);
-        }
+        clr_AUDIO_RESET;
+        reset_PIC32();
+        while(1);
+    }
+    if (++dma_i2s_handle1_timeout == 20000) // Around 30 ms
+    {
+        clr_AUDIO_RESET;
+        reset_PIC32();
+        while(1);
     }
     
     /* 
