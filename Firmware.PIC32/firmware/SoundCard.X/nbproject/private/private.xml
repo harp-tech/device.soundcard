@@ -2,17 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/C:/Users/Filipe%20Carvalho/Desktop/Bitbucket.Soundcard/Firmware.PIC32/firmware/src/memory.h</file>
-            <file>file:/C:/Users/Filipe%20Carvalho/Desktop/Bitbucket.Soundcard/Firmware.PIC32/firmware/src/main.c</file>
-            <file>file:/C:/Users/Filipe%20Carvalho/Desktop/Bitbucket.Soundcard/Firmware.PIC32/firmware/src/system_config/default/system_config.h</file>
-            <file>file:/C:/Users/Filipe%20Carvalho/Desktop/Bitbucket.Soundcard/Firmware.PIC32/firmware/src/sounds_allocation.h</file>
-            <file>file:/C:/Users/Filipe%20Carvalho/Desktop/Bitbucket.Soundcard/Firmware.PIC32/firmware/src/memory.c</file>
-            <file>file:/C:/Users/Filipe%20Carvalho/Desktop/Bitbucket.Soundcard/Firmware.PIC32/firmware/src/ios.c</file>
-            <file>file:/C:/Users/Filipe%20Carvalho/Desktop/Bitbucket.Soundcard/Firmware.PIC32/firmware/src/app.c</file>
-            <file>file:/C:/Users/Filipe%20Carvalho/Desktop/Bitbucket.Soundcard/Firmware.PIC32/firmware/src/sounds_allocation.c</file>
-            <file>file:/C:/Users/Filipe%20Carvalho/Desktop/Bitbucket.Soundcard/Firmware.PIC32/firmware/src/ios.h</file>
-            <file>file:/C:/Users/Filipe%20Carvalho/Desktop/Bitbucket.Soundcard/Firmware.PIC32/firmware/src/system_config/default/app_mz.ld</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>
