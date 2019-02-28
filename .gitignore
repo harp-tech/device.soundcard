@@ -16,3 +16,6 @@ Interface/obj
 Firmware.PIC32/firmware/SoundCard.X/dist
 Firmware.PIC32/firmware/SoundCard.X/debug
 Firmware.PIC32/firmware/SoundCard.X/build
+Bootloader.PIC32/firmware/Bootloader.PIC32.X/dist
+Bootloader.PIC32/firmware/Bootloader.PIC32.X/debug
+Bootloader.PIC32/firmware/Bootloader.PIC32.X/build
