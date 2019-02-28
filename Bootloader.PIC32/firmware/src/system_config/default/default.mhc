@@ -6,7 +6,7 @@
 #     Harmony version: 2.04
 #
 #
-# from C:\Users\Filipe Carvalho\Desktop\Bootloader.PIC32\firmware\Bootloader.PIC32.hconfig
+# from C:\Users\Filipe Carvalho\Desktop\Bitbucket.Soundcard\Bootloader.PIC32\firmware\Bootloader.PIC32.hconfig
 #
 CONFIG_APP_INSTANCES=1
 #
@@ -16,7 +16,7 @@ CONFIG_APP_MENU_IDX0=y
 CONFIG_APP_NAME_0="app"
 CONFIG_APP_AUTO_GENERATE_CODE0=n
 #
-# from C:\Users\Filipe Carvalho\Desktop\Bootloader.PIC32\firmware\Bootloader.PIC32.hconfig
+# from C:\Users\Filipe Carvalho\Desktop\Bitbucket.Soundcard\Bootloader.PIC32\firmware\Bootloader.PIC32.hconfig
 #
 CONFIG_USE_EXCEPTION_HANDLER=y
 CONFIG_EXCEPTION_USE_SYS_DEBUG=y
@@ -305,7 +305,7 @@ CONFIG_SYS_CLK_PBCLK3_FREQ="100000000"
 CONFIG_SYS_CLK_PBCLK4_FREQ="100000000"
 CONFIG_SYS_CLK_PBCLK6_FREQ="200000000"
 CONFIG_SYS_CLK_PBCLK7_FREQ="100000000"
-CONFIG_SYS_CLK_REFCLK0_FREQ="12288000"
+CONFIG_SYS_CLK_REFCLK0_FREQ="16384"
 #
 # from $HARMONY_VERSION_PATH\framework\system\devcon\config\sys_devcon.hconfig
 #

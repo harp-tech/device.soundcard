@@ -95,11 +95,9 @@ APP_DATA appData;
 */ 
 int APP_Bootloader_ForceEvent(void)
 {
-    /* Check the switch press to trigger bootloader */
-    if (BSP_SWITCH_STATE_PRESSED == BSP_SwitchStateGet(BTL_TRIGGER_SWITCH))
-    {
+    /* Check the BOOTLOADER_EN @ RB1 "switch" to trigger bootloader */
+    if ((PORTB & (1 << 1)))
         return (1);
-    }
 
     /* Check the trigger memory location and return true/false. */
     if (*(uint32_t *)APP_RESET_ADDRESS == 0xFFFFFFFF)
@@ -168,7 +166,10 @@ void APP_Tasks ( void )
         case APP_STATE_INIT:
         {
             bool appInitialized = true;
-       
+            
+            TRISGCLR = (1 << 14);   // config LED MEMORY
+            TRISFCLR = (1 << 1);    // config LED AUDIO
+            TRISFCLR = (1 << 0);    // config LED USB
         
             if (appInitialized)
             {
@@ -181,11 +182,54 @@ void APP_Tasks ( void )
         case APP_STATE_SERVICE_TASKS:
         {
             static uint32_t cntr = 0;
+            static uint32_t led_index = 0;
             // Blink the LED
-            if (cntr++ == 100000)
+            if (cntr++ == 200000)
             {
-                BSP_LEDToggle(BTL_LED);
+                // LED_USB @ RF0 toggle
+                //LATFINV = (1 << 0);
                 cntr = 0;
+                
+                switch (led_index)
+                {
+                    case 0:
+                        LATGSET = (1 << 14);    // set MEMORY
+                        LATFCLR = (1 << 1);     // clear AUDIO
+                        LATFCLR = (1 << 0);     // clear USB
+                        break;
+                        
+                    case 1:
+                        LATGCLR = (1 << 14);    // clear MEMORY
+                        LATFSET = (1 << 1);     // set AUDIO
+                        LATFCLR = (1 << 0);     // clear USB
+                        break;
+                        
+                    case 2:
+                        LATGCLR = (1 << 14);    // clear MEMORY
+                        LATFCLR = (1 << 1);     // clear AUDIO
+                        LATFSET = (1 << 0);     // set USB
+                        break;
+                        
+                    case 3:
+                        LATGCLR = (1 << 14);    // clear MEMORY
+                        LATFCLR = (1 << 1);     // clear AUDIO
+                        LATFCLR = (1 << 0);     // clear USB
+                        break;
+                }
+                
+                if (++led_index == 4)
+                    led_index = 0;
+                
+                if (!(PORTB & (1 << 1)))
+                {
+                    // MUST disable interrupts and dma, as reset timing is critical
+                    // use the compiler built-in function to disable interrupts
+                    SYS_INT_StatusGetAndDisable();
+                    // use the Peripheral Library Function to suspend the DMA
+                    PLIB_DMA_SuspendEnable(DMA_ID_0); // only required if you are using DMA
+                    // use the System Service Library Function to initiate the reset
+                    SYS_RESET_SoftwareReset(); // to perform the reset
+                }
             }
         
             break;

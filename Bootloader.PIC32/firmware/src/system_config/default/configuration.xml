@@ -253,7 +253,7 @@
       <Template dnOrder="21">
         <Name dnOrder="0">system_config.h</Name>
         <Path dnOrder="1">Header&amp;#160;Files/app/system_config/default</Path>
-        <Checksum dnOrder="2">9F5698EF7FA2297E5C628E7D1D1D8489</Checksum>
+        <Checksum dnOrder="2">B2FBBD7652DFC9CE93806D4D5AEB1C0E</Checksum>
       </Template>
       <Template dnOrder="22">
         <Name dnOrder="0">app.h</Name>
@@ -272,15 +272,15 @@
     </Templates>
     <CompilerItems dnOrder="2">
       <C32 dnOrder="0">
-        <Include dnOrder="0" value="C:\Users\Filipe Carvalho\Desktop\Bootloader.PIC32\firmware\src"/>
-        <Include dnOrder="1" value="C:\Users\Filipe Carvalho\Desktop\Bootloader.PIC32\firmware\src\system_config\default"/>
-        <Include dnOrder="2" value="C:\Users\Filipe Carvalho\Desktop\Bootloader.PIC32\firmware\src\default"/>
+        <Include dnOrder="0" value="C:\Users\Filipe Carvalho\Desktop\Bitbucket.Soundcard\Bootloader.PIC32\firmware\src"/>
+        <Include dnOrder="1" value="C:\Users\Filipe Carvalho\Desktop\Bitbucket.Soundcard\Bootloader.PIC32\firmware\src\system_config\default"/>
+        <Include dnOrder="2" value="C:\Users\Filipe Carvalho\Desktop\Bitbucket.Soundcard\Bootloader.PIC32\firmware\src\default"/>
         <Include dnOrder="3" value="C:\microchip\harmony\v2_04\framework"/>
-        <Include dnOrder="4" value="C:\Users\Filipe Carvalho\Desktop\Bootloader.PIC32\firmware\src\system_config\default\framework"/>
+        <Include dnOrder="4" value="C:\Users\Filipe Carvalho\Desktop\Bitbucket.Soundcard\Bootloader.PIC32\firmware\src\system_config\default\framework"/>
       </C32>
     </CompilerItems>
     <Libraries dnOrder="3">
-      <Library dnOrder="0" value="../../../../../../microchip/harmony/v2_04/bin/framework/peripheral/PIC32MZ2048EFM100_peripherals.a"/>
+      <Library dnOrder="0" value="../../../../../../../microchip/harmony/v2_04/bin/framework/peripheral/PIC32MZ2048EFM100_peripherals.a"/>
     </Libraries>
   </Manifest>
 </Configuration>
