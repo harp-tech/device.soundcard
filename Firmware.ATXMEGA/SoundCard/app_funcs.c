@@ -1045,13 +1045,7 @@ bool app_write_REG_ADC_VALUES(void *a)
 /************************************************************************/
 /* REG_BOOTLOADER                                                       */
 /************************************************************************/
-#define PIC32_BOOTLOADER_STATE__STANDBY 0
-#define PIC32_BOOTLOADER_STATE__START_BOOTLOADER_PROCESS 1
-
-extern uint8_t PIC32_READY_state;
-
 void app_read_REG_BOOTLOADER(void) {}
-
 bool app_write_REG_BOOTLOADER(void *a)
 {
    uint8_t reg = *((uint8_t*)a);
@@ -1061,22 +1055,6 @@ bool app_write_REG_BOOTLOADER(void *a)
    else
       clr_BOOTLOADER_EN;
       
-   return true;
-    
-   if ((*((uint8_t*)a) & 1) == B_EN_BOOT)
-   {
-      app_regs.REG_EVNT_ENABLE = B_EN_BOOT;
-      PIC32_READY_state = PIC32_BOOTLOADER_STATE__START_BOOTLOADER_PROCESS;
-   }
-   else
-   {
-      app_regs.REG_EVNT_ENABLE = 0;
-      
-      clr_BOOTLOADER_EN;      // Disable buffers
-      timer_type1_stop(&TCD1);
-      PIC32_READY_state = PIC32_BOOTLOADER_STATE__STANDBY;
-   }
-   
    return true;
 }
 
