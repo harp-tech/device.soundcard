@@ -7,15 +7,15 @@
 /* STOP                 11110000                                             checksum(1)
  * START                11110001  index(1)   A_left(2)  A_right(2)           checksum(1)
  * START W/ FREQUENCY   11110010             A_left(2)  A_right(2)  Freq(2)  checksum(1)
- * UPDATE               11111001             A_left(2)  A_right(2)           checksum(1)
+ * UPDATE AMP           11111001             A_left(2)  A_right(2)           checksum(1)
  * UPDATE AMP. & FREQ.  11111010             A_left(2)  A_right(2)  Freq(2)  checksum(1)
  * UPDATE FREQUENCY     11110011                                    Freq(2)  checksum(1)
  */
 #define CMD_STOP 0xF0
 #define CMD_START 0xF1
 #define CMD_START_W_FREQUENCY 0xF2
-#define CMD_UPDATE 0xF9
-#define CMD_UPDATE_ANPLITUDE_AND_FREQUENCY 0xFA
+#define CMD_UPDATE_AMPLITUDE 0xF9
+#define CMD_UPDATE_AMPLITUDE_AND_FREQUENCY 0xFA
 #define CMD_UPDATE_FREQUENCY 0xFB
 
 #define CMD_STOP_LEN 2
@@ -53,6 +53,10 @@ ISR(PORTC_INT1_vect, ISR_NAKED)
          {
             case CMD_START:
                par_cmd_start_sound_callback();
+               break;
+               
+            case CMD_STOP:
+               par_cmd_stop_callback();
                break;
          }
            
@@ -97,7 +101,6 @@ ISR(TCD0_OVF_vect, ISR_NAKED)
    PORTA_OUT = command_to_send;
    set_CMD_WRITE;
    
-   set_DOUT1;
    reti();
 }
 
@@ -160,7 +163,6 @@ bool par_cmd_start_sound_callback (void)
    send_byte(cmd_start[5]);
    send_byte(cmd_start[6]);
    
-   clr_DOUT1;
    return true;
 }
 

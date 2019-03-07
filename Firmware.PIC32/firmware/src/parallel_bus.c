@@ -2,8 +2,9 @@
 #include <stdbool.h>
 #include "ios.h"
 #include "parallel_bus.h"
+#include "audio.h"
 
-unsigned char cmd_stop[CMD_STOP_LEN]   = {CMD_STOP};
+unsigned char cmd_stop[CMD_STOP_LEN]   = {CMD_STOP, 0};
 unsigned char cmd_start[CMD_START_LEN] = {CMD_START, 0, 0, 0, 0, 0, 0};
 
 #define PAR_RECEIVE_BYTE(byte)  while (!read_PAR_CMD_WRITE); \
@@ -60,6 +61,16 @@ int par_bus_check_if_command_is_available(void)
                 }
                 
                 break;
+                
+            case CMD_STOP:
+                PAR_RECEIVE_BYTE(cmd_stop[1]);
+                
+                if (cmd_stop[0] == cmd_stop[1])
+                {
+                    return command_received;
+                }
+                
+                break;
         }
     }
     
@@ -78,4 +89,10 @@ int par_bus_process_command_start(void)
     
     /* Return sound index */
     return cmd_start[1];
+}
+
+void par_bus_process_command_stop(void)
+{    
+    /* Mute the device */
+    //set_AUDIO_MUTE;
 }

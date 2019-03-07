@@ -145,15 +145,13 @@ bool app_write_REG_PLAY_SOUND_OR_FREQ(void *a)
 /************************************************************************/
 /* REG_STOP                                                             */
 /************************************************************************/
-void app_read_REG_STOP(void)
-{
-	//app_regs.REG_STOP = 0;
-
-}
-
+void app_read_REG_STOP(void) {}
 bool app_write_REG_STOP(void *a)
 {
 	uint8_t reg = *((uint8_t*)a);
+    
+    if (reg)
+        par_cmd_stop();
 
 	app_regs.REG_STOP = reg;
 	return true;
