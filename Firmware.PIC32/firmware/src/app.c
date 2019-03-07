@@ -356,6 +356,7 @@ int launch_sound_v3(int index)
     if (sound_is_playing)
         return -1;
     
+    //clr_AUDIO_MUTE;
     new_sound_to_start = NEW_SOUND_STATE_IS_AVAILABLE;    
     new_sound_index = index;
     play_metadata = audio_all_metadata[index];
@@ -449,7 +450,6 @@ void update_sound_buffers (void)
             else
             {
                 sound_is_playing = false;
-                clr_SOUND_IS_ON;
                 clr_LED_AUDIO;
             }
             
@@ -486,7 +486,6 @@ void update_sound_buffers (void)
             else
             {
                 sound_is_playing = false;
-                clr_SOUND_IS_ON;
                 clr_LED_AUDIO;
             }
             
@@ -531,8 +530,9 @@ void update_sound_buffers (void)
             else
             {
                 sound_is_playing = false;
-                clr_SOUND_IS_ON;
+                //clr_SOUND_IS_ON;
                 clr_LED_AUDIO;
+                //trigger_delayed_stop(current_sample_rate, 256);
             }
             
             //if (audio_buffer0_state == AUDIO_BUFFER_HAS_DATA)
@@ -572,8 +572,9 @@ void update_sound_buffers (void)
             else
             {
                 sound_is_playing = false;
-                clr_SOUND_IS_ON;
+                //clr_SOUND_IS_ON;
                 clr_LED_AUDIO;
+                //trigger_delayed_stop(current_sample_rate, 256);
             }
             
             //if (audio_buffer1_state == AUDIO_BUFFER_HAS_DATA)
@@ -592,7 +593,8 @@ void update_sound_buffers (void)
             else
                 DRV_I2S_BufferAddWrite(i2sDriverHandle, &i2sBufferHandle0, audio_buffer_zeros, 128 * 4); // 8 works well
             
-            tgl_TP0;
+            clr_SOUND_IS_ON;
+            //tgl_TP0;
             audio_buffer0_state = AUDIO_BUFFER_HAS_DATA;
         }
         
@@ -604,7 +606,8 @@ void update_sound_buffers (void)
             else
                 DRV_I2S_BufferAddWrite(i2sDriverHandle, &i2sBufferHandle1, audio_buffer_zeros, 128 * 4); // 8 works well
             
-            tgl_TP1;
+            clr_SOUND_IS_ON;
+            //tgl_TP1;
             audio_buffer1_state = AUDIO_BUFFER_HAS_DATA;
             
             handle_USB_writing();
@@ -721,9 +724,16 @@ void prepare_metadataCmd(void)
         for (i = AUDIO_BUFFER_LEN; i != 0; i--)
         {
             audio_all_first_buffers[ptr->sound_index][i-1] = *(first_buffer_index +i-1);
-        }
-        for (i = AUDIO_BUFFER_LEN; i != 0; i--)
             audio_all_second_buffers[ptr->sound_index][i-1] = *( ((int*)(&receivedDataBuffer[4+4+16+AUDIO_BUFFER_LEN*4])) +i-1);
+        }
+        
+        audio_all_metadata[0] = *ptr;
+        
+        for (i = AUDIO_BUFFER_LEN; i != 0; i--)
+        {
+            audio_all_first_buffers[0][i-1] = 0;
+            audio_all_second_buffers[0][i-1] = 0;
+        }
         
         //set_LED_MEMORY;
 
@@ -1058,6 +1068,10 @@ void APP_Tasks ( void )
         {
             case CMD_START:
                 launch_sound_v3(par_bus_process_command_start());
+                break;
+            
+            case CMD_STOP:
+                par_bus_process_command_stop();
                 break;
         }
         
