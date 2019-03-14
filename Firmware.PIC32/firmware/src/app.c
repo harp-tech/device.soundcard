@@ -345,17 +345,22 @@ int launch_sound_v2(int index)
  * - no sound is initiating, and
  * - no sound is being produced.
  */
-int launch_sound_v3(int index)
+bool check_cmd_start(int index)
 {
     if (!audio_sound_exists[index])
-        return -1;    
+        return false;    
     
     if (new_sound_to_start != NEW_SOUND_STATE_STANDBY)
-        return -1;
+        return false;
     
     if (sound_is_playing)
-        return -1;
+        return false;
     
+    return true;
+}
+
+int launch_sound_v3(int index)
+{
     //clr_AUDIO_MUTE;
     new_sound_to_start = NEW_SOUND_STATE_IS_AVAILABLE;    
     new_sound_index = index;
@@ -363,7 +368,7 @@ int launch_sound_v3(int index)
     
     return 0;
 }
-
+  
 void update_sound_buffers (void)
 {
     if (!sound_is_playing && new_sound_to_start == NEW_SOUND_STATE_IS_AVAILABLE)

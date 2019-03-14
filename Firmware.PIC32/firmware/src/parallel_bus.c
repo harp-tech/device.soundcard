@@ -4,6 +4,8 @@
 #include "parallel_bus.h"
 #include "audio.h"
 
+bool check_cmd_start(int index);
+
 unsigned char cmd_stop[CMD_STOP_LEN]   = {CMD_STOP, 0};
 unsigned char cmd_start[CMD_START_LEN] = {CMD_START, 0, 0, 0, 0, 0, 0};
 
@@ -12,6 +14,14 @@ unsigned char cmd_start[CMD_START_LEN] = {CMD_START, 0, 0, 0, 0, 0, 0};
                                 set_PAR_CMD_LATCH; \
                                 while (read_PAR_CMD_WRITE); \
                                 clr_PAR_CMD_LATCH
+
+#define PAR_RECEIVE_LAST_BYTE(byte) while (!read_PAR_CMD_WRITE); \
+                                    byte = read_PAR_BUS
+
+#define PAR_RECEIVE_LAST_BYTE_REPLY(error)  if (error) set_PAR_CMD_ERROR; else clr_PAR_CMD_ERROR; \
+                                            set_PAR_CMD_LATCH; \
+                                            while (read_PAR_CMD_WRITE); \
+                                            clr_PAR_CMD_LATCH
 
 void initialize_par_ios(void)
 {
@@ -31,6 +41,7 @@ int par_bus_check_if_command_is_available(void)
         int command_received;
         int i;
         
+        clr_PAR_CMD_ERROR;
         command_received = read_PAR_BUS;
         set_PAR_CMD_LATCH;
         while (read_PAR_CMD_WRITE);
@@ -47,7 +58,8 @@ int par_bus_check_if_command_is_available(void)
                 PAR_RECEIVE_BYTE(cmd_start[3]);
                 PAR_RECEIVE_BYTE(cmd_start[4]);
                 PAR_RECEIVE_BYTE(cmd_start[5]);
-                PAR_RECEIVE_BYTE(cmd_start[6]);
+                //PAR_RECEIVE_BYTE(cmd_start[6]);
+                PAR_RECEIVE_LAST_BYTE(cmd_start[6]);
                 
                 unsigned char checksum = 0;
                 for (i = CMD_START_LEN - 1; i != 0; i--)
@@ -55,11 +67,15 @@ int par_bus_check_if_command_is_available(void)
                    checksum += cmd_start[i-1];
                 }
                 
-                if (checksum == cmd_start[CMD_START_LEN - 1])
+                if ((checksum == cmd_start[CMD_START_LEN - 1]) && (check_cmd_start(cmd_start[1])))
                 {
+                    PAR_RECEIVE_LAST_BYTE_REPLY(false);
+                clr_LED_USB;
                     return command_received;
                 }
                 
+                PAR_RECEIVE_LAST_BYTE_REPLY(true);
+                set_LED_USB;
                 break;
                 
             case CMD_STOP:

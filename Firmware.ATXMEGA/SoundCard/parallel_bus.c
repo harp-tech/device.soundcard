@@ -33,6 +33,13 @@ uint8_t command_to_send;
                         clr_CMD_WRITE; \
                         while (read_CMD_LATCHED)
 
+#define send_last_byte(byte)    PORTA_OUT = byte; \
+                                set_CMD_WRITE; \
+                                while (!read_CMD_LATCHED); \
+                                if (read_CMD_NOT_EXEC)  { clr_CMD_WRITE; while (read_CMD_LATCHED); set_DOUT2; return false;} \
+                                else                    { clr_CMD_WRITE; while (read_CMD_LATCHED); clr_DOUT2; return true; }
+
+
 /************************************************************************/
 /* CMD_LATCHED & SOUND_IS_ON                                            */
 /************************************************************************/
@@ -123,8 +130,7 @@ void par_cmd_stop(void)
 
 bool par_cmd_stop_callback (void)
 {
-   send_byte(cmd_stop[CMD_STOP_LEN - 1]);
-   return true;
+   send_last_byte(cmd_stop[CMD_STOP_LEN - 1]);
 }
 
 /************************************************************************/
@@ -161,9 +167,7 @@ bool par_cmd_start_sound_callback (void)
    send_byte(cmd_start[3]);
    send_byte(cmd_start[4]);
    send_byte(cmd_start[5]);
-   send_byte(cmd_start[6]);
-   
-   return true;
+   send_last_byte(cmd_start[6]);
 }
 
 

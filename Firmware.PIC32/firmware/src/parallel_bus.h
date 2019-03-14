@@ -17,11 +17,11 @@
 #define clr_PAR_CMD_LATCH  LATBCLR = (1 << 4)
 #define tgl_PAR_CMD_LATCH  LATBINV = (1 << 4)
 
-// CMD_ERROR @ RG6 as output
-#define cfg_PAR_CMD_ERROR TRISGCLR = (1 << 6)
-#define set_PAR_CMD_ERROR  LATGSET = (1 << 6)
-#define clr_PAR_CMD_ERROR  LATGCLR = (1 << 6)
-#define tgl_PAR_CMD_ERROR  LATGINV = (1 << 6)
+// CMD_NOT_EXEC @ RB2 as output
+#define cfg_PAR_CMD_ERROR TRISBCLR = (1 << 2)
+#define set_PAR_CMD_ERROR  LATBSET = (1 << 2)
+#define clr_PAR_CMD_ERROR  LATBCLR = (1 << 2)
+#define tgl_PAR_CMD_ERROR  LATBINV = (1 << 2)
 
 /************************************************************************/
 /* Protocol                                                             */
