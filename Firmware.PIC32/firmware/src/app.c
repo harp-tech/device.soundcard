@@ -374,11 +374,8 @@ void update_sound_buffers (void)
             sound_is_playing = true;
             set_page_and_sound_index(1, new_sound_index);
             
-            if (play_metadata.sample_rate != current_sample_rate)
-            {
-                current_sample_rate = play_metadata.sample_rate;
-                config_audio_dac(current_sample_rate);
-            }
+            config_audio_dac(play_metadata.sample_rate, (play_metadata.sample_rate != current_sample_rate) ? true : false);
+            current_sample_rate = play_metadata.sample_rate;
             
             if (play_metadata.sound_length > AUDIO_BUFFER_LEN)
             {
@@ -1013,7 +1010,7 @@ void APP_Initialize ( void )
     /* 
      * Configure audio DAC IC.
      */
-    config_audio_dac(current_sample_rate);
+    config_audio_dac(current_sample_rate, true);
     
     /* 
      * Initialize internal envelope.

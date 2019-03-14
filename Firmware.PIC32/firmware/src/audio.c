@@ -120,7 +120,7 @@ void update_audio_volume_int(int att_left, int att_right)
  * Configure audio DAC IC.
  * Configure the data format, the data rate and number of bits.
  */
-void config_audio_dac (int sample_rate)
+void config_audio_dac (int sample_rate, bool update_internal_clock)
 {
     if (sample_rate == 96000)
     {
@@ -129,16 +129,19 @@ void config_audio_dac (int sample_rate)
         reg_content = MCLK_mode_256_x_fs;
         update_audio_register(1, reg_content);
         
-        SYS_DEVCON_SystemUnlock ( );        
-        REFO1CONbits.ACTIVE = 0;
-        REFO1CONbits.ON = 0;
-        
-        /* RODIV */
-        PLIB_OSC_ReferenceOscDivisorValueSet ( OSC_ID_0, OSC_REFERENCE_1, 1);
-                
-        REFO1CONbits.ACTIVE = 1;
-        REFO1CONbits.ON = 1;
-        SYS_DEVCON_SystemLock ( );
+        if (update_internal_clock)
+        {
+            SYS_DEVCON_SystemUnlock ( );        
+            REFO1CONbits.ACTIVE = 0;
+            REFO1CONbits.ON = 0;
+
+            /* RODIV */
+            PLIB_OSC_ReferenceOscDivisorValueSet ( OSC_ID_0, OSC_REFERENCE_1, 1);
+
+            REFO1CONbits.ACTIVE = 1;
+            REFO1CONbits.ON = 1;
+            SYS_DEVCON_SystemLock ( );
+        }
     }
     else
     {
@@ -147,15 +150,18 @@ void config_audio_dac (int sample_rate)
         reg_content = MCLK_mode_512_x_fs;
         update_audio_register(1, reg_content);
         
-        SYS_DEVCON_SystemUnlock ( );      
-        REFO1CONbits.ACTIVE = 0;
-        REFO1CONbits.ON = 0;
-        
-        /* RODIV */
-        PLIB_OSC_ReferenceOscDivisorValueSet ( OSC_ID_0, OSC_REFERENCE_1, 0);
-        
-        REFO1CONbits.ACTIVE = 1;
-        REFO1CONbits.ON = 1;
-        SYS_DEVCON_SystemLock ( );
+        if (update_internal_clock)
+        {
+            SYS_DEVCON_SystemUnlock ( );      
+            REFO1CONbits.ACTIVE = 0;
+            REFO1CONbits.ON = 0;
+
+            /* RODIV */
+            PLIB_OSC_ReferenceOscDivisorValueSet ( OSC_ID_0, OSC_REFERENCE_1, 0);
+
+            REFO1CONbits.ACTIVE = 1;
+            REFO1CONbits.ON = 1;
+            SYS_DEVCON_SystemLock ( );
+        }
     }
 }
