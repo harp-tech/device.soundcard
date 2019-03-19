@@ -60,7 +60,7 @@ void (*app_func_rd_pointer[])(void) = {
 	&app_read_REG_RESERVED9,
 	&app_read_REG_ADC_CONF,
 	&app_read_REG_ADC_VALUES,
-	&app_read_REG_BOOTLOADER,
+	&app_read_REG_COMMANDS,
 	&app_read_REG_RESERVED10,
 	&app_read_REG_RESERVED11,
 	&app_read_REG_RESERVED12,
@@ -118,7 +118,7 @@ bool (*app_func_wr_pointer[])(void*) = {
 	&app_write_REG_RESERVED9,
 	&app_write_REG_ADC_CONF,
 	&app_write_REG_ADC_VALUES,
-	&app_write_REG_BOOTLOADER,
+	&app_write_REG_COMMANDS,
 	&app_write_REG_RESERVED10,
 	&app_write_REG_RESERVED11,
 	&app_write_REG_RESERVED12,
@@ -1041,17 +1041,24 @@ bool app_write_REG_ADC_VALUES(void *a)
 
 
 /************************************************************************/
-/* REG_BOOTLOADER                                                       */
+/* REG_COMMANDS                                                         */
 /************************************************************************/
-void app_read_REG_BOOTLOADER(void) {}
-bool app_write_REG_BOOTLOADER(void *a)
+void app_read_REG_COMMANDS(void) {}
+bool app_write_REG_COMMANDS(void *a)
 {
-   uint8_t reg = *((uint8_t*)a);
-    
-   if (reg)
-      set_BOOTLOADER_EN;
-   else
+   uint8_t reg = *((uint8_t*)a);   
+   
+   if (reg == GM_DIS_BOOTLOADER)
       clr_BOOTLOADER_EN;
+      
+   if (reg == GM_EN_BOOTLOADER)
+      set_BOOTLOADER_EN;
+   
+   if (reg == GM_DEL_ALL_SOUNDS)
+       par_cmd_delete_sound(0, true);
+   
+   if (reg >= 0+2+2 && reg <= 32+2)
+       par_cmd_delete_sound(reg-2, false);   
       
    return true;
 }

@@ -171,7 +171,7 @@ typedef struct
 	uint8_t REG_RESERVED9;
 	uint8_t REG_ADC_CONF;
 	uint16_t REG_ADC_VALUES[5];
-	uint8_t REG_BOOTLOADER;
+	uint8_t REG_COMMANDS;
 	uint8_t REG_RESERVED10;
 	uint8_t REG_RESERVED11;
 	uint8_t REG_RESERVED12;
@@ -232,7 +232,7 @@ typedef struct
 #define ADD_REG_RESERVED9                   79 // U8     Reserved for future purposes
 #define ADD_REG_ADC_CONF                    80 // U8     Configuration of Analog Inputs
 #define ADD_REG_ADC_VALUES                  81 // U16    [ADC0]   [ADC1]   [ATT LEFT]   [ATT RIGHT]   [FREQUENCY]   Values are 0 if not used
-#define ADD_REG_BOOTLOADER                  82 // U8     Enable board's buffers to send a new image to the PIC32
+#define ADD_REG_COMMANDS                    82 // U8     Send commands to PIC32 ucontroller
 #define ADD_REG_RESERVED10                  83 // U8     Reserved for future purposes
 #define ADD_REG_RESERVED11                  84 // U8     Reserved for future purposes
 #define ADD_REG_RESERVED12                  85 // U8     Reserved for future purposes
@@ -281,7 +281,9 @@ typedef struct
 #define GM_ADC_ARIGHT_1KHZ                 (4<<0)       // ADC0 controls right amplitude and ADC1 is an analog input
 #define GM_ADC_ALEFT_ARIGHT                (5<<0)       // ADC0 controls left amplitude and ADC1 controls right amplitude
 #define GM_ADC_ABOTH_FREQ                  (6<<0)       // ADC0 controls both amplitude and ADC1 controls the output frequency
-#define B_EN_BOOT                          (1<<0)       // Enables buffers if equal to ONE
+#define GM_DIS_BOOTLOADER                  0            // Disables bootloader buffers
+#define GM_EN_BOOTLOADER                   1            // Enables bootloader buffers
+#define GM_DEL_ALL_SOUNDS                  255          // Delete all sounds in the sound card
 #define B_EVT_PLAY_SOUND_OR_FREQ           (1<<0)       // Event of register PLAY_SOUND_OR_FREQ
 #define B_EVT_STOP                         (1<<1)       // Event of register STOP
 #define B_EVT_DIGITAL_INPUTS               (1<<2)       // Event of register DIGITAL_INPUTS

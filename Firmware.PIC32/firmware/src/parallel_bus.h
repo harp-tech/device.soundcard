@@ -29,6 +29,7 @@
 /* STOP                 11110000                                             checksum(1)
  * START                11110001  index(1)   A_left(2)  A_right(2)           checksum(1)
  * START W/ FREQUENCY   11110010             A_left(2)  A_right(2)  Freq(2)  checksum(1)
+ * DELETE_SOUND         11110100  index(1)                                   checksum(1)
  * UPDATE AMP           11111001             A_left(2)  A_right(2)           checksum(1)
  * UPDATE AMP. & FREQ.  11111010             A_left(2)  A_right(2)  Freq(2)  checksum(1)
  * UPDATE FREQUENCY     11110011                                    Freq(2)  checksum(1)
@@ -36,11 +37,13 @@
 #define CMD_STOP 0xF0
 #define CMD_START 0xF1
 #define CMD_START_W_FREQUENCY 0xF2
+#define CMD_DELETE_SOUND 0xF7
 #define CMD_UPDATE_AMPLITUDE 0xF9
 #define CMD_UPDATE_AMPLITUDE_AND_FREQUENCY 0xFA
 #define CMD_UPDATE_FREQUENCY 0xFB
 
 #define CMD_STOP_LEN 2
+#define CMD_DELETE_SOUND_LEN 3
 #define CMD_START_LEN 7
 
 /************************************************************************/

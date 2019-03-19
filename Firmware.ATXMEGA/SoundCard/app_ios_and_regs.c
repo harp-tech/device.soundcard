@@ -224,7 +224,7 @@ uint8_t *app_regs_pointer[] = {
 	(uint8_t*)(&app_regs.REG_RESERVED9),
 	(uint8_t*)(&app_regs.REG_ADC_CONF),
 	(uint8_t*)(app_regs.REG_ADC_VALUES),
-	(uint8_t*)(&app_regs.REG_BOOTLOADER),
+	(uint8_t*)(&app_regs.REG_COMMANDS),
 	(uint8_t*)(&app_regs.REG_RESERVED10),
 	(uint8_t*)(&app_regs.REG_RESERVED11),
 	(uint8_t*)(&app_regs.REG_RESERVED12),

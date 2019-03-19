@@ -3,11 +3,15 @@
 #include "ios.h"
 #include "parallel_bus.h"
 #include "audio.h"
+#include "sounds_allocation.h"
 
 bool check_cmd_start(int index);
 
-unsigned char cmd_stop[CMD_STOP_LEN]   = {CMD_STOP, 0};
-unsigned char cmd_start[CMD_START_LEN] = {CMD_START, 0, 0, 0, 0, 0, 0};
+extern bool audio_sound_exists[32];
+
+unsigned char cmd_stop[CMD_STOP_LEN]                  = {CMD_STOP, 0};
+unsigned char cmd_delete_sound[CMD_DELETE_SOUND_LEN]  = {CMD_DELETE_SOUND, 0, 0};
+unsigned char cmd_start[CMD_START_LEN]                = {CMD_START, 0, 0, 0, 0, 0, 0};
 
 #define PAR_RECEIVE_BYTE(byte)  while (!read_PAR_CMD_WRITE); \
                                 byte = read_PAR_BUS; \
@@ -70,12 +74,11 @@ int par_bus_check_if_command_is_available(void)
                 if ((checksum == cmd_start[CMD_START_LEN - 1]) && (check_cmd_start(cmd_start[1])))
                 {
                     PAR_RECEIVE_LAST_BYTE_REPLY(false);
-                clr_LED_USB;
+                    
                     return command_received;
                 }
                 
                 PAR_RECEIVE_LAST_BYTE_REPLY(true);
-                set_LED_USB;
                 break;
                 
             case CMD_STOP:
@@ -86,6 +89,54 @@ int par_bus_check_if_command_is_available(void)
                     return command_received;
                 }
                 
+                break;
+                
+            case CMD_DELETE_SOUND:
+                PAR_RECEIVE_BYTE(cmd_delete_sound[1]);
+                PAR_RECEIVE_LAST_BYTE(cmd_delete_sound[2]);
+                
+                if (cmd_delete_sound[2] == (unsigned char)(CMD_DELETE_SOUND + cmd_delete_sound[1]))
+                {
+                    if ((cmd_delete_sound[1] < 32) || (cmd_delete_sound[1] == 0xAA))
+                    {
+                        PAR_RECEIVE_LAST_BYTE_REPLY(false);
+                    
+                        if (cmd_delete_sound[1] < 32)
+                        {
+                            if (audio_sound_exists[cmd_delete_sound[1]] == true)
+                            {
+                                block_erase(cmd_delete_sound[1] * BLOCKS_PER_SOUND);
+                                
+                                clr_AUDIO_RESET;
+                                reset_PIC32();
+                                while(1);
+                            }
+                        }
+                        
+                        if (cmd_delete_sound[1] == 0xAA)
+                        {
+                            bool have_sounds = false;
+                            
+                            for (i = 0; i < get_available_sounds(); i++)
+                            {
+                                if (audio_sound_exists[i] == true)
+                                {
+                                    block_erase(i * BLOCKS_PER_SOUND);
+                                    have_sounds = true;
+                                }
+                            }
+                            
+                            if (have_sounds)
+                            {
+                                clr_AUDIO_RESET;
+                                reset_PIC32();
+                                while(1);
+                            }
+                        }
+                    }
+                }
+                
+                PAR_RECEIVE_LAST_BYTE_REPLY(true);                
                 break;
         }
     }

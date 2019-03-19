@@ -7,6 +7,7 @@
 /* STOP                 11110000                                             checksum(1)
  * START                11110001  index(1)   A_left(2)  A_right(2)           checksum(1)
  * START W/ FREQUENCY   11110010             A_left(2)  A_right(2)  Freq(2)  checksum(1)
+ * DELETE_SOUND         11110100  index(1)                                   checksum(1)
  * UPDATE AMP           11111001             A_left(2)  A_right(2)           checksum(1)
  * UPDATE AMP. & FREQ.  11111010             A_left(2)  A_right(2)  Freq(2)  checksum(1)
  * UPDATE FREQUENCY     11110011                                    Freq(2)  checksum(1)
@@ -14,15 +15,18 @@
 #define CMD_STOP 0xF0
 #define CMD_START 0xF1
 #define CMD_START_W_FREQUENCY 0xF2
+#define CMD_DELETE_SOUND 0xF7
 #define CMD_UPDATE_AMPLITUDE 0xF9
 #define CMD_UPDATE_AMPLITUDE_AND_FREQUENCY 0xFA
 #define CMD_UPDATE_FREQUENCY 0xFB
 
 #define CMD_STOP_LEN 2
+#define CMD_DELETE_SOUND_LEN 3
 #define CMD_START_LEN 7
 
-uint8_t cmd_stop[CMD_STOP_LEN]   = {CMD_STOP, 0};
-uint8_t cmd_start[CMD_START_LEN] = {CMD_START, 0, 0, 0, 0, 0, 0};
+uint8_t cmd_stop[CMD_STOP_LEN]                  = {CMD_STOP, 0};
+uint8_t cmd_delete_sound[CMD_DELETE_SOUND_LEN]  = {CMD_DELETE_SOUND, 0, 0};
+uint8_t cmd_start[CMD_START_LEN]                = {CMD_START, 0, 0, 0, 0, 0, 0};
 
 bool command_available = false;
 uint8_t command_to_send;
@@ -64,6 +68,10 @@ ISR(PORTC_INT1_vect, ISR_NAKED)
                
             case CMD_STOP:
                par_cmd_stop_callback();
+               break;
+               
+            case CMD_DELETE_SOUND:
+               par_cmd_delete_sound_callback();
                break;
          }
            
@@ -131,6 +139,34 @@ void par_cmd_stop(void)
 bool par_cmd_stop_callback (void)
 {
    send_last_byte(cmd_stop[CMD_STOP_LEN - 1]);
+}
+
+/************************************************************************/
+/* COMMAND: DELETE_SOUND                                                */
+/************************************************************************/
+void par_cmd_delete_sound(uint8_t sound_index, bool delete_all)
+{
+    /* Prepare command */
+    if (delete_all)
+        cmd_delete_sound[1] = 0xAA;
+    else
+        cmd_delete_sound[1] = sound_index;
+    
+    /* Calculate checksum */
+    cmd_delete_sound[2] = CMD_DELETE_SOUND + cmd_delete_sound[1];
+    
+    /* Update globals */
+    command_available = true;
+    command_to_send = CMD_DELETE_SOUND;
+    
+    /* Create an interrupt to be addressed as soon as possible */
+    timer_type0_enable(&TCD0, TIMER_PRESCALER_DIV1, 1, INT_LEVEL_LOW);
+}
+
+bool par_cmd_delete_sound_callback (void)
+{
+    send_byte(cmd_delete_sound[1]);
+    send_last_byte(cmd_delete_sound[2]);
 }
 
 /************************************************************************/
