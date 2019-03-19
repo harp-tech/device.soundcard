@@ -11568,6 +11568,25 @@ Source: http://products.nichicon.co.jp/en/pdf/XJA043/e-ud.pdf</description>
 <rectangle x1="-1.2" y1="0.8" x2="-0.7" y2="1.4" layer="51"/>
 <circle x="-0.889" y="-0.127" radius="0.254" width="0.127" layer="21"/>
 </package>
+<package name="SOT23-5">
+<description>&lt;b&gt;Small Outline Transistor&lt;/b&gt;, 5 lead</description>
+<wire x1="-1.544" y1="0.713" x2="1.544" y2="0.713" width="0.1524" layer="51"/>
+<wire x1="1.544" y1="0.713" x2="1.544" y2="-0.712" width="0.1524" layer="21"/>
+<wire x1="1.544" y1="-0.712" x2="-1.544" y2="-0.712" width="0.1524" layer="51"/>
+<wire x1="-1.544" y1="-0.712" x2="-1.544" y2="0.713" width="0.1524" layer="21"/>
+<smd name="5" x="-0.95" y="1.306" dx="0.6" dy="1.2" layer="1"/>
+<smd name="4" x="0.95" y="1.306" dx="0.6" dy="1.2" layer="1"/>
+<smd name="1" x="-0.95" y="-1.306" dx="0.6" dy="1.2" layer="1"/>
+<smd name="2" x="0" y="-1.306" dx="0.6" dy="1.2" layer="1"/>
+<smd name="3" x="0.95" y="-1.306" dx="0.6" dy="1.2" layer="1"/>
+<text x="-1.778" y="-1.778" size="1.27" layer="25" ratio="10" rot="R90">&gt;NAME</text>
+<text x="3.048" y="-1.778" size="1.27" layer="27" ratio="10" rot="R90">&gt;VALUE</text>
+<rectangle x1="-1.1875" y1="0.7126" x2="-0.7125" y2="1.5439" layer="51"/>
+<rectangle x1="0.7125" y1="0.7126" x2="1.1875" y2="1.5439" layer="51"/>
+<rectangle x1="-1.1875" y1="-1.5437" x2="-0.7125" y2="-0.7124" layer="51"/>
+<rectangle x1="-0.2375" y1="-1.5437" x2="0.2375" y2="-0.7124" layer="51"/>
+<rectangle x1="0.7125" y1="-1.5437" x2="1.1875" y2="-0.7124" layer="51"/>
+</package>
 </packages>
 <symbols>
 <symbol name="SI8645">
@@ -11626,6 +11645,23 @@ Source: http://products.nichicon.co.jp/en/pdf/XJA043/e-ud.pdf</description>
 <wire x1="7.62" y1="7.62" x2="-7.62" y2="7.62" width="0.254" layer="94"/>
 <text x="-7.62" y="8.89" size="1.778" layer="95">&gt;NAME</text>
 <text x="-7.62" y="-10.16" size="1.778" layer="95">&gt;VALUE</text>
+</symbol>
+<symbol name="OPAMP+-">
+<wire x1="-5.08" y1="5.08" x2="-5.08" y2="-5.08" width="0.4064" layer="94"/>
+<wire x1="-5.08" y1="-5.08" x2="5.08" y2="0" width="0.4064" layer="94"/>
+<wire x1="5.08" y1="0" x2="-5.08" y2="5.08" width="0.4064" layer="94"/>
+<wire x1="-3.81" y1="3.175" x2="-3.81" y2="1.905" width="0.1524" layer="94"/>
+<wire x1="-4.445" y1="2.54" x2="-3.175" y2="2.54" width="0.1524" layer="94"/>
+<wire x1="-4.445" y1="-2.54" x2="-3.175" y2="-2.54" width="0.1524" layer="94"/>
+<text x="2.54" y="3.175" size="1.778" layer="95">&gt;NAME</text>
+<text x="2.54" y="-5.08" size="1.778" layer="96">&gt;VALUE</text>
+<text x="1.27" y="3.175" size="0.8128" layer="93" rot="R90">V+</text>
+<text x="1.27" y="-4.445" size="0.8128" layer="93" rot="R90">V-</text>
+<pin name="-IN" x="-7.62" y="-2.54" visible="pad" length="short" direction="in"/>
+<pin name="+IN" x="-7.62" y="2.54" visible="pad" length="short" direction="in"/>
+<pin name="OUT" x="7.62" y="0" visible="pad" length="short" direction="out" rot="R180"/>
+<pin name="V+" x="0" y="7.62" visible="pad" length="middle" direction="pwr" rot="R270"/>
+<pin name="V-" x="0" y="-7.62" visible="pad" length="middle" direction="pwr" rot="R90"/>
 </symbol>
 </symbols>
 <devicesets>
@@ -11690,6 +11726,25 @@ Source: http://products.nichicon.co.jp/en/pdf/XJA043/e-ud.pdf</description>
 <connect gate="G$1" pin="GND" pad="2"/>
 <connect gate="G$1" pin="IN" pad="1"/>
 <connect gate="G$1" pin="OUT" pad="5"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="OPA365">
+<gates>
+<gate name="G$1" symbol="OPAMP+-" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="SOT23-5">
+<connects>
+<connect gate="G$1" pin="+IN" pad="3"/>
+<connect gate="G$1" pin="-IN" pad="4"/>
+<connect gate="G$1" pin="OUT" pad="1"/>
+<connect gate="G$1" pin="V+" pad="5"/>
+<connect gate="G$1" pin="V-" pad="2"/>
 </connects>
 <technologies>
 <technology name=""/>
@@ -30788,11 +30843,11 @@ Standard 4-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 <part name="C87" library="rcl" deviceset="C-EU" device="C0603" value="10uF"/>
 <part name="GND167" library="supply1" deviceset="GND" device=""/>
 <part name="P+54" library="supply1" deviceset="VCC" device=""/>
-<part name="TX1" library="CNP-miscellaneous" deviceset="LED" device="HAND" value="RED "/>
+<part name="LED1" library="CNP-miscellaneous" deviceset="LED" device="HAND" value="RED "/>
 <part name="R75" library="rcl" deviceset="R-EU_" device="R0402" value="2050 "/>
-<part name="TX2" library="CNP-miscellaneous" deviceset="LED" device="HAND" value="RED "/>
+<part name="LED2" library="CNP-miscellaneous" deviceset="LED" device="HAND" value="RED "/>
 <part name="R76" library="rcl" deviceset="R-EU_" device="R0402" value="2050"/>
-<part name="TX3" library="CNP-miscellaneous" deviceset="LED" device="HAND" value="RED "/>
+<part name="LED3" library="CNP-miscellaneous" deviceset="LED" device="HAND" value="RED "/>
 <part name="R77" library="rcl" deviceset="R-EU_" device="R0402" value="2050 "/>
 <part name="GND168" library="supply1" deviceset="GND" device=""/>
 <part name="GND170" library="supply1" deviceset="GND" device=""/>
@@ -30821,10 +30876,42 @@ Standard 4-pin 0.1" header. Use with straight break away headers (SKU : PRT-0011
 <part name="VCC24" library="supply1" deviceset="VCCIO" device="" value="VDDIO"/>
 <part name="GND182" library="supply1" deviceset="GND" device=""/>
 <part name="GND183" library="supply1" deviceset="GND" device=""/>
-<part name="R78" library="rcl" deviceset="R-EU_" device="R0402" value="10k"/>
+<part name="R78" library="rcl" deviceset="R-EU_" device="R0402" value="100k"/>
 <part name="GND184" library="supply1" deviceset="GND" device=""/>
-<part name="R79" library="rcl" deviceset="R-EU_" device="R0402" value="10k"/>
+<part name="R79" library="rcl" deviceset="R-EU_" device="R0402" value="100k"/>
 <part name="GND185" library="supply1" deviceset="GND" device=""/>
+<part name="R80" library="rcl" deviceset="R-EU_" device="R0402" value="3.16k"/>
+<part name="P+1" library="supply1" deviceset="VCC" device=""/>
+<part name="R81" library="rcl" deviceset="R-EU_" device="R0402" value="10k"/>
+<part name="C144" library="rcl" deviceset="C-EU" device="C0402" value="15nF"/>
+<part name="GND188" library="supply1" deviceset="GND" device=""/>
+<part name="C146" library="rcl" deviceset="C-EU" device="C0402" value="100nF"/>
+<part name="GND190" library="supply1" deviceset="GND" device=""/>
+<part name="GND191" library="supply1" deviceset="GND" device=""/>
+<part name="R83" library="rcl" deviceset="R-EU_" device="R0402" value="24k"/>
+<part name="R84" library="rcl" deviceset="R-EU_" device="R0402" value="16k"/>
+<part name="GND192" library="supply1" deviceset="GND" device=""/>
+<part name="IC37" library="CNP-ics 2" deviceset="OPA365" device=""/>
+<part name="VCC27" library="supply1" deviceset="VCCIO" device="" value="VDDIO"/>
+<part name="R82" library="rcl" deviceset="R-EU_" device="R0402" value="10k"/>
+<part name="C145" library="rcl" deviceset="C-EU" device="C0402" value="15nF "/>
+<part name="GND189" library="supply1" deviceset="GND" device=""/>
+<part name="C147" library="rcl" deviceset="C-EU" device="C0402" value="100nF"/>
+<part name="GND193" library="supply1" deviceset="GND" device=""/>
+<part name="GND194" library="supply1" deviceset="GND" device=""/>
+<part name="R85" library="rcl" deviceset="R-EU_" device="R0402" value="24k"/>
+<part name="R86" library="rcl" deviceset="R-EU_" device="R0402" value="16k"/>
+<part name="GND195" library="supply1" deviceset="GND" device=""/>
+<part name="IC38" library="CNP-ics 2" deviceset="OPA365" device=""/>
+<part name="VCC28" library="supply1" deviceset="VCCIO" device="" value="VDDIO"/>
+<part name="R87" library="rcl" deviceset="R-EU_" device="R0402" value="100k"/>
+<part name="C148" library="rcl" deviceset="C-EU" device="C0603" value="1u"/>
+<part name="R88" library="rcl" deviceset="R-EU_" device="R0402" value="100k"/>
+<part name="C149" library="rcl" deviceset="C-EU" device="C0603" value="1u"/>
+<part name="GND186" library="supply1" deviceset="GND" device=""/>
+<part name="GND187" library="supply1" deviceset="GND" device=""/>
+<part name="R89" library="rcl" deviceset="R-EU_" device="R0402" value="100k"/>
+<part name="GND196" library="supply1" deviceset="GND" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -30844,10 +30931,10 @@ less noise </text>
 <text x="111.76" y="48.26" size="1.778" layer="97">Vout=1.2x(1+RFB1/RFB2)=12.000V</text>
 <text x="106.68" y="73.66" size="1.778" layer="97">noise reduction 
 21uVRMS</text>
-<text x="288.798" y="9.144" size="1.778" layer="94" ratio="10">Licensed under the TAPR Open
+<text x="288.798" y="9.144" size="1.778" layer="94" ratio="10">Licensed under the TAPR Open 
 Hardware License (www.tapr.org/OHL)
-Copyright 2018 Artur Silva, Dario Bento,
-Paulo Carriço, Filipe Carvalho</text>
+Copyright 2017-2019 Artur Silva, Dario Bento,
+Paulo Carriço and Filipe Carvalho</text>
 <text x="60.96" y="203.2" size="1.778" layer="97">12V IN</text>
 </plain>
 <instances>
@@ -30934,10 +31021,16 @@ Paulo Carriço, Filipe Carvalho</text>
 <instance part="C2" gate="G$1" x="66.04" y="195.58"/>
 <instance part="EMI" gate="G$1" x="124.46" y="226.06"/>
 <instance part="GND70" gate="1" x="137.16" y="228.6" rot="MR0"/>
-<instance part="R78" gate="G$1" x="228.6" y="53.34" rot="R270"/>
-<instance part="GND184" gate="1" x="228.6" y="40.64" rot="MR0"/>
-<instance part="R79" gate="G$1" x="53.34" y="53.34" rot="R270"/>
-<instance part="GND185" gate="1" x="53.34" y="40.64" rot="MR0"/>
+<instance part="R78" gate="G$1" x="228.6" y="38.1" rot="R270"/>
+<instance part="GND184" gate="1" x="228.6" y="30.48" rot="MR0"/>
+<instance part="R79" gate="G$1" x="55.88" y="43.18" rot="R270"/>
+<instance part="GND185" gate="1" x="55.88" y="35.56" rot="MR0"/>
+<instance part="R87" gate="G$1" x="33.02" y="50.8"/>
+<instance part="C148" gate="G$1" x="43.18" y="45.72"/>
+<instance part="R88" gate="G$1" x="205.74" y="45.72"/>
+<instance part="C149" gate="G$1" x="215.9" y="40.64"/>
+<instance part="GND186" gate="1" x="43.18" y="35.56" rot="MR0"/>
+<instance part="GND187" gate="1" x="215.9" y="30.48" rot="MR0"/>
 </instances>
 <busses>
 </busses>
@@ -31080,13 +31173,20 @@ Paulo Carriço, Filipe Carvalho</text>
 <segment>
 <pinref part="R78" gate="G$1" pin="2"/>
 <pinref part="GND184" gate="1" pin="GND"/>
-<wire x1="228.6" y1="48.26" x2="228.6" y2="45.72" width="0.1524" layer="91"/>
-<wire x1="228.6" y1="43.18" x2="228.6" y2="45.72" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <pinref part="R79" gate="G$1" pin="2"/>
 <pinref part="GND185" gate="1" pin="GND"/>
-<wire x1="53.34" y1="48.26" x2="53.34" y2="43.18" width="0.1524" layer="91"/>
+</segment>
+<segment>
+<pinref part="C148" gate="G$1" pin="2"/>
+<wire x1="43.18" y1="40.64" x2="43.18" y2="38.1" width="0.1524" layer="91"/>
+<pinref part="GND186" gate="1" pin="GND"/>
+</segment>
+<segment>
+<pinref part="C149" gate="G$1" pin="2"/>
+<pinref part="GND187" gate="1" pin="GND"/>
+<wire x1="215.9" y1="35.56" x2="215.9" y2="33.02" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$7" class="0">
@@ -31434,26 +31534,60 @@ Paulo Carriço, Filipe Carvalho</text>
 <junction x="254" y="165.1"/>
 </segment>
 </net>
-<net name="EN_N12V" class="0">
+<net name="N$79" class="0">
 <segment>
-<pinref part="IC3" gate="G$1" pin="EN"/>
-<wire x1="233.68" y1="58.42" x2="228.6" y2="58.42" width="0.1524" layer="91"/>
-<pinref part="R78" gate="G$1" pin="1"/>
-<label x="223.52" y="58.42" size="1.778" layer="95"/>
+<pinref part="R79" gate="G$1" pin="1"/>
+<wire x1="55.88" y1="48.26" x2="55.88" y2="50.8" width="0.1524" layer="91"/>
+<pinref part="IC1" gate="G$1" pin="EN"/>
+<wire x1="55.88" y1="50.8" x2="55.88" y2="58.42" width="0.1524" layer="91"/>
+<wire x1="55.88" y1="58.42" x2="60.96" y2="58.42" width="0.1524" layer="91"/>
+<pinref part="C148" gate="G$1" pin="1"/>
+<wire x1="43.18" y1="48.26" x2="43.18" y2="50.8" width="0.1524" layer="91"/>
+<wire x1="43.18" y1="50.8" x2="55.88" y2="50.8" width="0.1524" layer="91"/>
+<pinref part="R87" gate="G$1" pin="2"/>
+<wire x1="38.1" y1="50.8" x2="43.18" y2="50.8" width="0.1524" layer="91"/>
+<junction x="43.18" y="50.8"/>
+<junction x="55.88" y="50.8"/>
 </segment>
 </net>
 <net name="EN_P12V" class="0">
 <segment>
-<pinref part="IC1" gate="G$1" pin="EN"/>
-<wire x1="60.96" y1="58.42" x2="53.34" y2="58.42" width="0.1524" layer="91"/>
-<pinref part="R79" gate="G$1" pin="1"/>
-<label x="50.8" y="58.42" size="1.778" layer="95"/>
+<pinref part="R87" gate="G$1" pin="1"/>
+<wire x1="27.94" y1="50.8" x2="22.86" y2="50.8" width="0.1524" layer="91"/>
+<label x="17.78" y="50.8" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="N$83" class="0">
+<segment>
+<pinref part="IC3" gate="G$1" pin="EN"/>
+<wire x1="233.68" y1="58.42" x2="228.6" y2="58.42" width="0.1524" layer="91"/>
+<pinref part="R78" gate="G$1" pin="1"/>
+<wire x1="228.6" y1="58.42" x2="228.6" y2="45.72" width="0.1524" layer="91"/>
+<wire x1="228.6" y1="45.72" x2="228.6" y2="43.18" width="0.1524" layer="91"/>
+<wire x1="228.6" y1="45.72" x2="215.9" y2="45.72" width="0.1524" layer="91"/>
+<pinref part="C149" gate="G$1" pin="1"/>
+<wire x1="215.9" y1="45.72" x2="210.82" y2="45.72" width="0.1524" layer="91"/>
+<wire x1="215.9" y1="43.18" x2="215.9" y2="45.72" width="0.1524" layer="91"/>
+<pinref part="R88" gate="G$1" pin="2"/>
+<junction x="215.9" y="45.72"/>
+<junction x="228.6" y="45.72"/>
+</segment>
+</net>
+<net name="EN_N12V" class="0">
+<segment>
+<pinref part="R88" gate="G$1" pin="1"/>
+<wire x1="200.66" y1="45.72" x2="195.58" y2="45.72" width="0.1524" layer="91"/>
+<label x="190.5" y="45.72" size="1.778" layer="95"/>
 </segment>
 </net>
 </nets>
 </sheet>
 <sheet>
 <plain>
+<text x="288.798" y="9.144" size="1.778" layer="94" ratio="10">Licensed under the TAPR Open
+Hardware License (www.tapr.org/OHL)
+Copyright 2017 Artur Silva and
+Filipe Carvalho</text>
 <text x="205.74" y="165.1" size="1.778" layer="97">WORD_CLK</text>
 <text x="205.74" y="160.02" size="1.778" layer="97">BIT_CLK</text>
 <text x="205.74" y="154.94" size="1.778" layer="97">Serial Data</text>
@@ -31467,10 +31601,6 @@ Paulo Carriço, Filipe Carvalho</text>
 <text x="142.24" y="116.84" size="1.778" layer="97">12V IN</text>
 <text x="91.44" y="154.94" size="1.778" layer="97">ADP3303-5.0</text>
 <text x="91.44" y="76.2" size="1.778" layer="97">ADP3303-5.0</text>
-<text x="288.798" y="9.144" size="1.778" layer="94" ratio="10">Licensed under the TAPR Open
-Hardware License (www.tapr.org/OHL)
-Copyright 2018 Artur Silva, Dario Bento,
-Paulo Carriço, Filipe Carvalho</text>
 </plain>
 <instances>
 <instance part="FRAME5" gate="G$1" x="0" y="0"/>
@@ -31981,8 +32111,8 @@ Paulo Carriço, Filipe Carvalho</text>
 <plain>
 <text x="288.798" y="9.144" size="1.778" layer="94" ratio="10">Licensed under the TAPR Open
 Hardware License (www.tapr.org/OHL)
-Copyright 2018 Artur Silva, Dario Bento,
-Paulo Carriço, Filipe Carvalho</text>
+Copyright 2017 Artur Silva and
+Filipe Carvalho</text>
 </plain>
 <instances>
 <instance part="IC8" gate="G$1" x="182.88" y="109.22" rot="MR180"/>
@@ -32547,8 +32677,8 @@ Paulo Carriço, Filipe Carvalho</text>
 <plain>
 <text x="288.798" y="9.144" size="1.778" layer="94" ratio="10">Licensed under the TAPR Open
 Hardware License (www.tapr.org/OHL)
-Copyright 2018 Artur Silva, Dario Bento,
-Paulo Carriço, Filipe Carvalho</text>
+Copyright 2017 Artur Silva and
+Filipe Carvalho</text>
 </plain>
 <instances>
 <instance part="IC11" gate="G$1" x="182.88" y="109.22" rot="MR180"/>
@@ -33067,6 +33197,10 @@ Paulo Carriço, Filipe Carvalho</text>
 </sheet>
 <sheet>
 <plain>
+<text x="288.798" y="9.144" size="1.778" layer="94" ratio="10">Licensed under the TAPR Open
+Hardware License (www.tapr.org/OHL)
+Copyright 2017 Artur Silva and
+Filipe Carvalho</text>
 <text x="33.02" y="17.78" size="1.778" layer="97">PMP
 PMCS1 - Parallel Master Port Chip Select 1 Strobe
 PMDx - Parallel Master Address/Data Port
@@ -33080,10 +33214,6 @@ Ireqmax=200mA</text>
 <text x="175.26" y="231.14" size="1.778" layer="97">3.3V@250mA</text>
 <text x="187.96" y="208.28" size="1.778" layer="97">24.576MHz</text>
 <text x="337.82" y="129.54" size="1.778" layer="97">24MHz</text>
-<text x="288.798" y="9.144" size="1.778" layer="94" ratio="10">Licensed under the TAPR Open
-Hardware License (www.tapr.org/OHL)
-Copyright 2018 Artur Silva, Dario Bento,
-Paulo Carriço, Filipe Carvalho</text>
 </plain>
 <instances>
 <instance part="IC13" gate="G$1" x="60.96" y="106.68"/>
@@ -33221,11 +33351,11 @@ Paulo Carriço, Filipe Carvalho</text>
 </instance>
 <instance part="GND167" gate="1" x="119.38" y="213.36" rot="MR0"/>
 <instance part="P+54" gate="VCC" x="172.72" y="238.76"/>
-<instance part="TX1" gate="G$1" x="119.38" y="177.8" rot="R270"/>
+<instance part="LED1" gate="G$1" x="119.38" y="177.8" rot="R270"/>
 <instance part="R75" gate="G$1" x="119.38" y="187.96" rot="R90"/>
-<instance part="TX2" gate="G$1" x="132.08" y="177.8" rot="R270"/>
+<instance part="LED2" gate="G$1" x="132.08" y="177.8" rot="R270"/>
 <instance part="R76" gate="G$1" x="132.08" y="187.96" rot="R90"/>
-<instance part="TX3" gate="G$1" x="144.78" y="177.8" rot="R270"/>
+<instance part="LED3" gate="G$1" x="144.78" y="177.8" rot="R270"/>
 <instance part="R77" gate="G$1" x="144.78" y="187.96" rot="R90"/>
 <instance part="GND168" gate="1" x="119.38" y="165.1" rot="MR0"/>
 <instance part="GND170" gate="1" x="132.08" y="165.1" rot="MR0"/>
@@ -33235,6 +33365,11 @@ Paulo Carriço, Filipe Carvalho</text>
 <instance part="GND172" gate="1" x="121.92" y="149.86" rot="MR0"/>
 <instance part="GND176" gate="G$1" x="134.62" y="132.08"/>
 <instance part="GND177" gate="1" x="134.62" y="129.54" rot="MR0"/>
+<instance part="R80" gate="G$1" x="335.28" y="50.8" smashed="yes" rot="MR90">
+<attribute name="NAME" x="336.7786" y="49.53" size="1.778" layer="95" rot="MR90"/>
+<attribute name="VALUE" x="331.978" y="46.99" size="1.778" layer="96" rot="MR90"/>
+</instance>
+<instance part="P+1" gate="VCC" x="335.28" y="60.96"/>
 </instances>
 <busses>
 </busses>
@@ -33465,17 +33600,17 @@ Paulo Carriço, Filipe Carvalho</text>
 <wire x1="119.38" y1="218.44" x2="119.38" y2="215.9" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="TX1" gate="G$1" pin="K"/>
+<pinref part="LED1" gate="G$1" pin="K"/>
 <wire x1="119.38" y1="172.72" x2="119.38" y2="167.64" width="0.1524" layer="91"/>
 <pinref part="GND168" gate="1" pin="GND"/>
 </segment>
 <segment>
-<pinref part="TX2" gate="G$1" pin="K"/>
+<pinref part="LED2" gate="G$1" pin="K"/>
 <wire x1="132.08" y1="172.72" x2="132.08" y2="167.64" width="0.1524" layer="91"/>
 <pinref part="GND170" gate="1" pin="GND"/>
 </segment>
 <segment>
-<pinref part="TX3" gate="G$1" pin="K"/>
+<pinref part="LED3" gate="G$1" pin="K"/>
 <wire x1="144.78" y1="172.72" x2="144.78" y2="167.64" width="0.1524" layer="91"/>
 <pinref part="GND171" gate="1" pin="GND"/>
 </segment>
@@ -33676,6 +33811,11 @@ Paulo Carriço, Filipe Carvalho</text>
 <pinref part="IC16" gate="G$1" pin="EBIA2/AN11/C2INC/ERXCLK/EREFCLK..."/>
 <wire x1="243.84" y1="35.56" x2="243.84" y2="20.32" width="0.1524" layer="91"/>
 <label x="243.84" y="20.32" size="1.778" layer="95" rot="R90"/>
+</segment>
+<segment>
+<pinref part="R80" gate="G$1" pin="1"/>
+<wire x1="335.28" y1="45.72" x2="335.28" y2="43.18" width="0.1524" layer="91"/>
+<label x="335.28" y="43.18" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="WP" class="0">
@@ -33934,6 +34074,11 @@ Paulo Carriço, Filipe Carvalho</text>
 <wire x1="165.1" y1="228.6" x2="172.72" y2="228.6" width="0.1524" layer="91"/>
 <junction x="172.72" y="228.6"/>
 <pinref part="P+54" gate="VCC" pin="VCC"/>
+</segment>
+<segment>
+<pinref part="R80" gate="G$1" pin="2"/>
+<pinref part="P+1" gate="VCC" pin="VCC"/>
+<wire x1="335.28" y1="55.88" x2="335.28" y2="58.42" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$82" class="0">
@@ -34402,21 +34547,21 @@ Paulo Carriço, Filipe Carvalho</text>
 </net>
 <net name="N$36" class="0">
 <segment>
-<pinref part="TX1" gate="G$1" pin="A"/>
+<pinref part="LED1" gate="G$1" pin="A"/>
 <pinref part="R75" gate="G$1" pin="1"/>
 <wire x1="119.38" y1="182.88" x2="119.38" y2="180.34" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$51" class="0">
 <segment>
-<pinref part="TX2" gate="G$1" pin="A"/>
+<pinref part="LED2" gate="G$1" pin="A"/>
 <pinref part="R76" gate="G$1" pin="1"/>
 <wire x1="132.08" y1="182.88" x2="132.08" y2="180.34" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$64" class="0">
 <segment>
-<pinref part="TX3" gate="G$1" pin="A"/>
+<pinref part="LED3" gate="G$1" pin="A"/>
 <pinref part="R77" gate="G$1" pin="1"/>
 <wire x1="144.78" y1="182.88" x2="144.78" y2="180.34" width="0.1524" layer="91"/>
 </segment>
@@ -34449,13 +34594,13 @@ Paulo Carriço, Filipe Carvalho</text>
 <text x="189.23" y="101.6" size="1.778" layer="97" rot="R180">Case A</text>
 <text x="83.82" y="157.48" size="2.54" layer="97">--------------------------------------------- USB UART ---------------------------------------------</text>
 <text x="284.48" y="215.9" size="1.778" layer="97">3.3V@250mA</text>
+<text x="288.798" y="9.144" size="1.778" layer="94" ratio="10">Licensed under the TAPR Open
+Hardware License (www.tapr.org/OHL)
+Copyright 2017 Artur Silva and
+Filipe Carvalho</text>
 <text x="132.08" y="231.14" size="1.778" layer="97">12V IN</text>
 <text x="83.82" y="220.98" size="1.778" layer="97">4.98V@Imax=1A
 Ireqmax=200mA</text>
-<text x="288.798" y="9.144" size="1.778" layer="94" ratio="10">Licensed under the TAPR Open
-Hardware License (www.tapr.org/OHL)
-Copyright 2018 Artur Silva, Dario Bento,
-Paulo Carriço, Filipe Carvalho</text>
 </plain>
 <instances>
 <instance part="FRAME1" gate="G$1" x="0" y="0"/>
@@ -35087,6 +35232,10 @@ voltage selector</text>
 <text x="15.24" y="195.58" size="2.54" layer="97">----------- UART3 Buffer -----------</text>
 <text x="264.16" y="71.12" size="1.778" layer="97">SI8642BB-B-IS1</text>
 <text x="208.28" y="137.16" size="1.778" layer="97">ATXMEGA128A4U-AU</text>
+<text x="288.798" y="9.144" size="1.778" layer="94" ratio="10">Licensed under the TAPR Open
+Hardware License (www.tapr.org/OHL)
+Copyright 2017 Artur Silva and
+Filipe Carvalho</text>
 <text x="15.24" y="127" size="1.778" layer="97">Bootloader On -&gt; UC_IO3 - High 
 ------
 UART2_TX (PIC32/AVR) -&gt; FTDI_RXD (ENABLED)
@@ -35105,10 +35254,6 @@ UART2_TX/RX on AVR side enabled
 
 AVR_TXD -&gt; FTDI_RXD (ENABLED)
 FTDI_TXD -&gt; AVR_RXD (ON)</text>
-<text x="288.798" y="9.144" size="1.778" layer="94" ratio="10">Licensed under the TAPR Open
-Hardware License (www.tapr.org/OHL)
-Copyright 2018 Artur Silva, Dario Bento,
-Paulo Carriço, Filipe Carvalho</text>
 </plain>
 <instances>
 <instance part="C132" gate="G$1" x="353.06" y="154.94" smashed="yes">
@@ -35233,6 +35378,11 @@ Paulo Carriço, Filipe Carvalho</text>
 <instance part="VCC24" gate="G$1" x="66.04" y="30.48"/>
 <instance part="GND182" gate="1" x="22.86" y="12.7" rot="MR0"/>
 <instance part="GND183" gate="1" x="22.86" y="73.66" rot="MR0"/>
+<instance part="R89" gate="G$1" x="88.9" y="66.04" smashed="yes" rot="MR270">
+<attribute name="NAME" x="87.4014" y="67.31" size="1.778" layer="95" rot="MR270"/>
+<attribute name="VALUE" x="92.202" y="67.31" size="1.778" layer="96" rot="MR270"/>
+</instance>
+<instance part="GND196" gate="1" x="88.9" y="55.88"/>
 </instances>
 <busses>
 </busses>
@@ -35637,6 +35787,11 @@ Paulo Carriço, Filipe Carvalho</text>
 <pinref part="GND182" gate="1" pin="GND"/>
 <pinref part="IC35" gate="G$1" pin="GND"/>
 <wire x1="22.86" y1="15.24" x2="25.4" y2="15.24" width="0.1524" layer="91"/>
+</segment>
+<segment>
+<pinref part="R89" gate="G$1" pin="2"/>
+<pinref part="GND196" gate="1" pin="GND"/>
+<wire x1="88.9" y1="60.96" x2="88.9" y2="58.42" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="OSC1" class="0">
@@ -36089,6 +36244,12 @@ Paulo Carriço, Filipe Carvalho</text>
 <wire x1="25.4" y1="25.4" x2="17.78" y2="25.4" width="0.1524" layer="91"/>
 <label x="15.24" y="25.4" size="1.778" layer="95"/>
 </segment>
+<segment>
+<wire x1="88.9" y1="73.66" x2="81.28" y2="73.66" width="0.1524" layer="91"/>
+<pinref part="R89" gate="G$1" pin="1"/>
+<wire x1="88.9" y1="73.66" x2="88.9" y2="71.12" width="0.1524" layer="91"/>
+<label x="81.28" y="73.66" size="1.778" layer="95"/>
+</segment>
 </net>
 <net name="VDD" class="0">
 <segment>
@@ -36182,14 +36343,20 @@ Paulo Carriço, Filipe Carvalho</text>
 </sheet>
 <sheet>
 <plain>
-<text x="88.646" y="209.296" size="1.778" layer="97">3V/5V in/out voltage
+<text x="35.306" y="219.456" size="1.778" layer="97">3V/5V in/out voltage
       selector</text>
 <text x="37.846" y="155.956" size="2.54" layer="97">------------------------- OUT1-2 -------------------------</text>
 <text x="225.298" y="154.686" size="2.54" layer="97">------------- IN1-2 -------------</text>
 <text x="288.798" y="9.144" size="1.778" layer="94" ratio="10">Licensed under the TAPR Open
 Hardware License (www.tapr.org/OHL)
-Copyright 2018 Artur Silva, Dario Bento,
-Paulo Carriço, Filipe Carvalho</text>
+Copyright 2017 Artur Silva and
+Filipe Carvalho</text>
+<text x="149.86" y="210.82" size="1.778" layer="97">2nd Order LPF: 1.061 kHz </text>
+<text x="83.82" y="226.06" size="1.778" layer="97">Vmax=5V -&gt; 
+VADCmax=2V (AVCC/1.6)</text>
+<text x="259.08" y="208.28" size="1.778" layer="97">2nd Order LPF: 1.061 kHz </text>
+<text x="193.04" y="223.52" size="1.778" layer="97">Vmax=5V -&gt; 
+VADCmax=2V (AVCC/1.6)</text>
 </plain>
 <instances>
 <instance part="FRAME2" gate="G$1" x="0" y="0"/>
@@ -36203,12 +36370,12 @@ Paulo Carriço, Filipe Carvalho</text>
 <instance part="GND74" gate="1" x="127" y="106.68"/>
 <instance part="P+5" gate="G$1" x="127" y="129.54"/>
 <instance part="P+13" gate="G$1" x="127" y="83.82"/>
-<instance part="X1" gate="G$1" x="261.62" y="208.28"/>
-<instance part="JP2" gate="1" x="104.14" y="190.5" rot="MR180"/>
-<instance part="P+16" gate="1" x="96.52" y="193.04" smashed="yes" rot="R90">
-<attribute name="VALUE" x="95.25" y="193.802" size="1.778" layer="96" rot="R180"/>
+<instance part="X1" gate="G$1" x="337.82" y="210.82"/>
+<instance part="JP2" gate="1" x="48.26" y="198.12" rot="MR180"/>
+<instance part="P+16" gate="1" x="40.64" y="200.66" smashed="yes" rot="R90">
+<attribute name="VALUE" x="39.37" y="201.422" size="1.778" layer="96" rot="R180"/>
 </instance>
-<instance part="P+4" gate="G$1" x="104.14" y="200.66"/>
+<instance part="P+4" gate="G$1" x="48.26" y="208.28"/>
 <instance part="IC30" gate="G$1" x="264.16" y="121.92"/>
 <instance part="C135" gate="G$1" x="299.72" y="121.92"/>
 <instance part="VCC8" gate="G$1" x="299.72" y="132.08"/>
@@ -36237,8 +36404,30 @@ Paulo Carriço, Filipe Carvalho</text>
 <attribute name="NAME" x="283.21" y="67.0814" size="1.778" layer="95" rot="MR180"/>
 <attribute name="VALUE" x="283.21" y="71.882" size="1.778" layer="96" rot="MR180"/>
 </instance>
-<instance part="P+10" gate="1" x="279.4" y="220.98"/>
-<instance part="VCC22" gate="G$1" x="111.76" y="193.04" rot="R270"/>
+<instance part="P+10" gate="1" x="355.6" y="223.52"/>
+<instance part="VCC22" gate="G$1" x="55.88" y="200.66" rot="R270"/>
+<instance part="R81" gate="G$1" x="154.94" y="203.2"/>
+<instance part="C144" gate="G$1" x="162.56" y="193.04" rot="R180"/>
+<instance part="GND188" gate="1" x="162.56" y="185.42" rot="MR0"/>
+<instance part="C146" gate="G$1" x="137.16" y="223.52"/>
+<instance part="GND190" gate="1" x="137.16" y="215.9" rot="MR0"/>
+<instance part="GND191" gate="1" x="127" y="190.5" rot="MR0"/>
+<instance part="R83" gate="G$1" x="99.06" y="213.36" rot="R90"/>
+<instance part="R84" gate="G$1" x="99.06" y="198.12" rot="R90"/>
+<instance part="GND192" gate="1" x="99.06" y="190.5" rot="MR0"/>
+<instance part="IC37" gate="G$1" x="127" y="203.2"/>
+<instance part="VCC27" gate="G$1" x="127" y="233.68"/>
+<instance part="R82" gate="G$1" x="264.16" y="200.66"/>
+<instance part="C145" gate="G$1" x="271.78" y="190.5" rot="R180"/>
+<instance part="GND189" gate="1" x="271.78" y="182.88" rot="MR0"/>
+<instance part="C147" gate="G$1" x="246.38" y="220.98"/>
+<instance part="GND193" gate="1" x="246.38" y="213.36" rot="MR0"/>
+<instance part="GND194" gate="1" x="236.22" y="187.96" rot="MR0"/>
+<instance part="R85" gate="G$1" x="208.28" y="210.82" rot="R90"/>
+<instance part="R86" gate="G$1" x="208.28" y="195.58" rot="R90"/>
+<instance part="GND195" gate="1" x="208.28" y="187.96" rot="MR0"/>
+<instance part="IC38" gate="G$1" x="236.22" y="200.66"/>
+<instance part="VCC28" gate="G$1" x="236.22" y="231.14"/>
 </instances>
 <busses>
 </busses>
@@ -36265,7 +36454,27 @@ Paulo Carriço, Filipe Carvalho</text>
 <segment>
 <pinref part="JP2" gate="1" pin="3"/>
 <pinref part="VCC22" gate="G$1" pin="VCCIO"/>
-<wire x1="109.22" y1="193.04" x2="106.68" y2="193.04" width="0.1524" layer="91"/>
+<wire x1="53.34" y1="200.66" x2="50.8" y2="200.66" width="0.1524" layer="91"/>
+</segment>
+<segment>
+<pinref part="C146" gate="G$1" pin="1"/>
+<wire x1="137.16" y1="228.6" x2="137.16" y2="226.06" width="0.1524" layer="91"/>
+<wire x1="127" y1="228.6" x2="137.16" y2="228.6" width="0.1524" layer="91"/>
+<wire x1="127" y1="231.14" x2="127" y2="228.6" width="0.1524" layer="91"/>
+<pinref part="IC37" gate="G$1" pin="V+"/>
+<wire x1="127" y1="228.6" x2="127" y2="210.82" width="0.1524" layer="91"/>
+<junction x="127" y="228.6"/>
+<pinref part="VCC27" gate="G$1" pin="VCCIO"/>
+</segment>
+<segment>
+<pinref part="C147" gate="G$1" pin="1"/>
+<wire x1="246.38" y1="226.06" x2="246.38" y2="223.52" width="0.1524" layer="91"/>
+<wire x1="236.22" y1="226.06" x2="246.38" y2="226.06" width="0.1524" layer="91"/>
+<wire x1="236.22" y1="228.6" x2="236.22" y2="226.06" width="0.1524" layer="91"/>
+<pinref part="IC38" gate="G$1" pin="V+"/>
+<wire x1="236.22" y1="226.06" x2="236.22" y2="208.28" width="0.1524" layer="91"/>
+<junction x="236.22" y="226.06"/>
+<pinref part="VCC28" gate="G$1" pin="VCCIO"/>
 </segment>
 </net>
 <net name="GND" class="0">
@@ -36301,8 +36510,8 @@ Paulo Carriço, Filipe Carvalho</text>
 </segment>
 <segment>
 <pinref part="X1" gate="G$1" pin="1"/>
-<wire x1="266.7" y1="218.44" x2="271.78" y2="218.44" width="0.1524" layer="91"/>
-<label x="269.24" y="218.44" size="1.778" layer="95"/>
+<wire x1="342.9" y1="220.98" x2="347.98" y2="220.98" width="0.1524" layer="91"/>
+<label x="345.44" y="220.98" size="1.778" layer="95"/>
 </segment>
 <segment>
 <pinref part="IC30" gate="G$1" pin="P$1"/>
@@ -36344,13 +36553,49 @@ Paulo Carriço, Filipe Carvalho</text>
 </segment>
 <segment>
 <pinref part="X1" gate="G$1" pin="5"/>
-<wire x1="266.7" y1="208.28" x2="271.78" y2="208.28" width="0.1524" layer="91"/>
-<label x="269.24" y="208.28" size="1.778" layer="95"/>
+<wire x1="342.9" y1="210.82" x2="347.98" y2="210.82" width="0.1524" layer="91"/>
+<label x="345.44" y="210.82" size="1.778" layer="95"/>
 </segment>
 <segment>
 <pinref part="X1" gate="G$1" pin="8"/>
-<wire x1="266.7" y1="200.66" x2="271.78" y2="200.66" width="0.1524" layer="91"/>
-<label x="269.24" y="200.66" size="1.778" layer="95"/>
+<wire x1="342.9" y1="203.2" x2="347.98" y2="203.2" width="0.1524" layer="91"/>
+<label x="345.44" y="203.2" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="C144" gate="G$1" pin="1"/>
+<pinref part="GND188" gate="1" pin="GND"/>
+<wire x1="162.56" y1="190.5" x2="162.56" y2="187.96" width="0.1524" layer="91"/>
+</segment>
+<segment>
+<pinref part="GND190" gate="1" pin="GND"/>
+<pinref part="C146" gate="G$1" pin="2"/>
+</segment>
+<segment>
+<pinref part="R84" gate="G$1" pin="1"/>
+<pinref part="GND192" gate="1" pin="GND"/>
+</segment>
+<segment>
+<pinref part="IC37" gate="G$1" pin="V-"/>
+<pinref part="GND191" gate="1" pin="GND"/>
+<wire x1="127" y1="195.58" x2="127" y2="193.04" width="0.1524" layer="91"/>
+</segment>
+<segment>
+<pinref part="C145" gate="G$1" pin="1"/>
+<pinref part="GND189" gate="1" pin="GND"/>
+<wire x1="271.78" y1="187.96" x2="271.78" y2="185.42" width="0.1524" layer="91"/>
+</segment>
+<segment>
+<pinref part="GND193" gate="1" pin="GND"/>
+<pinref part="C147" gate="G$1" pin="2"/>
+</segment>
+<segment>
+<pinref part="R86" gate="G$1" pin="1"/>
+<pinref part="GND195" gate="1" pin="GND"/>
+</segment>
+<segment>
+<pinref part="IC38" gate="G$1" pin="V-"/>
+<pinref part="GND194" gate="1" pin="GND"/>
+<wire x1="236.22" y1="193.04" x2="236.22" y2="190.5" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="OUT2" class="0">
@@ -36361,8 +36606,8 @@ Paulo Carriço, Filipe Carvalho</text>
 </segment>
 <segment>
 <pinref part="X1" gate="G$1" pin="3"/>
-<wire x1="266.7" y1="213.36" x2="271.78" y2="213.36" width="0.1524" layer="91"/>
-<label x="269.24" y="213.36" size="1.778" layer="95"/>
+<wire x1="342.9" y1="215.9" x2="347.98" y2="215.9" width="0.1524" layer="91"/>
+<label x="345.44" y="215.9" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="OUT1" class="0">
@@ -36373,21 +36618,21 @@ Paulo Carriço, Filipe Carvalho</text>
 </segment>
 <segment>
 <pinref part="X1" gate="G$1" pin="4"/>
-<wire x1="266.7" y1="210.82" x2="271.78" y2="210.82" width="0.1524" layer="91"/>
-<label x="269.24" y="210.82" size="1.778" layer="95"/>
+<wire x1="342.9" y1="213.36" x2="347.98" y2="213.36" width="0.1524" layer="91"/>
+<label x="345.44" y="213.36" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="+5V" class="0">
 <segment>
 <pinref part="JP2" gate="1" pin="1"/>
-<wire x1="101.6" y1="193.04" x2="99.06" y2="193.04" width="0.1524" layer="91"/>
+<wire x1="45.72" y1="200.66" x2="43.18" y2="200.66" width="0.1524" layer="91"/>
 <pinref part="P+16" gate="1" pin="+5V"/>
 </segment>
 <segment>
 <pinref part="X1" gate="G$1" pin="2"/>
 <pinref part="P+10" gate="1" pin="+5V"/>
-<wire x1="266.7" y1="215.9" x2="279.4" y2="215.9" width="0.1524" layer="91"/>
-<wire x1="279.4" y1="215.9" x2="279.4" y2="218.44" width="0.1524" layer="91"/>
+<wire x1="342.9" y1="218.44" x2="355.6" y2="218.44" width="0.1524" layer="91"/>
+<wire x1="355.6" y1="218.44" x2="355.6" y2="220.98" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="OUT01" class="0">
@@ -36407,8 +36652,8 @@ Paulo Carriço, Filipe Carvalho</text>
 <net name="IN1" class="0">
 <segment>
 <pinref part="X1" gate="G$1" pin="10"/>
-<wire x1="266.7" y1="195.58" x2="271.78" y2="195.58" width="0.1524" layer="91"/>
-<label x="269.24" y="195.58" size="1.778" layer="95"/>
+<wire x1="342.9" y1="198.12" x2="347.98" y2="198.12" width="0.1524" layer="91"/>
+<label x="345.44" y="198.12" size="1.778" layer="95"/>
 </segment>
 <segment>
 <pinref part="IC30" gate="G$1" pin="P$2"/>
@@ -36444,8 +36689,8 @@ Paulo Carriço, Filipe Carvalho</text>
 </segment>
 <segment>
 <pinref part="X1" gate="G$1" pin="9"/>
-<wire x1="266.7" y1="198.12" x2="271.78" y2="198.12" width="0.1524" layer="91"/>
-<label x="269.24" y="198.12" size="1.778" layer="95"/>
+<wire x1="342.9" y1="200.66" x2="347.98" y2="200.66" width="0.1524" layer="91"/>
+<label x="345.44" y="200.66" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="IN01" class="0">
@@ -36464,7 +36709,7 @@ Paulo Carriço, Filipe Carvalho</text>
 </net>
 <net name="VCCINT" class="0">
 <segment>
-<wire x1="104.14" y1="193.04" x2="104.14" y2="198.12" width="0.1524" layer="91"/>
+<wire x1="48.26" y1="200.66" x2="48.26" y2="205.74" width="0.1524" layer="91"/>
 <pinref part="JP2" gate="1" pin="2"/>
 <pinref part="P+4" gate="G$1" pin="VCCINT"/>
 </segment>
@@ -36487,18 +36732,100 @@ Paulo Carriço, Filipe Carvalho</text>
 <pinref part="P+13" gate="G$1" pin="VCCINT"/>
 </segment>
 </net>
-<net name="ADC0" class="0">
+<net name="ADC1_IN" class="0">
+<segment>
+<pinref part="X1" gate="G$1" pin="6"/>
+<wire x1="342.9" y1="208.28" x2="347.98" y2="208.28" width="0.1524" layer="91"/>
+<label x="345.44" y="208.28" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="R85" gate="G$1" pin="2"/>
+<wire x1="200.66" y1="215.9" x2="208.28" y2="215.9" width="0.1524" layer="91"/>
+<label x="200.66" y="215.9" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="ADC0_IN" class="0">
 <segment>
 <pinref part="X1" gate="G$1" pin="7"/>
-<wire x1="266.7" y1="203.2" x2="271.78" y2="203.2" width="0.1524" layer="91"/>
-<label x="269.24" y="203.2" size="1.778" layer="95"/>
+<wire x1="342.9" y1="205.74" x2="347.98" y2="205.74" width="0.1524" layer="91"/>
+<label x="345.44" y="205.74" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="R83" gate="G$1" pin="2"/>
+<wire x1="91.44" y1="218.44" x2="99.06" y2="218.44" width="0.1524" layer="91"/>
+<label x="91.44" y="218.44" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="ADC0" class="0">
+<segment>
+<wire x1="162.56" y1="203.2" x2="172.72" y2="203.2" width="0.1524" layer="91"/>
+<label x="167.64" y="203.2" size="1.778" layer="95"/>
+<pinref part="R81" gate="G$1" pin="2"/>
+<wire x1="160.02" y1="203.2" x2="162.56" y2="203.2" width="0.1524" layer="91"/>
+<pinref part="C144" gate="G$1" pin="2"/>
+<wire x1="162.56" y1="198.12" x2="162.56" y2="203.2" width="0.1524" layer="91"/>
+<junction x="162.56" y="203.2"/>
 </segment>
 </net>
 <net name="ADC1" class="0">
 <segment>
-<pinref part="X1" gate="G$1" pin="6"/>
-<wire x1="266.7" y1="205.74" x2="271.78" y2="205.74" width="0.1524" layer="91"/>
-<label x="269.24" y="205.74" size="1.778" layer="95"/>
+<wire x1="271.78" y1="200.66" x2="281.94" y2="200.66" width="0.1524" layer="91"/>
+<label x="276.86" y="200.66" size="1.778" layer="95"/>
+<pinref part="R82" gate="G$1" pin="2"/>
+<wire x1="269.24" y1="200.66" x2="271.78" y2="200.66" width="0.1524" layer="91"/>
+<pinref part="C145" gate="G$1" pin="2"/>
+<wire x1="271.78" y1="195.58" x2="271.78" y2="200.66" width="0.1524" layer="91"/>
+<junction x="271.78" y="200.66"/>
+</segment>
+</net>
+<net name="N$19" class="0">
+<segment>
+<pinref part="R81" gate="G$1" pin="1"/>
+<wire x1="134.62" y1="203.2" x2="144.78" y2="203.2" width="0.1524" layer="91"/>
+<wire x1="144.78" y1="203.2" x2="149.86" y2="203.2" width="0.1524" layer="91"/>
+<wire x1="144.78" y1="203.2" x2="144.78" y2="185.42" width="0.1524" layer="91"/>
+<junction x="144.78" y="203.2"/>
+<wire x1="114.3" y1="200.66" x2="119.38" y2="200.66" width="0.1524" layer="91"/>
+<wire x1="144.78" y1="185.42" x2="114.3" y2="185.42" width="0.1524" layer="91"/>
+<wire x1="114.3" y1="185.42" x2="114.3" y2="200.66" width="0.1524" layer="91"/>
+<pinref part="IC37" gate="G$1" pin="-IN"/>
+<pinref part="IC37" gate="G$1" pin="OUT"/>
+</segment>
+</net>
+<net name="N$44" class="0">
+<segment>
+<pinref part="R83" gate="G$1" pin="1"/>
+<pinref part="R84" gate="G$1" pin="2"/>
+<wire x1="99.06" y1="208.28" x2="99.06" y2="205.74" width="0.1524" layer="91"/>
+<wire x1="99.06" y1="205.74" x2="99.06" y2="203.2" width="0.1524" layer="91"/>
+<wire x1="119.38" y1="205.74" x2="99.06" y2="205.74" width="0.1524" layer="91"/>
+<junction x="99.06" y="205.74"/>
+<pinref part="IC37" gate="G$1" pin="+IN"/>
+</segment>
+</net>
+<net name="N$6" class="0">
+<segment>
+<pinref part="R82" gate="G$1" pin="1"/>
+<wire x1="243.84" y1="200.66" x2="254" y2="200.66" width="0.1524" layer="91"/>
+<wire x1="254" y1="200.66" x2="259.08" y2="200.66" width="0.1524" layer="91"/>
+<wire x1="254" y1="200.66" x2="254" y2="182.88" width="0.1524" layer="91"/>
+<junction x="254" y="200.66"/>
+<wire x1="223.52" y1="198.12" x2="228.6" y2="198.12" width="0.1524" layer="91"/>
+<wire x1="254" y1="182.88" x2="223.52" y2="182.88" width="0.1524" layer="91"/>
+<wire x1="223.52" y1="182.88" x2="223.52" y2="198.12" width="0.1524" layer="91"/>
+<pinref part="IC38" gate="G$1" pin="-IN"/>
+<pinref part="IC38" gate="G$1" pin="OUT"/>
+</segment>
+</net>
+<net name="N$57" class="0">
+<segment>
+<pinref part="R85" gate="G$1" pin="1"/>
+<pinref part="R86" gate="G$1" pin="2"/>
+<wire x1="208.28" y1="205.74" x2="208.28" y2="203.2" width="0.1524" layer="91"/>
+<wire x1="208.28" y1="203.2" x2="208.28" y2="200.66" width="0.1524" layer="91"/>
+<wire x1="228.6" y1="203.2" x2="208.28" y2="203.2" width="0.1524" layer="91"/>
+<junction x="208.28" y="203.2"/>
+<pinref part="IC38" gate="G$1" pin="+IN"/>
 </segment>
 </net>
 </nets>
