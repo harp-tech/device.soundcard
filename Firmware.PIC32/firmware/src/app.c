@@ -777,7 +777,6 @@ void process_metadataCmd(void)
             metadataCmd_received = false;
             
             clr_LED_MEMORY;
-            clr_LED_USB;
 
             reply_USB(12);
             return;
@@ -811,7 +810,6 @@ void process_metadataCmd(void)
             metadataCmd_received = false;
             
             clr_LED_MEMORY;
-            clr_LED_USB;
 
             reply_USB(12);
         }
@@ -862,7 +860,6 @@ void process_dataCmd(void)
             dataCmd_received = false;
             
             clr_LED_MEMORY;
-            clr_LED_USB;
 
             reply_USB(12);
             return;
@@ -873,7 +870,6 @@ void process_dataCmd(void)
         dataCmd_received = false;
         
         clr_LED_MEMORY;
-        clr_LED_USB;
         
         reply_USB(12);
     }
@@ -904,38 +900,9 @@ void process_readMetadataCmd(void)
     }
 
     for (i = 8; i != 0; i--)
-        transmitDataBuffer[i-1] = receivedDataBuffer[i-1];
-
-
-    USB_DEVICE_EndpointWrite ( appData.usbDevHandle, &appData.writeTranferHandle,
-        appData.endpointTx, &transmitDataBuffer[0],
-        2076,
-        USB_DEVICE_TRANSFER_FLAGS_MORE_DATA_PENDING);
-
-    appData.epDataReadPending = true ;
-
-    /* Place a new read request. */
-    USB_DEVICE_EndpointRead ( appData.usbDevHandle, &appData.readTranferHandle,
-                        appData.endpointRx, &receivedDataBuffer[0],
-                        sizeof(receivedDataBuffer) );
+        transmitDataBuffer[i-1] = receivedDataBuffer[i-1];    
     
-    clr_LED_USB;
-}
-
-void process_resetCmd(void)
-{                                
-    clr_AUDIO_RESET;
-    reset_PIC32();
-    while(1);
-}
-
-void process_cleanupCmd(void)
-{                   
-    clean_memory();
-
-    clr_AUDIO_RESET;
-    reset_PIC32();
-    while(1);
+    reply_USB(2076);
 }
 
 // *****************************************************************************
@@ -1276,38 +1243,6 @@ void APP_Tasks ( void )
                                 //receivedDataBuffer[32792] = 0;
                                 //receivedDataBuffer[32792+2048] = 0;
                             }    
-                            
-                            break;
-                        
-                        /* Reset device */
-                        case 0x88:
-                            if (receivedDataBuffer[4] == 'f')
-                            {
-                                receivedDataBuffer[0] = 0;
-                                receivedDataBuffer[1] = 0;
-                                receivedDataBuffer[2] = 0;
-                                receivedDataBuffer[3] = 0;
-                                receivedDataBuffer[4] = 0;
-    
-                                set_LED_USB;
-                                process_resetCmd();
-                            }
-                            
-                            break;
-                        
-                        /* Clean up memory and reset device */
-                        case 0x89:
-                            if (receivedDataBuffer[4] == 'f')
-                            {
-                                receivedDataBuffer[0] = 0;
-                                receivedDataBuffer[1] = 0;
-                                receivedDataBuffer[2] = 0;
-                                receivedDataBuffer[3] = 0;
-                                receivedDataBuffer[4] = 0;
-    
-                                set_LED_USB;
-                                process_cleanupCmd();
-                            }
                             
                             break;
                     }
