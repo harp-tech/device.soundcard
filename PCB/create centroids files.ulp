@@ -1,0 +1,68 @@
+/*
+ *  Creates a centroid list.
+ */
+
+ #usage "Create Centroid file in inches and millimeters"
+
+string Version = "1.2.0";  // Version 1.2,  March 22, 2012
+string fileMessage;
+
+string rotation(real Angle)
+{
+  string s;
+  sprintf(s, "%.1f", Angle);
+  int pos = strchr(s, '.');
+  if (pos >= 0) if (s[pos + 1] == '0') s[pos] = 0;
+  return s;
+}
+
+string side(int Mirror)
+{
+  string s;
+
+  if (Mirror){
+    s = "Bottom";
+  }
+  else {
+    s = "Top";
+  }
+  return s;
+}
+
+if (!board) {
+   dlgMessageBox("<hr><b>ERROR: This ULP will only operate in the board layout view.</b></hr><p>Switch to the board layout editor and re-run.");
+   exit(1);
+}
+
+if (board) board(B) {
+   output(filesetext(B.name, "_centroid_inches.csv")) {
+     printf("Centroid Data for pc board: \"%s\" as of: %s\n", filename(B.name), t2string(time()));
+     printf("Measurements are in inches. Comma delimited\n");
+     printf("Only surface mount components included\n\n");
+     printf("%s,%s,%s,%s,%s\n", "RefDes", "Layer", "LocationX", "LocationY", "Rotation");
+     B.elements(E) {
+       int isSmd;
+       isSmd = 0;
+       E.package.contacts(C) { if (C.smd) isSmd = 1; }
+       if (isSmd) printf("%s,%s,%5.6f,%5.6f,%s\n", E.name, side(E.mirror), u2inch(E.x), u2inch(E.y), rotation(E.angle));
+       }
+     }	 
+	 
+   output(filesetext(B.name, "_centroid_millimeters.csv")) {
+     printf("Centroid Data for pc board: \"%s\" as of: %s\n", filename(B.name), t2string(time()));
+     printf("Measurements are in millimeters. Comma delimited\n");
+     printf("Only surface mount components included\n\n");
+     printf("%s,%s,%s,%s,%s\n", "RefDes", "Layer", "LocationX", "LocationY", "Rotation");
+     B.elements(E) {
+       int isSmd;
+       isSmd = 0;
+       E.package.contacts(C) { if (C.smd) isSmd = 1; }
+       if (isSmd) printf("%s,%s,%5.6f,%5.6f,%s\n", E.name, side(E.mirror), u2mm(E.x), u2mm(E.y), rotation(E.angle));
+       }
+     }
+	 
+	 
+
+	dlgMessageBox("Done");
+}
+
