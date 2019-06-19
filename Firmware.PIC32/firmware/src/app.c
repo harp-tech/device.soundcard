@@ -256,89 +256,8 @@ void populate_envelope_internal(void)
                 
     }
 }
-    
-int launch_sound(int index)
-{
-    audio_buffer0_length = 0;
-    audio_buffer1_length = 0;
-    audio_buffer0_state = AUDIO_BUFFER_IS_EMPTY;
-    audio_buffer1_state = AUDIO_BUFFER_IS_EMPTY;
-    sound_is_playing = false;
-    sound_length_produced = 0;
-    
-    if (read_first_sound_page(index, audio_buffer0, &play_metadata) != 0) return -1;
-    sound_is_playing = true;
-    
-    if (play_metadata.sound_length > AUDIO_BUFFER_LEN)
-    {
-        audio_buffer0_length = AUDIO_BUFFER_LEN;
-        audio_buffer0_state = AUDIO_BUFFER_HAS_DATA;
-        
-        read_next_sound_page(audio_buffer1);
-        
-        if (play_metadata.sound_length - AUDIO_BUFFER_LEN > AUDIO_BUFFER_LEN)
-        {
-            audio_buffer1_length = AUDIO_BUFFER_LEN;
-            audio_buffer1_state = AUDIO_BUFFER_HAS_DATA;
-        }
-        else
-        {
-            audio_buffer1_length = play_metadata.sound_length - AUDIO_BUFFER_LEN;
-            audio_buffer1_state = AUDIO_BUFFER_HAS_DATA;
-        }
-    }
-    else
-    {
-        audio_buffer0_length = play_metadata.sound_length;
-        audio_buffer0_state = AUDIO_BUFFER_HAS_DATA;
-    }
-    
-    sound_length_produced += audio_buffer0_length;
-    sound_length_produced += audio_buffer1_length;
-    
-    if (audio_buffer0_state == AUDIO_BUFFER_HAS_DATA)
-        DRV_I2S_BufferAddWrite(i2sDriverHandle, &i2sBufferHandle0, audio_buffer0, audio_buffer0_length * 4);
-    
-    if (audio_buffer1_state == AUDIO_BUFFER_HAS_DATA)
-        DRV_I2S_BufferAddWrite(i2sDriverHandle, &i2sBufferHandle1, audio_buffer1, audio_buffer1_length * 4);
-    
-    return 0;
-}
 
 void update_sound_buffers (void);
-
-int launch_sound_v2(int index)
-{
-    set_LED_AUDIO;
-    
-    audio_buffer0_state = AUDIO_BUFFER_IS_EMPTY;
-    audio_buffer1_state = AUDIO_BUFFER_IS_EMPTY;
-    sound_is_playing = false;
-    sound_length_produced = 0;
-    
-    set_LED_MEMORY;
-    if (read_first_sound_page(index, audio_buffer0, &play_metadata) != 0) return -1;
-    clr_LED_MEMORY;
-    
-    sound_is_playing = true;
-    
-    if (play_metadata.sound_length > AUDIO_BUFFER_LEN)
-    {
-        DRV_I2S_BufferAddWrite(i2sDriverHandle, &i2sBufferHandle0, audio_buffer0, AUDIO_BUFFER_LEN * 4);
-        sound_length_produced = AUDIO_BUFFER_LEN;
-        audio_buffer0_state = AUDIO_BUFFER_HAS_DATA;
-    }
-    else
-    {
-        DRV_I2S_BufferAddWrite(i2sDriverHandle, &i2sBufferHandle0, audio_buffer0, play_metadata.sound_length * 4);
-        sound_length_produced = play_metadata.sound_length;
-        audio_buffer0_state = AUDIO_BUFFER_HAS_DATA;
-    }
-    
-    update_sound_buffers();
-    
-    return 0;
-}
 
 /* Start a new sound if:
  * - the selected index has a sound,
@@ -585,7 +504,8 @@ void update_sound_buffers (void)
             //}
         }
     }
-    else
+    
+    if (!sound_is_playing)
     {
         if (audio_buffer0_state == AUDIO_BUFFER_IS_EMPTY)
         {
@@ -596,7 +516,6 @@ void update_sound_buffers (void)
                 DRV_I2S_BufferAddWrite(i2sDriverHandle, &i2sBufferHandle0, audio_buffer_zeros, 128 * 4); // 8 works well
             
             clr_SOUND_IS_ON;
-            //tgl_TP0;
             audio_buffer0_state = AUDIO_BUFFER_HAS_DATA;
         }
         
@@ -609,7 +528,6 @@ void update_sound_buffers (void)
                 DRV_I2S_BufferAddWrite(i2sDriverHandle, &i2sBufferHandle1, audio_buffer_zeros, 128 * 4); // 8 works well
             
             clr_SOUND_IS_ON;
-            //tgl_TP1;
             audio_buffer1_state = AUDIO_BUFFER_HAS_DATA;
             
             handle_USB_writing();
