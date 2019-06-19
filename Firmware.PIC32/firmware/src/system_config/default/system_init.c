@@ -529,16 +529,6 @@ const USB_DEVICE_INIT usbDevInitData =
 // Section: System Initialization
 // *****************************************************************************
 // *****************************************************************************
-/*******************************************************************************
-  Function:
-    void __pic32_tlb_init_ebi_sqi ( void )
-
-  Summary:
-    Override the default function in crt0.s to skip TLB initialization from
-    application.
- */
-
-void __pic32_tlb_init_ebi_sqi ( void ) {}
 
 /*******************************************************************************
   Function:

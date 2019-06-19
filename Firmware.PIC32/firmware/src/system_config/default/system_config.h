@@ -84,7 +84,7 @@ extern "C" {
 #define SYS_CLK_FREQ                        200000000ul
 #define SYS_CLK_BUS_PERIPHERAL_1            100000000ul
 #define SYS_CLK_BUS_PERIPHERAL_2            100000000ul
-#define SYS_CLK_BUS_PERIPHERAL_3            100000000ul
+#define SYS_CLK_BUS_PERIPHERAL_3            3076923ul
 #define SYS_CLK_BUS_PERIPHERAL_4            100000000ul
 #define SYS_CLK_BUS_PERIPHERAL_5            100000000ul
 #define SYS_CLK_BUS_PERIPHERAL_7            200000000ul

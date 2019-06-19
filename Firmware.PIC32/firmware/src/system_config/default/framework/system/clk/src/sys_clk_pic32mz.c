@@ -101,7 +101,7 @@ void SYS_CLK_Initialize( const SYS_CLK_INIT const * clkInit )
     PLIB_OSC_PBClockDivisorSet (OSC_ID_0, 1, 2 );
     PLIB_OSC_PBOutputClockEnable (OSC_ID_0, 1 );
     /* Enable Peripheral Bus 3 */
-    PLIB_OSC_PBClockDivisorSet (OSC_ID_0, 2, 2 );
+    PLIB_OSC_PBClockDivisorSet (OSC_ID_0, 2, 65 );
     PLIB_OSC_PBOutputClockEnable (OSC_ID_0, 2 );
     /* Enable Peripheral Bus 4 */
     PLIB_OSC_PBClockDivisorSet (OSC_ID_0, 3, 2 );

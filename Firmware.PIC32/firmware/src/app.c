@@ -58,6 +58,14 @@ bool sound_is_playing = false;
 int new_sound_to_start = NEW_SOUND_STATE_STANDBY;
 int new_sound_index;
 
+#define SET_SOUND_IS_ON_WHEN_POSSIBLE 0
+#define SET_SOUND_IS_ON_DONE 1
+int set_sound_is_on_when_possible = SET_SOUND_IS_ON_DONE;
+#define CLR_SOUND_IS_ON_WHEN_POSSIBLE 0
+#define CLR_SOUND_IS_ON_DONE 1
+int clr_sound_is_on_when_possible = CLR_SOUND_IS_ON_DONE;
+int clr_sound_is_on_num_samples;
+
 /* Receive data buffer */
 uint8_t receivedDataBuffer[APP_READ_BUFFER_SIZE] APP_MAKE_BUFFER_DMA_READY;
 /* Transmit data buffer */
@@ -119,12 +127,40 @@ void I2SBufferEventHandler( DRV_I2S_BUFFER_EVENT event,
                 if (audio_buffer0_state == AUDIO_BUFFER_HAS_DATA)
                     audio_buffer0_state = AUDIO_BUFFER_IS_EMPTY;
                 
+                if (set_sound_is_on_when_possible == SET_SOUND_IS_ON_WHEN_POSSIBLE)
+                {
+                    clr_SOUND_IS_ON;
+                    set_sound_is_on_when_possible = SET_SOUND_IS_ON_DONE;
+                    trigger_pin_sound_is_on(current_sample_rate);
+                }
+                
+                if (clr_sound_is_on_when_possible == CLR_SOUND_IS_ON_WHEN_POSSIBLE)
+                {
+                    clr_sound_is_on_when_possible = CLR_SOUND_IS_ON_DONE;
+                    tgl_TP0;
+                    trigger_pin_sound_is_off(current_sample_rate, clr_sound_is_on_num_samples);
+                }
+
                 dma_i2s_handle0_timeout = 0;
             }
             if (bufferHandle == i2sBufferHandle1)
             {
                 if (audio_buffer1_state == AUDIO_BUFFER_HAS_DATA)
                     audio_buffer1_state = AUDIO_BUFFER_IS_EMPTY;
+                
+                if (set_sound_is_on_when_possible == SET_SOUND_IS_ON_WHEN_POSSIBLE)
+                {
+                    clr_SOUND_IS_ON;
+                    set_sound_is_on_when_possible = SET_SOUND_IS_ON_DONE;
+                    trigger_pin_sound_is_on(current_sample_rate);
+                }
+                
+                if (clr_sound_is_on_when_possible == CLR_SOUND_IS_ON_WHEN_POSSIBLE)
+                {
+                    clr_sound_is_on_when_possible = CLR_SOUND_IS_ON_DONE;
+                    tgl_TP0;
+                    trigger_pin_sound_is_off(current_sample_rate, clr_sound_is_on_num_samples);
+                }
                 
                 dma_i2s_handle1_timeout = 0;
             }
@@ -269,11 +305,11 @@ bool check_cmd_start(int index)
     if (!audio_sound_exists[index])
         return false;    
     
-    if (new_sound_to_start != NEW_SOUND_STATE_STANDBY)
-        return false;
+    //if (new_sound_to_start != NEW_SOUND_STATE_STANDBY)
+        //return false;
     
-    if (sound_is_playing)
-        return false;
+    //if (sound_is_playing)
+    //    return false;
     
     return true;
 }
@@ -287,14 +323,15 @@ int launch_sound_v3(int index)
     
     return 0;
 }
-  
+
 void update_sound_buffers (void)
 {
-    if (!sound_is_playing && new_sound_to_start == NEW_SOUND_STATE_IS_AVAILABLE)
+    if (/*!sound_is_playing && */new_sound_to_start == NEW_SOUND_STATE_IS_AVAILABLE)
     {
         if (audio_buffer0_state == AUDIO_BUFFER_IS_EMPTY || audio_buffer1_state == AUDIO_BUFFER_IS_EMPTY)
         {
             new_sound_to_start = NEW_SOUND_STATE_FIRST_BUFFER_DONE;
+            set_sound_is_on_when_possible = SET_SOUND_IS_ON_WHEN_POSSIBLE;
             sound_is_playing = true;
             set_page_and_sound_index(1, new_sound_index);
             
@@ -309,14 +346,12 @@ void update_sound_buffers (void)
                 {
                     DRV_I2S_BufferAddWrite(i2sDriverHandle, &i2sBufferHandle0, audio_all_first_buffers[new_sound_index], AUDIO_BUFFER_LEN * 4);
                     audio_buffer0_state = AUDIO_BUFFER_HAS_DATA;
-                    set_SOUND_IS_ON;
                     set_LED_AUDIO;
                 }
                 else
                 {
                     DRV_I2S_BufferAddWrite(i2sDriverHandle, &i2sBufferHandle1, audio_all_first_buffers[new_sound_index], AUDIO_BUFFER_LEN * 4);
                     audio_buffer1_state = AUDIO_BUFFER_HAS_DATA;
-                    set_SOUND_IS_ON;
                     set_LED_AUDIO;
                 }
             }
@@ -328,14 +363,12 @@ void update_sound_buffers (void)
                 {
                     DRV_I2S_BufferAddWrite(i2sDriverHandle, &i2sBufferHandle0, audio_all_first_buffers[new_sound_index], play_metadata.sound_length * 4);
                     audio_buffer0_state = AUDIO_BUFFER_HAS_DATA;
-                    set_SOUND_IS_ON;
                     set_LED_AUDIO;
                 }
                 else
                 {
                     DRV_I2S_BufferAddWrite(i2sDriverHandle, &i2sBufferHandle1, audio_all_first_buffers[new_sound_index], play_metadata.sound_length * 4);
                     audio_buffer1_state = AUDIO_BUFFER_HAS_DATA;
-                    set_SOUND_IS_ON;
                     set_LED_AUDIO;
                 }                
             }
@@ -360,7 +393,9 @@ void update_sound_buffers (void)
                 else
                 {
                     //audio_buffer0_length = play_metadata.sound_length - sound_length_produced;
-                    DRV_I2S_BufferAddWrite(i2sDriverHandle, &i2sBufferHandle0, audio_all_second_buffers[new_sound_index], (play_metadata.sound_length - sound_length_produced) * 4);
+                    DRV_I2S_BufferAddWrite(i2sDriverHandle, &i2sBufferHandle0, audio_all_second_buffers[new_sound_index], (play_metadata.sound_length - sound_length_produced) * 4);                    
+                    clr_sound_is_on_num_samples = play_metadata.sound_length - sound_length_produced;
+                    clr_sound_is_on_when_possible = CLR_SOUND_IS_ON_WHEN_POSSIBLE;
                     sound_length_produced += play_metadata.sound_length - sound_length_produced;
                     audio_buffer0_state = AUDIO_BUFFER_HAS_DATA;
                     
@@ -396,7 +431,9 @@ void update_sound_buffers (void)
                 else
                 {
                     //audio_buffer1_length = play_metadata.sound_length - sound_length_produced;
-                    DRV_I2S_BufferAddWrite(i2sDriverHandle, &i2sBufferHandle1, audio_all_second_buffers[new_sound_index], (play_metadata.sound_length - sound_length_produced) * 4);
+                    DRV_I2S_BufferAddWrite(i2sDriverHandle, &i2sBufferHandle1, audio_all_second_buffers[new_sound_index], (play_metadata.sound_length - sound_length_produced) * 4);                    
+                    clr_sound_is_on_num_samples = play_metadata.sound_length - sound_length_produced;
+                    clr_sound_is_on_when_possible = CLR_SOUND_IS_ON_WHEN_POSSIBLE;
                     sound_length_produced += play_metadata.sound_length - sound_length_produced;
                     audio_buffer1_state = AUDIO_BUFFER_HAS_DATA;
                     
@@ -418,7 +455,7 @@ void update_sound_buffers (void)
     }
     
     
-    if (sound_is_playing && new_sound_to_start == NEW_SOUND_STATE_STANDBY)
+    if (/*sound_is_playing && */new_sound_to_start == NEW_SOUND_STATE_STANDBY)
     {
         if (audio_buffer0_state == AUDIO_BUFFER_IS_EMPTY)
         {
@@ -440,9 +477,12 @@ void update_sound_buffers (void)
                 else
                 {
                     //audio_buffer0_length = play_metadata.sound_length - sound_length_produced;
-                    DRV_I2S_BufferAddWrite(i2sDriverHandle, &i2sBufferHandle0, audio_buffer0, (play_metadata.sound_length - sound_length_produced) * 4);
+                    DRV_I2S_BufferAddWrite(i2sDriverHandle, &i2sBufferHandle0, audio_buffer0, (play_metadata.sound_length - sound_length_produced) * 4);                    
+                    clr_sound_is_on_num_samples = play_metadata.sound_length - sound_length_produced;
+                    clr_sound_is_on_when_possible = CLR_SOUND_IS_ON_WHEN_POSSIBLE;
                     sound_length_produced += play_metadata.sound_length - sound_length_produced;
                     audio_buffer0_state = AUDIO_BUFFER_HAS_DATA;
+                    
                     
                     //sound_is_playing = false;
                     //clr_LED_AUDIO;
@@ -483,6 +523,8 @@ void update_sound_buffers (void)
                 {
                     //audio_buffer1_length = play_metadata.sound_length - sound_length_produced;
                     DRV_I2S_BufferAddWrite(i2sDriverHandle, &i2sBufferHandle1, audio_buffer1, (play_metadata.sound_length - sound_length_produced) * 4);
+                    clr_sound_is_on_num_samples = play_metadata.sound_length - sound_length_produced;
+                    clr_sound_is_on_when_possible = CLR_SOUND_IS_ON_WHEN_POSSIBLE;
                     sound_length_produced += play_metadata.sound_length - sound_length_produced;
                     audio_buffer1_state = AUDIO_BUFFER_HAS_DATA;
                     
@@ -515,7 +557,7 @@ void update_sound_buffers (void)
             else
                 DRV_I2S_BufferAddWrite(i2sDriverHandle, &i2sBufferHandle0, audio_buffer_zeros, 128 * 4); // 8 works well
             
-            clr_SOUND_IS_ON;
+            //clr_SOUND_IS_ON;
             audio_buffer0_state = AUDIO_BUFFER_HAS_DATA;
         }
         
@@ -527,7 +569,7 @@ void update_sound_buffers (void)
             else
                 DRV_I2S_BufferAddWrite(i2sDriverHandle, &i2sBufferHandle1, audio_buffer_zeros, 128 * 4); // 8 works well
             
-            clr_SOUND_IS_ON;
+            //clr_SOUND_IS_ON;
             audio_buffer1_state = AUDIO_BUFFER_HAS_DATA;
             
             handle_USB_writing();
@@ -911,6 +953,13 @@ void APP_Initialize ( void )
      * Clean all metadata in the memory.
      */
     //clean_memory();
+    
+    /*
+     * Initialize timers     
+     */
+    INTCONbits.MVEC = 1;
+    config_timer_for_pin_sound_is_on();
+    config_timer_for_pin_sound_is_off();
     
     /* 
      * Create the I2S driver handle.
