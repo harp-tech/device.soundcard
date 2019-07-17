@@ -325,7 +325,7 @@
       <Template dnOrder="16">
         <Name dnOrder="0">system_config.h</Name>
         <Path dnOrder="1">Header&amp;#160;Files/app/system_config/default</Path>
-        <Checksum dnOrder="2">51FA8DA3345E51C67260942CDDF1A097</Checksum>
+        <Checksum dnOrder="2">D00E4AC2C4A402D697EF75C3EBF6825A</Checksum>
         <ProjectFileChecksum dnOrder="3">6E5ED5A220951824F56EAF7BAA065D5D</ProjectFileChecksum>
       </Template>
       <Template dnOrder="17">
@@ -340,7 +340,7 @@
       <Template dnOrder="19">
         <Name dnOrder="0">sys_clk_pic32mz.c</Name>
         <Path dnOrder="1">Source&amp;#160;Files/app/system_config/default/framework/system/clk/src</Path>
-        <Checksum dnOrder="2">B84A35F04E6D9B1CD8430C952E895D60</Checksum>
+        <Checksum dnOrder="2">7274A455D1F3E9AEE8953DA3CFF38FF9</Checksum>
       </Template>
     </Templates>
     <CompilerItems dnOrder="2">

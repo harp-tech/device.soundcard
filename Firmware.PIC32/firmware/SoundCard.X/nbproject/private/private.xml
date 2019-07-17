@@ -2,6 +2,12 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/C:/Users/Filipe%20Carvalho/Desktop/Bitbucket.Soundcard/Firmware.PIC32/firmware/src/main.c</file>
+            <file>file:/C:/Users/Filipe%20Carvalho/Desktop/Bitbucket.Soundcard/Firmware.PIC32/firmware/src/delay.h</file>
+            <file>file:/C:/Users/Filipe%20Carvalho/Desktop/Bitbucket.Soundcard/Firmware.PIC32/firmware/src/app.c</file>
+            <file>file:/C:/Users/Filipe%20Carvalho/Desktop/Bitbucket.Soundcard/Firmware.PIC32/firmware/src/delay.c</file>
+            <file>file:/C:/microchip/harmony/v2_04/framework/driver/usb/usbhs/src/dynamic/drv_usbhs_device.c</file>
+        </group>
     </open-files>
 </project-private>
