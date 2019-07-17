@@ -134,8 +134,15 @@ bool app_write_REG_PLAY_SOUND_OR_FREQ(void *a)
 {
 	uint16_t reg = *((uint16_t*)a);
    
-   if (reg < 32)
-      par_cmd_start_sound(reg, app_regs.REG_ATTNUATION_LEFT, app_regs.REG_ATTENUATION_RIGHT);
+   if (reg > 1)
+   {
+      if (reg < 32)
+         par_cmd_start_sound(reg, app_regs.REG_ATTNUATION_LEFT, app_regs.REG_ATTENUATION_RIGHT);
+      else
+         ; // play tone
+   }      
+   else
+      return false;
 
 	app_regs.REG_PLAY_SOUND_OR_FREQ = reg;
 	return true;
