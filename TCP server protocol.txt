@@ -1,0 +1,43 @@
+/********************************************/
+/* Initial command                          */
+/********************************************/
+/* TX: [2]  [255] [0x10] [0x88] [128] [255] [1]   [metadata(16bytes)] [data(32768bytes)] [fileMetadata(2048bytes)] [checksum]
+/* RX: [2]  [10]                [128] [255] [16]  [Timestamp(6bytes)] [checksum]	// No error
+/* RX: [10] [10]                [128] [255] [16]  [Timestamp(6bytes)] [checksum]	// Error
+
+/* TX: [2]  [255] [0x14] [0x08] [129] [255] [1]   [metadata(16bytes)] [fileMetadata(2048bytes)] [checksum]
+/* RX: [2]  [10]                [129] [255] [16]  [Timestamp(6bytes)] [checksum]	// No error
+/* RX: [10] [10]                [129] [255] [16]  [Timestamp(6bytes)] [checksum]	// Error
+
+/* TX: [2]  [20]                [130] [255] [1]   [metadata(16bytes)] [checksum]
+/* RX: [2]  [10]                [130] [255] [16]  [Timestamp(6bytes)] [checksum]	// No error
+/* RX: [10] [10]                [130] [255] [16]  [Timestamp(6bytes)] [checksum]	// Error
+
+/* [metadata] (16 bytes)                    */
+/* [0:3] soundIndex  (I32) 0,1,...,30,31    */
+/* [4:7] soundLength (I32)                  */
+/* [8:11] sampleRate (I32) 96000,192000     */
+/* [12:15] dataType  (I32) 0(I32),1(F32)    */
+
+/* [fileMetadata] (2048bytes)               */
+/* [0:169]     sound_filename               */
+/* [170:339]   metadata_filename            */
+/* [340:511]   description_filename         */
+/* [512:1535]  metadata_filename content    */
+/* [1536:2047] description_filename content */
+
+/********************************************/
+/* Data command (integers)                  */
+/********************************************/
+/* TX: [2]  [255] [0x04] [0x80] [132] [255] [132] [dataIndex(4bytes)] [...data...(32768bytes)] [checksum]
+/* RX: [2]  [10]                [132] [255] [16]  [Timestamp(6bytes)] [checksum]
+/* RX: [10] [10]                [132] [255] [16]  [Timestamp(6bytes)] [checksum]
+
+/********************************************/
+/* Data command (floats)                  */
+/********************************************/
+/* TX: [2]  [255] [0x04] [0x80] [133] [255] [68]  [dataIndex(4bytes)] [...data...(32768bytes)] [checksum]
+/* RX: [2]  [10]                [133] [255] [16]  [Timestamp(6bytes)] [checksum]
+/* RX: [10] [10]                [133] [255] [16]  [Timestamp(6bytes)] [checksum]
+
+*/
