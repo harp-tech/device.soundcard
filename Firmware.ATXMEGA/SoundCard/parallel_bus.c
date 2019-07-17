@@ -47,7 +47,7 @@ uint8_t command_to_send;
 /************************************************************************/
 /* CMD_LATCHED & SOUND_IS_ON                                            */
 /************************************************************************/
-bool sound_is_on_state = false;
+uint8_t sound_index_on;
 
 ISR(PORTC_INT1_vect, ISR_NAKED)
 {
@@ -81,31 +81,10 @@ ISR(PORTC_INT1_vect, ISR_NAKED)
    }      
    
    if (read_SOUND_IS_ON)
-   {
-      if (!sound_is_on_state)
-      {
-         sound_is_on_state = true;
-         
-         /* The SOUND_IS_ON rising edge arrives around 415 us before the sound really starts */
-         timer_type0_enable(&TCC0, TIMER_PRESCALER_DIV1024, 13, INT_LEVEL_LOW);   // 416 us
-      }
-   }
+      set_DOUT0;
    else
-   {
-      if (sound_is_on_state)
-      {
-         sound_is_on_state = false;
-         clr_DOUT0;
-      }
-   }
+      clr_DOUT0;
    
-   reti();
-}
-
-ISR(TCC0_OVF_vect, ISR_NAKED)
-{
-   set_DOUT0;
-   timer_type0_stop(&TCC0);
    reti();
 }
 
@@ -174,6 +153,9 @@ bool par_cmd_delete_sound_callback (void)
 /************************************************************************/
 void par_cmd_start_sound(uint8_t sound_index, int16_t amplitude_left, int16_t amplitude_right)
 {  
+   /* Save the sound be played */
+   sound_index_on = sound_index;
+   
    /* Prepare command */
    cmd_start[1] = sound_index;
    cmd_start[2] = *(((uint8_t*)(&amplitude_left)) + 0);
