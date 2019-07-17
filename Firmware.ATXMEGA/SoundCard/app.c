@@ -24,7 +24,7 @@ extern bool (*app_func_wr_pointer[])(void*);
 /************************************************************************/
 static const uint8_t default_device_name[] = "SoundCard";
 
-#define MAJOR_FW_VERSION 1
+#define MAJOR_FW_VERSION 2
 
 void hwbp_app_initialize(void)
 {
