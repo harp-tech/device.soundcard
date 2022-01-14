@@ -354,14 +354,25 @@ void app_read_REG_DI0_SOUND_INDEX(void)
 
 }
 
-bool app_write_REG_DI0_SOUND_INDEX(void *a)
+bool app_write_REG_DI0_SOUND_INDEX(void *a) 
 {
 	uint8_t reg = *((uint8_t*)a);
+	
+	// for future implementation of cmd_index
+	/*if (reg > 1)
+	{
+		if (reg < 32)
+			par_cmd_index(reg);
+		else
+		; 
+	}
+	else
+	return false;*/
+		
 
 	app_regs.REG_DI0_SOUND_INDEX = reg;
 	return true;
 }
-
 
 /************************************************************************/
 /* REG_DI1_SOUND_INDEX                                                  */
@@ -904,7 +915,7 @@ bool app_write_REG_DO_SET(void *a)
    
    if (reg & B_DO0) set_DOUT0;
    if (reg & B_DO1) set_DOUT1;
-   if (reg & B_DO1) set_DOUT1;
+   if (reg & B_DO2) set_DOUT2;
 
 	app_regs.REG_DO_SET = reg;
 	return true;
