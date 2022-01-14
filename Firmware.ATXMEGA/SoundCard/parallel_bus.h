@@ -23,6 +23,9 @@
 void par_cmd_stop(void);
 bool par_cmd_stop_callback (void);
 
+void par_cmd_index(uint8_t sound_index);
+bool par_cmd_index_callback(void);
+
 void par_cmd_delete_sound(uint8_t sound_index, bool delete_all);
 bool par_cmd_delete_sound_callback (void);
 
