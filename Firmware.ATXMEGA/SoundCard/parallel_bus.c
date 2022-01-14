@@ -1,5 +1,6 @@
 #include "parallel_bus.h"
 #include "app_ios_and_regs.h"
+#include "hwbp_core.h"
 
 /************************************************************************/
 /* Protocol                                                             */
@@ -7,14 +8,16 @@
 /* STOP                 11110000                                             checksum(1)
  * START                11110001  index(1)   A_left(2)  A_right(2)           checksum(1)
  * START W/ FREQUENCY   11110010             A_left(2)  A_right(2)  Freq(2)  checksum(1)
+ * INDEX                11110011  index(1)                                   checksum(1)  
  * DELETE_SOUND         11110100  index(1)                                   checksum(1)
  * UPDATE AMP           11111001             A_left(2)  A_right(2)           checksum(1)
  * UPDATE AMP. & FREQ.  11111010             A_left(2)  A_right(2)  Freq(2)  checksum(1)
- * UPDATE FREQUENCY     11110011                                    Freq(2)  checksum(1)
+ * UPDATE FREQUENCY     11111011                                    Freq(2)  checksum(1) 
  */
 #define CMD_STOP 0xF0
 #define CMD_START 0xF1
 #define CMD_START_W_FREQUENCY 0xF2
+#define CMD_INDEX 0xF3 
 #define CMD_DELETE_SOUND 0xF7
 #define CMD_UPDATE_AMPLITUDE 0xF9
 #define CMD_UPDATE_AMPLITUDE_AND_FREQUENCY 0xFA
@@ -22,10 +25,12 @@
 
 #define CMD_STOP_LEN 2
 #define CMD_DELETE_SOUND_LEN 3
+#define CMD_INDEX_LEN 3  
 #define CMD_START_LEN 7
 
 uint8_t cmd_stop[CMD_STOP_LEN]                  = {CMD_STOP, 0};
 uint8_t cmd_delete_sound[CMD_DELETE_SOUND_LEN]  = {CMD_DELETE_SOUND, 0, 0};
+uint8_t cmd_index[CMD_INDEX_LEN]                = {CMD_INDEX, 0, 0};	
 uint8_t cmd_start[CMD_START_LEN]                = {CMD_START, 0, 0, 0, 0, 0, 0};
 
 bool command_available = false;
@@ -65,7 +70,11 @@ ISR(PORTC_INT1_vect, ISR_NAKED)
             case CMD_START:
                par_cmd_start_sound_callback();
                break;
-               
+			
+			case CMD_INDEX:
+				par_cmd_index_callback();
+				break;   
+            			   
             case CMD_STOP:
                par_cmd_stop_callback();
                break;
@@ -80,8 +89,10 @@ ISR(PORTC_INT1_vect, ISR_NAKED)
       }
    }      
    
-   if (read_SOUND_IS_ON)
-      set_DOUT0;
+   if (read_SOUND_IS_ON){
+	  set_DOUT0;
+	  core_func_send_event(ADD_REG_PLAY_SOUND_OR_FREQ, true);
+	  }
    else
       clr_DOUT0;
    
@@ -119,6 +130,31 @@ bool par_cmd_stop_callback (void)
 {
    send_last_byte(cmd_stop[CMD_STOP_LEN - 1]);
 }
+
+/************************************************************************/
+/* COMMAND: INDEX                                                       */
+/************************************************************************/ 
+void par_cmd_index(uint8_t sound_index)
+{
+	/* Prepare command */
+	cmd_index[1] = sound_index;
+	
+	/* Calculate checksum */
+	cmd_index[2] = CMD_INDEX + cmd_index[1];
+	
+	/* Update globals */
+	command_available = true;
+	command_to_send = CMD_INDEX;
+	
+	/* Create an interrupt to be addressed as soon as possible */
+	timer_type0_enable(&TCD0, TIMER_PRESCALER_DIV1, 1, INT_LEVEL_LOW);
+}
+
+bool par_cmd_index_callback (void)
+{
+	send_byte(cmd_index[1]);
+	send_last_byte(cmd_index[2]);
+}                                                                               
 
 /************************************************************************/
 /* COMMAND: DELETE_SOUND                                                */
