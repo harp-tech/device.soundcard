@@ -11,7 +11,8 @@ extern bool audio_sound_exists[32];
 
 unsigned char cmd_stop[CMD_STOP_LEN]                  = {CMD_STOP, 0};
 unsigned char cmd_delete_sound[CMD_DELETE_SOUND_LEN]  = {CMD_DELETE_SOUND, 0, 0};
-unsigned char cmd_start[CMD_START_LEN]                = {CMD_START, 0, 0, 0, 0, 0, 0};
+unsigned char cmd_index[CMD_INDEX]                    = {CMD_INDEX, 0, 0};
+unsigned char cmd_start[CMD_START_LEN]                = {CMD_START, 2, 0, 0, 0, 0, 0};
 
 #define PAR_RECEIVE_BYTE(byte)  while (!read_PAR_CMD_WRITE); \
                                 byte = read_PAR_BUS; \
@@ -76,6 +77,19 @@ int par_bus_check_if_command_is_available(void)
                     PAR_RECEIVE_LAST_BYTE_REPLY(false);
                     
                     return command_received;
+                }
+                
+                PAR_RECEIVE_LAST_BYTE_REPLY(true);
+                break;
+                
+            case CMD_INDEX:
+                PAR_RECEIVE_BYTE(cmd_index[1]);
+                PAR_RECEIVE_LAST_BYTE(cmd_index[2]);
+                
+                if (cmd_index[2] == (unsigned char)(CMD_INDEX + cmd_index[1])){
+                    
+                    cmd_start[1] = cmd_index[1];
+ 
                 }
                 
                 PAR_RECEIVE_LAST_BYTE_REPLY(true);
