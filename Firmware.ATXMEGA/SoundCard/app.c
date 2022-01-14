@@ -219,7 +219,7 @@ void core_callback_t_1ms(void)
    else
       app_regs.REG_ADC_VALUES[1] = 0;
       
-   core_func_send_event(ADD_REG_ADC_VALUES, true);   
+   //core_func_send_event(ADD_REG_ADC_VALUES, true);   
 }
 
 /************************************************************************/
