@@ -266,7 +266,7 @@
         <Name dnOrder="0">app_mz.ld</Name>
         <Path dnOrder="1">Linker&amp;#160;Files/system_config/default</Path>
         <Checksum dnOrder="2">554844EF852C3B0F9AA544EFA2B1D510</Checksum>
-        <ProjectFileChecksum dnOrder="3">F347151FE9F64F58B782623D3E26C111</ProjectFileChecksum>
+        <ProjectFileChecksum dnOrder="3">BC554412602F7931DA61AE93280E47C8</ProjectFileChecksum>
       </Template>
       <Template dnOrder="5">
         <Name dnOrder="0">system_definitions.h</Name>
@@ -326,7 +326,7 @@
         <Name dnOrder="0">system_config.h</Name>
         <Path dnOrder="1">Header&amp;#160;Files/app/system_config/default</Path>
         <Checksum dnOrder="2">D00E4AC2C4A402D697EF75C3EBF6825A</Checksum>
-        <ProjectFileChecksum dnOrder="3">6E5ED5A220951824F56EAF7BAA065D5D</ProjectFileChecksum>
+        <ProjectFileChecksum dnOrder="3">21C9028799322BCE25A9CA8068ACE744</ProjectFileChecksum>
       </Template>
       <Template dnOrder="17">
         <Name dnOrder="0">app.h</Name>
@@ -336,6 +336,7 @@
         <Name dnOrder="0">system_interrupt.c</Name>
         <Path dnOrder="1">Source&amp;#160;Files/app/system_config/default</Path>
         <Checksum dnOrder="2">1C01795DF3079A4BE02F6208F67336C9</Checksum>
+        <ProjectFileChecksum dnOrder="3">68A38BA448B9206309FC27E3DCC560B0</ProjectFileChecksum>
       </Template>
       <Template dnOrder="19">
         <Name dnOrder="0">sys_clk_pic32mz.c</Name>
@@ -345,11 +346,11 @@
     </Templates>
     <CompilerItems dnOrder="2">
       <C32 dnOrder="0">
-        <Include dnOrder="0" value="C:\Users\Filipe Carvalho\Desktop\Bitbucket.Soundcard\Firmware.PIC32\firmware\src"/>
-        <Include dnOrder="1" value="C:\Users\Filipe Carvalho\Desktop\Bitbucket.Soundcard\Firmware.PIC32\firmware\src\system_config\default"/>
-        <Include dnOrder="2" value="C:\Users\Filipe Carvalho\Desktop\Bitbucket.Soundcard\Firmware.PIC32\firmware\src\default"/>
+        <Include dnOrder="0" value="C:\Users\Work\Documents\device.soundcard\Firmware.PIC32\firmware\src"/>
+        <Include dnOrder="1" value="C:\Users\Work\Documents\device.soundcard\Firmware.PIC32\firmware\src\system_config\default"/>
+        <Include dnOrder="2" value="C:\Users\Work\Documents\device.soundcard\Firmware.PIC32\firmware\src\default"/>
         <Include dnOrder="3" value="C:\microchip\harmony\v2_04\framework"/>
-        <Include dnOrder="4" value="C:\Users\Filipe Carvalho\Desktop\Bitbucket.Soundcard\Firmware.PIC32\firmware\src\system_config\default\framework"/>
+        <Include dnOrder="4" value="C:\Users\Work\Documents\device.soundcard\Firmware.PIC32\firmware\src\system_config\default\framework"/>
       </C32>
     </CompilerItems>
     <Libraries dnOrder="3">

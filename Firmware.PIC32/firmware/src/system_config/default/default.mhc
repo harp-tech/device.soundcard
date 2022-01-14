@@ -6,7 +6,7 @@
 #     Harmony version: 2.04
 #
 #
-# from C:\Users\Filipe Carvalho\Desktop\Bitbucket.Soundcard\Firmware.PIC32\firmware\SoundCard.hconfig
+# from C:\Users\Work\Documents\device.soundcard\Firmware.PIC32\firmware\SoundCard.hconfig
 #
 CONFIG_APP_INSTANCES=1
 #
@@ -16,7 +16,7 @@ CONFIG_APP_MENU_IDX0=y
 CONFIG_APP_NAME_0="app"
 CONFIG_APP_AUTO_GENERATE_CODE0=n
 #
-# from C:\Users\Filipe Carvalho\Desktop\Bitbucket.Soundcard\Firmware.PIC32\firmware\SoundCard.hconfig
+# from C:\Users\Work\Documents\device.soundcard\Firmware.PIC32\firmware\SoundCard.hconfig
 #
 CONFIG_USE_EXCEPTION_HANDLER=y
 CONFIG_EXCEPTION_USE_SYS_DEBUG=y
@@ -1403,7 +1403,7 @@ CONFIG_BSP_PIN_70_CN=""
 CONFIG_BSP_PIN_70_PU=""
 CONFIG_BSP_PIN_70_PD=""
 CONFIG_BSP_PIN_71_FUNCTION_NAME=""
-CONFIG_BSP_PIN_71_FUNCTION_TYPE=""
+CONFIG_BSP_PIN_71_FUNCTION_TYPE="INT0"
 CONFIG_BSP_PIN_71_PORT_PIN="0"
 CONFIG_BSP_PIN_71_PORT_CHANNEL="D"
 CONFIG_BSP_PIN_71_MODE="DIGITAL"
