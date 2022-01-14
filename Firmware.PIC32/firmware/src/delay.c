@@ -89,16 +89,18 @@ void trigger_pin_sound_is_on(int sample_freq)
     TMR2    = 0;                        // Set counter to 0
     
     if (sample_freq == 96000)
-        PR2 = 818;                      // 266us
-    else
-        PR2 = 274;                      // 89us
+        PR2 = 664;                      // 216us
+    else                    
+        PR2 = 150; //49us
+      
+    //1/(3076923/PR) = us
     
     T2CONbits.TON   = 1;                // Turn on
 }
 
 void __attribute__((vector(_TIMER_2_VECTOR), interrupt(INT_T2_PRIORITY_TLDR_SOFT), nomips16)) timer2_handler()
 {
-    set_SOUND_IS_ON;
+    set_SOUND_IS_ON; 
     IFS0bits.T2IF = 0;                  // Clear interrupt flag
     //T2CON   = 0x0;                      // Disable timer
     T2CONbits.TON = 0;                  // Turn off
