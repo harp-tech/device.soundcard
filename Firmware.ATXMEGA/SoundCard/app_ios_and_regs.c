@@ -7,7 +7,7 @@
 /************************************************************************/
 void init_ios(void)
 {	/* Configure input pins */
-	io_pin2in(&PORTB, 0, PULL_IO_UP, SENSE_IO_EDGES_BOTH);               // DIN0
+	io_pin2in(&PORTB, 0, PULL_IO_UP, SENSE_IO_EDGE_RISING);              // DIN0 
 	io_pin2in(&PORTD, 0, PULL_IO_UP, SENSE_IO_EDGES_BOTH);               // DIN1
 	io_pin2in(&PORTC, 0, PULL_IO_UP, SENSE_IO_EDGES_BOTH);               // DIN2
 	io_pin2in(&PORTC, 5, PULL_IO_UP, SENSE_IO_EDGE_RISING);              // CMD_LATCHED
