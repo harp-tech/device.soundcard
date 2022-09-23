@@ -1,4 +1,2 @@
-artur.silva@neuro.fchampalimaud.org
-dario.bento@neuro.fchampalimaud.org
-paulo.carrico@neuro.fchampalimaud.org
-filipe.carvalho@neuro.fchampalimaud.org
+hardware@neuro.fchampalimaud.org
+hardware@research.fchampalimaud.org
