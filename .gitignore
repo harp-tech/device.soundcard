@@ -3,19 +3,19 @@ desktop.ini
 **/Debug
 *.atsuo
 
-Interface/Scripts/toSoundCard/bin
-Interface/Scripts/toSoundCard/obj
-Interface/Scripts/fromSoundCard/bin
-Interface/Scripts/fromSoundCard/obj
-Interface/LibWinUsb/bin
-Interface/LibWinUsb/obj
-Interface/bin
-Interface/obj
-*.suo
-
 Firmware.PIC32/firmware/SoundCard.X/dist
 Firmware.PIC32/firmware/SoundCard.X/debug
 Firmware.PIC32/firmware/SoundCard.X/build
 Bootloader.PIC32/firmware/Bootloader.PIC32.X/dist
 Bootloader.PIC32/firmware/Bootloader.PIC32.X/debug
 Bootloader.PIC32/firmware/Bootloader.PIC32.X/build
+
+# Visual studio files
+.vs
+.suo
+.nuget
+bin
+obj
+Debug
+packages
+*.componentinfo.xml
