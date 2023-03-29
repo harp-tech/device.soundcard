@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    <RootNamespace>Harp.SoundCard</RootNamespace>
+    <TargetFramework>net6.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <OutputPath>bin</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup>
+    <DeviceMetadata>..\device.yml</DeviceMetadata>
+    <IOMetadata>..\ios.yml</IOMetadata>
+  </PropertyGroup>
+  <PropertyGroup>
+    <InterfacePath>..\Interface\Harp.SoundCard</InterfacePath>
+    <FirmwarePath>..\Firmware\Harp.SoundCard</FirmwarePath>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Harp.Generators" Version="0.1.0-build032704" GeneratePathProperty="true" />
+  </ItemGroup>
+  <Target Name="TextTransform" BeforeTargets="AfterBuild">
+    <PropertyGroup>
+      <InterfaceFlags>-p:MetadataPath=$(DeviceMetadata) -p:Namespace=$(RootNamespace) -P=$(TargetDir)</InterfaceFlags>
+      <FirmwareFlags>-p:RegisterMetadataPath=$(DeviceMetadata) -p:IOMetadataPath=$(IOMetadata) -P=$(TargetDir)</FirmwareFlags>
+    </PropertyGroup>
+    <Exec WorkingDirectory="$(ProjectDir)"
+          Condition="Exists($(DeviceMetadata)) And $([System.String]::new('%(Content.Link)').EndsWith('Device.tt'))"
+          Command="t4 %(Content.Identity) $(InterfaceFlags) -o=$(InterfacePath)\%(Content.Link)" />
+    <Exec WorkingDirectory="$(ProjectDir)"
+          Condition="Exists($(IOMetadata)) And '%(Content.Link)' == 'Firmware.tt'"
+          Command="t4 %(Content.Identity) $(FirmwareFlags) -o=$(FirmwarePath)\app_ios_and_regs.h" />
+  </Target>
+</Project>

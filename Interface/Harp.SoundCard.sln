@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32825.248
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "fromSoundCard", "fromSoundCard\fromSoundCard.csproj", "{FD643F4A-0364-40DB-9076-CFDFB16F5258}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "fromSoundCard", "fromSoundCard\fromSoundCard.csproj", "{FD643F4A-0364-40DB-9076-CFDFB16F5258}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "toSoundCard", "toSoundCard\toSoundCard.csproj", "{3F7CA193-4E25-4A7E-A496-B45434AEF1AF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "toSoundCard", "toSoundCard\toSoundCard.csproj", "{3F7CA193-4E25-4A7E-A496-B45434AEF1AF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Harp.SoundCard", "Harp.SoundCard\Harp.SoundCard.csproj", "{1D7754B9-DE5E-4B1A-9109-826E15A92BAB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,6 +33,14 @@ Global
 		{3F7CA193-4E25-4A7E-A496-B45434AEF1AF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3F7CA193-4E25-4A7E-A496-B45434AEF1AF}.Release|x86.ActiveCfg = Release|Any CPU
 		{3F7CA193-4E25-4A7E-A496-B45434AEF1AF}.Release|x86.Build.0 = Release|Any CPU
+		{1D7754B9-DE5E-4B1A-9109-826E15A92BAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1D7754B9-DE5E-4B1A-9109-826E15A92BAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1D7754B9-DE5E-4B1A-9109-826E15A92BAB}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{1D7754B9-DE5E-4B1A-9109-826E15A92BAB}.Debug|x86.Build.0 = Debug|Any CPU
+		{1D7754B9-DE5E-4B1A-9109-826E15A92BAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1D7754B9-DE5E-4B1A-9109-826E15A92BAB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1D7754B9-DE5E-4B1A-9109-826E15A92BAB}.Release|x86.ActiveCfg = Release|Any CPU
+		{1D7754B9-DE5E-4B1A-9109-826E15A92BAB}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
