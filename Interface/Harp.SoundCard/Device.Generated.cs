@@ -43,7 +43,7 @@ namespace Harp.SoundCard
             { 35, typeof(AttenuationRight) },
             { 36, typeof(AttenuationBoth) },
             { 37, typeof(AttenuationAndPlaySoundOrFreq) },
-            { 40, typeof(DigitalInputs) },
+            { 40, typeof(InputState) },
             { 41, typeof(ConfigureDI0) },
             { 42, typeof(ConfigureDI1) },
             { 43, typeof(ConfigureDI2) },
@@ -76,7 +76,7 @@ namespace Harp.SoundCard
             { 76, typeof(OutputToggle) },
             { 77, typeof(OutputState) },
             { 80, typeof(ConfigureAdc) },
-            { 81, typeof(AnalogInputs) },
+            { 81, typeof(AnalogData) },
             { 82, typeof(Commands) },
             { 86, typeof(EnableEvents) }
         };
@@ -113,7 +113,7 @@ namespace Harp.SoundCard
     /// <seealso cref="AttenuationRight"/>
     /// <seealso cref="AttenuationBoth"/>
     /// <seealso cref="AttenuationAndPlaySoundOrFreq"/>
-    /// <seealso cref="DigitalInputs"/>
+    /// <seealso cref="InputState"/>
     /// <seealso cref="ConfigureDI0"/>
     /// <seealso cref="ConfigureDI1"/>
     /// <seealso cref="ConfigureDI2"/>
@@ -146,7 +146,7 @@ namespace Harp.SoundCard
     /// <seealso cref="OutputToggle"/>
     /// <seealso cref="OutputState"/>
     /// <seealso cref="ConfigureAdc"/>
-    /// <seealso cref="AnalogInputs"/>
+    /// <seealso cref="AnalogData"/>
     /// <seealso cref="Commands"/>
     /// <seealso cref="EnableEvents"/>
     [XmlInclude(typeof(PlaySoundOrFrequency))]
@@ -155,7 +155,7 @@ namespace Harp.SoundCard
     [XmlInclude(typeof(AttenuationRight))]
     [XmlInclude(typeof(AttenuationBoth))]
     [XmlInclude(typeof(AttenuationAndPlaySoundOrFreq))]
-    [XmlInclude(typeof(DigitalInputs))]
+    [XmlInclude(typeof(InputState))]
     [XmlInclude(typeof(ConfigureDI0))]
     [XmlInclude(typeof(ConfigureDI1))]
     [XmlInclude(typeof(ConfigureDI2))]
@@ -188,7 +188,7 @@ namespace Harp.SoundCard
     [XmlInclude(typeof(OutputToggle))]
     [XmlInclude(typeof(OutputState))]
     [XmlInclude(typeof(ConfigureAdc))]
-    [XmlInclude(typeof(AnalogInputs))]
+    [XmlInclude(typeof(AnalogData))]
     [XmlInclude(typeof(Commands))]
     [XmlInclude(typeof(EnableEvents))]
     [Description("Filters register-specific messages reported by the SoundCard device.")]
@@ -218,7 +218,7 @@ namespace Harp.SoundCard
     /// <seealso cref="AttenuationRight"/>
     /// <seealso cref="AttenuationBoth"/>
     /// <seealso cref="AttenuationAndPlaySoundOrFreq"/>
-    /// <seealso cref="DigitalInputs"/>
+    /// <seealso cref="InputState"/>
     /// <seealso cref="ConfigureDI0"/>
     /// <seealso cref="ConfigureDI1"/>
     /// <seealso cref="ConfigureDI2"/>
@@ -251,7 +251,7 @@ namespace Harp.SoundCard
     /// <seealso cref="OutputToggle"/>
     /// <seealso cref="OutputState"/>
     /// <seealso cref="ConfigureAdc"/>
-    /// <seealso cref="AnalogInputs"/>
+    /// <seealso cref="AnalogData"/>
     /// <seealso cref="Commands"/>
     /// <seealso cref="EnableEvents"/>
     [XmlInclude(typeof(PlaySoundOrFrequency))]
@@ -260,7 +260,7 @@ namespace Harp.SoundCard
     [XmlInclude(typeof(AttenuationRight))]
     [XmlInclude(typeof(AttenuationBoth))]
     [XmlInclude(typeof(AttenuationAndPlaySoundOrFreq))]
-    [XmlInclude(typeof(DigitalInputs))]
+    [XmlInclude(typeof(InputState))]
     [XmlInclude(typeof(ConfigureDI0))]
     [XmlInclude(typeof(ConfigureDI1))]
     [XmlInclude(typeof(ConfigureDI2))]
@@ -293,7 +293,7 @@ namespace Harp.SoundCard
     [XmlInclude(typeof(OutputToggle))]
     [XmlInclude(typeof(OutputState))]
     [XmlInclude(typeof(ConfigureAdc))]
-    [XmlInclude(typeof(AnalogInputs))]
+    [XmlInclude(typeof(AnalogData))]
     [XmlInclude(typeof(Commands))]
     [XmlInclude(typeof(EnableEvents))]
     [XmlInclude(typeof(TimestampedPlaySoundOrFrequency))]
@@ -302,7 +302,7 @@ namespace Harp.SoundCard
     [XmlInclude(typeof(TimestampedAttenuationRight))]
     [XmlInclude(typeof(TimestampedAttenuationBoth))]
     [XmlInclude(typeof(TimestampedAttenuationAndPlaySoundOrFreq))]
-    [XmlInclude(typeof(TimestampedDigitalInputs))]
+    [XmlInclude(typeof(TimestampedInputState))]
     [XmlInclude(typeof(TimestampedConfigureDI0))]
     [XmlInclude(typeof(TimestampedConfigureDI1))]
     [XmlInclude(typeof(TimestampedConfigureDI2))]
@@ -335,7 +335,7 @@ namespace Harp.SoundCard
     [XmlInclude(typeof(TimestampedOutputToggle))]
     [XmlInclude(typeof(TimestampedOutputState))]
     [XmlInclude(typeof(TimestampedConfigureAdc))]
-    [XmlInclude(typeof(TimestampedAnalogInputs))]
+    [XmlInclude(typeof(TimestampedAnalogData))]
     [XmlInclude(typeof(TimestampedCommands))]
     [XmlInclude(typeof(TimestampedEnableEvents))]
     [Description("Filters and selects specific messages reported by the SoundCard device.")]
@@ -362,7 +362,7 @@ namespace Harp.SoundCard
     /// <seealso cref="AttenuationRight"/>
     /// <seealso cref="AttenuationBoth"/>
     /// <seealso cref="AttenuationAndPlaySoundOrFreq"/>
-    /// <seealso cref="DigitalInputs"/>
+    /// <seealso cref="InputState"/>
     /// <seealso cref="ConfigureDI0"/>
     /// <seealso cref="ConfigureDI1"/>
     /// <seealso cref="ConfigureDI2"/>
@@ -395,7 +395,7 @@ namespace Harp.SoundCard
     /// <seealso cref="OutputToggle"/>
     /// <seealso cref="OutputState"/>
     /// <seealso cref="ConfigureAdc"/>
-    /// <seealso cref="AnalogInputs"/>
+    /// <seealso cref="AnalogData"/>
     /// <seealso cref="Commands"/>
     /// <seealso cref="EnableEvents"/>
     [XmlInclude(typeof(PlaySoundOrFrequency))]
@@ -404,7 +404,7 @@ namespace Harp.SoundCard
     [XmlInclude(typeof(AttenuationRight))]
     [XmlInclude(typeof(AttenuationBoth))]
     [XmlInclude(typeof(AttenuationAndPlaySoundOrFreq))]
-    [XmlInclude(typeof(DigitalInputs))]
+    [XmlInclude(typeof(InputState))]
     [XmlInclude(typeof(ConfigureDI0))]
     [XmlInclude(typeof(ConfigureDI1))]
     [XmlInclude(typeof(ConfigureDI2))]
@@ -437,7 +437,7 @@ namespace Harp.SoundCard
     [XmlInclude(typeof(OutputToggle))]
     [XmlInclude(typeof(OutputState))]
     [XmlInclude(typeof(ConfigureAdc))]
-    [XmlInclude(typeof(AnalogInputs))]
+    [XmlInclude(typeof(AnalogData))]
     [XmlInclude(typeof(Commands))]
     [XmlInclude(typeof(EnableEvents))]
     [Description("Formats a sequence of values as specific SoundCard register messages.")]
@@ -1034,95 +1034,96 @@ namespace Harp.SoundCard
     /// Represents a register that state of the digital inputs.
     /// </summary>
     [Description("State of the digital inputs")]
-    public partial class DigitalInputs
+    public partial class InputState
     {
         /// <summary>
-        /// Represents the address of the <see cref="DigitalInputs"/> register. This field is constant.
+        /// Represents the address of the <see cref="InputState"/> register. This field is constant.
         /// </summary>
         public const int Address = 40;
 
         /// <summary>
-        /// Represents the payload type of the <see cref="DigitalInputs"/> register. This field is constant.
+        /// Represents the payload type of the <see cref="InputState"/> register. This field is constant.
         /// </summary>
         public const PayloadType RegisterType = PayloadType.U8;
 
         /// <summary>
-        /// Represents the length of the <see cref="DigitalInputs"/> register. This field is constant.
+        /// Represents the length of the <see cref="InputState"/> register. This field is constant.
         /// </summary>
         public const int RegisterLength = 1;
 
         /// <summary>
-        /// Returns the payload data for <see cref="DigitalInputs"/> register messages.
+        /// Returns the payload data for <see cref="InputState"/> register messages.
         /// </summary>
         /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
         /// <returns>A value representing the message payload.</returns>
-        public static byte GetPayload(HarpMessage message)
+        public static DigitalInputs GetPayload(HarpMessage message)
         {
-            return message.GetPayloadByte();
+            return (DigitalInputs)message.GetPayloadByte();
         }
 
         /// <summary>
-        /// Returns the timestamped payload data for <see cref="DigitalInputs"/> register messages.
+        /// Returns the timestamped payload data for <see cref="InputState"/> register messages.
         /// </summary>
         /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
         /// <returns>A value representing the timestamped message payload.</returns>
-        public static Timestamped<byte> GetTimestampedPayload(HarpMessage message)
+        public static Timestamped<DigitalInputs> GetTimestampedPayload(HarpMessage message)
         {
-            return message.GetTimestampedPayloadByte();
+            var payload = message.GetTimestampedPayloadByte();
+            return Timestamped.Create((DigitalInputs)payload.Value, payload.Seconds);
         }
 
         /// <summary>
-        /// Returns a Harp message for the <see cref="DigitalInputs"/> register.
+        /// Returns a Harp message for the <see cref="InputState"/> register.
         /// </summary>
         /// <param name="messageType">The type of the Harp message.</param>
         /// <param name="value">The value to be stored in the message payload.</param>
         /// <returns>
-        /// A <see cref="HarpMessage"/> object for the <see cref="DigitalInputs"/> register
+        /// A <see cref="HarpMessage"/> object for the <see cref="InputState"/> register
         /// with the specified message type and payload.
         /// </returns>
-        public static HarpMessage FromPayload(MessageType messageType, byte value)
+        public static HarpMessage FromPayload(MessageType messageType, DigitalInputs value)
         {
-            return HarpMessage.FromByte(Address, messageType, value);
+            return HarpMessage.FromByte(Address, messageType, (byte)value);
         }
 
         /// <summary>
-        /// Returns a timestamped Harp message for the <see cref="DigitalInputs"/>
+        /// Returns a timestamped Harp message for the <see cref="InputState"/>
         /// register.
         /// </summary>
         /// <param name="timestamp">The timestamp of the message payload, in seconds.</param>
         /// <param name="messageType">The type of the Harp message.</param>
         /// <param name="value">The value to be stored in the message payload.</param>
         /// <returns>
-        /// A <see cref="HarpMessage"/> object for the <see cref="DigitalInputs"/> register
+        /// A <see cref="HarpMessage"/> object for the <see cref="InputState"/> register
         /// with the specified message type, timestamp, and payload.
         /// </returns>
-        public static HarpMessage FromPayload(double timestamp, MessageType messageType, byte value)
+        public static HarpMessage FromPayload(double timestamp, MessageType messageType, DigitalInputs value)
         {
-            return HarpMessage.FromByte(Address, timestamp, messageType, value);
+            return HarpMessage.FromByte(Address, timestamp, messageType, (byte)value);
         }
     }
 
     /// <summary>
     /// Provides methods for manipulating timestamped messages from the
-    /// DigitalInputs register.
+    /// InputState register.
     /// </summary>
-    /// <seealso cref="DigitalInputs"/>
-    [Description("Filters and selects timestamped messages from the DigitalInputs register.")]
-    public partial class TimestampedDigitalInputs
+    /// <seealso cref="InputState"/>
+    [Description("Filters and selects timestamped messages from the InputState register.")]
+    public partial class TimestampedInputState
     {
         /// <summary>
-        /// Represents the address of the <see cref="DigitalInputs"/> register. This field is constant.
+        /// Represents the address of the <see cref="InputState"/> register. This field is constant.
         /// </summary>
-        public const int Address = DigitalInputs.Address;
+        public const int Address = InputState.Address;
 
         /// <summary>
-        /// Returns timestamped payload data for <see cref="DigitalInputs"/> register messages.
+        /// Returns timestamped payload data for <see cref="InputState"/> register messages.
         /// </summary>
         /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
         /// <returns>A value representing the timestamped message payload.</returns>
-        public static Timestamped<byte> GetPayload(HarpMessage message)
+        public static Timestamped<DigitalInputs> GetPayload(HarpMessage message)
         {
-            return DigitalInputs.GetTimestampedPayload(message);
+            return InputState.GetTimestampedPayload(message);
         }
     }
 
@@ -1152,9 +1153,9 @@ namespace Harp.SoundCard
         /// </summary>
         /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
         /// <returns>A value representing the message payload.</returns>
-        public static byte GetPayload(HarpMessage message)
+        public static DigitalInputConfiguration GetPayload(HarpMessage message)
         {
-            return message.GetPayloadByte();
+            return (DigitalInputConfiguration)message.GetPayloadByte();
         }
 
         /// <summary>
@@ -1162,9 +1163,10 @@ namespace Harp.SoundCard
         /// </summary>
         /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
         /// <returns>A value representing the timestamped message payload.</returns>
-        public static Timestamped<byte> GetTimestampedPayload(HarpMessage message)
+        public static Timestamped<DigitalInputConfiguration> GetTimestampedPayload(HarpMessage message)
         {
-            return message.GetTimestampedPayloadByte();
+            var payload = message.GetTimestampedPayloadByte();
+            return Timestamped.Create((DigitalInputConfiguration)payload.Value, payload.Seconds);
         }
 
         /// <summary>
@@ -1176,9 +1178,9 @@ namespace Harp.SoundCard
         /// A <see cref="HarpMessage"/> object for the <see cref="ConfigureDI0"/> register
         /// with the specified message type and payload.
         /// </returns>
-        public static HarpMessage FromPayload(MessageType messageType, byte value)
+        public static HarpMessage FromPayload(MessageType messageType, DigitalInputConfiguration value)
         {
-            return HarpMessage.FromByte(Address, messageType, value);
+            return HarpMessage.FromByte(Address, messageType, (byte)value);
         }
 
         /// <summary>
@@ -1192,9 +1194,9 @@ namespace Harp.SoundCard
         /// A <see cref="HarpMessage"/> object for the <see cref="ConfigureDI0"/> register
         /// with the specified message type, timestamp, and payload.
         /// </returns>
-        public static HarpMessage FromPayload(double timestamp, MessageType messageType, byte value)
+        public static HarpMessage FromPayload(double timestamp, MessageType messageType, DigitalInputConfiguration value)
         {
-            return HarpMessage.FromByte(Address, timestamp, messageType, value);
+            return HarpMessage.FromByte(Address, timestamp, messageType, (byte)value);
         }
     }
 
@@ -1216,7 +1218,7 @@ namespace Harp.SoundCard
         /// </summary>
         /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
         /// <returns>A value representing the timestamped message payload.</returns>
-        public static Timestamped<byte> GetPayload(HarpMessage message)
+        public static Timestamped<DigitalInputConfiguration> GetPayload(HarpMessage message)
         {
             return ConfigureDI0.GetTimestampedPayload(message);
         }
@@ -1248,9 +1250,9 @@ namespace Harp.SoundCard
         /// </summary>
         /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
         /// <returns>A value representing the message payload.</returns>
-        public static byte GetPayload(HarpMessage message)
+        public static DigitalInputConfiguration GetPayload(HarpMessage message)
         {
-            return message.GetPayloadByte();
+            return (DigitalInputConfiguration)message.GetPayloadByte();
         }
 
         /// <summary>
@@ -1258,9 +1260,10 @@ namespace Harp.SoundCard
         /// </summary>
         /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
         /// <returns>A value representing the timestamped message payload.</returns>
-        public static Timestamped<byte> GetTimestampedPayload(HarpMessage message)
+        public static Timestamped<DigitalInputConfiguration> GetTimestampedPayload(HarpMessage message)
         {
-            return message.GetTimestampedPayloadByte();
+            var payload = message.GetTimestampedPayloadByte();
+            return Timestamped.Create((DigitalInputConfiguration)payload.Value, payload.Seconds);
         }
 
         /// <summary>
@@ -1272,9 +1275,9 @@ namespace Harp.SoundCard
         /// A <see cref="HarpMessage"/> object for the <see cref="ConfigureDI1"/> register
         /// with the specified message type and payload.
         /// </returns>
-        public static HarpMessage FromPayload(MessageType messageType, byte value)
+        public static HarpMessage FromPayload(MessageType messageType, DigitalInputConfiguration value)
         {
-            return HarpMessage.FromByte(Address, messageType, value);
+            return HarpMessage.FromByte(Address, messageType, (byte)value);
         }
 
         /// <summary>
@@ -1288,9 +1291,9 @@ namespace Harp.SoundCard
         /// A <see cref="HarpMessage"/> object for the <see cref="ConfigureDI1"/> register
         /// with the specified message type, timestamp, and payload.
         /// </returns>
-        public static HarpMessage FromPayload(double timestamp, MessageType messageType, byte value)
+        public static HarpMessage FromPayload(double timestamp, MessageType messageType, DigitalInputConfiguration value)
         {
-            return HarpMessage.FromByte(Address, timestamp, messageType, value);
+            return HarpMessage.FromByte(Address, timestamp, messageType, (byte)value);
         }
     }
 
@@ -1312,7 +1315,7 @@ namespace Harp.SoundCard
         /// </summary>
         /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
         /// <returns>A value representing the timestamped message payload.</returns>
-        public static Timestamped<byte> GetPayload(HarpMessage message)
+        public static Timestamped<DigitalInputConfiguration> GetPayload(HarpMessage message)
         {
             return ConfigureDI1.GetTimestampedPayload(message);
         }
@@ -1344,9 +1347,9 @@ namespace Harp.SoundCard
         /// </summary>
         /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
         /// <returns>A value representing the message payload.</returns>
-        public static byte GetPayload(HarpMessage message)
+        public static DigitalInputConfiguration GetPayload(HarpMessage message)
         {
-            return message.GetPayloadByte();
+            return (DigitalInputConfiguration)message.GetPayloadByte();
         }
 
         /// <summary>
@@ -1354,9 +1357,10 @@ namespace Harp.SoundCard
         /// </summary>
         /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
         /// <returns>A value representing the timestamped message payload.</returns>
-        public static Timestamped<byte> GetTimestampedPayload(HarpMessage message)
+        public static Timestamped<DigitalInputConfiguration> GetTimestampedPayload(HarpMessage message)
         {
-            return message.GetTimestampedPayloadByte();
+            var payload = message.GetTimestampedPayloadByte();
+            return Timestamped.Create((DigitalInputConfiguration)payload.Value, payload.Seconds);
         }
 
         /// <summary>
@@ -1368,9 +1372,9 @@ namespace Harp.SoundCard
         /// A <see cref="HarpMessage"/> object for the <see cref="ConfigureDI2"/> register
         /// with the specified message type and payload.
         /// </returns>
-        public static HarpMessage FromPayload(MessageType messageType, byte value)
+        public static HarpMessage FromPayload(MessageType messageType, DigitalInputConfiguration value)
         {
-            return HarpMessage.FromByte(Address, messageType, value);
+            return HarpMessage.FromByte(Address, messageType, (byte)value);
         }
 
         /// <summary>
@@ -1384,9 +1388,9 @@ namespace Harp.SoundCard
         /// A <see cref="HarpMessage"/> object for the <see cref="ConfigureDI2"/> register
         /// with the specified message type, timestamp, and payload.
         /// </returns>
-        public static HarpMessage FromPayload(double timestamp, MessageType messageType, byte value)
+        public static HarpMessage FromPayload(double timestamp, MessageType messageType, DigitalInputConfiguration value)
         {
-            return HarpMessage.FromByte(Address, timestamp, messageType, value);
+            return HarpMessage.FromByte(Address, timestamp, messageType, (byte)value);
         }
     }
 
@@ -1408,7 +1412,7 @@ namespace Harp.SoundCard
         /// </summary>
         /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
         /// <returns>A value representing the timestamped message payload.</returns>
-        public static Timestamped<byte> GetPayload(HarpMessage message)
+        public static Timestamped<DigitalInputConfiguration> GetPayload(HarpMessage message)
         {
             return ConfigureDI2.GetTimestampedPayload(message);
         }
@@ -3168,9 +3172,9 @@ namespace Harp.SoundCard
         /// </summary>
         /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
         /// <returns>A value representing the message payload.</returns>
-        public static byte GetPayload(HarpMessage message)
+        public static DigitalOutputConfiguration GetPayload(HarpMessage message)
         {
-            return message.GetPayloadByte();
+            return (DigitalOutputConfiguration)message.GetPayloadByte();
         }
 
         /// <summary>
@@ -3178,9 +3182,10 @@ namespace Harp.SoundCard
         /// </summary>
         /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
         /// <returns>A value representing the timestamped message payload.</returns>
-        public static Timestamped<byte> GetTimestampedPayload(HarpMessage message)
+        public static Timestamped<DigitalOutputConfiguration> GetTimestampedPayload(HarpMessage message)
         {
-            return message.GetTimestampedPayloadByte();
+            var payload = message.GetTimestampedPayloadByte();
+            return Timestamped.Create((DigitalOutputConfiguration)payload.Value, payload.Seconds);
         }
 
         /// <summary>
@@ -3192,9 +3197,9 @@ namespace Harp.SoundCard
         /// A <see cref="HarpMessage"/> object for the <see cref="ConfigureDO0"/> register
         /// with the specified message type and payload.
         /// </returns>
-        public static HarpMessage FromPayload(MessageType messageType, byte value)
+        public static HarpMessage FromPayload(MessageType messageType, DigitalOutputConfiguration value)
         {
-            return HarpMessage.FromByte(Address, messageType, value);
+            return HarpMessage.FromByte(Address, messageType, (byte)value);
         }
 
         /// <summary>
@@ -3208,9 +3213,9 @@ namespace Harp.SoundCard
         /// A <see cref="HarpMessage"/> object for the <see cref="ConfigureDO0"/> register
         /// with the specified message type, timestamp, and payload.
         /// </returns>
-        public static HarpMessage FromPayload(double timestamp, MessageType messageType, byte value)
+        public static HarpMessage FromPayload(double timestamp, MessageType messageType, DigitalOutputConfiguration value)
         {
-            return HarpMessage.FromByte(Address, timestamp, messageType, value);
+            return HarpMessage.FromByte(Address, timestamp, messageType, (byte)value);
         }
     }
 
@@ -3232,7 +3237,7 @@ namespace Harp.SoundCard
         /// </summary>
         /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
         /// <returns>A value representing the timestamped message payload.</returns>
-        public static Timestamped<byte> GetPayload(HarpMessage message)
+        public static Timestamped<DigitalOutputConfiguration> GetPayload(HarpMessage message)
         {
             return ConfigureDO0.GetTimestampedPayload(message);
         }
@@ -3264,9 +3269,9 @@ namespace Harp.SoundCard
         /// </summary>
         /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
         /// <returns>A value representing the message payload.</returns>
-        public static byte GetPayload(HarpMessage message)
+        public static DigitalOutputConfiguration GetPayload(HarpMessage message)
         {
-            return message.GetPayloadByte();
+            return (DigitalOutputConfiguration)message.GetPayloadByte();
         }
 
         /// <summary>
@@ -3274,9 +3279,10 @@ namespace Harp.SoundCard
         /// </summary>
         /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
         /// <returns>A value representing the timestamped message payload.</returns>
-        public static Timestamped<byte> GetTimestampedPayload(HarpMessage message)
+        public static Timestamped<DigitalOutputConfiguration> GetTimestampedPayload(HarpMessage message)
         {
-            return message.GetTimestampedPayloadByte();
+            var payload = message.GetTimestampedPayloadByte();
+            return Timestamped.Create((DigitalOutputConfiguration)payload.Value, payload.Seconds);
         }
 
         /// <summary>
@@ -3288,9 +3294,9 @@ namespace Harp.SoundCard
         /// A <see cref="HarpMessage"/> object for the <see cref="ConfigureDO1"/> register
         /// with the specified message type and payload.
         /// </returns>
-        public static HarpMessage FromPayload(MessageType messageType, byte value)
+        public static HarpMessage FromPayload(MessageType messageType, DigitalOutputConfiguration value)
         {
-            return HarpMessage.FromByte(Address, messageType, value);
+            return HarpMessage.FromByte(Address, messageType, (byte)value);
         }
 
         /// <summary>
@@ -3304,9 +3310,9 @@ namespace Harp.SoundCard
         /// A <see cref="HarpMessage"/> object for the <see cref="ConfigureDO1"/> register
         /// with the specified message type, timestamp, and payload.
         /// </returns>
-        public static HarpMessage FromPayload(double timestamp, MessageType messageType, byte value)
+        public static HarpMessage FromPayload(double timestamp, MessageType messageType, DigitalOutputConfiguration value)
         {
-            return HarpMessage.FromByte(Address, timestamp, messageType, value);
+            return HarpMessage.FromByte(Address, timestamp, messageType, (byte)value);
         }
     }
 
@@ -3328,7 +3334,7 @@ namespace Harp.SoundCard
         /// </summary>
         /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
         /// <returns>A value representing the timestamped message payload.</returns>
-        public static Timestamped<byte> GetPayload(HarpMessage message)
+        public static Timestamped<DigitalOutputConfiguration> GetPayload(HarpMessage message)
         {
             return ConfigureDO1.GetTimestampedPayload(message);
         }
@@ -3360,9 +3366,9 @@ namespace Harp.SoundCard
         /// </summary>
         /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
         /// <returns>A value representing the message payload.</returns>
-        public static byte GetPayload(HarpMessage message)
+        public static DigitalOutputConfiguration GetPayload(HarpMessage message)
         {
-            return message.GetPayloadByte();
+            return (DigitalOutputConfiguration)message.GetPayloadByte();
         }
 
         /// <summary>
@@ -3370,9 +3376,10 @@ namespace Harp.SoundCard
         /// </summary>
         /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
         /// <returns>A value representing the timestamped message payload.</returns>
-        public static Timestamped<byte> GetTimestampedPayload(HarpMessage message)
+        public static Timestamped<DigitalOutputConfiguration> GetTimestampedPayload(HarpMessage message)
         {
-            return message.GetTimestampedPayloadByte();
+            var payload = message.GetTimestampedPayloadByte();
+            return Timestamped.Create((DigitalOutputConfiguration)payload.Value, payload.Seconds);
         }
 
         /// <summary>
@@ -3384,9 +3391,9 @@ namespace Harp.SoundCard
         /// A <see cref="HarpMessage"/> object for the <see cref="ConfigureDO2"/> register
         /// with the specified message type and payload.
         /// </returns>
-        public static HarpMessage FromPayload(MessageType messageType, byte value)
+        public static HarpMessage FromPayload(MessageType messageType, DigitalOutputConfiguration value)
         {
-            return HarpMessage.FromByte(Address, messageType, value);
+            return HarpMessage.FromByte(Address, messageType, (byte)value);
         }
 
         /// <summary>
@@ -3400,9 +3407,9 @@ namespace Harp.SoundCard
         /// A <see cref="HarpMessage"/> object for the <see cref="ConfigureDO2"/> register
         /// with the specified message type, timestamp, and payload.
         /// </returns>
-        public static HarpMessage FromPayload(double timestamp, MessageType messageType, byte value)
+        public static HarpMessage FromPayload(double timestamp, MessageType messageType, DigitalOutputConfiguration value)
         {
-            return HarpMessage.FromByte(Address, timestamp, messageType, value);
+            return HarpMessage.FromByte(Address, timestamp, messageType, (byte)value);
         }
     }
 
@@ -3424,16 +3431,16 @@ namespace Harp.SoundCard
         /// </summary>
         /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
         /// <returns>A value representing the timestamped message payload.</returns>
-        public static Timestamped<byte> GetPayload(HarpMessage message)
+        public static Timestamped<DigitalOutputConfiguration> GetPayload(HarpMessage message)
         {
             return ConfigureDO2.GetTimestampedPayload(message);
         }
     }
 
     /// <summary>
-    /// Represents a register that pulse for the digital output 0 (DO0) [1:255].
+    /// Represents a register that pulse for the digital output 0 (DO0).
     /// </summary>
-    [Description("Pulse for the digital output 0 (DO0) [1:255]")]
+    [Description("Pulse for the digital output 0 (DO0)")]
     public partial class PulseDO0
     {
         /// <summary>
@@ -3527,9 +3534,9 @@ namespace Harp.SoundCard
     }
 
     /// <summary>
-    /// Represents a register that pulse for the digital output 1 (DO1) [1:255].
+    /// Represents a register that pulse for the digital output 1 (DO1).
     /// </summary>
-    [Description("Pulse for the digital output 1 (DO1) [1:255]")]
+    [Description("Pulse for the digital output 1 (DO1)")]
     public partial class PulseDO1
     {
         /// <summary>
@@ -3623,9 +3630,9 @@ namespace Harp.SoundCard
     }
 
     /// <summary>
-    /// Represents a register that pulse for the digital output 2 (DO2) [1:255].
+    /// Represents a register that pulse for the digital output 2 (DO2).
     /// </summary>
-    [Description("Pulse for the digital output 2 (DO2) [1:255]")]
+    [Description("Pulse for the digital output 2 (DO2)")]
     public partial class PulseDO2
     {
         /// <summary>
@@ -3744,9 +3751,9 @@ namespace Harp.SoundCard
         /// </summary>
         /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
         /// <returns>A value representing the message payload.</returns>
-        public static byte GetPayload(HarpMessage message)
+        public static DigitalOutputs GetPayload(HarpMessage message)
         {
-            return message.GetPayloadByte();
+            return (DigitalOutputs)message.GetPayloadByte();
         }
 
         /// <summary>
@@ -3754,9 +3761,10 @@ namespace Harp.SoundCard
         /// </summary>
         /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
         /// <returns>A value representing the timestamped message payload.</returns>
-        public static Timestamped<byte> GetTimestampedPayload(HarpMessage message)
+        public static Timestamped<DigitalOutputs> GetTimestampedPayload(HarpMessage message)
         {
-            return message.GetTimestampedPayloadByte();
+            var payload = message.GetTimestampedPayloadByte();
+            return Timestamped.Create((DigitalOutputs)payload.Value, payload.Seconds);
         }
 
         /// <summary>
@@ -3768,9 +3776,9 @@ namespace Harp.SoundCard
         /// A <see cref="HarpMessage"/> object for the <see cref="OutputSet"/> register
         /// with the specified message type and payload.
         /// </returns>
-        public static HarpMessage FromPayload(MessageType messageType, byte value)
+        public static HarpMessage FromPayload(MessageType messageType, DigitalOutputs value)
         {
-            return HarpMessage.FromByte(Address, messageType, value);
+            return HarpMessage.FromByte(Address, messageType, (byte)value);
         }
 
         /// <summary>
@@ -3784,9 +3792,9 @@ namespace Harp.SoundCard
         /// A <see cref="HarpMessage"/> object for the <see cref="OutputSet"/> register
         /// with the specified message type, timestamp, and payload.
         /// </returns>
-        public static HarpMessage FromPayload(double timestamp, MessageType messageType, byte value)
+        public static HarpMessage FromPayload(double timestamp, MessageType messageType, DigitalOutputs value)
         {
-            return HarpMessage.FromByte(Address, timestamp, messageType, value);
+            return HarpMessage.FromByte(Address, timestamp, messageType, (byte)value);
         }
     }
 
@@ -3808,7 +3816,7 @@ namespace Harp.SoundCard
         /// </summary>
         /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
         /// <returns>A value representing the timestamped message payload.</returns>
-        public static Timestamped<byte> GetPayload(HarpMessage message)
+        public static Timestamped<DigitalOutputs> GetPayload(HarpMessage message)
         {
             return OutputSet.GetTimestampedPayload(message);
         }
@@ -3840,9 +3848,9 @@ namespace Harp.SoundCard
         /// </summary>
         /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
         /// <returns>A value representing the message payload.</returns>
-        public static byte GetPayload(HarpMessage message)
+        public static DigitalOutputs GetPayload(HarpMessage message)
         {
-            return message.GetPayloadByte();
+            return (DigitalOutputs)message.GetPayloadByte();
         }
 
         /// <summary>
@@ -3850,9 +3858,10 @@ namespace Harp.SoundCard
         /// </summary>
         /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
         /// <returns>A value representing the timestamped message payload.</returns>
-        public static Timestamped<byte> GetTimestampedPayload(HarpMessage message)
+        public static Timestamped<DigitalOutputs> GetTimestampedPayload(HarpMessage message)
         {
-            return message.GetTimestampedPayloadByte();
+            var payload = message.GetTimestampedPayloadByte();
+            return Timestamped.Create((DigitalOutputs)payload.Value, payload.Seconds);
         }
 
         /// <summary>
@@ -3864,9 +3873,9 @@ namespace Harp.SoundCard
         /// A <see cref="HarpMessage"/> object for the <see cref="OutputClear"/> register
         /// with the specified message type and payload.
         /// </returns>
-        public static HarpMessage FromPayload(MessageType messageType, byte value)
+        public static HarpMessage FromPayload(MessageType messageType, DigitalOutputs value)
         {
-            return HarpMessage.FromByte(Address, messageType, value);
+            return HarpMessage.FromByte(Address, messageType, (byte)value);
         }
 
         /// <summary>
@@ -3880,9 +3889,9 @@ namespace Harp.SoundCard
         /// A <see cref="HarpMessage"/> object for the <see cref="OutputClear"/> register
         /// with the specified message type, timestamp, and payload.
         /// </returns>
-        public static HarpMessage FromPayload(double timestamp, MessageType messageType, byte value)
+        public static HarpMessage FromPayload(double timestamp, MessageType messageType, DigitalOutputs value)
         {
-            return HarpMessage.FromByte(Address, timestamp, messageType, value);
+            return HarpMessage.FromByte(Address, timestamp, messageType, (byte)value);
         }
     }
 
@@ -3904,7 +3913,7 @@ namespace Harp.SoundCard
         /// </summary>
         /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
         /// <returns>A value representing the timestamped message payload.</returns>
-        public static Timestamped<byte> GetPayload(HarpMessage message)
+        public static Timestamped<DigitalOutputs> GetPayload(HarpMessage message)
         {
             return OutputClear.GetTimestampedPayload(message);
         }
@@ -3936,9 +3945,9 @@ namespace Harp.SoundCard
         /// </summary>
         /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
         /// <returns>A value representing the message payload.</returns>
-        public static byte GetPayload(HarpMessage message)
+        public static DigitalOutputs GetPayload(HarpMessage message)
         {
-            return message.GetPayloadByte();
+            return (DigitalOutputs)message.GetPayloadByte();
         }
 
         /// <summary>
@@ -3946,9 +3955,10 @@ namespace Harp.SoundCard
         /// </summary>
         /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
         /// <returns>A value representing the timestamped message payload.</returns>
-        public static Timestamped<byte> GetTimestampedPayload(HarpMessage message)
+        public static Timestamped<DigitalOutputs> GetTimestampedPayload(HarpMessage message)
         {
-            return message.GetTimestampedPayloadByte();
+            var payload = message.GetTimestampedPayloadByte();
+            return Timestamped.Create((DigitalOutputs)payload.Value, payload.Seconds);
         }
 
         /// <summary>
@@ -3960,9 +3970,9 @@ namespace Harp.SoundCard
         /// A <see cref="HarpMessage"/> object for the <see cref="OutputToggle"/> register
         /// with the specified message type and payload.
         /// </returns>
-        public static HarpMessage FromPayload(MessageType messageType, byte value)
+        public static HarpMessage FromPayload(MessageType messageType, DigitalOutputs value)
         {
-            return HarpMessage.FromByte(Address, messageType, value);
+            return HarpMessage.FromByte(Address, messageType, (byte)value);
         }
 
         /// <summary>
@@ -3976,9 +3986,9 @@ namespace Harp.SoundCard
         /// A <see cref="HarpMessage"/> object for the <see cref="OutputToggle"/> register
         /// with the specified message type, timestamp, and payload.
         /// </returns>
-        public static HarpMessage FromPayload(double timestamp, MessageType messageType, byte value)
+        public static HarpMessage FromPayload(double timestamp, MessageType messageType, DigitalOutputs value)
         {
-            return HarpMessage.FromByte(Address, timestamp, messageType, value);
+            return HarpMessage.FromByte(Address, timestamp, messageType, (byte)value);
         }
     }
 
@@ -4000,7 +4010,7 @@ namespace Harp.SoundCard
         /// </summary>
         /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
         /// <returns>A value representing the timestamped message payload.</returns>
-        public static Timestamped<byte> GetPayload(HarpMessage message)
+        public static Timestamped<DigitalOutputs> GetPayload(HarpMessage message)
         {
             return OutputToggle.GetTimestampedPayload(message);
         }
@@ -4032,9 +4042,9 @@ namespace Harp.SoundCard
         /// </summary>
         /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
         /// <returns>A value representing the message payload.</returns>
-        public static byte GetPayload(HarpMessage message)
+        public static DigitalOutputs GetPayload(HarpMessage message)
         {
-            return message.GetPayloadByte();
+            return (DigitalOutputs)message.GetPayloadByte();
         }
 
         /// <summary>
@@ -4042,9 +4052,10 @@ namespace Harp.SoundCard
         /// </summary>
         /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
         /// <returns>A value representing the timestamped message payload.</returns>
-        public static Timestamped<byte> GetTimestampedPayload(HarpMessage message)
+        public static Timestamped<DigitalOutputs> GetTimestampedPayload(HarpMessage message)
         {
-            return message.GetTimestampedPayloadByte();
+            var payload = message.GetTimestampedPayloadByte();
+            return Timestamped.Create((DigitalOutputs)payload.Value, payload.Seconds);
         }
 
         /// <summary>
@@ -4056,9 +4067,9 @@ namespace Harp.SoundCard
         /// A <see cref="HarpMessage"/> object for the <see cref="OutputState"/> register
         /// with the specified message type and payload.
         /// </returns>
-        public static HarpMessage FromPayload(MessageType messageType, byte value)
+        public static HarpMessage FromPayload(MessageType messageType, DigitalOutputs value)
         {
-            return HarpMessage.FromByte(Address, messageType, value);
+            return HarpMessage.FromByte(Address, messageType, (byte)value);
         }
 
         /// <summary>
@@ -4072,9 +4083,9 @@ namespace Harp.SoundCard
         /// A <see cref="HarpMessage"/> object for the <see cref="OutputState"/> register
         /// with the specified message type, timestamp, and payload.
         /// </returns>
-        public static HarpMessage FromPayload(double timestamp, MessageType messageType, byte value)
+        public static HarpMessage FromPayload(double timestamp, MessageType messageType, DigitalOutputs value)
         {
-            return HarpMessage.FromByte(Address, timestamp, messageType, value);
+            return HarpMessage.FromByte(Address, timestamp, messageType, (byte)value);
         }
     }
 
@@ -4096,7 +4107,7 @@ namespace Harp.SoundCard
         /// </summary>
         /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
         /// <returns>A value representing the timestamped message payload.</returns>
-        public static Timestamped<byte> GetPayload(HarpMessage message)
+        public static Timestamped<DigitalOutputs> GetPayload(HarpMessage message)
         {
             return OutputState.GetTimestampedPayload(message);
         }
@@ -4128,9 +4139,9 @@ namespace Harp.SoundCard
         /// </summary>
         /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
         /// <returns>A value representing the message payload.</returns>
-        public static byte GetPayload(HarpMessage message)
+        public static AdcConfiguration GetPayload(HarpMessage message)
         {
-            return message.GetPayloadByte();
+            return (AdcConfiguration)message.GetPayloadByte();
         }
 
         /// <summary>
@@ -4138,9 +4149,10 @@ namespace Harp.SoundCard
         /// </summary>
         /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
         /// <returns>A value representing the timestamped message payload.</returns>
-        public static Timestamped<byte> GetTimestampedPayload(HarpMessage message)
+        public static Timestamped<AdcConfiguration> GetTimestampedPayload(HarpMessage message)
         {
-            return message.GetTimestampedPayloadByte();
+            var payload = message.GetTimestampedPayloadByte();
+            return Timestamped.Create((AdcConfiguration)payload.Value, payload.Seconds);
         }
 
         /// <summary>
@@ -4152,9 +4164,9 @@ namespace Harp.SoundCard
         /// A <see cref="HarpMessage"/> object for the <see cref="ConfigureAdc"/> register
         /// with the specified message type and payload.
         /// </returns>
-        public static HarpMessage FromPayload(MessageType messageType, byte value)
+        public static HarpMessage FromPayload(MessageType messageType, AdcConfiguration value)
         {
-            return HarpMessage.FromByte(Address, messageType, value);
+            return HarpMessage.FromByte(Address, messageType, (byte)value);
         }
 
         /// <summary>
@@ -4168,9 +4180,9 @@ namespace Harp.SoundCard
         /// A <see cref="HarpMessage"/> object for the <see cref="ConfigureAdc"/> register
         /// with the specified message type, timestamp, and payload.
         /// </returns>
-        public static HarpMessage FromPayload(double timestamp, MessageType messageType, byte value)
+        public static HarpMessage FromPayload(double timestamp, MessageType messageType, AdcConfiguration value)
         {
-            return HarpMessage.FromByte(Address, timestamp, messageType, value);
+            return HarpMessage.FromByte(Address, timestamp, messageType, (byte)value);
         }
     }
 
@@ -4192,105 +4204,129 @@ namespace Harp.SoundCard
         /// </summary>
         /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
         /// <returns>A value representing the timestamped message payload.</returns>
-        public static Timestamped<byte> GetPayload(HarpMessage message)
+        public static Timestamped<AdcConfiguration> GetPayload(HarpMessage message)
         {
             return ConfigureAdc.GetTimestampedPayload(message);
         }
     }
 
     /// <summary>
-    /// Represents a register that [ADC0]   [ADC1]   [ATT LEFT]   [ATT RIGHT]   [FREQUENCY]   Values are 0 if not used.
+    /// Represents a register that contains sampled analog input data or dynamic sound parameters controlled by the ADC channels. Values are zero if not used.
     /// </summary>
-    [Description("[ADC0]   [ADC1]   [ATT LEFT]   [ATT RIGHT]   [FREQUENCY]   Values are 0 if not used")]
-    public partial class AnalogInputs
+    [Description("Contains sampled analog input data or dynamic sound parameters controlled by the ADC channels. Values are zero if not used.")]
+    public partial class AnalogData
     {
         /// <summary>
-        /// Represents the address of the <see cref="AnalogInputs"/> register. This field is constant.
+        /// Represents the address of the <see cref="AnalogData"/> register. This field is constant.
         /// </summary>
         public const int Address = 81;
 
         /// <summary>
-        /// Represents the payload type of the <see cref="AnalogInputs"/> register. This field is constant.
+        /// Represents the payload type of the <see cref="AnalogData"/> register. This field is constant.
         /// </summary>
         public const PayloadType RegisterType = PayloadType.U16;
 
         /// <summary>
-        /// Represents the length of the <see cref="AnalogInputs"/> register. This field is constant.
+        /// Represents the length of the <see cref="AnalogData"/> register. This field is constant.
         /// </summary>
         public const int RegisterLength = 5;
 
+        static AnalogDataPayload ParsePayload(ushort[] payload)
+        {
+            AnalogDataPayload result;
+            result.Adc0 = payload[0];
+            result.Adc1 = payload[1];
+            result.AttenuationLeft = payload[2];
+            result.AttenuationRight = payload[3];
+            result.Frequency = payload[4];
+            return result;
+        }
+
+        static ushort[] FormatPayload(AnalogDataPayload value)
+        {
+            ushort[] result;
+            result = new ushort[5];
+            result[0] = value.Adc0;
+            result[1] = value.Adc1;
+            result[2] = value.AttenuationLeft;
+            result[3] = value.AttenuationRight;
+            result[4] = value.Frequency;
+            return result;
+        }
+
         /// <summary>
-        /// Returns the payload data for <see cref="AnalogInputs"/> register messages.
+        /// Returns the payload data for <see cref="AnalogData"/> register messages.
         /// </summary>
         /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
         /// <returns>A value representing the message payload.</returns>
-        public static ushort[] GetPayload(HarpMessage message)
+        public static AnalogDataPayload GetPayload(HarpMessage message)
         {
-            return message.GetPayloadArray<ushort>();
+            return ParsePayload(message.GetPayloadArray<ushort>());
         }
 
         /// <summary>
-        /// Returns the timestamped payload data for <see cref="AnalogInputs"/> register messages.
+        /// Returns the timestamped payload data for <see cref="AnalogData"/> register messages.
         /// </summary>
         /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
         /// <returns>A value representing the timestamped message payload.</returns>
-        public static Timestamped<ushort[]> GetTimestampedPayload(HarpMessage message)
+        public static Timestamped<AnalogDataPayload> GetTimestampedPayload(HarpMessage message)
         {
-            return message.GetTimestampedPayloadArray<ushort>();
+            var payload = message.GetTimestampedPayloadArray<ushort>();
+            return Timestamped.Create(ParsePayload(payload.Value), payload.Seconds);
         }
 
         /// <summary>
-        /// Returns a Harp message for the <see cref="AnalogInputs"/> register.
+        /// Returns a Harp message for the <see cref="AnalogData"/> register.
         /// </summary>
         /// <param name="messageType">The type of the Harp message.</param>
         /// <param name="value">The value to be stored in the message payload.</param>
         /// <returns>
-        /// A <see cref="HarpMessage"/> object for the <see cref="AnalogInputs"/> register
+        /// A <see cref="HarpMessage"/> object for the <see cref="AnalogData"/> register
         /// with the specified message type and payload.
         /// </returns>
-        public static HarpMessage FromPayload(MessageType messageType, ushort[] value)
+        public static HarpMessage FromPayload(MessageType messageType, AnalogDataPayload value)
         {
-            return HarpMessage.FromUInt16(Address, messageType, value);
+            return HarpMessage.FromUInt16(Address, messageType, FormatPayload(value));
         }
 
         /// <summary>
-        /// Returns a timestamped Harp message for the <see cref="AnalogInputs"/>
+        /// Returns a timestamped Harp message for the <see cref="AnalogData"/>
         /// register.
         /// </summary>
         /// <param name="timestamp">The timestamp of the message payload, in seconds.</param>
         /// <param name="messageType">The type of the Harp message.</param>
         /// <param name="value">The value to be stored in the message payload.</param>
         /// <returns>
-        /// A <see cref="HarpMessage"/> object for the <see cref="AnalogInputs"/> register
+        /// A <see cref="HarpMessage"/> object for the <see cref="AnalogData"/> register
         /// with the specified message type, timestamp, and payload.
         /// </returns>
-        public static HarpMessage FromPayload(double timestamp, MessageType messageType, ushort[] value)
+        public static HarpMessage FromPayload(double timestamp, MessageType messageType, AnalogDataPayload value)
         {
-            return HarpMessage.FromUInt16(Address, timestamp, messageType, value);
+            return HarpMessage.FromUInt16(Address, timestamp, messageType, FormatPayload(value));
         }
     }
 
     /// <summary>
     /// Provides methods for manipulating timestamped messages from the
-    /// AnalogInputs register.
+    /// AnalogData register.
     /// </summary>
-    /// <seealso cref="AnalogInputs"/>
-    [Description("Filters and selects timestamped messages from the AnalogInputs register.")]
-    public partial class TimestampedAnalogInputs
+    /// <seealso cref="AnalogData"/>
+    [Description("Filters and selects timestamped messages from the AnalogData register.")]
+    public partial class TimestampedAnalogData
     {
         /// <summary>
-        /// Represents the address of the <see cref="AnalogInputs"/> register. This field is constant.
+        /// Represents the address of the <see cref="AnalogData"/> register. This field is constant.
         /// </summary>
-        public const int Address = AnalogInputs.Address;
+        public const int Address = AnalogData.Address;
 
         /// <summary>
-        /// Returns timestamped payload data for <see cref="AnalogInputs"/> register messages.
+        /// Returns timestamped payload data for <see cref="AnalogData"/> register messages.
         /// </summary>
         /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
         /// <returns>A value representing the timestamped message payload.</returns>
-        public static Timestamped<ushort[]> GetPayload(HarpMessage message)
+        public static Timestamped<AnalogDataPayload> GetPayload(HarpMessage message)
         {
-            return AnalogInputs.GetTimestampedPayload(message);
+            return AnalogData.GetTimestampedPayload(message);
         }
     }
 
@@ -4320,9 +4356,9 @@ namespace Harp.SoundCard
         /// </summary>
         /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
         /// <returns>A value representing the message payload.</returns>
-        public static byte GetPayload(HarpMessage message)
+        public static ControllerCommand GetPayload(HarpMessage message)
         {
-            return message.GetPayloadByte();
+            return (ControllerCommand)message.GetPayloadByte();
         }
 
         /// <summary>
@@ -4330,9 +4366,10 @@ namespace Harp.SoundCard
         /// </summary>
         /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
         /// <returns>A value representing the timestamped message payload.</returns>
-        public static Timestamped<byte> GetTimestampedPayload(HarpMessage message)
+        public static Timestamped<ControllerCommand> GetTimestampedPayload(HarpMessage message)
         {
-            return message.GetTimestampedPayloadByte();
+            var payload = message.GetTimestampedPayloadByte();
+            return Timestamped.Create((ControllerCommand)payload.Value, payload.Seconds);
         }
 
         /// <summary>
@@ -4344,9 +4381,9 @@ namespace Harp.SoundCard
         /// A <see cref="HarpMessage"/> object for the <see cref="Commands"/> register
         /// with the specified message type and payload.
         /// </returns>
-        public static HarpMessage FromPayload(MessageType messageType, byte value)
+        public static HarpMessage FromPayload(MessageType messageType, ControllerCommand value)
         {
-            return HarpMessage.FromByte(Address, messageType, value);
+            return HarpMessage.FromByte(Address, messageType, (byte)value);
         }
 
         /// <summary>
@@ -4360,9 +4397,9 @@ namespace Harp.SoundCard
         /// A <see cref="HarpMessage"/> object for the <see cref="Commands"/> register
         /// with the specified message type, timestamp, and payload.
         /// </returns>
-        public static HarpMessage FromPayload(double timestamp, MessageType messageType, byte value)
+        public static HarpMessage FromPayload(double timestamp, MessageType messageType, ControllerCommand value)
         {
-            return HarpMessage.FromByte(Address, timestamp, messageType, value);
+            return HarpMessage.FromByte(Address, timestamp, messageType, (byte)value);
         }
     }
 
@@ -4384,16 +4421,16 @@ namespace Harp.SoundCard
         /// </summary>
         /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
         /// <returns>A value representing the timestamped message payload.</returns>
-        public static Timestamped<byte> GetPayload(HarpMessage message)
+        public static Timestamped<ControllerCommand> GetPayload(HarpMessage message)
         {
             return Commands.GetTimestampedPayload(message);
         }
     }
 
     /// <summary>
-    /// Represents a register that enable the Events.
+    /// Represents a register that specifies the active events in the SoundCard device.
     /// </summary>
-    [Description("Enable the Events")]
+    [Description("Specifies the active events in the SoundCard device")]
     public partial class EnableEvents
     {
         /// <summary>
@@ -4416,9 +4453,9 @@ namespace Harp.SoundCard
         /// </summary>
         /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
         /// <returns>A value representing the message payload.</returns>
-        public static byte GetPayload(HarpMessage message)
+        public static SoundCardEvents GetPayload(HarpMessage message)
         {
-            return message.GetPayloadByte();
+            return (SoundCardEvents)message.GetPayloadByte();
         }
 
         /// <summary>
@@ -4426,9 +4463,10 @@ namespace Harp.SoundCard
         /// </summary>
         /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
         /// <returns>A value representing the timestamped message payload.</returns>
-        public static Timestamped<byte> GetTimestampedPayload(HarpMessage message)
+        public static Timestamped<SoundCardEvents> GetTimestampedPayload(HarpMessage message)
         {
-            return message.GetTimestampedPayloadByte();
+            var payload = message.GetTimestampedPayloadByte();
+            return Timestamped.Create((SoundCardEvents)payload.Value, payload.Seconds);
         }
 
         /// <summary>
@@ -4440,9 +4478,9 @@ namespace Harp.SoundCard
         /// A <see cref="HarpMessage"/> object for the <see cref="EnableEvents"/> register
         /// with the specified message type and payload.
         /// </returns>
-        public static HarpMessage FromPayload(MessageType messageType, byte value)
+        public static HarpMessage FromPayload(MessageType messageType, SoundCardEvents value)
         {
-            return HarpMessage.FromByte(Address, messageType, value);
+            return HarpMessage.FromByte(Address, messageType, (byte)value);
         }
 
         /// <summary>
@@ -4456,9 +4494,9 @@ namespace Harp.SoundCard
         /// A <see cref="HarpMessage"/> object for the <see cref="EnableEvents"/> register
         /// with the specified message type, timestamp, and payload.
         /// </returns>
-        public static HarpMessage FromPayload(double timestamp, MessageType messageType, byte value)
+        public static HarpMessage FromPayload(double timestamp, MessageType messageType, SoundCardEvents value)
         {
-            return HarpMessage.FromByte(Address, timestamp, messageType, value);
+            return HarpMessage.FromByte(Address, timestamp, messageType, (byte)value);
         }
     }
 
@@ -4480,7 +4518,7 @@ namespace Harp.SoundCard
         /// </summary>
         /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
         /// <returns>A value representing the timestamped message payload.</returns>
-        public static Timestamped<byte> GetPayload(HarpMessage message)
+        public static Timestamped<SoundCardEvents> GetPayload(HarpMessage message)
         {
             return EnableEvents.GetTimestampedPayload(message);
         }
@@ -4496,7 +4534,7 @@ namespace Harp.SoundCard
     /// <seealso cref="CreateAttenuationRightPayload"/>
     /// <seealso cref="CreateAttenuationBothPayload"/>
     /// <seealso cref="CreateAttenuationAndPlaySoundOrFreqPayload"/>
-    /// <seealso cref="CreateDigitalInputsPayload"/>
+    /// <seealso cref="CreateInputStatePayload"/>
     /// <seealso cref="CreateConfigureDI0Payload"/>
     /// <seealso cref="CreateConfigureDI1Payload"/>
     /// <seealso cref="CreateConfigureDI2Payload"/>
@@ -4529,7 +4567,7 @@ namespace Harp.SoundCard
     /// <seealso cref="CreateOutputTogglePayload"/>
     /// <seealso cref="CreateOutputStatePayload"/>
     /// <seealso cref="CreateConfigureAdcPayload"/>
-    /// <seealso cref="CreateAnalogInputsPayload"/>
+    /// <seealso cref="CreateAnalogDataPayload"/>
     /// <seealso cref="CreateCommandsPayload"/>
     /// <seealso cref="CreateEnableEventsPayload"/>
     [XmlInclude(typeof(CreatePlaySoundOrFrequencyPayload))]
@@ -4538,7 +4576,7 @@ namespace Harp.SoundCard
     [XmlInclude(typeof(CreateAttenuationRightPayload))]
     [XmlInclude(typeof(CreateAttenuationBothPayload))]
     [XmlInclude(typeof(CreateAttenuationAndPlaySoundOrFreqPayload))]
-    [XmlInclude(typeof(CreateDigitalInputsPayload))]
+    [XmlInclude(typeof(CreateInputStatePayload))]
     [XmlInclude(typeof(CreateConfigureDI0Payload))]
     [XmlInclude(typeof(CreateConfigureDI1Payload))]
     [XmlInclude(typeof(CreateConfigureDI2Payload))]
@@ -4571,7 +4609,7 @@ namespace Harp.SoundCard
     [XmlInclude(typeof(CreateOutputTogglePayload))]
     [XmlInclude(typeof(CreateOutputStatePayload))]
     [XmlInclude(typeof(CreateConfigureAdcPayload))]
-    [XmlInclude(typeof(CreateAnalogInputsPayload))]
+    [XmlInclude(typeof(CreateAnalogDataPayload))]
     [XmlInclude(typeof(CreateCommandsPayload))]
     [XmlInclude(typeof(CreateEnableEventsPayload))]
     [Description("Creates standard message payloads for the SoundCard device.")]
@@ -4880,16 +4918,16 @@ namespace Harp.SoundCard
     /// Represents an operator that creates a sequence of message payloads
     /// that state of the digital inputs.
     /// </summary>
-    [DisplayName("DigitalInputsPayload")]
+    [DisplayName("InputStatePayload")]
     [WorkflowElementCategory(ElementCategory.Transform)]
     [Description("Creates a sequence of message payloads that state of the digital inputs.")]
-    public partial class CreateDigitalInputsPayload : HarpCombinator
+    public partial class CreateInputStatePayload : HarpCombinator
     {
         /// <summary>
         /// Gets or sets the value that state of the digital inputs.
         /// </summary>
         [Description("The value that state of the digital inputs.")]
-        public byte Value { get; set; }
+        public DigitalInputs Value { get; set; }
 
         /// <summary>
         /// Creates an observable sequence that contains a single message
@@ -4920,7 +4958,7 @@ namespace Harp.SoundCard
         /// </returns>
         public IObservable<HarpMessage> Process<TSource>(IObservable<TSource> source)
         {
-            return source.Select(_ => DigitalInputs.FromPayload(MessageType, Value));
+            return source.Select(_ => InputState.FromPayload(MessageType, Value));
         }
     }
 
@@ -4937,7 +4975,7 @@ namespace Harp.SoundCard
         /// Gets or sets the value that configuration of the digital input 0 (DI0).
         /// </summary>
         [Description("The value that configuration of the digital input 0 (DI0).")]
-        public byte Value { get; set; }
+        public DigitalInputConfiguration Value { get; set; }
 
         /// <summary>
         /// Creates an observable sequence that contains a single message
@@ -4985,7 +5023,7 @@ namespace Harp.SoundCard
         /// Gets or sets the value that configuration of the digital input 1 (DI1).
         /// </summary>
         [Description("The value that configuration of the digital input 1 (DI1).")]
-        public byte Value { get; set; }
+        public DigitalInputConfiguration Value { get; set; }
 
         /// <summary>
         /// Creates an observable sequence that contains a single message
@@ -5033,7 +5071,7 @@ namespace Harp.SoundCard
         /// Gets or sets the value that configuration of the digital input 2 (DI2).
         /// </summary>
         [Description("The value that configuration of the digital input 2 (DI2).")]
-        public byte Value { get; set; }
+        public DigitalInputConfiguration Value { get; set; }
 
         /// <summary>
         /// Creates an observable sequence that contains a single message
@@ -5945,7 +5983,7 @@ namespace Harp.SoundCard
         /// Gets or sets the value that configuration of the digital output 0 (DO0).
         /// </summary>
         [Description("The value that configuration of the digital output 0 (DO0).")]
-        public byte Value { get; set; }
+        public DigitalOutputConfiguration Value { get; set; }
 
         /// <summary>
         /// Creates an observable sequence that contains a single message
@@ -5993,7 +6031,7 @@ namespace Harp.SoundCard
         /// Gets or sets the value that configuration of the digital output 1 (DO1).
         /// </summary>
         [Description("The value that configuration of the digital output 1 (DO1).")]
-        public byte Value { get; set; }
+        public DigitalOutputConfiguration Value { get; set; }
 
         /// <summary>
         /// Creates an observable sequence that contains a single message
@@ -6041,7 +6079,7 @@ namespace Harp.SoundCard
         /// Gets or sets the value that configuration of the digital output 2 (DO2.
         /// </summary>
         [Description("The value that configuration of the digital output 2 (DO2.")]
-        public byte Value { get; set; }
+        public DigitalOutputConfiguration Value { get; set; }
 
         /// <summary>
         /// Creates an observable sequence that contains a single message
@@ -6078,22 +6116,24 @@ namespace Harp.SoundCard
 
     /// <summary>
     /// Represents an operator that creates a sequence of message payloads
-    /// that pulse for the digital output 0 (DO0) [1:255].
+    /// that pulse for the digital output 0 (DO0).
     /// </summary>
     [DisplayName("PulseDO0Payload")]
     [WorkflowElementCategory(ElementCategory.Transform)]
-    [Description("Creates a sequence of message payloads that pulse for the digital output 0 (DO0) [1:255].")]
+    [Description("Creates a sequence of message payloads that pulse for the digital output 0 (DO0).")]
     public partial class CreatePulseDO0Payload : HarpCombinator
     {
         /// <summary>
-        /// Gets or sets the value that pulse for the digital output 0 (DO0) [1:255].
+        /// Gets or sets the value that pulse for the digital output 0 (DO0).
         /// </summary>
-        [Description("The value that pulse for the digital output 0 (DO0) [1:255].")]
-        public byte Value { get; set; }
+        [Range(min: 1, max: 255)]
+        [Editor(DesignTypes.NumericUpDownEditor, DesignTypes.UITypeEditor)]
+        [Description("The value that pulse for the digital output 0 (DO0).")]
+        public byte Value { get; set; } = 1;
 
         /// <summary>
         /// Creates an observable sequence that contains a single message
-        /// that pulse for the digital output 0 (DO0) [1:255].
+        /// that pulse for the digital output 0 (DO0).
         /// </summary>
         /// <returns>
         /// A sequence containing a single <see cref="HarpMessage"/> object
@@ -6106,7 +6146,7 @@ namespace Harp.SoundCard
 
         /// <summary>
         /// Creates an observable sequence of message payloads
-        /// that pulse for the digital output 0 (DO0) [1:255].
+        /// that pulse for the digital output 0 (DO0).
         /// </summary>
         /// <typeparam name="TSource">
         /// The type of the elements in the <paramref name="source"/> sequence.
@@ -6126,22 +6166,24 @@ namespace Harp.SoundCard
 
     /// <summary>
     /// Represents an operator that creates a sequence of message payloads
-    /// that pulse for the digital output 1 (DO1) [1:255].
+    /// that pulse for the digital output 1 (DO1).
     /// </summary>
     [DisplayName("PulseDO1Payload")]
     [WorkflowElementCategory(ElementCategory.Transform)]
-    [Description("Creates a sequence of message payloads that pulse for the digital output 1 (DO1) [1:255].")]
+    [Description("Creates a sequence of message payloads that pulse for the digital output 1 (DO1).")]
     public partial class CreatePulseDO1Payload : HarpCombinator
     {
         /// <summary>
-        /// Gets or sets the value that pulse for the digital output 1 (DO1) [1:255].
+        /// Gets or sets the value that pulse for the digital output 1 (DO1).
         /// </summary>
-        [Description("The value that pulse for the digital output 1 (DO1) [1:255].")]
-        public byte Value { get; set; }
+        [Range(min: 1, max: 255)]
+        [Editor(DesignTypes.NumericUpDownEditor, DesignTypes.UITypeEditor)]
+        [Description("The value that pulse for the digital output 1 (DO1).")]
+        public byte Value { get; set; } = 1;
 
         /// <summary>
         /// Creates an observable sequence that contains a single message
-        /// that pulse for the digital output 1 (DO1) [1:255].
+        /// that pulse for the digital output 1 (DO1).
         /// </summary>
         /// <returns>
         /// A sequence containing a single <see cref="HarpMessage"/> object
@@ -6154,7 +6196,7 @@ namespace Harp.SoundCard
 
         /// <summary>
         /// Creates an observable sequence of message payloads
-        /// that pulse for the digital output 1 (DO1) [1:255].
+        /// that pulse for the digital output 1 (DO1).
         /// </summary>
         /// <typeparam name="TSource">
         /// The type of the elements in the <paramref name="source"/> sequence.
@@ -6174,22 +6216,24 @@ namespace Harp.SoundCard
 
     /// <summary>
     /// Represents an operator that creates a sequence of message payloads
-    /// that pulse for the digital output 2 (DO2) [1:255].
+    /// that pulse for the digital output 2 (DO2).
     /// </summary>
     [DisplayName("PulseDO2Payload")]
     [WorkflowElementCategory(ElementCategory.Transform)]
-    [Description("Creates a sequence of message payloads that pulse for the digital output 2 (DO2) [1:255].")]
+    [Description("Creates a sequence of message payloads that pulse for the digital output 2 (DO2).")]
     public partial class CreatePulseDO2Payload : HarpCombinator
     {
         /// <summary>
-        /// Gets or sets the value that pulse for the digital output 2 (DO2) [1:255].
+        /// Gets or sets the value that pulse for the digital output 2 (DO2).
         /// </summary>
-        [Description("The value that pulse for the digital output 2 (DO2) [1:255].")]
-        public byte Value { get; set; }
+        [Range(min: 1, max: 255)]
+        [Editor(DesignTypes.NumericUpDownEditor, DesignTypes.UITypeEditor)]
+        [Description("The value that pulse for the digital output 2 (DO2).")]
+        public byte Value { get; set; } = 1;
 
         /// <summary>
         /// Creates an observable sequence that contains a single message
-        /// that pulse for the digital output 2 (DO2) [1:255].
+        /// that pulse for the digital output 2 (DO2).
         /// </summary>
         /// <returns>
         /// A sequence containing a single <see cref="HarpMessage"/> object
@@ -6202,7 +6246,7 @@ namespace Harp.SoundCard
 
         /// <summary>
         /// Creates an observable sequence of message payloads
-        /// that pulse for the digital output 2 (DO2) [1:255].
+        /// that pulse for the digital output 2 (DO2).
         /// </summary>
         /// <typeparam name="TSource">
         /// The type of the elements in the <paramref name="source"/> sequence.
@@ -6233,7 +6277,7 @@ namespace Harp.SoundCard
         /// Gets or sets the value that set the specified digital output lines.
         /// </summary>
         [Description("The value that set the specified digital output lines.")]
-        public byte Value { get; set; }
+        public DigitalOutputs Value { get; set; }
 
         /// <summary>
         /// Creates an observable sequence that contains a single message
@@ -6281,7 +6325,7 @@ namespace Harp.SoundCard
         /// Gets or sets the value that clear the specified digital output lines.
         /// </summary>
         [Description("The value that clear the specified digital output lines.")]
-        public byte Value { get; set; }
+        public DigitalOutputs Value { get; set; }
 
         /// <summary>
         /// Creates an observable sequence that contains a single message
@@ -6329,7 +6373,7 @@ namespace Harp.SoundCard
         /// Gets or sets the value that toggle the specified digital output lines.
         /// </summary>
         [Description("The value that toggle the specified digital output lines.")]
-        public byte Value { get; set; }
+        public DigitalOutputs Value { get; set; }
 
         /// <summary>
         /// Creates an observable sequence that contains a single message
@@ -6377,7 +6421,7 @@ namespace Harp.SoundCard
         /// Gets or sets the value that write the state of all digital output lines.
         /// </summary>
         [Description("The value that write the state of all digital output lines.")]
-        public byte Value { get; set; }
+        public DigitalOutputs Value { get; set; }
 
         /// <summary>
         /// Creates an observable sequence that contains a single message
@@ -6425,7 +6469,7 @@ namespace Harp.SoundCard
         /// Gets or sets the value that configuration of Analog Inputs.
         /// </summary>
         [Description("The value that configuration of Analog Inputs.")]
-        public byte Value { get; set; }
+        public AdcConfiguration Value { get; set; }
 
         /// <summary>
         /// Creates an observable sequence that contains a single message
@@ -6462,22 +6506,46 @@ namespace Harp.SoundCard
 
     /// <summary>
     /// Represents an operator that creates a sequence of message payloads
-    /// that [ADC0]   [ADC1]   [ATT LEFT]   [ATT RIGHT]   [FREQUENCY]   Values are 0 if not used.
+    /// that contains sampled analog input data or dynamic sound parameters controlled by the ADC channels. Values are zero if not used.
     /// </summary>
-    [DisplayName("AnalogInputsPayload")]
+    [DisplayName("AnalogDataPayload")]
     [WorkflowElementCategory(ElementCategory.Transform)]
-    [Description("Creates a sequence of message payloads that [ADC0]   [ADC1]   [ATT LEFT]   [ATT RIGHT]   [FREQUENCY]   Values are 0 if not used.")]
-    public partial class CreateAnalogInputsPayload : HarpCombinator
+    [Description("Creates a sequence of message payloads that contains sampled analog input data or dynamic sound parameters controlled by the ADC channels. Values are zero if not used.")]
+    public partial class CreateAnalogDataPayload : HarpCombinator
     {
         /// <summary>
-        /// Gets or sets the value that [ADC0]   [ADC1]   [ATT LEFT]   [ATT RIGHT]   [FREQUENCY]   Values are 0 if not used.
+        /// Gets or sets a value that the sampled analog input value on ADC0.
         /// </summary>
-        [Description("The value that [ADC0]   [ADC1]   [ATT LEFT]   [ATT RIGHT]   [FREQUENCY]   Values are 0 if not used.")]
-        public ushort[] Value { get; set; }
+        [Description("The sampled analog input value on ADC0.")]
+        public ushort Adc0 { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value that the sampled analog input value on ADC1.
+        /// </summary>
+        [Description("The sampled analog input value on ADC1.")]
+        public ushort Adc1 { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value that the amplitude of the left channel controlled by ADC0.
+        /// </summary>
+        [Description("The amplitude of the left channel controlled by ADC0.")]
+        public ushort AttenuationLeft { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value that the amplitude of the right channel controlled by ADC0.
+        /// </summary>
+        [Description("The amplitude of the right channel controlled by ADC0.")]
+        public ushort AttenuationRight { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value that the output frequency controlled by ADC1.
+        /// </summary>
+        [Description("The output frequency controlled by ADC1.")]
+        public ushort Frequency { get; set; }
 
         /// <summary>
         /// Creates an observable sequence that contains a single message
-        /// that [ADC0]   [ADC1]   [ATT LEFT]   [ATT RIGHT]   [FREQUENCY]   Values are 0 if not used.
+        /// that contains sampled analog input data or dynamic sound parameters controlled by the ADC channels. Values are zero if not used.
         /// </summary>
         /// <returns>
         /// A sequence containing a single <see cref="HarpMessage"/> object
@@ -6490,7 +6558,7 @@ namespace Harp.SoundCard
 
         /// <summary>
         /// Creates an observable sequence of message payloads
-        /// that [ADC0]   [ADC1]   [ATT LEFT]   [ATT RIGHT]   [FREQUENCY]   Values are 0 if not used.
+        /// that contains sampled analog input data or dynamic sound parameters controlled by the ADC channels. Values are zero if not used.
         /// </summary>
         /// <typeparam name="TSource">
         /// The type of the elements in the <paramref name="source"/> sequence.
@@ -6504,7 +6572,16 @@ namespace Harp.SoundCard
         /// </returns>
         public IObservable<HarpMessage> Process<TSource>(IObservable<TSource> source)
         {
-            return source.Select(_ => AnalogInputs.FromPayload(MessageType, Value));
+            return source.Select(_ =>
+            {
+                AnalogDataPayload value;
+                value.Adc0 = Adc0;
+                value.Adc1 = Adc1;
+                value.AttenuationLeft = AttenuationLeft;
+                value.AttenuationRight = AttenuationRight;
+                value.Frequency = Frequency;
+                return AnalogData.FromPayload(MessageType, value);
+            });
         }
     }
 
@@ -6521,7 +6598,7 @@ namespace Harp.SoundCard
         /// Gets or sets the value that send commands to PIC32 micro-controller.
         /// </summary>
         [Description("The value that send commands to PIC32 micro-controller.")]
-        public byte Value { get; set; }
+        public ControllerCommand Value { get; set; }
 
         /// <summary>
         /// Creates an observable sequence that contains a single message
@@ -6558,22 +6635,22 @@ namespace Harp.SoundCard
 
     /// <summary>
     /// Represents an operator that creates a sequence of message payloads
-    /// that enable the Events.
+    /// that specifies the active events in the SoundCard device.
     /// </summary>
     [DisplayName("EnableEventsPayload")]
     [WorkflowElementCategory(ElementCategory.Transform)]
-    [Description("Creates a sequence of message payloads that enable the Events.")]
+    [Description("Creates a sequence of message payloads that specifies the active events in the SoundCard device.")]
     public partial class CreateEnableEventsPayload : HarpCombinator
     {
         /// <summary>
-        /// Gets or sets the value that enable the Events.
+        /// Gets or sets the value that specifies the active events in the SoundCard device.
         /// </summary>
-        [Description("The value that enable the Events.")]
-        public byte Value { get; set; }
+        [Description("The value that specifies the active events in the SoundCard device.")]
+        public SoundCardEvents Value { get; set; }
 
         /// <summary>
         /// Creates an observable sequence that contains a single message
-        /// that enable the Events.
+        /// that specifies the active events in the SoundCard device.
         /// </summary>
         /// <returns>
         /// A sequence containing a single <see cref="HarpMessage"/> object
@@ -6586,7 +6663,7 @@ namespace Harp.SoundCard
 
         /// <summary>
         /// Creates an observable sequence of message payloads
-        /// that enable the Events.
+        /// that specifies the active events in the SoundCard device.
         /// </summary>
         /// <typeparam name="TSource">
         /// The type of the elements in the <paramref name="source"/> sequence.
@@ -6602,5 +6679,201 @@ namespace Harp.SoundCard
         {
             return source.Select(_ => EnableEvents.FromPayload(MessageType, Value));
         }
+    }
+
+    /// <summary>
+    /// Represents the payload of the AnalogData register.
+    /// </summary>
+    public struct AnalogDataPayload
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AnalogDataPayload"/> structure.
+        /// </summary>
+        /// <param name="adc0">The sampled analog input value on ADC0.</param>
+        /// <param name="adc1">The sampled analog input value on ADC1.</param>
+        /// <param name="attenuationLeft">The amplitude of the left channel controlled by ADC0.</param>
+        /// <param name="attenuationRight">The amplitude of the right channel controlled by ADC0.</param>
+        /// <param name="frequency">The output frequency controlled by ADC1.</param>
+        public AnalogDataPayload(
+            ushort adc0,
+            ushort adc1,
+            ushort attenuationLeft,
+            ushort attenuationRight,
+            ushort frequency)
+        {
+            Adc0 = adc0;
+            Adc1 = adc1;
+            AttenuationLeft = attenuationLeft;
+            AttenuationRight = attenuationRight;
+            Frequency = frequency;
+        }
+
+        /// <summary>
+        /// The sampled analog input value on ADC0.
+        /// </summary>
+        public ushort Adc0;
+
+        /// <summary>
+        /// The sampled analog input value on ADC1.
+        /// </summary>
+        public ushort Adc1;
+
+        /// <summary>
+        /// The amplitude of the left channel controlled by ADC0.
+        /// </summary>
+        public ushort AttenuationLeft;
+
+        /// <summary>
+        /// The amplitude of the right channel controlled by ADC0.
+        /// </summary>
+        public ushort AttenuationRight;
+
+        /// <summary>
+        /// The output frequency controlled by ADC1.
+        /// </summary>
+        public ushort Frequency;
+    }
+
+    /// <summary>
+    /// Specifies the state of the digital input lines.
+    /// </summary>
+    [Flags]
+    public enum DigitalInputs : byte
+    {
+        DI0 = 0x1
+    }
+
+    /// <summary>
+    /// Specifies the state of the digital output lines.
+    /// </summary>
+    [Flags]
+    public enum DigitalOutputs : byte
+    {
+        DO0 = 0x1,
+        DO1 = 0x2,
+        DO2 = 0x3
+    }
+
+    /// <summary>
+    /// Specifies the active events in the SoundCard.
+    /// </summary>
+    [Flags]
+    public enum SoundCardEvents : byte
+    {
+        PlaySoundOrFrequency = 0x1,
+        Stop = 0x2,
+        DigitalInputs = 0x4,
+        AdcValues = 0x8
+    }
+
+    /// <summary>
+    /// Specifies the operation mode of the digital input.
+    /// </summary>
+    public enum DigitalInputConfiguration : byte
+    {
+        /// <summary>
+        /// Used as a pure digital input.
+        /// </summary>
+        Digital = 0,
+
+        /// <summary>
+        /// Starts sound when rising edge and stop when falling edge.
+        /// </summary>
+        StartAndStopSound = 1,
+
+        /// <summary>
+        /// Starts sound when rising edge.
+        /// </summary>
+        StartSound = 2,
+
+        /// <summary>
+        /// Stops sound or frequency when rising edge.
+        /// </summary>
+        Stop = 3,
+
+        /// <summary>
+        /// Starts frequency when rising edge and stop when falling edge.
+        /// </summary>
+        StartAndStopFrequency = 4,
+
+        /// <summary>
+        /// Starts frequency when rising edge.
+        /// </summary>
+        StartFrequency = 5
+    }
+
+    /// <summary>
+    /// Specifies the operation mode of the digital output.
+    /// </summary>
+    public enum DigitalOutputConfiguration : byte
+    {
+        /// <summary>
+        /// Used as a pure digital output.
+        /// </summary>
+        Digital = 0,
+
+        /// <summary>
+        /// The digital output will be high during a period specified by register DOxPulse.
+        /// </summary>
+        Pulse = 1,
+
+        /// <summary>
+        /// High when the sound is being played.
+        /// </summary>
+        HighWhenSound = 2,
+
+        /// <summary>
+        /// High when sound starts during 1 ms.
+        /// </summary>
+        Pulse1MsWhenStart = 3,
+
+        /// <summary>
+        /// High when sound starts during 10 ms.
+        /// </summary>
+        Pulse10MsWhenStart = 4,
+
+        /// <summary>
+        /// High when sound starts during 100 ms.
+        /// </summary>
+        Pulse100MsWhenStart = 5,
+
+        /// <summary>
+        /// High when sound stops during 1 ms.
+        /// </summary>
+        Pulse1MsWhenStop = 6,
+
+        /// <summary>
+        /// High when sound stops during 10 ms.
+        /// </summary>
+        Pulse10MsWhenStop = 7,
+
+        /// <summary>
+        /// High when sound starts during 100 ms.
+        /// </summary>
+        Pulse100MsWhenStop = 8
+    }
+
+    /// <summary>
+    /// Specifies commands to send to the PIC32 micro-controller
+    /// </summary>
+    public enum ControllerCommand : byte
+    {
+        DisableBootloader = 0,
+        EnableBootloader = 1,
+        DeleteAllSounds = 255
+    }
+
+    /// <summary>
+    /// Specifies the operation mode of the analog inputs.
+    /// </summary>
+    public enum AdcConfiguration : byte
+    {
+        NotUsed = 0,
+        AdcAdc = 1,
+        AmplitudeBothAdc = 2,
+        AmplitudeLeftAdc = 3,
+        AmplitudeRightAdc = 4,
+        AmplitudeLeftAmplitudeRight = 5,
+        AmplitudeBothFrequency = 6
     }
 }

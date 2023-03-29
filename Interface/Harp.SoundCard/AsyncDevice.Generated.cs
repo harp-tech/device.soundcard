@@ -267,29 +267,29 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously reads the contents of the DigitalInputs register.
+        /// Asynchronously reads the contents of the InputState register.
         /// </summary>
         /// <returns>
         /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
         /// property contains the register payload.
         /// </returns>
-        public async Task<byte> ReadDigitalInputsAsync()
+        public async Task<DigitalInputs> ReadInputStateAsync()
         {
-            var reply = await CommandAsync(HarpCommand.ReadByte(DigitalInputs.Address));
-            return DigitalInputs.GetPayload(reply);
+            var reply = await CommandAsync(HarpCommand.ReadByte(InputState.Address));
+            return InputState.GetPayload(reply);
         }
 
         /// <summary>
-        /// Asynchronously reads the timestamped contents of the DigitalInputs register.
+        /// Asynchronously reads the timestamped contents of the InputState register.
         /// </summary>
         /// <returns>
         /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
         /// property contains the timestamped register payload.
         /// </returns>
-        public async Task<Timestamped<byte>> ReadTimestampedDigitalInputsAsync()
+        public async Task<Timestamped<DigitalInputs>> ReadTimestampedInputStateAsync()
         {
-            var reply = await CommandAsync(HarpCommand.ReadByte(DigitalInputs.Address));
-            return DigitalInputs.GetTimestampedPayload(reply);
+            var reply = await CommandAsync(HarpCommand.ReadByte(InputState.Address));
+            return InputState.GetTimestampedPayload(reply);
         }
 
         /// <summary>
@@ -299,7 +299,7 @@ namespace Harp.SoundCard
         /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
         /// property contains the register payload.
         /// </returns>
-        public async Task<byte> ReadConfigureDI0Async()
+        public async Task<DigitalInputConfiguration> ReadConfigureDI0Async()
         {
             var reply = await CommandAsync(HarpCommand.ReadByte(ConfigureDI0.Address));
             return ConfigureDI0.GetPayload(reply);
@@ -312,7 +312,7 @@ namespace Harp.SoundCard
         /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
         /// property contains the timestamped register payload.
         /// </returns>
-        public async Task<Timestamped<byte>> ReadTimestampedConfigureDI0Async()
+        public async Task<Timestamped<DigitalInputConfiguration>> ReadTimestampedConfigureDI0Async()
         {
             var reply = await CommandAsync(HarpCommand.ReadByte(ConfigureDI0.Address));
             return ConfigureDI0.GetTimestampedPayload(reply);
@@ -323,7 +323,7 @@ namespace Harp.SoundCard
         /// </summary>
         /// <param name="value">The value to be stored in the register.</param>
         /// <returns>The task object representing the asynchronous write operation.</returns>
-        public async Task WriteConfigureDI0Async(byte value)
+        public async Task WriteConfigureDI0Async(DigitalInputConfiguration value)
         {
             var request = ConfigureDI0.FromPayload(MessageType.Write, value);
             await CommandAsync(request);
@@ -336,7 +336,7 @@ namespace Harp.SoundCard
         /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
         /// property contains the register payload.
         /// </returns>
-        public async Task<byte> ReadConfigureDI1Async()
+        public async Task<DigitalInputConfiguration> ReadConfigureDI1Async()
         {
             var reply = await CommandAsync(HarpCommand.ReadByte(ConfigureDI1.Address));
             return ConfigureDI1.GetPayload(reply);
@@ -349,7 +349,7 @@ namespace Harp.SoundCard
         /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
         /// property contains the timestamped register payload.
         /// </returns>
-        public async Task<Timestamped<byte>> ReadTimestampedConfigureDI1Async()
+        public async Task<Timestamped<DigitalInputConfiguration>> ReadTimestampedConfigureDI1Async()
         {
             var reply = await CommandAsync(HarpCommand.ReadByte(ConfigureDI1.Address));
             return ConfigureDI1.GetTimestampedPayload(reply);
@@ -360,7 +360,7 @@ namespace Harp.SoundCard
         /// </summary>
         /// <param name="value">The value to be stored in the register.</param>
         /// <returns>The task object representing the asynchronous write operation.</returns>
-        public async Task WriteConfigureDI1Async(byte value)
+        public async Task WriteConfigureDI1Async(DigitalInputConfiguration value)
         {
             var request = ConfigureDI1.FromPayload(MessageType.Write, value);
             await CommandAsync(request);
@@ -373,7 +373,7 @@ namespace Harp.SoundCard
         /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
         /// property contains the register payload.
         /// </returns>
-        public async Task<byte> ReadConfigureDI2Async()
+        public async Task<DigitalInputConfiguration> ReadConfigureDI2Async()
         {
             var reply = await CommandAsync(HarpCommand.ReadByte(ConfigureDI2.Address));
             return ConfigureDI2.GetPayload(reply);
@@ -386,7 +386,7 @@ namespace Harp.SoundCard
         /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
         /// property contains the timestamped register payload.
         /// </returns>
-        public async Task<Timestamped<byte>> ReadTimestampedConfigureDI2Async()
+        public async Task<Timestamped<DigitalInputConfiguration>> ReadTimestampedConfigureDI2Async()
         {
             var reply = await CommandAsync(HarpCommand.ReadByte(ConfigureDI2.Address));
             return ConfigureDI2.GetTimestampedPayload(reply);
@@ -397,7 +397,7 @@ namespace Harp.SoundCard
         /// </summary>
         /// <param name="value">The value to be stored in the register.</param>
         /// <returns>The task object representing the asynchronous write operation.</returns>
-        public async Task WriteConfigureDI2Async(byte value)
+        public async Task WriteConfigureDI2Async(DigitalInputConfiguration value)
         {
             var request = ConfigureDI2.FromPayload(MessageType.Write, value);
             await CommandAsync(request);
@@ -1076,7 +1076,7 @@ namespace Harp.SoundCard
         /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
         /// property contains the register payload.
         /// </returns>
-        public async Task<byte> ReadConfigureDO0Async()
+        public async Task<DigitalOutputConfiguration> ReadConfigureDO0Async()
         {
             var reply = await CommandAsync(HarpCommand.ReadByte(ConfigureDO0.Address));
             return ConfigureDO0.GetPayload(reply);
@@ -1089,7 +1089,7 @@ namespace Harp.SoundCard
         /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
         /// property contains the timestamped register payload.
         /// </returns>
-        public async Task<Timestamped<byte>> ReadTimestampedConfigureDO0Async()
+        public async Task<Timestamped<DigitalOutputConfiguration>> ReadTimestampedConfigureDO0Async()
         {
             var reply = await CommandAsync(HarpCommand.ReadByte(ConfigureDO0.Address));
             return ConfigureDO0.GetTimestampedPayload(reply);
@@ -1100,7 +1100,7 @@ namespace Harp.SoundCard
         /// </summary>
         /// <param name="value">The value to be stored in the register.</param>
         /// <returns>The task object representing the asynchronous write operation.</returns>
-        public async Task WriteConfigureDO0Async(byte value)
+        public async Task WriteConfigureDO0Async(DigitalOutputConfiguration value)
         {
             var request = ConfigureDO0.FromPayload(MessageType.Write, value);
             await CommandAsync(request);
@@ -1113,7 +1113,7 @@ namespace Harp.SoundCard
         /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
         /// property contains the register payload.
         /// </returns>
-        public async Task<byte> ReadConfigureDO1Async()
+        public async Task<DigitalOutputConfiguration> ReadConfigureDO1Async()
         {
             var reply = await CommandAsync(HarpCommand.ReadByte(ConfigureDO1.Address));
             return ConfigureDO1.GetPayload(reply);
@@ -1126,7 +1126,7 @@ namespace Harp.SoundCard
         /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
         /// property contains the timestamped register payload.
         /// </returns>
-        public async Task<Timestamped<byte>> ReadTimestampedConfigureDO1Async()
+        public async Task<Timestamped<DigitalOutputConfiguration>> ReadTimestampedConfigureDO1Async()
         {
             var reply = await CommandAsync(HarpCommand.ReadByte(ConfigureDO1.Address));
             return ConfigureDO1.GetTimestampedPayload(reply);
@@ -1137,7 +1137,7 @@ namespace Harp.SoundCard
         /// </summary>
         /// <param name="value">The value to be stored in the register.</param>
         /// <returns>The task object representing the asynchronous write operation.</returns>
-        public async Task WriteConfigureDO1Async(byte value)
+        public async Task WriteConfigureDO1Async(DigitalOutputConfiguration value)
         {
             var request = ConfigureDO1.FromPayload(MessageType.Write, value);
             await CommandAsync(request);
@@ -1150,7 +1150,7 @@ namespace Harp.SoundCard
         /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
         /// property contains the register payload.
         /// </returns>
-        public async Task<byte> ReadConfigureDO2Async()
+        public async Task<DigitalOutputConfiguration> ReadConfigureDO2Async()
         {
             var reply = await CommandAsync(HarpCommand.ReadByte(ConfigureDO2.Address));
             return ConfigureDO2.GetPayload(reply);
@@ -1163,7 +1163,7 @@ namespace Harp.SoundCard
         /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
         /// property contains the timestamped register payload.
         /// </returns>
-        public async Task<Timestamped<byte>> ReadTimestampedConfigureDO2Async()
+        public async Task<Timestamped<DigitalOutputConfiguration>> ReadTimestampedConfigureDO2Async()
         {
             var reply = await CommandAsync(HarpCommand.ReadByte(ConfigureDO2.Address));
             return ConfigureDO2.GetTimestampedPayload(reply);
@@ -1174,7 +1174,7 @@ namespace Harp.SoundCard
         /// </summary>
         /// <param name="value">The value to be stored in the register.</param>
         /// <returns>The task object representing the asynchronous write operation.</returns>
-        public async Task WriteConfigureDO2Async(byte value)
+        public async Task WriteConfigureDO2Async(DigitalOutputConfiguration value)
         {
             var request = ConfigureDO2.FromPayload(MessageType.Write, value);
             await CommandAsync(request);
@@ -1298,7 +1298,7 @@ namespace Harp.SoundCard
         /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
         /// property contains the register payload.
         /// </returns>
-        public async Task<byte> ReadOutputSetAsync()
+        public async Task<DigitalOutputs> ReadOutputSetAsync()
         {
             var reply = await CommandAsync(HarpCommand.ReadByte(OutputSet.Address));
             return OutputSet.GetPayload(reply);
@@ -1311,7 +1311,7 @@ namespace Harp.SoundCard
         /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
         /// property contains the timestamped register payload.
         /// </returns>
-        public async Task<Timestamped<byte>> ReadTimestampedOutputSetAsync()
+        public async Task<Timestamped<DigitalOutputs>> ReadTimestampedOutputSetAsync()
         {
             var reply = await CommandAsync(HarpCommand.ReadByte(OutputSet.Address));
             return OutputSet.GetTimestampedPayload(reply);
@@ -1322,7 +1322,7 @@ namespace Harp.SoundCard
         /// </summary>
         /// <param name="value">The value to be stored in the register.</param>
         /// <returns>The task object representing the asynchronous write operation.</returns>
-        public async Task WriteOutputSetAsync(byte value)
+        public async Task WriteOutputSetAsync(DigitalOutputs value)
         {
             var request = OutputSet.FromPayload(MessageType.Write, value);
             await CommandAsync(request);
@@ -1335,7 +1335,7 @@ namespace Harp.SoundCard
         /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
         /// property contains the register payload.
         /// </returns>
-        public async Task<byte> ReadOutputClearAsync()
+        public async Task<DigitalOutputs> ReadOutputClearAsync()
         {
             var reply = await CommandAsync(HarpCommand.ReadByte(OutputClear.Address));
             return OutputClear.GetPayload(reply);
@@ -1348,7 +1348,7 @@ namespace Harp.SoundCard
         /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
         /// property contains the timestamped register payload.
         /// </returns>
-        public async Task<Timestamped<byte>> ReadTimestampedOutputClearAsync()
+        public async Task<Timestamped<DigitalOutputs>> ReadTimestampedOutputClearAsync()
         {
             var reply = await CommandAsync(HarpCommand.ReadByte(OutputClear.Address));
             return OutputClear.GetTimestampedPayload(reply);
@@ -1359,7 +1359,7 @@ namespace Harp.SoundCard
         /// </summary>
         /// <param name="value">The value to be stored in the register.</param>
         /// <returns>The task object representing the asynchronous write operation.</returns>
-        public async Task WriteOutputClearAsync(byte value)
+        public async Task WriteOutputClearAsync(DigitalOutputs value)
         {
             var request = OutputClear.FromPayload(MessageType.Write, value);
             await CommandAsync(request);
@@ -1372,7 +1372,7 @@ namespace Harp.SoundCard
         /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
         /// property contains the register payload.
         /// </returns>
-        public async Task<byte> ReadOutputToggleAsync()
+        public async Task<DigitalOutputs> ReadOutputToggleAsync()
         {
             var reply = await CommandAsync(HarpCommand.ReadByte(OutputToggle.Address));
             return OutputToggle.GetPayload(reply);
@@ -1385,7 +1385,7 @@ namespace Harp.SoundCard
         /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
         /// property contains the timestamped register payload.
         /// </returns>
-        public async Task<Timestamped<byte>> ReadTimestampedOutputToggleAsync()
+        public async Task<Timestamped<DigitalOutputs>> ReadTimestampedOutputToggleAsync()
         {
             var reply = await CommandAsync(HarpCommand.ReadByte(OutputToggle.Address));
             return OutputToggle.GetTimestampedPayload(reply);
@@ -1396,7 +1396,7 @@ namespace Harp.SoundCard
         /// </summary>
         /// <param name="value">The value to be stored in the register.</param>
         /// <returns>The task object representing the asynchronous write operation.</returns>
-        public async Task WriteOutputToggleAsync(byte value)
+        public async Task WriteOutputToggleAsync(DigitalOutputs value)
         {
             var request = OutputToggle.FromPayload(MessageType.Write, value);
             await CommandAsync(request);
@@ -1409,7 +1409,7 @@ namespace Harp.SoundCard
         /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
         /// property contains the register payload.
         /// </returns>
-        public async Task<byte> ReadOutputStateAsync()
+        public async Task<DigitalOutputs> ReadOutputStateAsync()
         {
             var reply = await CommandAsync(HarpCommand.ReadByte(OutputState.Address));
             return OutputState.GetPayload(reply);
@@ -1422,7 +1422,7 @@ namespace Harp.SoundCard
         /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
         /// property contains the timestamped register payload.
         /// </returns>
-        public async Task<Timestamped<byte>> ReadTimestampedOutputStateAsync()
+        public async Task<Timestamped<DigitalOutputs>> ReadTimestampedOutputStateAsync()
         {
             var reply = await CommandAsync(HarpCommand.ReadByte(OutputState.Address));
             return OutputState.GetTimestampedPayload(reply);
@@ -1433,7 +1433,7 @@ namespace Harp.SoundCard
         /// </summary>
         /// <param name="value">The value to be stored in the register.</param>
         /// <returns>The task object representing the asynchronous write operation.</returns>
-        public async Task WriteOutputStateAsync(byte value)
+        public async Task WriteOutputStateAsync(DigitalOutputs value)
         {
             var request = OutputState.FromPayload(MessageType.Write, value);
             await CommandAsync(request);
@@ -1446,7 +1446,7 @@ namespace Harp.SoundCard
         /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
         /// property contains the register payload.
         /// </returns>
-        public async Task<byte> ReadConfigureAdcAsync()
+        public async Task<AdcConfiguration> ReadConfigureAdcAsync()
         {
             var reply = await CommandAsync(HarpCommand.ReadByte(ConfigureAdc.Address));
             return ConfigureAdc.GetPayload(reply);
@@ -1459,7 +1459,7 @@ namespace Harp.SoundCard
         /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
         /// property contains the timestamped register payload.
         /// </returns>
-        public async Task<Timestamped<byte>> ReadTimestampedConfigureAdcAsync()
+        public async Task<Timestamped<AdcConfiguration>> ReadTimestampedConfigureAdcAsync()
         {
             var reply = await CommandAsync(HarpCommand.ReadByte(ConfigureAdc.Address));
             return ConfigureAdc.GetTimestampedPayload(reply);
@@ -1470,36 +1470,36 @@ namespace Harp.SoundCard
         /// </summary>
         /// <param name="value">The value to be stored in the register.</param>
         /// <returns>The task object representing the asynchronous write operation.</returns>
-        public async Task WriteConfigureAdcAsync(byte value)
+        public async Task WriteConfigureAdcAsync(AdcConfiguration value)
         {
             var request = ConfigureAdc.FromPayload(MessageType.Write, value);
             await CommandAsync(request);
         }
 
         /// <summary>
-        /// Asynchronously reads the contents of the AnalogInputs register.
+        /// Asynchronously reads the contents of the AnalogData register.
         /// </summary>
         /// <returns>
         /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
         /// property contains the register payload.
         /// </returns>
-        public async Task<ushort[]> ReadAnalogInputsAsync()
+        public async Task<AnalogDataPayload> ReadAnalogDataAsync()
         {
-            var reply = await CommandAsync(HarpCommand.ReadUInt16(AnalogInputs.Address));
-            return AnalogInputs.GetPayload(reply);
+            var reply = await CommandAsync(HarpCommand.ReadUInt16(AnalogData.Address));
+            return AnalogData.GetPayload(reply);
         }
 
         /// <summary>
-        /// Asynchronously reads the timestamped contents of the AnalogInputs register.
+        /// Asynchronously reads the timestamped contents of the AnalogData register.
         /// </summary>
         /// <returns>
         /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
         /// property contains the timestamped register payload.
         /// </returns>
-        public async Task<Timestamped<ushort[]>> ReadTimestampedAnalogInputsAsync()
+        public async Task<Timestamped<AnalogDataPayload>> ReadTimestampedAnalogDataAsync()
         {
-            var reply = await CommandAsync(HarpCommand.ReadUInt16(AnalogInputs.Address));
-            return AnalogInputs.GetTimestampedPayload(reply);
+            var reply = await CommandAsync(HarpCommand.ReadUInt16(AnalogData.Address));
+            return AnalogData.GetTimestampedPayload(reply);
         }
 
         /// <summary>
@@ -1509,7 +1509,7 @@ namespace Harp.SoundCard
         /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
         /// property contains the register payload.
         /// </returns>
-        public async Task<byte> ReadCommandsAsync()
+        public async Task<ControllerCommand> ReadCommandsAsync()
         {
             var reply = await CommandAsync(HarpCommand.ReadByte(Commands.Address));
             return Commands.GetPayload(reply);
@@ -1522,7 +1522,7 @@ namespace Harp.SoundCard
         /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
         /// property contains the timestamped register payload.
         /// </returns>
-        public async Task<Timestamped<byte>> ReadTimestampedCommandsAsync()
+        public async Task<Timestamped<ControllerCommand>> ReadTimestampedCommandsAsync()
         {
             var reply = await CommandAsync(HarpCommand.ReadByte(Commands.Address));
             return Commands.GetTimestampedPayload(reply);
@@ -1533,7 +1533,7 @@ namespace Harp.SoundCard
         /// </summary>
         /// <param name="value">The value to be stored in the register.</param>
         /// <returns>The task object representing the asynchronous write operation.</returns>
-        public async Task WriteCommandsAsync(byte value)
+        public async Task WriteCommandsAsync(ControllerCommand value)
         {
             var request = Commands.FromPayload(MessageType.Write, value);
             await CommandAsync(request);
@@ -1546,7 +1546,7 @@ namespace Harp.SoundCard
         /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
         /// property contains the register payload.
         /// </returns>
-        public async Task<byte> ReadEnableEventsAsync()
+        public async Task<SoundCardEvents> ReadEnableEventsAsync()
         {
             var reply = await CommandAsync(HarpCommand.ReadByte(EnableEvents.Address));
             return EnableEvents.GetPayload(reply);
@@ -1559,7 +1559,7 @@ namespace Harp.SoundCard
         /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
         /// property contains the timestamped register payload.
         /// </returns>
-        public async Task<Timestamped<byte>> ReadTimestampedEnableEventsAsync()
+        public async Task<Timestamped<SoundCardEvents>> ReadTimestampedEnableEventsAsync()
         {
             var reply = await CommandAsync(HarpCommand.ReadByte(EnableEvents.Address));
             return EnableEvents.GetTimestampedPayload(reply);
@@ -1570,7 +1570,7 @@ namespace Harp.SoundCard
         /// </summary>
         /// <param name="value">The value to be stored in the register.</param>
         /// <returns>The task object representing the asynchronous write operation.</returns>
-        public async Task WriteEnableEventsAsync(byte value)
+        public async Task WriteEnableEventsAsync(SoundCardEvents value)
         {
             var request = EnableEvents.FromPayload(MessageType.Write, value);
             await CommandAsync(request);
