@@ -455,9 +455,9 @@ namespace Harp.SoundCard
     }
 
     /// <summary>
-    /// Represents a register that starts the sound index (if < 32) or frequency (if >= 32).
+    /// Represents a register that starts the sound index (if less than 32) or frequency (if greater or equal than 32).
     /// </summary>
-    [Description("Starts the sound index (if < 32) or frequency (if >= 32)")]
+    [Description("Starts the sound index (if less than 32) or frequency (if greater or equal than 32)")]
     public partial class PlaySoundOrFrequency
     {
         /// <summary>
@@ -4590,22 +4590,22 @@ namespace Harp.SoundCard
 
     /// <summary>
     /// Represents an operator that creates a sequence of message payloads
-    /// that starts the sound index (if < 32) or frequency (if >= 32).
+    /// that starts the sound index (if less than 32) or frequency (if greater or equal than 32).
     /// </summary>
     [DisplayName("PlaySoundOrFrequencyPayload")]
     [WorkflowElementCategory(ElementCategory.Transform)]
-    [Description("Creates a sequence of message payloads that starts the sound index (if < 32) or frequency (if >= 32).")]
+    [Description("Creates a sequence of message payloads that starts the sound index (if less than 32) or frequency (if greater or equal than 32).")]
     public partial class CreatePlaySoundOrFrequencyPayload : HarpCombinator
     {
         /// <summary>
-        /// Gets or sets the value that starts the sound index (if < 32) or frequency (if >= 32).
+        /// Gets or sets the value that starts the sound index (if less than 32) or frequency (if greater or equal than 32).
         /// </summary>
-        [Description("The value that starts the sound index (if < 32) or frequency (if >= 32).")]
+        [Description("The value that starts the sound index (if less than 32) or frequency (if greater or equal than 32).")]
         public ushort Value { get; set; }
 
         /// <summary>
         /// Creates an observable sequence that contains a single message
-        /// that starts the sound index (if < 32) or frequency (if >= 32).
+        /// that starts the sound index (if less than 32) or frequency (if greater or equal than 32).
         /// </summary>
         /// <returns>
         /// A sequence containing a single <see cref="HarpMessage"/> object
@@ -4618,7 +4618,7 @@ namespace Harp.SoundCard
 
         /// <summary>
         /// Creates an observable sequence of message payloads
-        /// that starts the sound index (if < 32) or frequency (if >= 32).
+        /// that starts the sound index (if less than 32) or frequency (if greater or equal than 32).
         /// </summary>
         /// <typeparam name="TSource">
         /// The type of the elements in the <paramref name="source"/> sequence.

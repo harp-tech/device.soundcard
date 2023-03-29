@@ -10,7 +10,7 @@ registers:
     address: 32
     type: U16
     access: Write
-    description: Starts the sound index (if < 32) or frequency (if >= 32)
+    description: Starts the sound index (if less than 32) or frequency (if greater or equal than 32)
   Stop:
     address: 33
     type: U8
