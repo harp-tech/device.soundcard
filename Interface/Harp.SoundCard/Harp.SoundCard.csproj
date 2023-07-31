@@ -20,7 +20,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Bonsai.Harp" Version="3.5.0-build032701" GeneratePathProperty="true" />
+    <PackageReference Include="Bonsai.Harp" Version="3.5.0-build062701" GeneratePathProperty="true" />
   </ItemGroup>
 
 </Project>
