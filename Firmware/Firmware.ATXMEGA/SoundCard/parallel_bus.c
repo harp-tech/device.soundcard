@@ -144,11 +144,11 @@ ISR(PORTC_INT0_vect, ISR_NAKED)
 	     last_sound_triggered = 0; // The event was sent and a new sound can be trigger
 	  }
 	  
-      set_DOUT0;
+      //set_DOUT0;
    }
    else
    {
-      clr_DOUT0;
+      //clr_DOUT0;
    }
    
    reti();
