@@ -6,8 +6,6 @@
 #include "app_funcs.h"
 #include "app_ios_and_regs.h"
 #include "parallel_bus.h"
-#include "uart1.h"
-#include "bpod_cmds.h"
 
 /************************************************************************/
 /* Declare application registers                                        */
@@ -30,22 +28,25 @@ void hwbp_app_initialize(void)
 {
    /* Define versions */
    uint8_t hwH = 2;
-   uint8_t hwL = 0;
+   uint8_t hwL = 2;
    uint8_t fwH = MAJOR_FW_VERSION;
-   uint8_t fwL = 1;
+   uint8_t fwL = 2;
    uint8_t ass = 0;
    
-   /* Start core */
-   core_func_start_core(
-      1280,
-      hwH, hwL,
-      fwH, fwL,
-      ass,
-      (uint8_t*)(&app_regs),
-      APP_NBYTES_OF_REG_BANK,
-      APP_REGS_ADD_MAX - APP_REGS_ADD_MIN + 1,
-      default_device_name
-   );
+		/* Start core */
+	core_func_start_core(
+		1280,
+		hwH, hwL,
+		fwH, fwL,
+		ass,
+		(uint8_t*)(&app_regs),
+		APP_NBYTES_OF_REG_BANK,
+		APP_REGS_ADD_MAX - APP_REGS_ADD_MIN + 1,
+		default_device_name,
+		false,	// The device is _not_ able to repeat the harp timestamp clock
+		false,	// The device is _not_ able to generate the harp timestamp clock
+		0	// Default timestamp offset
+	);
 }
 
 /************************************************************************/
@@ -123,19 +124,14 @@ uint8_t temperature_read(ADC_t* adc)
 /************************************************************************/
 uint16_t AdcOffset;
 
-void core_callback_1st_config_hw_after_boot(void)
+void core_callback_define_clock_default(void) {}
+	
+void core_callback_initialize_hardware(void)
 {
 	/* Initialize IOs */
 	/* Don't delete this function!!! */
 	init_ios();
    
-   /* Initialize BPod serial communication with 1.312.500 bps*/
-   uart1_init(67, -7, false);
-   uart1_enable();
-   
-   /* Initialize BPod reply */
-   load_device_name_to_bpod_cmds(MAJOR_FW_VERSION, default_device_name, 9);
-	
 	/* Initialize ADC */
 	PR_PRPA &= ~(PR_ADC_bm);									// Remove power reduction
 	ADCA_CTRLA = ADC_ENABLE_bm;								// Enable ADCA
@@ -222,6 +218,14 @@ void core_callback_t_1ms(void)
    //core_func_send_event(ADD_REG_ADC_VALUES, true);   
 }
 
+/************************************************************************/
+/* Callbacks: clock control                                              */
+/************************************************************************/
+void core_callback_clock_to_repeater(void) {}
+void core_callback_clock_to_generator(void) {}
+void core_callback_clock_to_unlock(void) {}
+void core_callback_clock_to_lock(void) {}
+	
 /************************************************************************/
 /* Callbacks: uart control                                              */
 /************************************************************************/

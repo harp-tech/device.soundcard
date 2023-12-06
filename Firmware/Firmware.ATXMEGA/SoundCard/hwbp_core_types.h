@@ -26,9 +26,9 @@
 #define MSK_TIMESTAMP_AT_PAYLOAD	0x10
 
 /************************************************************************/
-/* Maximum size of an entire packet (header to chksum)                  */
+/* Maximum size of a received packet                                    */
 /************************************************************************/
-#define MAX_PACKET_SIZE				256
+#define MAX_PACKET_SIZE				255
 
 
 #endif /* _HWBP_CORE_TYPES_H_ */

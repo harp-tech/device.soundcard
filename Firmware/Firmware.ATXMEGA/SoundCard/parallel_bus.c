@@ -122,6 +122,13 @@ ISR(PORTC_INT1_vect, ISR_NAKED)
          command_available = false;
       }
    }
+
+   if (read_SOUND_IS_ON){
+      //set_DOUT0;
+	  //core_func_send_event(ADD_REG_PLAY_SOUND_OR_FREQ, true);
+   }
+   //else
+      //clr_DOUT0;
    
    reti();
 }
@@ -137,11 +144,11 @@ ISR(PORTC_INT0_vect, ISR_NAKED)
 	     last_sound_triggered = 0; // The event was sent and a new sound can be trigger
 	  }
 	  
-      //set_DOUT0;
+      set_DOUT0;
    }
    else
    {
-      //clr_DOUT0;
+      clr_DOUT0;
    }
    
    reti();
@@ -245,6 +252,32 @@ bool par_cmd_delete_sound_callback (void)
     send_byte(cmd_delete_sound[1]);
     send_last_byte(cmd_delete_sound[2]);
 }
+
+
+/************************************************************************/
+/* COMMAND: INDEX                                                       */
+/************************************************************************/
+/*void par_cmd_index(uint8_t sound_index)
+{
+	// Prepare command 
+	cmd_index[1] = sound_index;
+	
+	// Calculate checksum 
+	cmd_index[2] = CMD_INDEX + cmd_index[1];
+	
+	// Update globals 
+	command_available = true;
+	command_to_send = CMD_INDEX;
+	
+	// Create an interrupt to be addressed as soon as possible 
+	timer_type0_enable(&TCD0, TIMER_PRESCALER_DIV1, 1, INT_LEVEL_LOW);
+}
+
+bool par_cmd_index_callback (void)
+{
+	send_byte(cmd_index[1]);
+	send_last_byte(cmd_index[2]);
+}*/
 
 /************************************************************************/
 /* COMMAND: CMD_UPDATE_FREQUENCY                                        */
