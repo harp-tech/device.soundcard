@@ -3,7 +3,6 @@
 #include "app_ios_and_regs.h"
 #include "app_funcs.h"
 #include "hwbp_core.h"
-#include "parallel_bus.h"
 
 /************************************************************************/
 /* Declare application registers                                        */
@@ -32,19 +31,7 @@ extern AppRegs app_regs;
 /************************************************************************/
 ISR(PORTB_INT0_vect, ISR_NAKED)
 {
-	
-	//app_regs.REG_PLAY_SOUND_OR_FREQ = 3; //default plays index 3
-	//app_write_REG_PLAY_SOUND_OR_FREQ(&app_regs.REG_PLAY_SOUND_OR_FREQ);
-	
-	uint8_t aux = read_DIN0;
-
-	app_regs.REG_DIGITAL_INPUTS = aux;
-	app_write_REG_DIGITAL_INPUTS(&app_regs.REG_DIGITAL_INPUTS);
-	core_func_send_event(ADD_REG_DIGITAL_INPUTS, true);
-	
-	par_cmd_start_sound(app_regs.REG_DI0_SOUND_INDEX, app_regs.REG_ATTNUATION_LEFT, app_regs.REG_ATTENUATION_RIGHT);
-	
-	reti();
+   reti();
 }
 
 /************************************************************************/
@@ -58,10 +45,12 @@ ISR(PORTD_INT0_vect, ISR_NAKED)
 /************************************************************************/
 /* DIN2                                                                 */
 /************************************************************************/
+/*
 ISR(PORTC_INT0_vect, ISR_NAKED)
 {
    reti();
 }
+/*
 
 /************************************************************************/
 /* PIC32_READY                                                          */
