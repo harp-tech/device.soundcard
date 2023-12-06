@@ -23,14 +23,25 @@
 void par_cmd_stop(void);
 bool par_cmd_stop_callback (void);
 
-void par_cmd_index(uint8_t sound_index);
-bool par_cmd_index_callback(void);
+void par_cmd_start_sound(uint16_t sound_index, int16_t amplitude_left, int16_t amplitude_right);
+bool par_cmd_start_sound_callback (void);
 
 void par_cmd_delete_sound(uint8_t sound_index, bool delete_all);
 bool par_cmd_delete_sound_callback (void);
 
-void par_cmd_start_sound(uint8_t sound_index, int16_t amplitude_left, int16_t amplitude_right);
-bool par_cmd_start_sound_callback (void);
+void par_cmd_update_frequency(uint16_t sound_index);
+bool par_cmd_update_frequency_callback (void);
+
+void par_cmd_update_amplitude(int16_t amplitude_left, int16_t amplitude_right);
+bool par_cmd_update_amplitude_callback (void);
+
+void par_cmd_update_amplitude_left(int16_t amplitude_left);
+bool par_cmd_update_amplitude_left_callback (void);
+
+void par_cmd_update_amplitude_right(int16_t amplitude_right);
+bool par_cmd_update_amplitude_right_callback (void);
+
+
 
 
 #endif /* _PARALLEL_BUS_H_ */

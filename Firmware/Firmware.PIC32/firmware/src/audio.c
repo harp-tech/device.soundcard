@@ -116,6 +116,38 @@ void update_audio_volume_int(int att_left, int att_right)
     update_audio_register(3, reg_content_right);
 }
 
+/*
+ * Sets the audio attenuation of the left channel.
+ * Each LSB of the integer is 0.1dB
+ */
+void update_audio_volume_left_int(int att_left)
+{
+    if (att_left < 0)
+        return;
+
+    int volume_left  = pow(10, ((att_left  * -1) / 10.0) / 20) * (pow(2, 14) - 1);
+    
+    int reg_content_left  = volume_left  << 2;
+    
+    update_audio_register(2, reg_content_left);
+}
+
+/*
+ * Sets the audio attenuation of the right channel.
+ * Each LSB of the integer is 0.1dB
+ */
+void update_audio_volume_right_int(int att_right)
+{
+    if (att_right < 0)
+        return;
+
+    int volume_right  = pow(10, ((att_right  * -1) / 10.0) / 20) * (pow(2, 14) - 1);
+    
+    int reg_content_right  = volume_right  << 2;
+    
+    update_audio_register(3, reg_content_right);
+}
+
 /* 
  * Configure audio DAC IC.
  * Configure the data format, the data rate and number of bits.

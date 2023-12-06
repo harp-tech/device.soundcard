@@ -48,9 +48,21 @@
         <InterfaceName>PDI</InterfaceName>
       </ToolOptions>
       <ToolType>com.atmel.avrdbg.tool.atmelice</ToolType>
-      <ToolNumber>J41800031896</ToolNumber>
+      <ToolNumber>J42700022647</ToolNumber>
       <ToolName>Atmel-ICE</ToolName>
     </com_atmel_avrdbg_tool_atmelice>
+    <com_atmel_avrdbg_tool_simulator>
+      <ToolOptions xmlns="">
+        <InterfaceProperties>
+        </InterfaceProperties>
+        <InterfaceName>
+        </InterfaceName>
+      </ToolOptions>
+      <ToolType xmlns="">com.atmel.avrdbg.tool.simulator</ToolType>
+      <ToolNumber xmlns="">
+      </ToolNumber>
+      <ToolName xmlns="">Simulator</ToolName>
+    </com_atmel_avrdbg_tool_simulator>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <ToolchainSettings>
@@ -92,6 +104,7 @@
         <avrgcccpp.linker.libraries.LibrarySearchPaths>
           <ListValues>
             <Value>C:\Users\Filipe Carvalho\Documents\BitBucket\Device.LoadCells\Firmware\LoadCells</Value>
+            <Value>C:\Users\OEPS\Documents\bitbucket\fchampalimaud\Device.SoundCard\Firmware.ATXMEGA\SoundCard</Value>
           </ListValues>
         </avrgcccpp.linker.libraries.LibrarySearchPaths>
       </AvrGccCpp>
@@ -139,6 +152,7 @@
         <avrgcccpp.linker.libraries.LibrarySearchPaths>
           <ListValues>
             <Value>C:\Users\Filipe Carvalho\Documents\BitBucket\Device.LoadCells\Firmware\LoadCells</Value>
+            <Value>C:\Users\OEPS\Documents\bitbucket\fchampalimaud\Device.SoundCard\Firmware.ATXMEGA\SoundCard</Value>
           </ListValues>
         </avrgcccpp.linker.libraries.LibrarySearchPaths>
         <avrgcccpp.assembler.debugging.DebugLevel>Default (-Wa,-g)</avrgcccpp.assembler.debugging.DebugLevel>

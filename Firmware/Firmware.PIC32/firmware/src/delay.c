@@ -1,4 +1,5 @@
 #include <xc.h>
+#include <stdbool.h>
 #include "delay.h"
 #include "ios.h"
 
@@ -98,12 +99,43 @@ void trigger_pin_sound_is_on(int sample_freq)
     T2CONbits.TON   = 1;                // Turn on
 }
 
+bool int_requested_by_sinewave_on = false;
+
+void trigger_pin_sinewave_is_on(int sample_freq, int samples)
+{
+    int_requested_by_sinewave_on = true;
+    
+    TMR2    = 0;                        // Set counter to 0
+    
+    if (sample_freq == 96000)
+    {
+        if (samples == 0)
+            PR2 = 778;                  // Measured 254 us
+        else
+            PR2 = 778 /*254us*/ + (samples / 32.0) * 1020 /*333*/;
+    }
+    else
+        PR2 = 274;                      // 89us
+    
+    T2CONbits.TON   = 1;                // Turn on
+}
+
 void __attribute__((vector(_TIMER_2_VECTOR), interrupt(INT_T2_PRIORITY_TLDR_SOFT), nomips16)) timer2_handler()
 {
-    set_SOUND_IS_ON; 
+    set_SOUND_IS_ON;
     IFS0bits.T2IF = 0;                  // Clear interrupt flag
     //T2CON   = 0x0;                      // Disable timer
     T2CONbits.TON = 0;                  // Turn off
+    
+    if (int_requested_by_sinewave_on)
+    {
+        int_requested_by_sinewave_on = false;
+        
+        /* Configure Timer 3 with 532 us to clear the pin clr_SOUND_IS_ON */
+        TMR3 = 0;                       // Set counter to 0
+        PR3  = 1388;                    // 450 us
+        T3CONbits.TON   = 1;            // Turn on
+    }
 }
 
 void trigger_pin_sound_is_off(int sample_freq, int num_samples)

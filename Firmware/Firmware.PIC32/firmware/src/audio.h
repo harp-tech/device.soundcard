@@ -114,6 +114,8 @@ void initialize_audio_ios(int reset_reason_type);
 void update_audio_register(int register_address, int register_content);
 void update_audio_volume_dBV(float gain, bool update_left, bool update_right);
 void update_audio_volume_int(int att_left, int att_right);
+void update_audio_volume_left_int(int att_left);
+void update_audio_volume_right_int(int att_right);
 void config_audio_dac (int sample_rate, bool update_internal_clock);
 
 

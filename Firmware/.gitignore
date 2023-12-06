@@ -7,3 +7,6 @@ obj
 Debug
 packages
 *.componentinfo.xml
+.generated_files
+build
+dist

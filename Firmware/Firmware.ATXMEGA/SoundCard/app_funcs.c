@@ -129,22 +129,30 @@ bool (*app_func_wr_pointer[])(void*) = {
 /************************************************************************/
 /* REG_PLAY_SOUND_OR_FREQ                                               */
 /************************************************************************/
+uint16_t last_sound_triggered = 0;	// 0 means it's stopped
+
 void app_read_REG_PLAY_SOUND_OR_FREQ(void) {}
 bool app_write_REG_PLAY_SOUND_OR_FREQ(void *a)
 {
 	uint16_t reg = *((uint16_t*)a);
    
-   if (reg > 1)
-   {
-      if (reg < 32)
-         par_cmd_start_sound(reg, app_regs.REG_ATTNUATION_LEFT, app_regs.REG_ATTENUATION_RIGHT);
-      else
-         ; // play tone
-   }      
-   else
+   if (reg <= 1 || reg > 40000)
       return false;
 
+   if (last_sound_triggered != 0)
+      /* Previous event was not sent yet */ 
+      return false;
+
+	app_regs.REG_SET_ATTENUATION_AND_PLAY_SOUND_OR_FREQ[0] = reg;
+	
 	app_regs.REG_PLAY_SOUND_OR_FREQ = reg;
+		
+	/* Save the sound being played */
+	last_sound_triggered = reg;
+	
+	//par_cmd_start_sound(reg, app_regs.REG_ATTNUATION_LEFT, app_regs.REG_ATTENUATION_RIGHT);
+	par_cmd_update_frequency(reg);
+	
 	return true;
 }
 
@@ -158,7 +166,10 @@ bool app_write_REG_STOP(void *a)
 	uint8_t reg = *((uint8_t*)a);
     
     if (reg)
+	{
         par_cmd_stop();
+		last_sound_triggered = 0;
+	}
 
 	app_regs.REG_STOP = reg;
 	return true;
@@ -168,17 +179,18 @@ bool app_write_REG_STOP(void *a)
 /************************************************************************/
 /* REG_ATTNUATION_LEFT                                                  */
 /************************************************************************/
-void app_read_REG_ATTNUATION_LEFT(void)
-{
-	//app_regs.REG_ATTNUATION_LEFT = 0;
-
-}
-
+void app_read_REG_ATTNUATION_LEFT(void) {}
 bool app_write_REG_ATTNUATION_LEFT(void *a)
 {
 	uint16_t reg = *((uint16_t*)a);
 
+	app_regs.REG_ATTENUATION_BOTH[0] = reg;
+	app_regs.REG_SET_ATTENUATION_AND_PLAY_SOUND_OR_FREQ[1] = reg;
+
 	app_regs.REG_ATTNUATION_LEFT = reg;
+	
+	par_cmd_update_amplitude_left(reg);
+	
 	return true;
 }
 
@@ -186,17 +198,18 @@ bool app_write_REG_ATTNUATION_LEFT(void *a)
 /************************************************************************/
 /* REG_ATTENUATION_RIGHT                                                */
 /************************************************************************/
-void app_read_REG_ATTENUATION_RIGHT(void)
-{
-	//app_regs.REG_ATTENUATION_RIGHT = 0;
-
-}
-
+void app_read_REG_ATTENUATION_RIGHT(void) {}
 bool app_write_REG_ATTENUATION_RIGHT(void *a)
 {
 	uint16_t reg = *((uint16_t*)a);
+	
+	app_regs.REG_ATTENUATION_BOTH[1] = reg;
+	app_regs.REG_SET_ATTENUATION_AND_PLAY_SOUND_OR_FREQ[2] = reg;
 
 	app_regs.REG_ATTENUATION_RIGHT = reg;
+	
+	par_cmd_update_amplitude_right(reg);
+	
 	return true;
 }
 
@@ -204,17 +217,22 @@ bool app_write_REG_ATTENUATION_RIGHT(void *a)
 /************************************************************************/
 /* REG_ATTENUATION_BOTH                                                 */
 /************************************************************************/
-void app_read_REG_ATTENUATION_BOTH(void)
-{
-	//app_regs.REG_ATTENUATION_BOTH = 0;
-
-}
-
+void app_read_REG_ATTENUATION_BOTH(void) {}
 bool app_write_REG_ATTENUATION_BOTH(void *a)
 {
-	uint16_t reg = *((uint16_t*)a);
-
-	app_regs.REG_ATTENUATION_BOTH[0] = reg;
+	uint16_t *reg = ((uint16_t*)a);
+		
+	app_regs.REG_ATTNUATION_LEFT    = reg[0];
+	app_regs.REG_ATTENUATION_RIGHT  = reg[1];
+	
+	app_regs.REG_SET_ATTENUATION_AND_PLAY_SOUND_OR_FREQ[1] = reg[0];
+	app_regs.REG_SET_ATTENUATION_AND_PLAY_SOUND_OR_FREQ[2] = reg[1];
+	
+	app_regs.REG_ATTENUATION_BOTH[0] = reg[0];
+	app_regs.REG_ATTENUATION_BOTH[1] = reg[1];
+	
+	par_cmd_update_amplitude(reg[0], reg[1]);
+	
 	return true;
 }
 
@@ -222,17 +240,33 @@ bool app_write_REG_ATTENUATION_BOTH(void *a)
 /************************************************************************/
 /* REG_SET_ATTENUATION_AND_PLAY_SOUND_OR_FREQ                           */
 /************************************************************************/
-void app_read_REG_SET_ATTENUATION_AND_PLAY_SOUND_OR_FREQ(void)
-{
-	//app_regs.REG_SET_ATTENUATION_AND_PLAY_SOUND_OR_FREQ = 0;
-
-}
-
+void app_read_REG_SET_ATTENUATION_AND_PLAY_SOUND_OR_FREQ(void) {}
 bool app_write_REG_SET_ATTENUATION_AND_PLAY_SOUND_OR_FREQ(void *a)
 {
-	uint16_t reg = *((uint16_t*)a);
+	uint16_t *reg = ((uint16_t*)a);
+	
+	if (reg[0] <= 1 || reg[0] > 40000)
+		return false;
 
-	app_regs.REG_SET_ATTENUATION_AND_PLAY_SOUND_OR_FREQ[0] = reg;
+	if (last_sound_triggered != 0)
+      /* Previous event was not sent yet */ 
+      return false;
+	
+	app_regs.REG_PLAY_SOUND_OR_FREQ = reg[0];
+	app_regs.REG_ATTNUATION_LEFT    = reg[1];
+	app_regs.REG_ATTENUATION_RIGHT  = reg[2];
+	app_regs.REG_ATTENUATION_BOTH[0] = reg[1];
+	app_regs.REG_ATTENUATION_BOTH[1] = reg[2];
+	
+	app_regs.REG_SET_ATTENUATION_AND_PLAY_SOUND_OR_FREQ[0] = reg[0];
+	app_regs.REG_SET_ATTENUATION_AND_PLAY_SOUND_OR_FREQ[1] = reg[1];
+	app_regs.REG_SET_ATTENUATION_AND_PLAY_SOUND_OR_FREQ[2] = reg[2];
+	
+	/* Save the sound being played */
+	last_sound_triggered = reg[0];
+	
+	par_cmd_start_sound(reg[0], reg[1], reg[2]);
+	
 	return true;
 }
 
@@ -354,25 +388,14 @@ void app_read_REG_DI0_SOUND_INDEX(void)
 
 }
 
-bool app_write_REG_DI0_SOUND_INDEX(void *a) 
+bool app_write_REG_DI0_SOUND_INDEX(void *a)
 {
 	uint8_t reg = *((uint8_t*)a);
-	
-	// for future implementation of cmd_index
-	/*if (reg > 1)
-	{
-		if (reg < 32)
-			par_cmd_index(reg);
-		else
-		; 
-	}
-	else
-	return false;*/
-		
 
 	app_regs.REG_DI0_SOUND_INDEX = reg;
 	return true;
 }
+
 
 /************************************************************************/
 /* REG_DI1_SOUND_INDEX                                                  */

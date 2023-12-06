@@ -34,7 +34,7 @@
   <documentation help="" />
   <offline-documentation help="" />
   <dependencies>
-    <content-extension eid="atmel.asf" uuidref="Atmel.ASF" version="3.39.0" />
+    <content-extension eid="atmel.asf" uuidref="Atmel.ASF" version="3.42.0" />
   </dependencies>
 </framework-data>
     </AsfFrameworkConfig>
@@ -48,9 +48,21 @@
         <InterfaceName>PDI</InterfaceName>
       </ToolOptions>
       <ToolType>com.atmel.avrdbg.tool.atmelice</ToolType>
-      <ToolNumber>J41800031896</ToolNumber>
+      <ToolNumber>J42700022647</ToolNumber>
       <ToolName>Atmel-ICE</ToolName>
     </com_atmel_avrdbg_tool_atmelice>
+    <com_atmel_avrdbg_tool_simulator>
+      <ToolOptions xmlns="">
+        <InterfaceProperties>
+        </InterfaceProperties>
+        <InterfaceName>
+        </InterfaceName>
+      </ToolOptions>
+      <ToolType xmlns="">com.atmel.avrdbg.tool.simulator</ToolType>
+      <ToolNumber xmlns="">
+      </ToolNumber>
+      <ToolName xmlns="">Simulator</ToolName>
+    </com_atmel_avrdbg_tool_simulator>
     <ResetRule>0</ResetRule>
     <EraseKey />
   </PropertyGroup>
@@ -105,7 +117,9 @@
   <avrgcccpp.linker.libraries.LibrarySearchPaths>
     <ListValues>
       <Value>C:\Users\Filipe Carvalho\Documents\BitBucket\Device.LoadCells\Firmware\LoadCells</Value>
-      <Value>C:\Users\Work\Documents\device.soundcard\Firmware.ATXMEGA\SoundCard</Value>
+      <Value>C:\Users\OEPS\Documents\bitbucket\fchampalimaud\Device.SoundCard\Firmware.ATXMEGA\SoundCard</Value>
+      <Value>C:\Users\OEPS\Documents\bitbucket\_fchampalimaud_\Device.SoundCard\device.soundcard\Firmware.ATXMEGA\SoundCard</Value>
+      <Value>C:\Users\Artur\Documents\GitHub\device.soundcard\Firmware\Firmware.ATXMEGA\SoundCard</Value>
     </ListValues>
   </avrgcccpp.linker.libraries.LibrarySearchPaths>
   <avrgcccpp.assembler.general.IncludePaths>
@@ -169,7 +183,9 @@
   <avrgcccpp.linker.libraries.LibrarySearchPaths>
     <ListValues>
       <Value>C:\Users\Filipe Carvalho\Documents\BitBucket\Device.LoadCells\Firmware\LoadCells</Value>
-      <Value>C:\Users\Work\Documents\device.soundcard\Firmware.ATXMEGA\SoundCard</Value>
+      <Value>C:\Users\OEPS\Documents\bitbucket\fchampalimaud\Device.SoundCard\Firmware.ATXMEGA\SoundCard</Value>
+      <Value>C:\Users\OEPS\Documents\bitbucket\_fchampalimaud_\Device.SoundCard\device.soundcard\Firmware.ATXMEGA\SoundCard</Value>
+      <Value>C:\Users\Artur\Documents\GitHub\device.soundcard\Firmware\Firmware.ATXMEGA\SoundCard</Value>
     </ListValues>
   </avrgcccpp.linker.libraries.LibrarySearchPaths>
   <avrgcccpp.assembler.general.IncludePaths>

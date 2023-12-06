@@ -7,7 +7,7 @@
 /************************************************************************/
 void init_ios(void)
 {	/* Configure input pins */
-	io_pin2in(&PORTB, 0, PULL_IO_UP, SENSE_IO_EDGE_RISING);              // DIN0 
+	io_pin2in(&PORTB, 0, PULL_IO_UP, SENSE_IO_EDGES_BOTH);               // DIN0
 	io_pin2in(&PORTD, 0, PULL_IO_UP, SENSE_IO_EDGES_BOTH);               // DIN1
 	io_pin2in(&PORTC, 0, PULL_IO_UP, SENSE_IO_EDGES_BOTH);               // DIN2
 	io_pin2in(&PORTC, 5, PULL_IO_UP, SENSE_IO_EDGE_RISING);              // CMD_LATCHED
@@ -17,9 +17,9 @@ void init_ios(void)
 	/* Configure input interrupts */
 	io_set_int(&PORTB, INT_LEVEL_LOW, 0, (1<<0), false);                 // DIN0
 	io_set_int(&PORTD, INT_LEVEL_LOW, 0, (1<<0), false);                 // DIN1
-	io_set_int(&PORTC, INT_LEVEL_LOW, 0, (1<<0), false);                 // DIN2
+	//io_set_int(&PORTC, INT_LEVEL_LOW, 0, (1<<0), false);                 // DIN2
 	io_set_int(&PORTC, INT_LEVEL_LOW, 1, (1<<5), false);                 // CMD_LATCHED
-	io_set_int(&PORTC, INT_LEVEL_LOW, 1, (1<<6), false);                 // SOUND_IS_ON
+	io_set_int(&PORTC, INT_LEVEL_LOW, 0, (1<<6), false);                 // SOUND_IS_ON
 
 	/* Configure output pins */
 	io_pin2out(&PORTA, 0, OUT_IO_DIGITAL, IN_EN_IO_DIS);                 // PAR0

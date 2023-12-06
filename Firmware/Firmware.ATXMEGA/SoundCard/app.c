@@ -29,10 +29,10 @@ static const uint8_t default_device_name[] = "SoundCard";
 void hwbp_app_initialize(void)
 {
    /* Define versions */
-   uint8_t hwH = 1;
-   uint8_t hwL = 1;
+   uint8_t hwH = 2;
+   uint8_t hwL = 0;
    uint8_t fwH = MAJOR_FW_VERSION;
-   uint8_t fwL = 0;
+   uint8_t fwL = 1;
    uint8_t ass = 0;
    
    /* Start core */

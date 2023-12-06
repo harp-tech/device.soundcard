@@ -13,6 +13,7 @@ void _ms_delay(int ms);
 void config_timer_for_pin_sound_is_on(void);
 void config_timer_for_pin_sound_is_off(void);
 void trigger_pin_sound_is_on(int sample_freq);
+void trigger_pin_sinewave_is_on(int sample_freq, int samples);
 void trigger_pin_sound_is_off(int sample_freq, int num_samples);
 
 #endif	/* DELAY_H */

@@ -13,6 +13,26 @@
             <asminc-extensions/>
             <sourceEncoding>ISO-8859-1</sourceEncoding>
             <make-dep-projects/>
+            <sourceRootList>
+                <sourceRootElem>../src</sourceRootElem>
+                <sourceRootElem>../../../../../../microchip/harmony/v2_04</sourceRootElem>
+                <sourceRootElem>..\src</sourceRootElem>
+                <sourceRootElem>..\src\default</sourceRootElem>
+                <sourceRootElem>..\src\system_config\default</sourceRootElem>
+                <sourceRootElem>../../../Firmware.PIC32_v0.2/Firmware.PIC32/firmware/src</sourceRootElem>
+                <sourceRootElem>../../../../../../../microchip/harmony/v2_04</sourceRootElem>
+                <sourceRootElem>../../microchip/harmony/v2_04/framework</sourceRootElem>
+                <sourceRootElem>../../../../../../../../microchip/harmony/v2_04</sourceRootElem>
+            </sourceRootList>
+            <confList>
+                <confElem>
+                    <name>default</name>
+                    <type>2</type>
+                </confElem>
+            </confList>
+            <formatting>
+                <project-formatting-style>false</project-formatting-style>
+            </formatting>
         </data>
     </configuration>
 </project>
