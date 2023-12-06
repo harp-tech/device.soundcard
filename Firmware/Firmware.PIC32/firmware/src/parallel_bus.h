@@ -26,27 +26,33 @@
 /************************************************************************/
 /* Protocol                                                             */
 /************************************************************************/
-/* STOP                 11110000                                             checksum(1)
- * START                11110001  index(1)   A_left(2)  A_right(2)           checksum(1)
- * START W/ FREQUENCY   11110010             A_left(2)  A_right(2)  Freq(2)  checksum(1)
- * DELETE_SOUND         11110100  index(1)                                   checksum(1)
- * INDEX                11110011  index(1)                                   checksum(1)  
- * UPDATE AMP           11111001             A_left(2)  A_right(2)           checksum(1)
- * UPDATE AMP. & FREQ.  11111010             A_left(2)  A_right(2)  Freq(2)  checksum(1)
- * UPDATE FREQUENCY     11111011                                    Freq(2)  checksum(1)
+/* DONE STOP                 11110000                                             checksum(1)
+ * DONE START                11110001  index(1)   A_left(2)  A_right(2)           checksum(1)
+ * X    START W/ FREQUENCY   11110010             A_left(2)  A_right(2)  Freq(2)  checksum(1)
+ * DONE DELETE_SOUND         11110100  index(1)                                   checksum(1)
+ * TODO UPDATE AMP           11111001             A_left(2)  A_right(2)           checksum(1)
+ * X    UPDATE AMP. & FREQ.  11111010             A_left(2)  A_right(2)  Freq(2)  checksum(1)
+ * TODO UPDATE FREQUENCY     11110011                                    Freq(2)  checksum(1)
+ * TODO UPDATE AMP LEFT      11111100             A_left(2)                       checksum(1)
+ * TODO UPDATE AMP RIGHT     11111101                        A_right(2)           checksum(1)
  */
 #define CMD_STOP 0xF0
 #define CMD_START 0xF1
 #define CMD_START_W_FREQUENCY 0xF2
-#define CMD_INDEX 0xF3    
 #define CMD_DELETE_SOUND 0xF7
 #define CMD_UPDATE_AMPLITUDE 0xF9
 #define CMD_UPDATE_AMPLITUDE_AND_FREQUENCY 0xFA
 #define CMD_UPDATE_FREQUENCY 0xFB
+#define CMD_UPDATE_AMPLITUDE_LEFT 0xFC
+#define CMD_UPDATE_AMPLITUDE_RIGHT 0xFD
 
 #define CMD_STOP_LEN 2
 #define CMD_DELETE_SOUND_LEN 3
-#define CMD_START_LEN 7
+#define CMD_START_LEN 8
+#define CMD_UPDATE_AMPLITUDE_LEN 6
+#define CMD_UPDATE_FREQUENCY_LEN 4
+#define CMD_UPDATE_AMPLITUDE_LEFT_LEN 4
+#define CMD_UPDATE_AMPLITUDE_RIGHT_LEN 4
 
 /************************************************************************/
 /* Prototypes                                                           */
@@ -56,6 +62,7 @@ int par_bus_check_if_command_is_available(void);
 
 int par_bus_process_command_start(void);
 void par_bus_process_command_stop(void);
+int par_bus_process_command_update_frequency(void);
 
 #endif	/* PARALLEL_BUS_H */
 

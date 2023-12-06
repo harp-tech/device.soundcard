@@ -9,10 +9,13 @@ bool check_cmd_start(int index);
 
 extern bool audio_sound_exists[32];
 
-unsigned char cmd_stop[CMD_STOP_LEN]                  = {CMD_STOP, 0};
-unsigned char cmd_delete_sound[CMD_DELETE_SOUND_LEN]  = {CMD_DELETE_SOUND, 0, 0};
-unsigned char cmd_index[CMD_INDEX]                    = {CMD_INDEX, 0, 0};
-unsigned char cmd_start[CMD_START_LEN]                = {CMD_START, 2, 0, 0, 0, 0, 0};
+unsigned char cmd_stop[CMD_STOP_LEN]                                     = {CMD_STOP, 0};
+unsigned char cmd_delete_sound[CMD_DELETE_SOUND_LEN]                     = {CMD_DELETE_SOUND, 0, 0};
+unsigned char cmd_start[CMD_START_LEN]                                   = {CMD_START, 0, 0, 0, 0, 0, 0};
+unsigned char cmd_update_amplitude[CMD_UPDATE_AMPLITUDE_LEN]             = {CMD_UPDATE_AMPLITUDE, 0, 0, 0, 0, 0};
+unsigned char cmd_update_frequency[CMD_UPDATE_FREQUENCY_LEN]             = {CMD_UPDATE_FREQUENCY, 0, 0, 0};
+unsigned char cmd_update_amplitude_left[CMD_UPDATE_AMPLITUDE_LEFT_LEN]   = {CMD_UPDATE_AMPLITUDE_LEFT, 0, 0, 0};
+unsigned char cmd_update_amplitude_right[CMD_UPDATE_AMPLITUDE_RIGHT_LEN] = {CMD_UPDATE_AMPLITUDE_RIGHT, 0, 0, 0};
 
 #define PAR_RECEIVE_BYTE(byte)  while (!read_PAR_CMD_WRITE); \
                                 byte = read_PAR_BUS; \
@@ -45,6 +48,9 @@ int par_bus_check_if_command_is_available(void)
     {
         int command_received;
         int i;
+        unsigned char checksum = 0;
+        int att_left;
+        int att_right;
         
         clr_PAR_CMD_ERROR;
         command_received = read_PAR_BUS;
@@ -63,43 +69,44 @@ int par_bus_check_if_command_is_available(void)
                 PAR_RECEIVE_BYTE(cmd_start[3]);
                 PAR_RECEIVE_BYTE(cmd_start[4]);
                 PAR_RECEIVE_BYTE(cmd_start[5]);
-                //PAR_RECEIVE_BYTE(cmd_start[6]);
-                PAR_RECEIVE_LAST_BYTE(cmd_start[6]);
+                PAR_RECEIVE_BYTE(cmd_start[6]);
+                PAR_RECEIVE_LAST_BYTE(cmd_start[7]);                
                 
-                unsigned char checksum = 0;
                 for (i = CMD_START_LEN - 1; i != 0; i--)
                 {
                    checksum += cmd_start[i-1];
                 }
                 
-                if ((checksum == cmd_start[CMD_START_LEN - 1]) && (check_cmd_start(cmd_start[1])))
+                //if ((checksum == cmd_start[CMD_START_LEN - 1]) && (check_cmd_start(cmd_start[1])))
+                if (checksum == cmd_start[CMD_START_LEN - 1])
                 {
-                    PAR_RECEIVE_LAST_BYTE_REPLY(false);
+                    int index = cmd_start[2];
+                    index = (index << 8) | cmd_start[1];
                     
+                    if (index < 32)
+                        if(audio_sound_exists[index] == false)
+                        {
+                            /* Return error */
+                            PAR_RECEIVE_LAST_BYTE_REPLY(true);
+                            return 0;
+                        }
+                    
+                    /* Return success */
+                    PAR_RECEIVE_LAST_BYTE_REPLY(false);                    
                     return command_received;
                 }
                 
+                /* Return error */
                 PAR_RECEIVE_LAST_BYTE_REPLY(true);
-                break;
-                
-            case CMD_INDEX:
-                PAR_RECEIVE_BYTE(cmd_index[1]);
-                PAR_RECEIVE_LAST_BYTE(cmd_index[2]);
-                
-                if (cmd_index[2] == (unsigned char)(CMD_INDEX + cmd_index[1])){
-                    
-                    cmd_start[1] = cmd_index[1];
- 
-                }
-                
-                PAR_RECEIVE_LAST_BYTE_REPLY(true);
-                break;
+                return 0;
                 
             case CMD_STOP:
                 PAR_RECEIVE_BYTE(cmd_stop[1]);
                 
                 if (cmd_stop[0] == cmd_stop[1])
                 {
+                    PAR_RECEIVE_LAST_BYTE_REPLY(false);
+                    
                     return command_received;
                 }
                 
@@ -113,6 +120,7 @@ int par_bus_check_if_command_is_available(void)
                 {
                     if ((cmd_delete_sound[1] < 32) || (cmd_delete_sound[1] == 0xAA))
                     {
+                        /* Return success */
                         PAR_RECEIVE_LAST_BYTE_REPLY(false);
                     
                         if (cmd_delete_sound[1] < 32)
@@ -150,8 +158,123 @@ int par_bus_check_if_command_is_available(void)
                     }
                 }
                 
-                PAR_RECEIVE_LAST_BYTE_REPLY(true);                
-                break;
+                /* Return error */
+                PAR_RECEIVE_LAST_BYTE_REPLY(true);
+                return 0;
+            
+            case CMD_UPDATE_AMPLITUDE:
+                PAR_RECEIVE_BYTE(cmd_update_amplitude[1]);
+                PAR_RECEIVE_BYTE(cmd_update_amplitude[2]);
+                PAR_RECEIVE_BYTE(cmd_update_amplitude[3]);
+                PAR_RECEIVE_BYTE(cmd_update_amplitude[4]);
+                PAR_RECEIVE_LAST_BYTE(cmd_update_amplitude[5]);
+                
+                unsigned char checksum = 0;
+                for (i = CMD_UPDATE_AMPLITUDE_LEN - 1; i != 0; i--)
+                   checksum += cmd_update_amplitude[i-1];
+                
+                if (checksum == cmd_update_amplitude[CMD_UPDATE_AMPLITUDE_LEN - 1])
+                {
+                    /* Return success */
+                    PAR_RECEIVE_LAST_BYTE_REPLY(false);
+                    
+                    att_left = cmd_update_amplitude[2];
+                    att_right = cmd_update_amplitude[4];
+                    att_left = (att_left << 8) | cmd_update_amplitude[1];
+                    att_right = (att_right << 8) | cmd_update_amplitude[3];
+
+                    /* Update output amplitude */
+                    update_audio_volume_int(att_left, att_right);
+                    
+                    return 0;
+                }
+                
+                /* Return error */
+                PAR_RECEIVE_LAST_BYTE_REPLY(true);
+                return 0;
+                
+            case CMD_UPDATE_FREQUENCY:
+                PAR_RECEIVE_BYTE(cmd_update_frequency[1]);
+                PAR_RECEIVE_BYTE(cmd_update_frequency[2]);
+                PAR_RECEIVE_LAST_BYTE(cmd_update_frequency[3]);
+                
+                checksum = 0;
+                for (i = CMD_UPDATE_FREQUENCY_LEN - 1; i != 0; i--)
+                   checksum += cmd_update_frequency[i-1];
+                
+                if (checksum == cmd_update_frequency[CMD_UPDATE_FREQUENCY_LEN - 1])
+                {
+                    int index = cmd_update_frequency[2];
+                    index = (index << 8) | cmd_update_frequency[1];
+                    
+                    if (index < 32)
+                        if(audio_sound_exists[index] == false)
+                        {
+                            /* Return error */
+                            PAR_RECEIVE_LAST_BYTE_REPLY(true);
+                            return 0;
+                        }
+    
+                    /* Return success */
+                    PAR_RECEIVE_LAST_BYTE_REPLY(false);                    
+                    return command_received;
+                }
+                
+                /* Return error */
+                PAR_RECEIVE_LAST_BYTE_REPLY(true);
+                return 0;
+                
+            case CMD_UPDATE_AMPLITUDE_LEFT:
+                PAR_RECEIVE_BYTE(cmd_update_amplitude_left[1]);
+                PAR_RECEIVE_BYTE(cmd_update_amplitude_left[2]);
+                PAR_RECEIVE_LAST_BYTE(cmd_update_amplitude_left[3]);
+                
+                checksum = 0;
+                for (i = CMD_UPDATE_AMPLITUDE_LEFT_LEN - 1; i != 0; i--)
+                   checksum += cmd_update_amplitude_left[i-1];
+                
+                if (checksum == cmd_update_amplitude_left[CMD_UPDATE_AMPLITUDE_LEFT_LEN - 1])
+                {
+                    /* Return success */
+                    PAR_RECEIVE_LAST_BYTE_REPLY(false);
+                    
+                    att_left = cmd_update_amplitude_left[2];
+                    att_left = (att_left << 8) | cmd_update_amplitude_left[1];
+
+                    update_audio_volume_left_int(att_left);
+                    
+                    return 0;
+                }
+                
+                /* Return error */
+                PAR_RECEIVE_LAST_BYTE_REPLY(true);
+                return 0;
+                
+            case CMD_UPDATE_AMPLITUDE_RIGHT:
+                PAR_RECEIVE_BYTE(cmd_update_amplitude_right[1]);
+                PAR_RECEIVE_BYTE(cmd_update_amplitude_right[2]);
+                PAR_RECEIVE_LAST_BYTE(cmd_update_amplitude_right[3]);
+                
+                checksum = 0;
+                for (i = CMD_UPDATE_AMPLITUDE_RIGHT_LEN - 1; i != 0; i--)
+                   checksum += cmd_update_amplitude_right[i-1];
+                
+                if (checksum == cmd_update_amplitude_right[CMD_UPDATE_AMPLITUDE_RIGHT_LEN - 1])
+                {
+                    /* Return success */
+                    PAR_RECEIVE_LAST_BYTE_REPLY(false);
+                    
+                    att_right = cmd_update_amplitude_right[2];
+                    att_right = (att_right << 8) | cmd_update_amplitude_right[1];
+
+                    update_audio_volume_right_int(att_right);
+                    
+                    return 0;
+                }
+                
+                /* Return error */
+                PAR_RECEIVE_LAST_BYTE_REPLY(true);
+                return 0;
         }
     }
     
@@ -160,20 +283,31 @@ int par_bus_check_if_command_is_available(void)
 
 int par_bus_process_command_start(void)
 {
-    int att_left = cmd_start[3];
-    int att_right = cmd_start[5];
-    att_left = (att_left << 8) | cmd_start[2];
-    att_right = (att_right << 8) | cmd_start[4];
+    int index = cmd_start[2];
+    int att_left = cmd_start[4];
+    int att_right = cmd_start[6];
+    index = (index << 8) | cmd_start[1];
+    att_left = (att_left << 8) | cmd_start[3];
+    att_right = (att_right << 8) | cmd_start[5];
     
     /* Update output amplitude */
     update_audio_volume_int(att_left, att_right);
     
     /* Return sound index */
-    return cmd_start[1];
+    return index;
 }
 
 void par_bus_process_command_stop(void)
 {    
     /* Mute the device */
     //set_AUDIO_MUTE;
+}
+
+int par_bus_process_command_update_frequency(void)
+{
+    int index = cmd_update_frequency[2];
+    index = (index << 8) | cmd_update_frequency[1];
+    
+    /* Return sound index */
+    return index;
 }

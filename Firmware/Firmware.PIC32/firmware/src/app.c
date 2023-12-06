@@ -37,6 +37,10 @@ int audio_buffer1_length;
 //int audio_buffer1_zeros[AUDIO_BUFFER_LEN] __attribute__((coherent));
 int audio_buffer_zeros[AUDIO_BUFFER_LEN] __attribute__((coherent));
 
+int audio_sinewave[AUDIO_BUFFER_LEN] __attribute__((coherent));
+float right_tetha = 0;
+float left_tetha = 0;
+
 int audio_all_first_buffers[32][AUDIO_BUFFER_LEN];
 int audio_all_second_buffers[32][AUDIO_BUFFER_LEN];
 Sound_Metadata audio_all_metadata[32];
@@ -314,18 +318,177 @@ bool check_cmd_start(int index)
     return true;
 }
 
-int launch_sound_v3(int index)
+int launch_sound_v3(void/*int index*/)
 {
     //clr_AUDIO_MUTE;
     new_sound_to_start = NEW_SOUND_STATE_IS_AVAILABLE;    
-    new_sound_index = index;
-    play_metadata = audio_all_metadata[index];
+    //new_sound_index = index;
+    play_metadata = audio_all_metadata[new_sound_index];
     
     return 0;
 }
 
+
+//http://www.dcs.gla.ac.uk/~jhw/cordic/
+
+//Cordic in 32 bit signed fixed point math
+//Function is valid for arguments in range -pi/2 -- pi/2
+//for values pi/2--pi: value = half_pi-(theta-half_pi) and similarly for values -pi---pi/2
+//
+// 1.0 = 1073741824
+// 1/k = 0.6072529350088812561694
+// pi = 3.1415926535897932384626
+//Constants
+#define cordic_1K 0x26DD3B6A
+#define half_pi 0x6487ED51
+#define MUL 1073741824.000000
+#define CORDIC_NTAB 32
+int cordic_ctab [] = {0x3243F6A8, 0x1DAC6705, 0x0FADBAFC, 0x07F56EA6, 0x03FEAB76, 0x01FFD55B, 
+0x00FFFAAA, 0x007FFF55, 0x003FFFEA, 0x001FFFFD, 0x000FFFFF, 0x0007FFFF, 0x0003FFFF, 
+0x0001FFFF, 0x0000FFFF, 0x00007FFF, 0x00003FFF, 0x00001FFF, 0x00000FFF, 0x000007FF, 
+0x000003FF, 0x000001FF, 0x000000FF, 0x0000007F, 0x0000003F, 0x0000001F, 0x0000000F, 
+0x00000008, 0x00000004, 0x00000002, 0x00000001, 0x00000000, };
+
+int cordic(int theta, /*int *s, */ /*int *c, */int n)
+{
+  int k, d, tx, ty, tz;
+  int x=cordic_1K,y=0,z=theta;
+  // n = (n>CORDIC_NTAB) ? CORDIC_NTAB : n;
+  for (k=0; k<n; ++k)
+  {
+    d = z>>31;
+    //get sign. for other architectures, you might want to use the more portable version
+    //d = z>=0 ? 0 : -1;
+    tx = x - (((y>>k) ^ d) - d);
+    ty = y + (((x>>k) ^ d) - d);
+    tz = z - ((cordic_ctab[k] ^ d) - d);
+    x = tx; y = ty; z = tz;
+  }  
+ /*c = x;*/ /**s = y;*/
+            return y;   // sine
+}
+
+int right_sinewave_freq = 0;
+int left_sinewave_freq = 0;
+
+int new_right_sinewave_freq;
+bool new_sine_gen_frequency_is_available = false;
+bool stop_sine_gen = false;
+
+int right_mult = 1;
+int left_mult = 1;
+
+bool right_positive = true;
+bool left_positive = true;
+
+
+#define SINEWAVE_GEN_96KHZ_LOAD_SAMPLE_N 64
+#define CORDIC_ITERACTIONS 12
+
+int freqs[4] = {1000, 1234, 1000, 1234};
+int freqs_index = 0;
+int counter = 0;
+
+void proc_sinewave_generator(void)
+{
+    int i = 0;
+    
+    if (new_sine_gen_frequency_is_available)
+        if (right_sinewave_freq == 0)
+        {
+            new_sine_gen_frequency_is_available = false;
+
+            right_sinewave_freq = new_right_sinewave_freq;
+            
+            //set_SOUND_IS_ON;
+            trigger_pin_sinewave_is_on(96000, 0);
+        }
+    
+    if (right_sinewave_freq != 0)
+    {
+        set_LED_AUDIO;
+            
+        for (; i < SINEWAVE_GEN_96KHZ_LOAD_SAMPLE_N/2; i++)
+        {                
+            right_tetha = right_tetha + (right_mult)*(half_pi/(96000.0/(right_sinewave_freq<<2)));
+
+            if (right_tetha > half_pi)
+            {
+                right_mult = -1;
+                right_tetha = half_pi - (right_tetha - half_pi);
+            }
+            if (right_tetha < -half_pi)
+            {
+                right_mult = 1;
+                right_tetha = -half_pi - (right_tetha + half_pi);
+            }
+
+            audio_sinewave[i*2+1] = cordic((int)(right_tetha), CORDIC_ITERACTIONS);
+            
+            if (right_tetha > 0)
+            {   
+                //clr_SOUND_IS_ON;
+                
+                if (right_positive == false)
+                {
+                    if (new_sine_gen_frequency_is_available)
+                    {
+                        new_sine_gen_frequency_is_available = false;
+                        
+                        if (right_sinewave_freq != new_right_sinewave_freq)
+                        {
+                            /* Update only if the new frequency is different */
+                            right_sinewave_freq = new_right_sinewave_freq;
+
+                            //set_SOUND_IS_ON;
+                            trigger_pin_sinewave_is_on(96000, i);
+                        }
+                    }
+                    
+                    if (stop_sine_gen)
+                    {
+                        right_sinewave_freq = 0;
+                    }
+                }
+                
+                right_positive = true;
+            }
+            else
+            {
+                right_positive = false;
+            }
+        }
+    }
+    else
+    {
+        if (new_sine_gen_frequency_is_available)
+        {
+            new_sine_gen_frequency_is_available = false;
+
+            right_sinewave_freq = new_sound_index;
+        }
+        
+        if (stop_sine_gen)
+        {
+            stop_sine_gen = false;
+            
+            clr_LED_AUDIO;
+
+            for (; i < SINEWAVE_GEN_96KHZ_LOAD_SAMPLE_N/2; i++)
+            {
+                audio_sinewave[i*2+1] = 0;
+            }
+
+            right_tetha = 0;
+            right_mult = 1;
+        }
+    }
+}
+
 void update_sound_buffers (void)
 {
+    int i = 0;
+    
     if (/*!sound_is_playing && */new_sound_to_start == NEW_SOUND_STATE_IS_AVAILABLE)
     {
         if (audio_buffer0_state == AUDIO_BUFFER_IS_EMPTY || audio_buffer1_state == AUDIO_BUFFER_IS_EMPTY)
@@ -552,8 +715,23 @@ void update_sound_buffers (void)
         if (audio_buffer0_state == AUDIO_BUFFER_IS_EMPTY)
         {
             if (current_sample_rate == 96000)
+            {
                 //DRV_I2S_BufferAddWrite(i2sDriverHandle, &i2sBufferHandle0, audio_buffer_zeros, 32 * 4);
-                DRV_I2S_BufferAddWrite(i2sDriverHandle, &i2sBufferHandle0, audio_buffer_zeros, 64 * 4);
+                //DRV_I2S_BufferAddWrite(i2sDriverHandle, &i2sBufferHandle0, audio_buffer_zeros, 64 * 4);
+                
+                /*
+                for (; i < 256/2; i++)
+                {
+                    _X_ = _X_ + 2.0*3.141592654/(96000.0/3000.0);
+                    audio_sinewave[i*2] = 16777216/2 * sin(_X_);
+                    //audio_sinewave[i*2+1] = audio_sinewave[i*2];                    
+                }
+                */
+                        
+                proc_sinewave_generator();
+                
+                DRV_I2S_BufferAddWrite(i2sDriverHandle, &i2sBufferHandle0, audio_sinewave, SINEWAVE_GEN_96KHZ_LOAD_SAMPLE_N * 4);
+            }
             else
                 DRV_I2S_BufferAddWrite(i2sDriverHandle, &i2sBufferHandle0, audio_buffer_zeros, 128 * 4); // 8 works well
             
@@ -564,8 +742,22 @@ void update_sound_buffers (void)
         if (audio_buffer1_state == AUDIO_BUFFER_IS_EMPTY)
         {
             if (current_sample_rate == 96000)
+            {
                 //DRV_I2S_BufferAddWrite(i2sDriverHandle, &i2sBufferHandle1, audio_buffer_zeros, 32 * 4);
-                DRV_I2S_BufferAddWrite(i2sDriverHandle, &i2sBufferHandle1, audio_buffer_zeros, 64 * 4);
+                //DRV_I2S_BufferAddWrite(i2sDriverHandle, &i2sBufferHandle1, audio_buffer_zeros, 64 * 4);
+                
+                /*for (; i < 256/2; i++)
+                {
+                    _X_ = _X_ + 2.0*3.141592654/(96000.0/3000.0);
+                    audio_sinewave[i*2] = 16777216/2 * sin(_X_);
+                    //audio_sinewave[i*2+1] = audio_sinewave[i*2];
+                }
+                */
+                
+                proc_sinewave_generator();
+                
+                DRV_I2S_BufferAddWrite(i2sDriverHandle, &i2sBufferHandle1, audio_sinewave, SINEWAVE_GEN_96KHZ_LOAD_SAMPLE_N * 4);
+            }
             else
                 DRV_I2S_BufferAddWrite(i2sDriverHandle, &i2sBufferHandle1, audio_buffer_zeros, 128 * 4); // 8 works well
             
@@ -576,6 +768,7 @@ void update_sound_buffers (void)
         }
     }
 }
+
 
 void fill_audio_first_and_second_buffers()
 {
@@ -881,6 +1074,7 @@ void process_readMetadataCmd(void)
 
 void APP_Initialize ( void )
 {    
+    int i = 0;
     /*
      * Place the App state machine in its initial state.
      */
@@ -916,6 +1110,26 @@ void APP_Initialize ( void )
      */
     initialize_ios((int) reasonType);   // Will leave all LEDs on
     
+    /*
+    for (; i < 64/2; i++)
+    {
+        _X_ = _X_ + 2.0*3.141592654/(96000.0/3000.0);
+        audio_sinewave[i*2] = 16777216/2 * sin(_X_);
+        audio_sinewave[i*2+1] = audio_sinewave[i*2];
+    }
+    */
+    
+    //right_sinewave_freq = 200;
+    
+    /*
+     * Clear the sinewave generator's buffers
+     */
+    for (; i < SINEWAVE_GEN_96KHZ_LOAD_SAMPLE_N/2; i++)
+    {
+        audio_sinewave[i*2+0] = 0;  // Left
+        audio_sinewave[i*2+1] = 0;  // Right
+    }
+    
     initialize_audio_ios((int) reasonType);
     clr_LED_AUDIO;                      // There is no way to check the audio circuit
                                         // Turn AUDIO LED off         
@@ -928,6 +1142,16 @@ void APP_Initialize ( void )
     }
     
     initialize_par_ios();
+    
+    /*
+    for (i = 0; i < 50/2; i++)
+    {
+        set_LED_AUDIO;
+        _ms_delay(100);
+        clr_LED_AUDIO;
+        _ms_delay(100);
+    }
+    */
     
     /*
      * Debug purpose only.
@@ -1003,11 +1227,45 @@ void APP_Tasks ( void )
         switch(command_received)
         {
             case CMD_START:
-                launch_sound_v3(par_bus_process_command_start());
+            case CMD_UPDATE_FREQUENCY:
+                
+                switch(command_received)
+                {
+                    case CMD_START:
+                        new_sound_index = par_bus_process_command_start();
+                        break;
+                        
+                    case CMD_UPDATE_FREQUENCY:
+                        new_sound_index = par_bus_process_command_update_frequency();
+                        break;
+                }
+                
+                if (new_sound_index < 32)
+                {
+                    if (check_cmd_start(new_sound_index))
+                    {
+                        launch_sound_v3(/*new_sound_index*/);
+                    
+                        stop_sine_gen = true;
+                    }
+                }
+                else if (new_sound_index < 40000)
+                {
+                    new_right_sinewave_freq = new_sound_index;
+                    new_sine_gen_frequency_is_available = true;
+                }
+                
                 break;
             
             case CMD_STOP:
-                par_bus_process_command_stop();
+                if (right_sinewave_freq == 0)   // Sinewave generator is not working
+                {
+                    par_bus_process_command_stop();
+                }
+                else
+                {
+                    stop_sine_gen = true;
+                }
                 break;
         }
         

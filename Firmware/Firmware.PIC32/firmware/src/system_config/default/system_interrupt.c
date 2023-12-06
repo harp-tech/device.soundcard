@@ -61,7 +61,6 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 
 #include "system/common/sys_common.h"
 #include "app.h"
-//#include "ios.h"
 #include "system_definitions.h"
 
 // *****************************************************************************
@@ -76,15 +75,7 @@ void __ISR(_DMA0_VECTOR, ipl1AUTO) _IntHandlerSysDmaCh0(void)
     SYS_DMA_TasksISR(sysObj.sysDma, DMA_CHANNEL_0);
 }
 
-/*void __ISR(_EXTERNAL_0_VECTOR, IPL1AUTO) _IntHandlerExternalInterruptInstance0(void)
-{
-    //clr_LED_USB;
-    
-    //launch_sound_v3(par_bus_process_command_start());
-    //launch_sound_v3(3);
-    PLIB_INT_SourceFlagClear(INT_ID_0, INT_SOURCE_EXTERNAL_0);
-}
- */
+ 
 
 void __ISR(_TIMER_1_VECTOR, ipl1AUTO) IntHandlerDrvTmrInstance0(void)
 {
