@@ -3,7 +3,7 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/harp-tech/reflex-generator/main/schema/device.json
 device: SoundCard
 whoAmI: 1280
-firmwareVersion: "2.0"
+firmwareVersion: "2.2"
 hardwareTargets: "1.1"
 registers:
   PlaySoundOrFrequency: &frequency
