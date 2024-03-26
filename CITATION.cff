@@ -1,0 +1,13 @@
+cff-version: 1.0.0
+message: "If you use this repository, please cite it as below."
+authors:
+  - family-names: Silva
+    given-names: Artur
+  - family-names: Carvalho
+    given-names: Filipe
+  - family-names: Cruz
+    given-names: Bruno F.
+title: "High-Performance Wide-Band Open-Source System for Acoustic Stimulation"
+doi: 10.1101/2024.02.22.581424
+date-released: 2024-02-22
+url: https://www.biorxiv.org/content/10.1101/2024.02.22.581424
