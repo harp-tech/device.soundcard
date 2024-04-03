@@ -4,22 +4,22 @@ This is a high performance sound card with two output channels using 24 bits DAC
 ![HarpSoundcard](./Assets/pcb.png)
 
 
-## Hardware Compatibility
+### Hardware Compatibility
 
-|  HW Version 	| Board           	                                                | Board HW Version 	| Notes                            	|
-|-----------------------	|-----------------	                                                |------------------	|----------------------------------	|
-| **All**                 | [Peripheral.AudioAmp](https://github.com/harp-tech/peripheral.audioamp) 	| >= 2.0             |                                	|
-----
+| HW Version | Board                    | Board HW Version  | Notes                             |
+| ---------- | ------------------------ |------------------ | --------------------------------- |
+| **All**    | [Peripheral.AudioAmp][1] | >= 2.0            |                                   |
 
+[1]: https://github.com/harp-tech/peripheral.audioamp
 
-## Firmware Compatibility
+### Firmware Compatibility
 
-|  FW Version 	| Board           	                                                | Board HW Version 	| Notes                            	|
-|-----------------------	|-----------------	                                                |------------------	|----------------------------------	|
-| **>= 2.2**                 | [Device.SoundCard](https://github.com/harp-tech/device.soundcard) 	| >= 1.0             | Bpod serial communication not supported                                	|
-| **<= 2.2**                 | [Device.SoundCard](https://github.com/harp-tech/device.soundcard) 	| >= 1.0             |                                	|
-----
+| FW Version | Board                 | Board HW Version | Notes                                   |
+| ---------- | --------------------- | ---------------- | --------------------------------------- |
+| **>= 2.2** | [Device.SoundCard][2] | >= 1.0           | Bpod serial communication not supported |
+| **<= 2.2** | [Device.SoundCard][2] | >= 1.0           |                                         |
 
+[2]: https://github.com/harp-tech/device.soundcard
 
 ### Key Features ###
 
