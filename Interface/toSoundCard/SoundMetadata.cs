@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using System.Text;
 
 namespace HarpSoundCard
 {
@@ -42,14 +40,14 @@ namespace HarpSoundCard
 
             return arr;
         }
-        
+
         public void ToStructure(byte[] bytearray)
         {
             int sizeOfStruture = Marshal.SizeOf(this);
 
             IntPtr ptr = Marshal.AllocHGlobal(sizeOfStruture);
 
-            Marshal.Copy(bytearray, 0, ptr, sizeOfStruture);            
+            Marshal.Copy(bytearray, 0, ptr, sizeOfStruture);
             this = (SoundMetadata)Marshal.PtrToStructure(ptr, typeof(SoundMetadata));
 
             Marshal.FreeHGlobal(ptr);
@@ -107,6 +105,4 @@ namespace HarpSoundCard
 
         }
     }
-
-    
 }
