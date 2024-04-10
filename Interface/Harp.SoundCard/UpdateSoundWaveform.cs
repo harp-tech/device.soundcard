@@ -43,13 +43,6 @@ namespace Harp.SoundCard
         public SampleRate SampleRate { get; set; }
 
         /// <summary>
-        /// Gets or sets a value specifying the bit depth of each sample in the
-        /// sound waveform.
-        /// </summary>
-        [Description("Specifies the bit depth of each sample in the sound waveform.")]
-        public SampleType SampleType { get; set; }
-
-        /// <summary>
         /// Replaces the specified sound waveform in the SoundCard device with each
         /// of the sample buffers in an observable sequence.
         /// </summary>
@@ -66,7 +59,7 @@ namespace Harp.SoundCard
         {
             return source.Do(value =>
             {
-                UpdateWaveform(DeviceIndex, SoundIndex, SampleRate, SampleType, value, SoundName);
+                UpdateWaveform(DeviceIndex, SoundIndex, SampleRate, SampleType.Int32, value, SoundName);
             });
         }
 
@@ -92,15 +85,14 @@ namespace Harp.SoundCard
                     throw new InvalidOperationException("Sound waveforms must have a single channel.");
                 }
 
-                var sampleType = SampleType;
-                var depth = sampleType == SampleType.Int32 ? Depth.S32 : Depth.F32;
+                var depth = Depth.S32;
                 var soundWaveform = new byte[value.ElementSize * value.Cols * value.Rows];
                 using (var waveformHeader = Mat.CreateMatHeader(soundWaveform, value.Rows, value.Cols, depth, channels: 1))
                 {
                     CV.Convert(value, waveformHeader);
                 }
 
-                UpdateWaveform(DeviceIndex, SoundIndex, SampleRate, sampleType, soundWaveform, SoundName);
+                UpdateWaveform(DeviceIndex, SoundIndex, SampleRate, SampleType.Int32, soundWaveform, SoundName);
             });
         }
 

@@ -3,7 +3,7 @@
     /// <summary>
     /// Specifies the available bit depths for sound waveform samples.
     /// </summary>
-    public enum SampleType : int
+    internal enum SampleType : int
     {
         /// <summary>
         /// Specifies signed 32-bit samples.
