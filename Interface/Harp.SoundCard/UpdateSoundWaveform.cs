@@ -11,7 +11,7 @@ namespace Harp.SoundCard
     /// SoundCard device with each of the sample buffers in the sequence.
     /// </summary>
     [Description("Replaces the specified sound waveform in the SoundCard device with each of the sample buffers in the sequence.")]
-    public class UpdateSoundWaveform : Sink<Mat>
+    public class UpdateSoundWaveform : Sink<byte[]>
     {
         /// <summary>
         /// Gets or sets the index of the SoundCard device to update. If no index
@@ -54,6 +54,27 @@ namespace Harp.SoundCard
         /// of the sample buffers in an observable sequence.
         /// </summary>
         /// <param name="source">
+        /// A sequence of binary array objects representing all the raw samples of
+        /// the sound waveform. Continuous streaming is not supported.
+        /// </param>
+        /// <returns>
+        /// An observable sequence that is identical to the <paramref name="source"/> sequence
+        /// but where there is an additional side effect of replacing the sound waveform
+        /// of the specified sound with each of the sample buffers in the sequence.
+        /// </returns>
+        public override IObservable<byte[]> Process(IObservable<byte[]> source)
+        {
+            return source.Do(value =>
+            {
+                UpdateWaveform(DeviceIndex, SoundIndex, SampleRate, SampleType, value, SoundName);
+            });
+        }
+
+        /// <summary>
+        /// Replaces the specified sound waveform in the SoundCard device with each
+        /// of the sample buffers in an observable sequence.
+        /// </summary>
+        /// <param name="source">
         /// A sequence of <see cref="Mat"/> objects representing all the raw samples of
         /// the sound waveform. Continuous streaming is not supported.
         /// </param>
@@ -62,7 +83,7 @@ namespace Harp.SoundCard
         /// but where there is an additional side effect of replacing the sound waveform
         /// of the specified sound with each of the sample buffers in the sequence.
         /// </returns>
-        public override IObservable<Mat> Process(IObservable<Mat> source)
+        public IObservable<Mat> Process(IObservable<Mat> source)
         {
             return source.Do(value =>
             {
@@ -79,12 +100,23 @@ namespace Harp.SoundCard
                     CV.Convert(value, waveformHeader);
                 }
 
-                var errorCode = WaveformHelper.WriteSoundWaveform(DeviceIndex, SoundIndex, SampleRate, sampleType, soundWaveform, SoundName);
-                if (errorCode != SoundCardErrorCode.Ok)
-                {
-                    SoundCardErrorHelper.ThrowExceptionForErrorCode(errorCode);
-                }
+                UpdateWaveform(DeviceIndex, SoundIndex, SampleRate, sampleType, soundWaveform, SoundName);
             });
+        }
+
+        static void UpdateWaveform(
+            int? deviceIndex,
+            int soundIndex,
+            SampleRate sampleRate,
+            SampleType sampleType,
+            byte[] soundWaveform,
+            string soundName = null)
+        {
+            var errorCode = WaveformHelper.WriteSoundWaveform(deviceIndex, soundIndex, sampleRate, sampleType, soundWaveform, soundName);
+            if (errorCode != SoundCardErrorCode.Ok)
+            {
+                SoundCardErrorHelper.ThrowExceptionForErrorCode(errorCode);
+            }
         }
     }
 }

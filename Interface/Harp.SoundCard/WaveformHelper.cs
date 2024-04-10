@@ -17,7 +17,7 @@ namespace Harp.SoundCard
             SampleRate sampleRate,
             SampleType sampleType,
             byte[] soundWaveform,
-            string waveformName = null)
+            string soundName = null)
         {
             const int MetadataSize = 2048;
             const int MaxBufferSize = 32768;
@@ -66,9 +66,9 @@ namespace Harp.SoundCard
                 /* [1536:2047] description_filename content */
 
                 var userMetadata = new byte[MetadataSize];
-                if (!string.IsNullOrEmpty(waveformName))
+                if (!string.IsNullOrEmpty(soundName))
                 {
-                    Buffer.BlockCopy(Encoding.ASCII.GetBytes(waveformName), 0, userMetadata, 0, waveformName.Length);
+                    Buffer.BlockCopy(Encoding.ASCII.GetBytes(soundName), 0, userMetadata, 0, soundName.Length);
                 }
 
                 /*************************************
