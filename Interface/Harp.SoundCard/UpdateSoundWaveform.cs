@@ -68,8 +68,9 @@ namespace Harp.SoundCard
         /// of the sample buffers in an observable sequence.
         /// </summary>
         /// <param name="source">
-        /// A sequence of <see cref="Mat"/> objects representing all the raw samples of
-        /// the sound waveform. Continuous streaming is not supported.
+        /// A sequence of <see cref="Mat"/> objects representing the raw samples of the
+        /// the sound waveform. Both mono or stereo waveforms are supported, where channels are
+        /// rows. Continuous streaming is not supported so the full waveform should be sent.
         /// </param>
         /// <returns>
         /// An observable sequence that is identical to the <paramref name="source"/> sequence
@@ -80,15 +81,30 @@ namespace Harp.SoundCard
         {
             return source.Do(value =>
             {
-                if (value.Cols != 1 && value.Rows != 1 || value.Channels != 1)
+                if (value.Rows > 2 || value.Channels != 1)
                 {
-                    throw new InvalidOperationException("Sound waveforms must have a single channel.");
+                    throw new InvalidOperationException("Sound waveforms must be either mono or stereo.");
                 }
 
-                var soundWaveform = new byte[sizeof(int) * value.Cols * value.Rows];
-                using (var waveformHeader = Mat.CreateMatHeader(soundWaveform, value.Rows, value.Cols, Depth.S32, channels: 1))
+                var sampleDepth = Depth.S32;
+                if (value.Depth != sampleDepth)
                 {
-                    CV.Convert(value, waveformHeader);
+                    var temp = new Mat(value.Rows, value.Cols, sampleDepth, value.Channels);
+                    CV.Convert(value, temp);
+                    value = temp;
+                }
+
+                var soundWaveform = new byte[sizeof(int) * value.Cols * 2];
+                using (var waveformHeader = Mat.CreateMatHeader(soundWaveform, rows: value.Cols, cols: 2, sampleDepth, channels: 1))
+                {
+                    if (value.Rows == 1)
+                    {
+                        using var channel0 = waveformHeader.GetCol(0);
+                        using var channel1 = waveformHeader.GetCol(1);
+                        CV.Transpose(value, channel0);
+                        CV.Transpose(value, channel1);
+                    }
+                    else CV.Transpose(value, waveformHeader);
                 }
 
                 UpdateWaveform(DeviceIndex, SoundIndex, SampleRate, SampleType.Int32, soundWaveform, SoundName);
