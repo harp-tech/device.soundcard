@@ -1,6 +1,6 @@
 %YAML 1.1
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/harp-tech/reflex-generator/main/schema/device.json
+# yaml-language-server: $schema=https://harp-tech.org/draft-02/schema/device.json
 device: SoundCard
 whoAmI: 1280
 firmwareVersion: "2.2"
@@ -285,24 +285,24 @@ groupMasks:
   DigitalInputConfiguration:
     description: Specifies the operation mode of the digital input.
     values:
-      Digital: {0, description: Used as a pure digital input.}
-      StartAndStopSound: {1, description: Starts sound when rising edge and stop when falling edge.}
-      StartSound: {2, description: Starts sound when rising edge.}
-      Stop: {3, description: Stops sound or frequency when rising edge.}
-      StartAndStopFrequency: {4, description: Starts frequency when rising edge and stop when falling edge.}
-      StartFrequency: {5, description: Starts frequency when rising edge.}
+      Digital: {value: 0, description: Used as a pure digital input.}
+      StartAndStopSound: {value: 1, description: Starts sound when rising edge and stop when falling edge.}
+      StartSound: {value: 2, description: Starts sound when rising edge.}
+      Stop: {value: 3, description: Stops sound or frequency when rising edge.}
+      StartAndStopFrequency: {value: 4, description: Starts frequency when rising edge and stop when falling edge.}
+      StartFrequency: {value: 5, description: Starts frequency when rising edge.}
   DigitalOutputConfiguration:
     description: Specifies the operation mode of the digital output.
     values:
-      Digital: {0, description: Used as a pure digital output.}
-      Pulse: {1, description: The digital output will be high during a period specified by register DOxPulse.}
-      HighWhenSound: {2, description: High when the sound is being played. }
-      Pulse1MsWhenStart: {3, description: High when sound starts during 1 ms. }
-      Pulse10MsWhenStart: {4, description: High when sound starts during 10 ms. }
-      Pulse100MsWhenStart: {5, description: High when sound starts during 100 ms. }
-      Pulse1MsWhenStop: {6, description: High when sound stops during 1 ms. }
-      Pulse10MsWhenStop: {7, description: High when sound stops during 10 ms. }
-      Pulse100MsWhenStop: {8, description: High when sound starts during 100 ms. }
+      Digital: {value: 0, description: Used as a pure digital output.}
+      Pulse: {value: 1, description: The digital output will be high during a period specified by register DOxPulse.}
+      HighWhenSound: {value: 2, description: High when the sound is being played. }
+      Pulse1MsWhenStart: {value: 3, description: High when sound starts during 1 ms. }
+      Pulse10MsWhenStart: {value: 4, description: High when sound starts during 10 ms. }
+      Pulse100MsWhenStart: {value: 5, description: High when sound starts during 100 ms. }
+      Pulse1MsWhenStop: {value: 6, description: High when sound stops during 1 ms. }
+      Pulse10MsWhenStop: {value: 7, description: High when sound stops during 10 ms. }
+      Pulse100MsWhenStop: {value: 8, description: High when sound starts during 100 ms. }
   ControllerCommand:
     description: Specifies commands to send to the PIC32 micro-controller
     values:
