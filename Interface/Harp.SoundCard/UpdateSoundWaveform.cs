@@ -85,9 +85,8 @@ namespace Harp.SoundCard
                     throw new InvalidOperationException("Sound waveforms must have a single channel.");
                 }
 
-                var depth = Depth.S32;
-                var soundWaveform = new byte[value.ElementSize * value.Cols * value.Rows];
-                using (var waveformHeader = Mat.CreateMatHeader(soundWaveform, value.Rows, value.Cols, depth, channels: 1))
+                var soundWaveform = new byte[sizeof(int) * value.Cols * value.Rows];
+                using (var waveformHeader = Mat.CreateMatHeader(soundWaveform, value.Rows, value.Cols, Depth.S32, channels: 1))
                 {
                     CV.Convert(value, waveformHeader);
                 }
