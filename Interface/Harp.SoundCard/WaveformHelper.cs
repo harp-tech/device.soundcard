@@ -10,11 +10,18 @@ namespace Harp.SoundCard
     {
         public static UsbDeviceFinder UsbFinder = new(0x04D8, 0xEE6A);
 
-        public static unsafe SoundCardErrorCode WriteSoundWaveform(int soundIndex, SampleRate sampleRate, SampleType sampleType, byte[] soundWaveform)
+        public static unsafe SoundCardErrorCode WriteSoundWaveform(int? deviceIndex, int soundIndex, SampleRate sampleRate, SampleType sampleType, byte[] soundWaveform)
         {
             const int MetadataSize = 2048;
             const int MaxBufferSize = 32768;
-            using var usbDevice = UsbDevice.OpenUsbDevice(UsbFinder);
+            var usbDeviceIndex = deviceIndex.GetValueOrDefault();
+            var usbDevices = UsbDevice.AllDevices.FindAll(UsbFinder);
+            if (usbDevices.Count <= usbDeviceIndex)
+            {
+                return SoundCardErrorCode.HarpSoundCardNotDetected;
+            }
+
+            using var usbDevice = usbDevices[usbDeviceIndex].Device;
             try
             {
                 // Check if usb device is open and ready

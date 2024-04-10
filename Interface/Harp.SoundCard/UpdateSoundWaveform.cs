@@ -14,6 +14,13 @@ namespace Harp.SoundCard
     public class UpdateSoundWaveform : Sink<Mat>
     {
         /// <summary>
+        /// Gets or sets the index of the SoundCard device to update. If no index
+        /// is specified, the first SoundCard will be used.
+        /// </summary>
+        [Description("The index of the SoundCard device to update. If no index is specified, the first SoundCard will be used.")]
+        public int? DeviceIndex { get; set; }
+
+        /// <summary>
         /// Gets or sets the index of the sound to update.
         /// </summary>
         [Range(2, 31)]
@@ -65,7 +72,7 @@ namespace Harp.SoundCard
                     CV.Convert(value, waveformHeader);
                 }
 
-                var errorCode = WaveformHelper.WriteSoundWaveform(SoundIndex, SampleRate, sampleType, soundWaveform);
+                var errorCode = WaveformHelper.WriteSoundWaveform(DeviceIndex, SoundIndex, SampleRate, sampleType, soundWaveform);
                 if (errorCode != SoundCardErrorCode.Ok)
                 {
                     SoundCardErrorHelper.ThrowExceptionForErrorCode(errorCode);
