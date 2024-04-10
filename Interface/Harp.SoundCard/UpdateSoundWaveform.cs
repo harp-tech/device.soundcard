@@ -29,6 +29,13 @@ namespace Harp.SoundCard
         public int SoundIndex { get; set; } = 2;
 
         /// <summary>
+        /// Gets or sets the name of the sound to be stored in the device.
+        /// This field is optional.
+        /// </summary>
+        [Description("The name of the sound to be stored in the device. This field is optional.")]
+        public string SoundName { get; set; }
+
+        /// <summary>
         /// Gets or sets a value specifying the sample rate used to playback the
         /// sound waveform.
         /// </summary>
@@ -72,7 +79,7 @@ namespace Harp.SoundCard
                     CV.Convert(value, waveformHeader);
                 }
 
-                var errorCode = WaveformHelper.WriteSoundWaveform(DeviceIndex, SoundIndex, SampleRate, sampleType, soundWaveform);
+                var errorCode = WaveformHelper.WriteSoundWaveform(DeviceIndex, SoundIndex, SampleRate, sampleType, soundWaveform, SoundName);
                 if (errorCode != SoundCardErrorCode.Ok)
                 {
                     SoundCardErrorHelper.ThrowExceptionForErrorCode(errorCode);

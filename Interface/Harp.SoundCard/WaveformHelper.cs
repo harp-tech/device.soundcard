@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Runtime.InteropServices;
+using System.Text;
 using LibUsbDotNet;
 using LibUsbDotNet.Main;
 
@@ -10,7 +11,13 @@ namespace Harp.SoundCard
     {
         public static UsbDeviceFinder UsbFinder = new(0x04D8, 0xEE6A);
 
-        public static unsafe SoundCardErrorCode WriteSoundWaveform(int? deviceIndex, int soundIndex, SampleRate sampleRate, SampleType sampleType, byte[] soundWaveform)
+        public static unsafe SoundCardErrorCode WriteSoundWaveform(
+            int? deviceIndex,
+            int soundIndex,
+            SampleRate sampleRate,
+            SampleType sampleType,
+            byte[] soundWaveform,
+            string waveformName = null)
         {
             const int MetadataSize = 2048;
             const int MaxBufferSize = 32768;
@@ -59,19 +66,10 @@ namespace Harp.SoundCard
                 /* [1536:2047] description_filename content */
 
                 var userMetadata = new byte[MetadataSize];
-                //Buffer.BlockCopy(Encoding.ASCII.GetBytes(fileName), 0, userMetadata, 0, fileName.Length);
-
-                //if (userMetadataExists)
-                //{
-                //    Buffer.BlockCopy(Encoding.ASCII.GetBytes(userMetadataFileName), 0, userMetadata, 170, userMetadataFileName.Length);
-                //    metadataFileStream.Read(userMetadata, 512, 1024);
-                //}
-
-                //if (userDescriptionExists)
-                //{
-                //    Buffer.BlockCopy(Encoding.ASCII.GetBytes(userDescriptionFileName), 0, userMetadata, 340, userDescriptionFileName.Length);
-                //    descriptionFileStream.Read(userMetadata, 512 + 1024, 512);
-                //}
+                if (!string.IsNullOrEmpty(waveformName))
+                {
+                    Buffer.BlockCopy(Encoding.ASCII.GetBytes(waveformName), 0, userMetadata, 0, waveformName.Length);
+                }
 
                 /*************************************
                  * Build sound header
