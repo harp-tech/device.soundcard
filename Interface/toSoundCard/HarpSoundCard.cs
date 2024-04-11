@@ -1,13 +1,10 @@
 ﻿using System;
-using System.IO;
 using System.Diagnostics;
-using System.Threading;
+using System.IO;
+using System.Reflection;
 using System.Text;
-using System.Text.RegularExpressions;
 using LibUsbDotNet;
 using LibUsbDotNet.Main;
-using System.Runtime.InteropServices;
-using System.Reflection;
 
 namespace HarpSoundCard
 {
@@ -84,7 +81,7 @@ namespace HarpSoundCard
                 #region Create folders if don't exist
                 var currentDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
                 var toDirectory = System.IO.Path.Combine(currentDirectory, "toSoundCard");
-                
+
                 if (Directory.Exists(toDirectory) == false)
                     System.IO.Directory.CreateDirectory(toDirectory);
 
@@ -130,7 +127,7 @@ namespace HarpSoundCard
                     Console.WriteLine("  -> [sample rate]  96000 or 192000");
                     Console.WriteLine("");
                     Console.WriteLine("  Note: It's recommended that \"filenames\" should have an extension.");
-                    return (int) SoundCardErrorCode.BadUserInput;
+                    return (int)SoundCardErrorCode.BadUserInput;
                 }
 
                 //string fileName = "..\\..\\1920K_samples.bin";
@@ -253,7 +250,7 @@ namespace HarpSoundCard
 
                 if (userMetadataExists)
                 {
-                    System.Buffer.BlockCopy(Encoding.ASCII.GetBytes(userMetadataFileName), 0, userMetadata, 170, userMetadataFileName.Length);                    
+                    System.Buffer.BlockCopy(Encoding.ASCII.GetBytes(userMetadataFileName), 0, userMetadata, 170, userMetadataFileName.Length);
                     metadataFileStream.Read(userMetadata, 512, 1024);
                 }
 
@@ -269,7 +266,7 @@ namespace HarpSoundCard
                  ************************************/
                 SoundMetadata soundMetadata;
                 soundMetadata.soundIndex = soundIndex;
-                soundMetadata.soundLength = (int) soundFileSizeInSamples; // samples per sound 1048576;
+                soundMetadata.soundLength = (int)soundFileSizeInSamples; // samples per sound 1048576;
                 soundMetadata.sampleRate = sampleRate;
                 soundMetadata.dataType = dataType;
 
@@ -281,15 +278,15 @@ namespace HarpSoundCard
                 /* Data command lenght:     'c' 'm' 'd' '0x81' + random + dataIndex + 32768 + 'f'        */
                 /* Reset command lenght:    'c' 'm' 'd' '0x88' + 'f'                                     */
                 var metadataCmd = new byte[4 + sizeof(int) + soundMetadata.GetSize() + 32768 + 2048 + 1];
-                var dataCmd     = new byte[4 + sizeof(int) + sizeof(int) + 32768 + 1];
-                var resetCmd    = new byte[5];
+                var dataCmd = new byte[4 + sizeof(int) + sizeof(int) + 32768 + 1];
+                var resetCmd = new byte[5];
 
                 int metadataCmdDataIndex = 4 + sizeof(int) + soundMetadata.GetSize();
-                int dataCmdDataIndex     = 4 + sizeof(int) + sizeof(int);
+                int dataCmdDataIndex = 4 + sizeof(int) + sizeof(int);
 
                 byte metadataCmdHeader = 0x80;
-                byte dataCmdHeader     = 0x81;
-                byte resetCmdHeader    = 0x88;
+                byte dataCmdHeader = 0x81;
+                byte resetCmdHeader = 0x88;
 
 
                 /*************************************
@@ -380,7 +377,7 @@ namespace HarpSoundCard
                 soundFileStream.Read(metadataCmd, metadataCmdDataIndex, 32768);
                 //Console.WriteLine("Elapsed time (get 32KB from the file): " + stopwatch.ElapsedMilliseconds + " ms");
 
-                reader.Flush();                
+                reader.Flush();
 
                 ec = writer.Write(metadataCmd, 0, metadataCmd.Length, writeTimeout, out bytesSent);
                 if (ec != ErrorCode.None) throw new Exception("NotAbleToSendMetadata");
@@ -419,9 +416,9 @@ namespace HarpSoundCard
                 for (int i = 0; i < 8; i++)
                     if (metadataCmd[i] != commandReply[i]) throw new Exception("MetadataCommandReplyNotCorrect");
 
-                if ((SoundCardErrorCode) errorReceived != SoundCardErrorCode.Ok)
+                if ((SoundCardErrorCode)errorReceived != SoundCardErrorCode.Ok)
                 {
-                    Console.WriteLine("Error: " + (SoundCardErrorCode) errorReceived);
+                    Console.WriteLine("Error: " + (SoundCardErrorCode)errorReceived);
                     return (int)soundMetadata.CheckData();
                 }
 
@@ -492,7 +489,7 @@ namespace HarpSoundCard
                 //Console.WriteLine("Ticks: " + stopwatch.ElapsedTicks);
                 Console.WriteLine("Elapsed time: " + stopwatch.ElapsedMilliseconds + " ms");
                 //Console.WriteLine("Bandwidth: " + bandwidth_MBps.ToString("0.000") + " MB/s");
-                Console.WriteLine("Bandwidth: " + bandwidth_Mbps.ToString("0.0") + " Mb/s");                
+                Console.WriteLine("Bandwidth: " + bandwidth_Mbps.ToString("0.0") + " Mb/s");
             }
             catch (Exception ex)
             {
@@ -501,7 +498,7 @@ namespace HarpSoundCard
             }
             finally
             {
-                if (MyUsbDevice != null) 
+                if (MyUsbDevice != null)
                 {
                     if (MyUsbDevice.IsOpen)
                     {
