@@ -7,7 +7,7 @@
 /************************************************************************/
 void init_ios(void)
 {	/* Configure input pins */
-	io_pin2in(&PORTB, 0, PULL_IO_UP, SENSE_IO_EDGE_RISING);              // DIN0
+	io_pin2in(&PORTB, 0, PULL_IO_UP, SENSE_IO_EDGES_BOTH);               // DIN0
 	io_pin2in(&PORTD, 0, PULL_IO_UP, SENSE_IO_EDGES_BOTH);               // DIN1
 	io_pin2in(&PORTC, 0, PULL_IO_UP, SENSE_IO_EDGES_BOTH);               // DIN2
 	io_pin2in(&PORTC, 5, PULL_IO_UP, SENSE_IO_EDGE_RISING);              // CMD_LATCHED
@@ -71,8 +71,6 @@ uint8_t app_regs_type[] = {
 	TYPE_U8,
 	TYPE_U8,
 	TYPE_U8,
-	TYPE_U8,
-	TYPE_U8,
 	TYPE_U16,
 	TYPE_U16,
 	TYPE_U16,
@@ -83,14 +81,6 @@ uint8_t app_regs_type[] = {
 	TYPE_U16,
 	TYPE_U16,
 	TYPE_U16,
-	TYPE_U16,
-	TYPE_U16,
-	TYPE_U16,
-	TYPE_U16,
-	TYPE_U16,
-	TYPE_U8,
-	TYPE_U8,
-	TYPE_U8,
 	TYPE_U8,
 	TYPE_U8,
 	TYPE_U8,
@@ -108,7 +98,6 @@ uint8_t app_regs_type[] = {
 	TYPE_U8,
 	TYPE_U8,
 	TYPE_U16,
-	TYPE_U8,
 	TYPE_U8,
 	TYPE_U8,
 	TYPE_U8,
@@ -135,20 +124,10 @@ uint16_t app_regs_n_elements[] = {
 	1,
 	1,
 	1,
-	1,
-	1,
-	1,
-	1,
-	1,
-	3,
 	3,
 	3,
 	2,
 	2,
-	2,
-	1,
-	1,
-	1,
 	1,
 	1,
 	1,
@@ -169,7 +148,6 @@ uint16_t app_regs_n_elements[] = {
 	1,
 	1,
 	1,
-	1,
 	1
 };
 
@@ -185,34 +163,24 @@ uint8_t *app_regs_pointer[] = {
 	(uint8_t*)(&app_regs.REG_DIGITAL_INPUTS),
 	(uint8_t*)(&app_regs.REG_DI0_CONF),
 	(uint8_t*)(&app_regs.REG_DI1_CONF),
-	(uint8_t*)(&app_regs.REG_DI2_CONF),
 	(uint8_t*)(&app_regs.REG_DI0_SOUND_INDEX),
 	(uint8_t*)(&app_regs.REG_DI1_SOUND_INDEX),
-	(uint8_t*)(&app_regs.REG_DI2_SOUND_INDEX),
 	(uint8_t*)(&app_regs.REG_DI0_FREQ),
 	(uint8_t*)(&app_regs.REG_DI1_FREQ),
-	(uint8_t*)(&app_regs.REG_DI2_FREQ),
 	(uint8_t*)(&app_regs.REG_DI0_ATTNUATION_LEFT),
 	(uint8_t*)(&app_regs.REG_DI1_ATTNUATION_LEFT),
-	(uint8_t*)(&app_regs.REG_DI2_ATTNUATION_LEFT),
 	(uint8_t*)(&app_regs.REG_DI0_ATTENUATION_RIGHT),
 	(uint8_t*)(&app_regs.REG_DI1_ATTENUATION_RIGHT),
-	(uint8_t*)(&app_regs.REG_DI2_ATTENUATION_RIGHT),
 	(uint8_t*)(app_regs.REG_DI0_ATTENUATION_AND_SOUND_INDEX),
 	(uint8_t*)(app_regs.REG_DI1_ATTENUATION_AND_SOUND_INDEX),
-	(uint8_t*)(app_regs.REG_DI2_ATTENUATION_AND_SOUND_INDEX),
 	(uint8_t*)(app_regs.REG_DI0_ATTENUATION_AND_FREQUENCY),
 	(uint8_t*)(app_regs.REG_DI1_ATTENUATION_AND_FREQUENCY),
-	(uint8_t*)(app_regs.REG_DI2_ATTENUATION_AND_FReQUENCY),
 	(uint8_t*)(&app_regs.REG_RESERVED2),
 	(uint8_t*)(&app_regs.REG_RESERVED3),
 	(uint8_t*)(&app_regs.REG_RESERVED4),
 	(uint8_t*)(&app_regs.REG_DO0_CONF),
 	(uint8_t*)(&app_regs.REG_DO1_CONF),
 	(uint8_t*)(&app_regs.REG_DO2_CONF),
-	(uint8_t*)(&app_regs.REG_DO0_PULSE),
-	(uint8_t*)(&app_regs.REG_DO1_PULSE),
-	(uint8_t*)(&app_regs.REG_DO2_PULSE),
 	(uint8_t*)(&app_regs.REG_RESERVED5),
 	(uint8_t*)(&app_regs.REG_RESERVED6),
 	(uint8_t*)(&app_regs.REG_RESERVED7),
@@ -227,6 +195,5 @@ uint8_t *app_regs_pointer[] = {
 	(uint8_t*)(&app_regs.REG_COMMANDS),
 	(uint8_t*)(&app_regs.REG_RESERVED10),
 	(uint8_t*)(&app_regs.REG_RESERVED11),
-	(uint8_t*)(&app_regs.REG_RESERVED12),
-	(uint8_t*)(&app_regs.REG_EVNT_ENABLE)
+	(uint8_t*)(&app_regs.REG_RESERVED12)
 };
