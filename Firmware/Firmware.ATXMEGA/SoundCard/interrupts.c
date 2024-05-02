@@ -61,7 +61,10 @@ ISR(PORTD_INT0_vect, ISR_NAKED)
 /*
 ISR(PORTC_INT0_vect, ISR_NAKED)
 {
-   reti();
+	Digital IN2 don't have interrupt because the available interrupt on
+	PortC is being used by the communication between ATXMEGA and PIC32.
+   
+	reti();
 }
 */
 
