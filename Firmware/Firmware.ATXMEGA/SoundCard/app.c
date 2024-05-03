@@ -201,9 +201,9 @@ void core_callback_t_1ms(void)
    while(!(ADCA_CH0_INTFLAGS & ADC_CH_CHIF_bm));		// Wait for conversion to finish
    ADCA_CH0_INTFLAGS = ADC_CH_CHIF_bm;						// Clear interrupt bit
    if (ADCA_CH0_RES > AdcOffset)
-      app_regs.REG_ADC_VALUES[0] = (ADCA_CH0_RES & 0x0FFF) - AdcOffset;
+      app_regs.REG_DATA_STREAM[0] = (ADCA_CH0_RES & 0x0FFF) - AdcOffset;
    else
-      app_regs.REG_ADC_VALUES[0] = 0;
+      app_regs.REG_DATA_STREAM[0] = 0;
       
    /* Read ADC1 */
    ADCA_CH0_MUXCTRL = 9 << 3;							      // Select pin
@@ -211,9 +211,9 @@ void core_callback_t_1ms(void)
    while(!(ADCA_CH0_INTFLAGS & ADC_CH_CHIF_bm));		// Wait for conversion to finish
    ADCA_CH0_INTFLAGS = ADC_CH_CHIF_bm;						// Clear interrupt bit
    if (ADCA_CH0_RES > AdcOffset)
-      app_regs.REG_ADC_VALUES[1] = (ADCA_CH0_RES & 0x0FFF) - AdcOffset;
+      app_regs.REG_DATA_STREAM[1] = (ADCA_CH0_RES & 0x0FFF) - AdcOffset;
    else
-      app_regs.REG_ADC_VALUES[1] = 0;
+      app_regs.REG_DATA_STREAM[1] = 0;
       
    //core_func_send_event(ADD_REG_ADC_VALUES, true);   
 }
