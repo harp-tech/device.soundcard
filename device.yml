@@ -181,21 +181,54 @@ registers:
     access: Write
     maskType: Adc1Configuration
     description: Configuration of analog input ADC1
-  Commands:
+  Reserved10:
+    <<: *reserved
     address: 68
+  Reserved11:
+    <<: *reserved
+    address: 69
+  Reserved12:
+    <<: *reserved
+    address: 70
+  Reserved13:
+    <<: *reserved
+    address: 71
+  Reserved14:
+    <<: *reserved
+    address: 72
+  Reserved15:
+    <<: *reserved
+    address: 73
+  Reserved16:
+    <<: *reserved
+    address: 74
+  Reserved17:
+    <<: *reserved
+    address: 75
+  Reserved18:
+    <<: *reserved
+    address: 76
+  Reserved19:
+    <<: *reserved
+    address: 77
+  Reserved20:
+    <<: *reserved
+    address: 78
+  Reserved21:
+    <<: *reserved
+    address: 79
+  Reserved22:
+    <<: *reserved
+    address: 80
+  Reserved23:
+    <<: *reserved
+    address: 81
+  Commands:
+    address: 82
     type: U8
     access: Write
     maskType: ControllerCommand
     description: Send commands to PIC32 micro-controller
-  Reserved10:
-    <<: *reserved
-    address: 69
-  Reserved11:
-    <<: *reserved
-    address: 70
-  Reserved12:
-    <<: *reserved
-    address: 71
 bitMasks:
   DigitalInputs:
     description: Specifies the state of the digital input lines.

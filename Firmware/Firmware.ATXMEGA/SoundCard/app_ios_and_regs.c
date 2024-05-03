@@ -9,7 +9,7 @@ void init_ios(void)
 {	/* Configure input pins */
 	io_pin2in(&PORTB, 0, PULL_IO_UP, SENSE_IO_EDGES_BOTH);               // DIN0
 	io_pin2in(&PORTD, 0, PULL_IO_UP, SENSE_IO_EDGES_BOTH);               // DIN1
-	io_pin2in(&PORTC, 0, PULL_IO_UP, SENSE_IO_EDGES_BOTH);               // DIN2
+	io_pin2in(&PORTC, 0, PULL_IO_UP, SENSE_IO_NO_INT_USED);              // DIN2
 	io_pin2in(&PORTC, 5, PULL_IO_UP, SENSE_IO_EDGE_RISING);              // CMD_LATCHED
 	io_pin2in(&PORTD, 5, PULL_IO_UP, SENSE_IO_EDGE_RISING);              // CMD_NOT_EXEC
 	io_pin2in(&PORTC, 6, PULL_IO_UP, SENSE_IO_EDGES_BOTH);               // SOUND_IS_ON
@@ -17,7 +17,6 @@ void init_ios(void)
 	/* Configure input interrupts */
 	io_set_int(&PORTB, INT_LEVEL_LOW, 0, (1<<0), false);                 // DIN0
 	io_set_int(&PORTD, INT_LEVEL_LOW, 0, (1<<0), false);                 // DIN1
-	//io_set_int(&PORTC, INT_LEVEL_LOW, 0, (1<<0), false);                 // DIN2
 	io_set_int(&PORTC, INT_LEVEL_LOW, 1, (1<<5), false);                 // CMD_LATCHED
 	io_set_int(&PORTC, INT_LEVEL_LOW, 0, (1<<6), false);                 // SOUND_IS_ON
 
@@ -97,6 +96,17 @@ uint8_t app_regs_type[] = {
 	TYPE_U8,
 	TYPE_U8,
 	TYPE_U8,
+	TYPE_U8,
+	TYPE_U8,
+	TYPE_U8,
+	TYPE_U8,
+	TYPE_U8,
+	TYPE_U8,
+	TYPE_U8,
+	TYPE_U8,
+	TYPE_U8,
+	TYPE_U8,
+	TYPE_U8,
 	TYPE_U8
 };
 
@@ -135,6 +145,17 @@ uint16_t app_regs_n_elements[] = {
 	1,
 	1,
 	5,
+	1,
+	1,
+	1,
+	1,
+	1,
+	1,
+	1,
+	1,
+	1,
+	1,
+	1,
 	1,
 	1,
 	1,
@@ -180,8 +201,19 @@ uint8_t *app_regs_pointer[] = {
 	(uint8_t*)(app_regs.REG_DATA_STREAM),
 	(uint8_t*)(&app_regs.REG_ADC0_CONF),
 	(uint8_t*)(&app_regs.REG_ADC1_CONF),
-	(uint8_t*)(&app_regs.REG_COMMANDS),
 	(uint8_t*)(&app_regs.REG_RESERVED10),
 	(uint8_t*)(&app_regs.REG_RESERVED11),
-	(uint8_t*)(&app_regs.REG_RESERVED12)
+	(uint8_t*)(&app_regs.REG_RESERVED12),
+	(uint8_t*)(&app_regs.REG_RESERVED13),
+	(uint8_t*)(&app_regs.REG_RESERVED14),
+	(uint8_t*)(&app_regs.REG_RESERVED15),
+	(uint8_t*)(&app_regs.REG_RESERVED16),
+	(uint8_t*)(&app_regs.REG_RESERVED17),
+	(uint8_t*)(&app_regs.REG_RESERVED18),
+	(uint8_t*)(&app_regs.REG_RESERVED19),
+	(uint8_t*)(&app_regs.REG_RESERVED20),
+	(uint8_t*)(&app_regs.REG_RESERVED21),
+	(uint8_t*)(&app_regs.REG_RESERVED22),
+	(uint8_t*)(&app_regs.REG_RESERVED23),
+	(uint8_t*)(&app_regs.REG_COMMANDS)
 };

@@ -46,10 +46,21 @@ void (*app_func_rd_pointer[])(void) = {
 	&app_read_REG_DATA_STREAM,
 	&app_read_REG_ADC0_CONF,
 	&app_read_REG_ADC1_CONF,
-	&app_read_REG_COMMANDS,
 	&app_read_REG_RESERVED10,
 	&app_read_REG_RESERVED11,
-	&app_read_REG_RESERVED12
+	&app_read_REG_RESERVED12,
+	&app_read_REG_RESERVED13,
+	&app_read_REG_RESERVED14,
+	&app_read_REG_RESERVED15,
+	&app_read_REG_RESERVED16,
+	&app_read_REG_RESERVED17,
+	&app_read_REG_RESERVED18,
+	&app_read_REG_RESERVED19,
+	&app_read_REG_RESERVED20,
+	&app_read_REG_RESERVED21,
+	&app_read_REG_RESERVED22,
+	&app_read_REG_RESERVED23,
+	&app_read_REG_COMMANDS
 };
 
 bool (*app_func_wr_pointer[])(void*) = {
@@ -89,10 +100,21 @@ bool (*app_func_wr_pointer[])(void*) = {
 	&app_write_REG_DATA_STREAM,
 	&app_write_REG_ADC0_CONF,
 	&app_write_REG_ADC1_CONF,
-	&app_write_REG_COMMANDS,
 	&app_write_REG_RESERVED10,
 	&app_write_REG_RESERVED11,
-	&app_write_REG_RESERVED12
+	&app_write_REG_RESERVED12,
+	&app_write_REG_RESERVED13,
+	&app_write_REG_RESERVED14,
+	&app_write_REG_RESERVED15,
+	&app_write_REG_RESERVED16,
+	&app_write_REG_RESERVED17,
+	&app_write_REG_RESERVED18,
+	&app_write_REG_RESERVED19,
+	&app_write_REG_RESERVED20,
+	&app_write_REG_RESERVED21,
+	&app_write_REG_RESERVED22,
+	&app_write_REG_RESERVED23,
+	&app_write_REG_COMMANDS
 };
 
 
@@ -237,42 +259,6 @@ bool app_write_REG_SET_ATTENUATION_AND_PLAY_SOUND_OR_FREQ(void *a)
 	
 	par_cmd_start_sound(reg[0], reg[1], reg[2]);
 	
-	return true;
-}
-
-
-/************************************************************************/
-/* REG_RESERVED0                                                        */
-/************************************************************************/
-void app_read_REG_RESERVED0(void)
-{
-	//app_regs.REG_RESERVED0 = 0;
-
-}
-
-bool app_write_REG_RESERVED0(void *a)
-{
-	uint8_t reg = *((uint8_t*)a);
-
-	app_regs.REG_RESERVED0 = reg;
-	return true;
-}
-
-
-/************************************************************************/
-/* REG_RESERVED1                                                        */
-/************************************************************************/
-void app_read_REG_RESERVED1(void)
-{
-	//app_regs.REG_RESERVED1 = 0;
-
-}
-
-bool app_write_REG_RESERVED1(void *a)
-{
-	uint8_t reg = *((uint8_t*)a);
-
-	app_regs.REG_RESERVED1 = reg;
 	return true;
 }
 
@@ -444,60 +430,6 @@ bool app_write_REG_DI1_ATTENUATION_RIGHT(void *a)
 
 
 /************************************************************************/
-/* REG_RESERVED2                                                        */
-/************************************************************************/
-void app_read_REG_RESERVED2(void)
-{
-	//app_regs.REG_RESERVED2 = 0;
-
-}
-
-bool app_write_REG_RESERVED2(void *a)
-{
-	uint8_t reg = *((uint8_t*)a);
-
-	app_regs.REG_RESERVED2 = reg;
-	return true;
-}
-
-
-/************************************************************************/
-/* REG_RESERVED3                                                        */
-/************************************************************************/
-void app_read_REG_RESERVED3(void)
-{
-	//app_regs.REG_RESERVED3 = 0;
-
-}
-
-bool app_write_REG_RESERVED3(void *a)
-{
-	uint8_t reg = *((uint8_t*)a);
-
-	app_regs.REG_RESERVED3 = reg;
-	return true;
-}
-
-
-/************************************************************************/
-/* REG_RESERVED4                                                        */
-/************************************************************************/
-void app_read_REG_RESERVED4(void)
-{
-	//app_regs.REG_RESERVED4 = 0;
-
-}
-
-bool app_write_REG_RESERVED4(void *a)
-{
-	uint8_t reg = *((uint8_t*)a);
-
-	app_regs.REG_RESERVED4 = reg;
-	return true;
-}
-
-
-/************************************************************************/
 /* REG_DO0_CONF                                                         */
 /************************************************************************/
 void app_read_REG_DO0_CONF(void)
@@ -547,60 +479,6 @@ bool app_write_REG_DO2_CONF(void *a)
 	uint8_t reg = *((uint8_t*)a);
 
 	app_regs.REG_DO2_CONF = reg;
-	return true;
-}
-
-
-/************************************************************************/
-/* REG_RESERVED5                                                        */
-/************************************************************************/
-void app_read_REG_RESERVED5(void)
-{
-	//app_regs.REG_RESERVED5 = 0;
-
-}
-
-bool app_write_REG_RESERVED5(void *a)
-{
-	uint8_t reg = *((uint8_t*)a);
-
-	app_regs.REG_RESERVED5 = reg;
-	return true;
-}
-
-
-/************************************************************************/
-/* REG_RESERVED6                                                        */
-/************************************************************************/
-void app_read_REG_RESERVED6(void)
-{
-	//app_regs.REG_RESERVED6 = 0;
-
-}
-
-bool app_write_REG_RESERVED6(void *a)
-{
-	uint8_t reg = *((uint8_t*)a);
-
-	app_regs.REG_RESERVED6 = reg;
-	return true;
-}
-
-
-/************************************************************************/
-/* REG_RESERVED7                                                        */
-/************************************************************************/
-void app_read_REG_RESERVED7(void)
-{
-	//app_regs.REG_RESERVED7 = 0;
-
-}
-
-bool app_write_REG_RESERVED7(void *a)
-{
-	uint8_t reg = *((uint8_t*)a);
-
-	app_regs.REG_RESERVED7 = reg;
 	return true;
 }
 
@@ -684,42 +562,6 @@ bool app_write_REG_DO_OUT(void *a)
    if (reg & B_DO2) set_DOUT2; else clr_DOUT2;
 
 	app_regs.REG_DO_OUT = reg;
-	return true;
-}
-
-
-/************************************************************************/
-/* REG_RESERVED8                                                        */
-/************************************************************************/
-void app_read_REG_RESERVED8(void)
-{
-	//app_regs.REG_RESERVED8 = 0;
-
-}
-
-bool app_write_REG_RESERVED8(void *a)
-{
-	uint8_t reg = *((uint8_t*)a);
-
-	app_regs.REG_RESERVED8 = reg;
-	return true;
-}
-
-
-/************************************************************************/
-/* REG_RESERVED9                                                        */
-/************************************************************************/
-void app_read_REG_RESERVED9(void)
-{
-	//app_regs.REG_RESERVED9 = 0;
-
-}
-
-bool app_write_REG_RESERVED9(void *a)
-{
-	uint8_t reg = *((uint8_t*)a);
-
-	app_regs.REG_RESERVED9 = reg;
 	return true;
 }
 
@@ -837,54 +679,54 @@ bool app_write_REG_COMMANDS(void *a)
 
 
 /************************************************************************/
-/* REG_RESERVED10                                                       */
+/* All REG_RESERVEDx                                                    */
 /************************************************************************/
-void app_read_REG_RESERVED10(void)
-{
-	//app_regs.REG_RESERVED10 = 0;
+void 	app_read_REG_RESERVED0	(void) {}
+void 	app_read_REG_RESERVED1	(void) {}
+void 	app_read_REG_RESERVED2	(void) {}
+void 	app_read_REG_RESERVED3	(void) {}
+void 	app_read_REG_RESERVED4	(void) {}
+void 	app_read_REG_RESERVED5	(void) {}
+void 	app_read_REG_RESERVED6	(void) {}
+void 	app_read_REG_RESERVED7	(void) {}
+void 	app_read_REG_RESERVED8	(void) {}
+void 	app_read_REG_RESERVED9	(void) {}
+void 	app_read_REG_RESERVED10	(void) {}
+void 	app_read_REG_RESERVED11	(void) {}
+void 	app_read_REG_RESERVED12	(void) {}
+void 	app_read_REG_RESERVED13	(void) {}
+void 	app_read_REG_RESERVED14	(void) {}
+void 	app_read_REG_RESERVED15	(void) {}
+void 	app_read_REG_RESERVED16	(void) {}
+void 	app_read_REG_RESERVED17	(void) {}
+void 	app_read_REG_RESERVED18	(void) {}
+void 	app_read_REG_RESERVED19	(void) {}
+void 	app_read_REG_RESERVED20	(void) {}
+void 	app_read_REG_RESERVED21	(void) {}
+void 	app_read_REG_RESERVED22	(void) {}
+void 	app_read_REG_RESERVED23	(void) {}
 
-}
-
-bool app_write_REG_RESERVED10(void *a)
-{
-	uint8_t reg = *((uint8_t*)a);
-
-	app_regs.REG_RESERVED10 = reg;
-	return true;
-}
-
-
-/************************************************************************/
-/* REG_RESERVED11                                                       */
-/************************************************************************/
-void app_read_REG_RESERVED11(void)
-{
-	//app_regs.REG_RESERVED11 = 0;
-
-}
-
-bool app_write_REG_RESERVED11(void *a)
-{
-	uint8_t reg = *((uint8_t*)a);
-
-	app_regs.REG_RESERVED11 = reg;
-	return true;
-}
-
-
-/************************************************************************/
-/* REG_RESERVED12                                                       */
-/************************************************************************/
-void app_read_REG_RESERVED12(void)
-{
-	//app_regs.REG_RESERVED12 = 0;
-
-}
-
-bool app_write_REG_RESERVED12(void *a)
-{
-	uint8_t reg = *((uint8_t*)a);
-
-	app_regs.REG_RESERVED12 = reg;
-	return true;
-}
+bool app_write_REG_RESERVED0	(void *a) { app_regs.REG_RESERVED0	 = *((uint8_t*)a); return true; }
+bool app_write_REG_RESERVED1	(void *a) { app_regs.REG_RESERVED1	 = *((uint8_t*)a); return true; }
+bool app_write_REG_RESERVED2	(void *a) { app_regs.REG_RESERVED2	 = *((uint8_t*)a); return true; }
+bool app_write_REG_RESERVED3	(void *a) { app_regs.REG_RESERVED3	 = *((uint8_t*)a); return true; }
+bool app_write_REG_RESERVED4	(void *a) { app_regs.REG_RESERVED4	 = *((uint8_t*)a); return true; }
+bool app_write_REG_RESERVED5	(void *a) { app_regs.REG_RESERVED5	 = *((uint8_t*)a); return true; }
+bool app_write_REG_RESERVED6	(void *a) { app_regs.REG_RESERVED6	 = *((uint8_t*)a); return true; }
+bool app_write_REG_RESERVED7	(void *a) { app_regs.REG_RESERVED7	 = *((uint8_t*)a); return true; }
+bool app_write_REG_RESERVED8	(void *a) { app_regs.REG_RESERVED8	 = *((uint8_t*)a); return true; }
+bool app_write_REG_RESERVED9	(void *a) { app_regs.REG_RESERVED9	 = *((uint8_t*)a); return true; }
+bool app_write_REG_RESERVED10	(void *a) { app_regs.REG_RESERVED10	 = *((uint8_t*)a); return true; }
+bool app_write_REG_RESERVED11	(void *a) { app_regs.REG_RESERVED11	 = *((uint8_t*)a); return true; }
+bool app_write_REG_RESERVED12	(void *a) { app_regs.REG_RESERVED12	 = *((uint8_t*)a); return true; }
+bool app_write_REG_RESERVED13	(void *a) { app_regs.REG_RESERVED13	 = *((uint8_t*)a); return true; }
+bool app_write_REG_RESERVED14	(void *a) { app_regs.REG_RESERVED14	 = *((uint8_t*)a); return true; }
+bool app_write_REG_RESERVED15	(void *a) { app_regs.REG_RESERVED15	 = *((uint8_t*)a); return true; }
+bool app_write_REG_RESERVED16	(void *a) { app_regs.REG_RESERVED16	 = *((uint8_t*)a); return true; }
+bool app_write_REG_RESERVED17	(void *a) { app_regs.REG_RESERVED17	 = *((uint8_t*)a); return true; }
+bool app_write_REG_RESERVED18	(void *a) { app_regs.REG_RESERVED18	 = *((uint8_t*)a); return true; }
+bool app_write_REG_RESERVED19	(void *a) { app_regs.REG_RESERVED19	 = *((uint8_t*)a); return true; }
+bool app_write_REG_RESERVED20	(void *a) { app_regs.REG_RESERVED20	 = *((uint8_t*)a); return true; }
+bool app_write_REG_RESERVED21	(void *a) { app_regs.REG_RESERVED21	 = *((uint8_t*)a); return true; }
+bool app_write_REG_RESERVED22	(void *a) { app_regs.REG_RESERVED22	 = *((uint8_t*)a); return true; }
+bool app_write_REG_RESERVED23	(void *a) { app_regs.REG_RESERVED23	 = *((uint8_t*)a); return true; }
