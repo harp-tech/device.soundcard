@@ -56,10 +56,21 @@ void app_read_REG_DATA_STREAM_CONF(void);
 void app_read_REG_DATA_STREAM(void);
 void app_read_REG_ADC0_CONF(void);
 void app_read_REG_ADC1_CONF(void);
-void app_read_REG_COMMANDS(void);
 void app_read_REG_RESERVED10(void);
 void app_read_REG_RESERVED11(void);
 void app_read_REG_RESERVED12(void);
+void app_read_REG_RESERVED13(void);
+void app_read_REG_RESERVED14(void);
+void app_read_REG_RESERVED15(void);
+void app_read_REG_RESERVED16(void);
+void app_read_REG_RESERVED17(void);
+void app_read_REG_RESERVED18(void);
+void app_read_REG_RESERVED19(void);
+void app_read_REG_RESERVED20(void);
+void app_read_REG_RESERVED21(void);
+void app_read_REG_RESERVED22(void);
+void app_read_REG_RESERVED23(void);
+void app_read_REG_COMMANDS(void);
 
 bool app_write_REG_PLAY_SOUND_OR_FREQ(void *a);
 bool app_write_REG_STOP(void *a);
@@ -97,10 +108,21 @@ bool app_write_REG_DATA_STREAM_CONF(void *a);
 bool app_write_REG_DATA_STREAM(void *a);
 bool app_write_REG_ADC0_CONF(void *a);
 bool app_write_REG_ADC1_CONF(void *a);
-bool app_write_REG_COMMANDS(void *a);
 bool app_write_REG_RESERVED10(void *a);
 bool app_write_REG_RESERVED11(void *a);
 bool app_write_REG_RESERVED12(void *a);
+bool app_write_REG_RESERVED13(void *a);
+bool app_write_REG_RESERVED14(void *a);
+bool app_write_REG_RESERVED15(void *a);
+bool app_write_REG_RESERVED16(void *a);
+bool app_write_REG_RESERVED17(void *a);
+bool app_write_REG_RESERVED18(void *a);
+bool app_write_REG_RESERVED19(void *a);
+bool app_write_REG_RESERVED20(void *a);
+bool app_write_REG_RESERVED21(void *a);
+bool app_write_REG_RESERVED22(void *a);
+bool app_write_REG_RESERVED23(void *a);
+bool app_write_REG_COMMANDS(void *a);
 
 
 #endif /* _APP_FUNCTIONS_H_ */

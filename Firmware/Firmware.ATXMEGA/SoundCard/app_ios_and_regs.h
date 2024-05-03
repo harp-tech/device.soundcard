@@ -157,10 +157,21 @@ typedef struct
 	uint16_t REG_DATA_STREAM[5];
 	uint8_t REG_ADC0_CONF;
 	uint8_t REG_ADC1_CONF;
-	uint8_t REG_COMMANDS;
 	uint8_t REG_RESERVED10;
 	uint8_t REG_RESERVED11;
 	uint8_t REG_RESERVED12;
+	uint8_t REG_RESERVED13;
+	uint8_t REG_RESERVED14;
+	uint8_t REG_RESERVED15;
+	uint8_t REG_RESERVED16;
+	uint8_t REG_RESERVED17;
+	uint8_t REG_RESERVED18;
+	uint8_t REG_RESERVED19;
+	uint8_t REG_RESERVED20;
+	uint8_t REG_RESERVED21;
+	uint8_t REG_RESERVED22;
+	uint8_t REG_RESERVED23;
+	uint8_t REG_COMMANDS;
 } AppRegs;
 
 /************************************************************************/
@@ -203,10 +214,21 @@ typedef struct
 #define ADD_REG_DATA_STREAM                 65 // U16    [ADC0]   [ADC1]   [ATT LEFT]   [ATT RIGHT]   [FREQUENCY]   Values are 0 if not used
 #define ADD_REG_ADC0_CONF                   66 // U8     
 #define ADD_REG_ADC1_CONF                   67 // U8     
-#define ADD_REG_COMMANDS                    68 // U8     Send commands to PIC32 ucontroller
-#define ADD_REG_RESERVED10                  69 // U8     Reserved for future purposes
-#define ADD_REG_RESERVED11                  70 // U8     Reserved for future purposes
-#define ADD_REG_RESERVED12                  71 // U8     Reserved for future purposes
+#define ADD_REG_RESERVED10                  68 // U8     Reserved for future purposes
+#define ADD_REG_RESERVED11                  69 // U8     Reserved for future purposes
+#define ADD_REG_RESERVED12                  70 // U8     Reserved for future purposes
+#define ADD_REG_RESERVED13                  71 // U8     Reserved for future purposes
+#define ADD_REG_RESERVED14                  72 // U8     Reserved for future purposes
+#define ADD_REG_RESERVED15                  73 // U8     Reserved for future purposes
+#define ADD_REG_RESERVED16                  74 // U8     Reserved for future purposes
+#define ADD_REG_RESERVED17                  75 // U8     Reserved for future purposes
+#define ADD_REG_RESERVED18                  76 // U8     Reserved for future purposes
+#define ADD_REG_RESERVED19                  77 // U8     Reserved for future purposes
+#define ADD_REG_RESERVED20                  78 // U8     Reserved for future purposes
+#define ADD_REG_RESERVED21                  79 // U8     Reserved for future purposes
+#define ADD_REG_RESERVED22                  80 // U8     Reserved for future purposes
+#define ADD_REG_RESERVED23                  81 // U8     Reserved for future purposes
+#define ADD_REG_COMMANDS                    82 // U8     Send commands to PIC32 ucontroller
 
 /************************************************************************/
 /* PWM Generator registers' memory limits                               */
@@ -216,8 +238,8 @@ typedef struct
 /************************************************************************/
 /* Memory limits */
 #define APP_REGS_ADD_MIN                    0x20
-#define APP_REGS_ADD_MAX                    0x47
-#define APP_NBYTES_OF_REG_BANK              64
+#define APP_REGS_ADD_MAX                    0x52
+#define APP_NBYTES_OF_REG_BANK              75
 
 /************************************************************************/
 /* Registers' bits                                                      */
