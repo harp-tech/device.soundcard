@@ -134,16 +134,10 @@ typedef struct
 	uint8_t REG_DI1_CONF;
 	uint8_t REG_DI0_SOUND_INDEX;
 	uint8_t REG_DI1_SOUND_INDEX;
-	uint16_t REG_DI0_FREQ;
-	uint16_t REG_DI1_FREQ;
 	uint16_t REG_DI0_ATTNUATION_LEFT;
 	uint16_t REG_DI1_ATTNUATION_LEFT;
 	uint16_t REG_DI0_ATTENUATION_RIGHT;
 	uint16_t REG_DI1_ATTENUATION_RIGHT;
-	uint16_t REG_DI0_ATTENUATION_AND_SOUND_INDEX[3];
-	uint16_t REG_DI1_ATTENUATION_AND_SOUND_INDEX[3];
-	uint16_t REG_DI0_ATTENUATION_AND_FREQUENCY[2];
-	uint16_t REG_DI1_ATTENUATION_AND_FREQUENCY[2];
 	uint8_t REG_RESERVED2;
 	uint8_t REG_RESERVED3;
 	uint8_t REG_RESERVED4;
@@ -159,8 +153,10 @@ typedef struct
 	uint8_t REG_DO_OUT;
 	uint8_t REG_RESERVED8;
 	uint8_t REG_RESERVED9;
-	uint8_t REG_ADC_CONF;
-	uint16_t REG_ADC_VALUES[5];
+	uint8_t REG_DATA_STREAM_CONF;
+	uint16_t REG_DATA_STREAM[5];
+	uint8_t REG_ADC0_CONF;
+	uint8_t REG_ADC1_CONF;
 	uint8_t REG_COMMANDS;
 	uint8_t REG_RESERVED10;
 	uint8_t REG_RESERVED11;
@@ -184,37 +180,33 @@ typedef struct
 #define ADD_REG_DI1_CONF                    42 // U8     Configuration of the digital input 1 (DI1)
 #define ADD_REG_DI0_SOUND_INDEX             43 // U8     Sound index to be played when triggering DI0
 #define ADD_REG_DI1_SOUND_INDEX             44 // U8     Sound index to be played when triggering DI1
-#define ADD_REG_DI0_FREQ                    45 // U16    Sound frequency to be played when triggering DI0
-#define ADD_REG_DI1_FREQ                    46 // U16    Sound frequency to be played when triggering DI1
-#define ADD_REG_DI0_ATTNUATION_LEFT         47 // U16    Left channel's attenuation (1 LSB is 0.1dB) when triggering DI0
-#define ADD_REG_DI1_ATTNUATION_LEFT         48 // U16    Left channel's attenuation (1 LSB is 0.1dB) when triggering DI1
-#define ADD_REG_DI0_ATTENUATION_RIGHT       49 // U16    Right channel's attenuation (1 LSB is 0.1dB) when triggering DI0
-#define ADD_REG_DI1_ATTENUATION_RIGHT       50 // U16    Right channel's attenuation (1 LSB is 0.1dB) when triggering DI1
-#define ADD_REG_DI0_ATTENUATION_AND_SOUND_INDEX 51 // U16    Sound index and attenuation to be played when triggering DI0 [Att R] [Att L] [Index]
-#define ADD_REG_DI1_ATTENUATION_AND_SOUND_INDEX 52 // U16    Sound index and attenuation to be played when triggering DI1 [Att R] [Att L] [Index]
-#define ADD_REG_DI0_ATTENUATION_AND_FREQUENCY 53 // U16    Sound index and attenuation to be played when triggering DI0 [Att BOTH] [Frequency]
-#define ADD_REG_DI1_ATTENUATION_AND_FREQUENCY 54 // U16    Sound index and attenuation to be played when triggering DI0 [Att BOTH] [Frequency]
-#define ADD_REG_RESERVED2                   55 // U8     Reserved for future purposes
-#define ADD_REG_RESERVED3                   56 // U8     Reserved for future purposes
-#define ADD_REG_RESERVED4                   57 // U8     Reserved for future purposes
-#define ADD_REG_DO0_CONF                    58 // U8     Configuration of the digital output 0 (DO0)
-#define ADD_REG_DO1_CONF                    59 // U8     Configuration of the digital output 1 (DO1)
-#define ADD_REG_DO2_CONF                    60 // U8     Configuration of the digital output 1 (DO1)
-#define ADD_REG_RESERVED5                   61 // U8     Reserved for future purposes
-#define ADD_REG_RESERVED6                   62 // U8     Reserved for future purposes
-#define ADD_REG_RESERVED7                   63 // U8     Reserved for future purposes
-#define ADD_REG_DO_SET                      64 // U8     Set the digital outputs
-#define ADD_REG_DO_CLEAR                    65 // U8     Clear the digital outputs
-#define ADD_REG_DO_TOGGLE                   66 // U8     Toggle the digital outputs
-#define ADD_REG_DO_OUT                      67 // U8     Writes to the digital output
-#define ADD_REG_RESERVED8                   68 // U8     Reserved for future purposes
-#define ADD_REG_RESERVED9                   69 // U8     Reserved for future purposes
-#define ADD_REG_ADC_CONF                    70 // U8     Configuration of Analog Inputs
-#define ADD_REG_ADC_VALUES                  71 // U16    [ADC0]   [ADC1]   [ATT LEFT]   [ATT RIGHT]   [FREQUENCY]   Values are 0 if not used
-#define ADD_REG_COMMANDS                    72 // U8     Send commands to PIC32 ucontroller
-#define ADD_REG_RESERVED10                  73 // U8     Reserved for future purposes
-#define ADD_REG_RESERVED11                  74 // U8     Reserved for future purposes
-#define ADD_REG_RESERVED12                  75 // U8     Reserved for future purposes
+#define ADD_REG_DI0_ATTNUATION_LEFT         45 // U16    Left channel's attenuation (1 LSB is 0.1dB) when triggering DI0
+#define ADD_REG_DI1_ATTNUATION_LEFT         46 // U16    Left channel's attenuation (1 LSB is 0.1dB) when triggering DI1
+#define ADD_REG_DI0_ATTENUATION_RIGHT       47 // U16    Right channel's attenuation (1 LSB is 0.1dB) when triggering DI0
+#define ADD_REG_DI1_ATTENUATION_RIGHT       48 // U16    Right channel's attenuation (1 LSB is 0.1dB) when triggering DI1
+#define ADD_REG_RESERVED2                   49 // U8     Reserved for future purposes
+#define ADD_REG_RESERVED3                   50 // U8     Reserved for future purposes
+#define ADD_REG_RESERVED4                   51 // U8     Reserved for future purposes
+#define ADD_REG_DO0_CONF                    52 // U8     Configuration of the digital output 0 (DO0)
+#define ADD_REG_DO1_CONF                    53 // U8     Configuration of the digital output 1 (DO1)
+#define ADD_REG_DO2_CONF                    54 // U8     Configuration of the digital output 1 (DO1)
+#define ADD_REG_RESERVED5                   55 // U8     Reserved for future purposes
+#define ADD_REG_RESERVED6                   56 // U8     Reserved for future purposes
+#define ADD_REG_RESERVED7                   57 // U8     Reserved for future purposes
+#define ADD_REG_DO_SET                      58 // U8     Set the digital outputs
+#define ADD_REG_DO_CLEAR                    59 // U8     Clear the digital outputs
+#define ADD_REG_DO_TOGGLE                   60 // U8     Toggle the digital outputs
+#define ADD_REG_DO_OUT                      61 // U8     Writes to the digital output
+#define ADD_REG_RESERVED8                   62 // U8     Reserved for future purposes
+#define ADD_REG_RESERVED9                   63 // U8     Reserved for future purposes
+#define ADD_REG_DATA_STREAM_CONF            64 // U8     Configuration of data stream
+#define ADD_REG_DATA_STREAM                 65 // U16    [ADC0]   [ADC1]   [ATT LEFT]   [ATT RIGHT]   [FREQUENCY]   Values are 0 if not used
+#define ADD_REG_ADC0_CONF                   66 // U8     
+#define ADD_REG_ADC1_CONF                   67 // U8     
+#define ADD_REG_COMMANDS                    68 // U8     Send commands to PIC32 ucontroller
+#define ADD_REG_RESERVED10                  69 // U8     Reserved for future purposes
+#define ADD_REG_RESERVED11                  70 // U8     Reserved for future purposes
+#define ADD_REG_RESERVED12                  71 // U8     Reserved for future purposes
 
 /************************************************************************/
 /* PWM Generator registers' memory limits                               */
@@ -224,8 +216,8 @@ typedef struct
 /************************************************************************/
 /* Memory limits */
 #define APP_REGS_ADD_MIN                    0x20
-#define APP_REGS_ADD_MAX                    0x4B
-#define APP_NBYTES_OF_REG_BANK              86
+#define APP_REGS_ADD_MAX                    0x47
+#define APP_NBYTES_OF_REG_BANK              64
 
 /************************************************************************/
 /* Registers' bits                                                      */
@@ -244,14 +236,18 @@ typedef struct
 #define B_DO0                              (1<<0)       // Digital output 0
 #define B_DO1                              (1<<1)       // Digital output 1
 #define B_DO2                              (1<<2)       // Digital output 2
-#define MSK_ADC_SEL                        (7<<0)       // 
-#define GM_ADC_NOT                         (0<<0)       // Not used
-#define GM_ADC_1KHZ_1KHZ                   (1<<0)       // Use both as a pure analog inputs acquired at 1000 Hz
-#define GM_ADC_ABOTH_1KHZ                  (2<<0)       // ADC0 controls amplitude of both channels and ADC1 is an analog input
-#define GM_ADC_ALEFT_1KHZ                  (3<<0)       // ADC0 controls left amplitude and ADC1 is an analog input
-#define GM_ADC_ARIGHT_1KHZ                 (4<<0)       // ADC0 controls right amplitude and ADC1 is an analog input
-#define GM_ADC_ALEFT_ARIGHT                (5<<0)       // ADC0 controls left amplitude and ADC1 controls right amplitude
-#define GM_ADC_ABOTH_FREQ                  (6<<0)       // ADC0 controls both amplitude and ADC1 controls the output frequency
+#define MSK_DATA_STREAM_SEL                (1<<0)       // 
+#define GM_DATA_STREAM_OFF                 (0<<0)       // Not used
+#define GM_DATA_STREAM_1KHz                (1<<0)       // Use both as a pure analog inputs acquired at 1000 Hz
+#define MSK_ADC0_SEL                       (3<<0)       // 
+#define GM_ADC0_PURE_ANALOG_INPUT          (0<<0)       // 
+#define GM_ADC0_CONTROL_LEFT_AMPLITUDE     (1<<0)       // 
+#define GM_ADC0_CONTROL_BOTH_AMPLITUDE     (2<<0)       // 
+#define MSK_ADC1_SEL                       (3<<0)       // ADC0 controls amplitude of both channels and ADC1 is an analog input
+#define GM_ADC1_PURE_ANALOG_INPUT          (0<<0)       // ADC0 controls left amplitude and ADC1 is an analog input
+#define GM_ADC1_CONTROL_RIGHT_AMPLITUDE    (1<<0)       // ADC0 controls right amplitude and ADC1 is an analog input
+#define GM_ADC1_CONTROL_BOTH_AMPLITUDE     (2<<0)       // ADC0 controls left amplitude and ADC1 controls right amplitude
+#define GM_ADC1_CONTROL_FREQUENCY          (3<<0)       // ADC0 controls both amplitude and ADC1 controls the output frequency
 #define GM_DIS_BOOTLOADER                  0            // Disables bootloader buffers
 #define GM_EN_BOOTLOADER                   1            // Enables bootloader buffers
 #define GM_DEL_ALL_SOUNDS                  255          // Delete all sounds in the sound card

@@ -60,127 +60,99 @@ registers:
     <<: *configureDI
     address: 42
     description: Configuration of the digital input 1 (DI1)
-  SoundIndexDI0: &soundIndex
+  SoundOrFrequencyDI0: &soundIndex
     address: 43
     type: U8
     access: Write
     description: Specifies the sound index to be played when triggering DI0
-  SoundIndexDI1:
+  SoundOrFrequencyDI1:
     <<: *soundIndex
     address: 44
     description: Specifies the sound index to be played when triggering DI1
-  FrequencyDI0:
-    <<: *frequency
-    address: 45
-    description: Specifies the sound frequency to be played when triggering DI0
-  FrequencyDI1:
-    <<: *frequency
-    address: 46
-    description: Specifies the sound frequency to be played when triggering DI1
   AttenuationLeftDI0:
     <<: *attenuation
-    address: 47
+    address: 45
     description: Left channel's attenuation (1 LSB is 0.1dB) when triggering DI0
   AttenuationLeftDI1:
     <<: *attenuation
-    address: 48
+    address: 46
     description: Left channel's attenuation (1 LSB is 0.1dB) when triggering DI1
   AttenuationRightDI0:
     <<: *attenuation
-    address: 49
+    address: 47
     description: Right channel's attenuation (1 LSB is 0.1dB) when triggering DI0
   AttenuationRightDI1:
     <<: *attenuation
-    address: 50
+    address: 48
     description: Right channel's attenuation (1 LSB is 0.1dB) when triggering DI1
-  AttenuationAndSoundIndexDI0:
-    <<: *attenuation
-    address: 51
-    length: 3
-    description: Sound index and attenuation to be played when triggering DI0 [Att R] [Att L] [Index]
-  AttenuationAndSoundIndexDI1:
-    <<: *attenuation
-    address: 52
-    length: 3
-    description: Sound index and attenuation to be played when triggering DI1 [Att R] [Att L] [Index]
-  AttenuationAndFrequencyDI0:
-    <<: *attenuation
-    address: 53
-    length: 2
-    description: Sound index and attenuation to be played when triggering DI0 [Att BOTH] [Frequency]
-  AttenuationAndFrequencyDI1:
-    <<: *attenuation
-    address: 54
-    length: 2
-    description: Sound index and attenuation to be played when triggering DI1 [Att BOTH] [Frequency]
   Reserved2:
     <<: *reserved
-    address: 55
+    address: 49
   Reserved3:
     <<: *reserved
-    address: 56
+    address: 50
   Reserved4:
     <<: *reserved
-    address: 57
+    address: 51
   ConfigureDO0: &configureDO
-    address: 58
+    address: 52
     type: U8
     access: Write
     maskType: DigitalOutputConfiguration
     description: Configuration of the digital output 0 (DO0)
   ConfigureDO1:
     <<: *configureDO
-    address: 59
+    address: 53
     description: Configuration of the digital output 1 (DO1)
   ConfigureDO2:
     <<: *configureDO
-    address: 60
+    address: 54
     description: Configuration of the digital output 2 (DO2
   Reserved5:
     <<: *reserved
-    address: 61
+    address: 55
   Reserved6:
     <<: *reserved
-    address: 62
+    address: 56
   Reserved7:
     <<: *reserved
-    address: 63
+    address: 57
   OutputSet: &output
-    address: 64
+    address: 58
     type: U8
     access: Write
     maskType: DigitalOutputs
     description: Set the specified digital output lines
   OutputClear:
     <<: *output
-    address: 65
+    address: 59
     description: Clear the specified digital output lines
   OutputToggle:
     <<: *output
-    address: 66
+    address: 60
     description: Toggle the specified digital output lines
   OutputState:
     <<: *output
-    address: 67
+    address: 61
     description: Write the state of all digital output lines
   Reserved8:
     <<: *reserved
-    address: 68
+    address: 62
   Reserved9:
     <<: *reserved
-    address: 69
-  ConfigureAdc:
-    address: 70
+    address: 63
+  EnableDataStream:
+    address: 64
     type: U8
     access: Write
-    maskType: AdcConfiguration
-    description: Configuration of Analog Inputs
-  AnalogData:
-    address: 71
+    maskType: DataStreamConfiguration
+    description: Configuration of the data stream
+  DataStream:
+    address: 65
     type: U16
     access: Event
     length: 5
-    description: Contains sampled analog input data or dynamic sound parameters controlled by the ADC channels. Values are zero if not used.
+    description: Contains sampled analog input data and sound parameters.
     payloadSpec:
       Adc0:
         offset: 0
@@ -190,34 +162,40 @@ registers:
         description: The sampled analog input value on ADC1.
       AttenuationLeft:
         offset: 2
-        description: The amplitude of the left channel controlled by ADC0.
+        description: The current amplitude of the left channel.
       AttenuationRight:
         offset: 3
-        description: The amplitude of the right channel controlled by ADC0.
+        description: The current amplitude of the right channel.
       Frequency:
         offset: 4
-        description: The output frequency controlled by ADC1.
+        description: The output sound index (if less than 32) or frequency (if greater or equal than 32) being played.
+  ConfigureAdc0:
+    address: 66
+    type: U8
+    access: Write
+    maskType: Adc0Configuration
+    description: Configuration of analog input ADC0
+  ConfigureAdc1:
+    address: 67
+    type: U8
+    access: Write
+    maskType: Adc1Configuration
+    description: Configuration of analog input ADC1
   Commands:
-    address: 72
+    address: 68
     type: U8
     access: Write
     maskType: ControllerCommand
     description: Send commands to PIC32 micro-controller
   Reserved10:
     <<: *reserved
-    address: 73
+    address: 69
   Reserved11:
     <<: *reserved
-    address: 74
+    address: 70
   Reserved12:
     <<: *reserved
-    address: 75
-  EnableEvents:
-    address: 76
-    type: U8
-    access: Write
-    maskType: SoundCardEvents
-    description: Specifies the active events in the SoundCard device
+    address: 71
 bitMasks:
   DigitalInputs:
     description: Specifies the state of the digital input lines.
@@ -231,19 +209,12 @@ bitMasks:
       DO0: {value: 1, description: Digital output 0.}
       DO1: {value: 2, description: Digital output 1.}
       DO2: {value: 4, description: Digital output 2.}
-  SoundCardEvents:
-    description: Specifies the active events in the SoundCard.
-    bits:
-      PlaySoundOrFrequency: 0x1
-      Stop: 0x2
-      DigitalInputs: 0x4
-      AdcValues: 0x8
 groupMasks:
   DigitalInputConfiguration:
     description: Specifies the operation mode of the digital input.
     values:
       Digital: {value: 0, description: Used as a pure digital input.}
-      StartAndStopSound: {value: 1, description: Starts sound index (if less than 32) or frequency (if greater or equal than 32) when rising edge and stop when falling edge.}
+      StartAndStopSound: {value: 1, description: Starts sound index (if less than 32) or frequency (if greater or equal than 32) when rising edge and stop when falling edge (frequency only).}
       StartSound: {value: 2, description: Starts sound index (if less than 32) or frequency (if greater or equal than 32) when rising edge.}
       StopSound: {value: 3, description: Stops frequency when falling edge.}
   DigitalOutputConfiguration:
@@ -251,19 +222,27 @@ groupMasks:
     values:
       Digital: {value: 0, description: Used as a pure digital output.}
       HighWhenSound: {value: 2, description: High when the sound is being played. }
+  DataStreamConfiguration:
+    description: Specifies the operation mode of the data stream.
+    values:
+      Disabled: 0
+      StreamAt1Khz: 1
+  Adc0Configuration:
+    description: Specifies the operation mode of the analog input ADC0.
+    values:
+      AnalogInputOnly: 0
+      ControlsLeftChannelAmplitude: 1
+      ControlsBothChannelsAmplitude: 2
+  Adc1Configuration:
+    description: Specifies the operation mode of the analog input ADC1.
+    values:
+      AnalogInputOnly: 0
+      ControlsRightChannelAmplitude: 1
+      ControlsBothChannelsAmplitude: 2
+      ControlsFrequencyGenerator: 3
   ControllerCommand:
     description: Specifies commands to send to the PIC32 micro-controller
     values:
       DisableBootloader: 0
       EnableBootloader: 1
       DeleteAllSounds: 255
-  AdcConfiguration:
-    description: Specifies the operation mode of the analog inputs.
-    values:
-      NotUsed: 0
-      AdcAdc: 1
-      AmplitudeBothAdc: 2
-      AmplitudeLeftAdc: 3
-      AmplitudeRightAdc: 4
-      AmplitudeLeftAmplitudeRight: 5
-      AmplitudeBothFrequency: 6

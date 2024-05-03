@@ -23,16 +23,10 @@ void (*app_func_rd_pointer[])(void) = {
 	&app_read_REG_DI1_CONF,
 	&app_read_REG_DI0_SOUND_INDEX,
 	&app_read_REG_DI1_SOUND_INDEX,
-	&app_read_REG_DI0_FREQ,
-	&app_read_REG_DI1_FREQ,
 	&app_read_REG_DI0_ATTNUATION_LEFT,
 	&app_read_REG_DI1_ATTNUATION_LEFT,
 	&app_read_REG_DI0_ATTENUATION_RIGHT,
 	&app_read_REG_DI1_ATTENUATION_RIGHT,
-	&app_read_REG_DI0_ATTENUATION_AND_SOUND_INDEX,
-	&app_read_REG_DI1_ATTENUATION_AND_SOUND_INDEX,
-	&app_read_REG_DI0_ATTENUATION_AND_FREQUENCY,
-	&app_read_REG_DI1_ATTENUATION_AND_FREQUENCY,
 	&app_read_REG_RESERVED2,
 	&app_read_REG_RESERVED3,
 	&app_read_REG_RESERVED4,
@@ -48,8 +42,10 @@ void (*app_func_rd_pointer[])(void) = {
 	&app_read_REG_DO_OUT,
 	&app_read_REG_RESERVED8,
 	&app_read_REG_RESERVED9,
-	&app_read_REG_ADC_CONF,
-	&app_read_REG_ADC_VALUES,
+	&app_read_REG_DATA_STREAM_CONF,
+	&app_read_REG_DATA_STREAM,
+	&app_read_REG_ADC0_CONF,
+	&app_read_REG_ADC1_CONF,
 	&app_read_REG_COMMANDS,
 	&app_read_REG_RESERVED10,
 	&app_read_REG_RESERVED11,
@@ -70,16 +66,10 @@ bool (*app_func_wr_pointer[])(void*) = {
 	&app_write_REG_DI1_CONF,
 	&app_write_REG_DI0_SOUND_INDEX,
 	&app_write_REG_DI1_SOUND_INDEX,
-	&app_write_REG_DI0_FREQ,
-	&app_write_REG_DI1_FREQ,
 	&app_write_REG_DI0_ATTNUATION_LEFT,
 	&app_write_REG_DI1_ATTNUATION_LEFT,
 	&app_write_REG_DI0_ATTENUATION_RIGHT,
 	&app_write_REG_DI1_ATTENUATION_RIGHT,
-	&app_write_REG_DI0_ATTENUATION_AND_SOUND_INDEX,
-	&app_write_REG_DI1_ATTENUATION_AND_SOUND_INDEX,
-	&app_write_REG_DI0_ATTENUATION_AND_FREQUENCY,
-	&app_write_REG_DI1_ATTENUATION_AND_FREQUENCY,
 	&app_write_REG_RESERVED2,
 	&app_write_REG_RESERVED3,
 	&app_write_REG_RESERVED4,
@@ -95,8 +85,10 @@ bool (*app_func_wr_pointer[])(void*) = {
 	&app_write_REG_DO_OUT,
 	&app_write_REG_RESERVED8,
 	&app_write_REG_RESERVED9,
-	&app_write_REG_ADC_CONF,
-	&app_write_REG_ADC_VALUES,
+	&app_write_REG_DATA_STREAM_CONF,
+	&app_write_REG_DATA_STREAM,
+	&app_write_REG_ADC0_CONF,
+	&app_write_REG_ADC1_CONF,
 	&app_write_REG_COMMANDS,
 	&app_write_REG_RESERVED10,
 	&app_write_REG_RESERVED11,
@@ -380,42 +372,6 @@ bool app_write_REG_DI1_SOUND_INDEX(void *a)
 
 
 /************************************************************************/
-/* REG_DI0_FREQ                                                         */
-/************************************************************************/
-void app_read_REG_DI0_FREQ(void)
-{
-	//app_regs.REG_DI0_FREQ = 0;
-
-}
-
-bool app_write_REG_DI0_FREQ(void *a)
-{
-	uint16_t reg = *((uint16_t*)a);
-
-	app_regs.REG_DI0_FREQ = reg;
-	return true;
-}
-
-
-/************************************************************************/
-/* REG_DI1_FREQ                                                         */
-/************************************************************************/
-void app_read_REG_DI1_FREQ(void)
-{
-	//app_regs.REG_DI1_FREQ = 0;
-
-}
-
-bool app_write_REG_DI1_FREQ(void *a)
-{
-	uint16_t reg = *((uint16_t*)a);
-
-	app_regs.REG_DI1_FREQ = reg;
-	return true;
-}
-
-
-/************************************************************************/
 /* REG_DI0_ATTNUATION_LEFT                                              */
 /************************************************************************/
 void app_read_REG_DI0_ATTNUATION_LEFT(void)
@@ -483,82 +439,6 @@ bool app_write_REG_DI1_ATTENUATION_RIGHT(void *a)
 	uint16_t reg = *((uint16_t*)a);
 
 	app_regs.REG_DI1_ATTENUATION_RIGHT = reg;
-	return true;
-}
-
-
-/************************************************************************/
-/* REG_DI0_ATTENUATION_AND_SOUND_INDEX                                  */
-/************************************************************************/
-// This register is an array with 3 positions
-void app_read_REG_DI0_ATTENUATION_AND_SOUND_INDEX(void)
-{
-	//app_regs.REG_DI0_ATTENUATION_AND_SOUND_INDEX[0] = 0;
-
-}
-
-bool app_write_REG_DI0_ATTENUATION_AND_SOUND_INDEX(void *a)
-{
-	uint16_t *reg = ((uint16_t*)a);
-
-	app_regs.REG_DI0_ATTENUATION_AND_SOUND_INDEX[0] = reg[0];
-	return true;
-}
-
-
-/************************************************************************/
-/* REG_DI1_ATTENUATION_AND_SOUND_INDEX                                  */
-/************************************************************************/
-// This register is an array with 3 positions
-void app_read_REG_DI1_ATTENUATION_AND_SOUND_INDEX(void)
-{
-	//app_regs.REG_DI1_ATTENUATION_AND_SOUND_INDEX[0] = 0;
-
-}
-
-bool app_write_REG_DI1_ATTENUATION_AND_SOUND_INDEX(void *a)
-{
-	uint16_t *reg = ((uint16_t*)a);
-
-	app_regs.REG_DI1_ATTENUATION_AND_SOUND_INDEX[0] = reg[0];
-	return true;
-}
-
-
-/************************************************************************/
-/* REG_DI0_ATTENUATION_AND_FREQUENCY                                    */
-/************************************************************************/
-// This register is an array with 2 positions
-void app_read_REG_DI0_ATTENUATION_AND_FREQUENCY(void)
-{
-	//app_regs.REG_DI0_ATTENUATION_AND_FREQUENCY[0] = 0;
-
-}
-
-bool app_write_REG_DI0_ATTENUATION_AND_FREQUENCY(void *a)
-{
-	uint16_t *reg = ((uint16_t*)a);
-
-	app_regs.REG_DI0_ATTENUATION_AND_FREQUENCY[0] = reg[0];
-	return true;
-}
-
-
-/************************************************************************/
-/* REG_DI1_ATTENUATION_AND_FREQUENCY                                    */
-/************************************************************************/
-// This register is an array with 2 positions
-void app_read_REG_DI1_ATTENUATION_AND_FREQUENCY(void)
-{
-	//app_regs.REG_DI1_ATTENUATION_AND_FREQUENCY[0] = 0;
-
-}
-
-bool app_write_REG_DI1_ATTENUATION_AND_FREQUENCY(void *a)
-{
-	uint16_t *reg = ((uint16_t*)a);
-
-	app_regs.REG_DI1_ATTENUATION_AND_FREQUENCY[0] = reg[0];
 	return true;
 }
 
@@ -845,38 +725,89 @@ bool app_write_REG_RESERVED9(void *a)
 
 
 /************************************************************************/
-/* REG_ADC_CONF                                                         */
+/* REG_DATA_STREAM_CONF                                                 */
 /************************************************************************/
-void app_read_REG_ADC_CONF(void)
+void app_read_REG_DATA_STREAM_CONF(void)
 {
-	//app_regs.REG_ADC_CONF = 0;
+	//app_regs.REG_DATA_STREAM_CONF = 0;
 
 }
 
-bool app_write_REG_ADC_CONF(void *a)
+bool app_write_REG_DATA_STREAM_CONF(void *a)
 {
 	uint8_t reg = *((uint8_t*)a);
+	
+	if (reg & (~MSK_DATA_STREAM_SEL))
+	{
+		return false;
+	}
 
-	app_regs.REG_ADC_CONF = reg;
+	app_regs.REG_DATA_STREAM_CONF = reg;
 	return true;
 }
 
 
 /************************************************************************/
-/* REG_ADC_VALUES                                                       */
+/* REG_DATA_STREAM                                                      */
 /************************************************************************/
 // This register is an array with 5 positions
-void app_read_REG_ADC_VALUES(void)
+void app_read_REG_DATA_STREAM(void)
 {
-	//app_regs.REG_ADC_VALUES[0] = 0;
+	//app_regs.REG_DATA_STREAM[0] = 0;
 
 }
 
-bool app_write_REG_ADC_VALUES(void *a)
+bool app_write_REG_DATA_STREAM(void *a)
 {
 	uint16_t *reg = ((uint16_t*)a);
 
-	app_regs.REG_ADC_VALUES[0] = reg[0];
+	app_regs.REG_DATA_STREAM[0] = reg[0];
+	return true;
+}
+
+
+/************************************************************************/
+/* REG_ADC0_CONF                                                        */
+/************************************************************************/
+void app_read_REG_ADC0_CONF(void)
+{
+	//app_regs.REG_ADC0_CONF = 0;
+
+}
+
+bool app_write_REG_ADC0_CONF(void *a)
+{
+	uint8_t reg = *((uint8_t*)a);
+	
+	if (reg & (~MSK_ADC0_SEL))
+	{
+		return false;
+	}
+
+	app_regs.REG_ADC0_CONF = reg;
+	return true;
+}
+
+
+/************************************************************************/
+/* REG_ADC1_CONF                                                        */
+/************************************************************************/
+void app_read_REG_ADC1_CONF(void)
+{
+	//app_regs.REG_ADC1_CONF = 0;
+
+}
+
+bool app_write_REG_ADC1_CONF(void *a)
+{
+	uint8_t reg = *((uint8_t*)a);
+	
+	if (reg & (~MSK_ADC1_SEL))
+	{
+		return false;
+	}
+
+	app_regs.REG_ADC1_CONF = reg;
 	return true;
 }
 
