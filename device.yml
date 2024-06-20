@@ -249,7 +249,7 @@ groupMasks:
       Digital: {value: 0, description: Used as a pure digital input.}
       StartAndStopSound: {value: 1, description: Starts sound index (if less than 32) or frequency (if greater or equal than 32) when rising edge and stop when falling edge (frequency only).}
       StartSound: {value: 2, description: Starts sound index (if less than 32) or frequency (if greater or equal than 32) when rising edge.}
-      StopSound: {value: 3, description: Stops frequency when falling edge.}
+      StopSound: {value: 3, description: Stops frequency when rising edge.}
   DigitalOutputConfiguration:
     description: Specifies the operation mode of the digital output.
     values:
