@@ -98,6 +98,7 @@ registers:
     address: 52
     type: U8
     access: Write
+    default: 1
     maskType: DigitalOutputConfiguration
     description: Configuration of the digital output 0 (DO0)
   ConfigureDO1:
@@ -254,7 +255,7 @@ groupMasks:
     description: Specifies the operation mode of the digital output.
     values:
       Digital: {value: 0, description: Used as a pure digital output.}
-      HighWhenSound: {value: 1, description: High when the sound is being played. }
+      PulseForSoundStartOrFrequencyChange: {value: 1, description: Positive pulse when sound starts or frequency changes. }
   DataStreamConfiguration:
     description: Specifies the operation mode of the data stream.
     values:

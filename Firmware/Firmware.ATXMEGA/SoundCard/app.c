@@ -162,7 +162,27 @@ void core_callback_initialize_hardware(void)
 	ADCA_CH0_INTCTRL |= ADC_CH_INTLVL_LO_gc;				// Enable ADC0 interrupt
 }
 
-void core_callback_reset_registers(void) {}
+void core_callback_reset_registers(void)
+{	
+	app_regs.REG_DI0_CONF = GM_DI_SYNC;
+	app_regs.REG_DI1_CONF = GM_DI_SYNC;
+	
+	app_regs.REG_DI0_SOUND_INDEX = 2000;		// 2 KHz
+	app_regs.REG_DI1_SOUND_INDEX = 4000;		// 4 KHz
+	app_regs.REG_DI0_ATTNUATION_LEFT = 60;		// -6 DFS
+	app_regs.REG_DI1_ATTNUATION_LEFT = 60;		// -6 DFS
+	app_regs.REG_DI0_ATTENUATION_RIGHT = 60;	// -6 DFS
+	app_regs.REG_DI1_ATTENUATION_RIGHT = 60;	// -6 DFS
+	
+	app_regs.REG_DO0_CONF = GM_DO_PULSE;
+	app_regs.REG_DO1_CONF = GM_DO_DIG;
+	app_regs.REG_DO2_CONF = GM_DO_DIG;
+	
+	app_regs.REG_DATA_STREAM_CONF = GM_DATA_STREAM_OFF;
+	
+	app_regs.REG_ADC0_CONF = GM_ADC0_PURE_ANALOG_INPUT;
+	app_regs.REG_ADC1_CONF = GM_ADC1_PURE_ANALOG_INPUT;
+}
    
 void core_callback_registers_were_reinitialized(void) {}
 

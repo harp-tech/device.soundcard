@@ -254,7 +254,7 @@ typedef struct
 #define GM_DI_STOP                         (3<<0)       // Stops sound or frequency when rising edge
 #define MSK_DO_SEL                         (1<<0)       // 
 #define GM_DO_DIG                          (0<<0)       // Used as a pure digital output
-#define GM_DO_HIGH_WHEN_SOUND              (1<<0)       // High when the sound is being played
+#define GM_DO_PULSE                        (1<<0)       // Positive pulse when sound starts or frequency changes
 #define B_DO0                              (1<<0)       // Digital output 0
 #define B_DO1                              (1<<1)       // Digital output 1
 #define B_DO2                              (1<<2)       // Digital output 2

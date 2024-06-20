@@ -142,13 +142,16 @@ ISR(PORTC_INT0_vect, ISR_NAKED)
 			app_regs.REG_PLAY_SOUND_OR_FREQ = last_sound_triggered;
 			core_func_send_event(ADD_REG_PLAY_SOUND_OR_FREQ, true);
 			last_sound_triggered = 0; // The event was sent and a new sound can be trigger
-	  }
-	  
-      //set_DOUT0;
-   } 
-   else
-   {
-      //clr_DOUT0;
+		}
+		
+		if (app_regs.REG_DO0_CONF == GM_DO_PULSE) {set_DOUT0;}
+		if (app_regs.REG_DO1_CONF == GM_DO_PULSE) {set_DOUT1;}
+		if (app_regs.REG_DO2_CONF == GM_DO_PULSE) {set_DOUT2;}
+		
+		/* Set timer for 400s to clear the digital output */
+		/* Is can't be higher!! */
+		timer_type0_enable(&TCE0, TIMER_PRESCALER_DIV64, 400/2, INT_LEVEL_LOW);
+		
    }
    
    reti();
