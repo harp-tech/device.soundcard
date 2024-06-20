@@ -139,13 +139,13 @@ ISR(PORTC_INT0_vect, ISR_NAKED)
    {
       if (last_sound_triggered != 0)
       {
-         app_regs.REG_PLAY_SOUND_OR_FREQ = last_sound_triggered;
-	     core_func_send_event(ADD_REG_PLAY_SOUND_OR_FREQ, true);
-	     last_sound_triggered = 0; // The event was sent and a new sound can be trigger
+			app_regs.REG_PLAY_SOUND_OR_FREQ = last_sound_triggered;
+			core_func_send_event(ADD_REG_PLAY_SOUND_OR_FREQ, true);
+			last_sound_triggered = 0; // The event was sent and a new sound can be trigger
 	  }
 	  
       //set_DOUT0;
-   }
+   } 
    else
    {
       //clr_DOUT0;
@@ -182,7 +182,11 @@ void par_cmd_stop(void)
 }
 
 bool par_cmd_stop_callback (void)
-{
+{	
+	// Measurements show that this timer equal to 476 us put all the real stops
+	// inside a interval of +/- 200 us
+	timer_type0_enable(&TCC0, TIMER_PRESCALER_DIV64, 476/2, INT_LEVEL_LOW);
+	
    send_last_byte(cmd_stop[CMD_STOP_LEN - 1]);
 }
 
