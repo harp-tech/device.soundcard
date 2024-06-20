@@ -332,7 +332,10 @@ void app_read_REG_DI0_SOUND_INDEX(void)
 
 bool app_write_REG_DI0_SOUND_INDEX(void *a)
 {
-	uint8_t reg = *((uint8_t*)a);
+	uint16_t reg = *((uint16_t*)a);
+	
+	if (reg <= 1 || reg > 40000)
+		return false;
 
 	app_regs.REG_DI0_SOUND_INDEX = reg;
 	return true;
@@ -350,7 +353,10 @@ void app_read_REG_DI1_SOUND_INDEX(void)
 
 bool app_write_REG_DI1_SOUND_INDEX(void *a)
 {
-	uint8_t reg = *((uint8_t*)a);
+	uint16_t reg = *((uint16_t*)a);
+	
+	if (reg <= 1 || reg > 40000)
+		return false;
 
 	app_regs.REG_DI1_SOUND_INDEX = reg;
 	return true;
