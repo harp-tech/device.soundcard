@@ -149,3 +149,41 @@ ISR(PORTD_INT1_vect, ISR_NAKED)
 {   
    reti();
 }
+
+
+/************************************************************************/
+/* ADC                                                                  */
+/************************************************************************/
+extern int16_t AdcOffset;
+
+extern bool first_adc_channel;
+
+ISR(ADCA_CH0_vect, ISR_NAKED)
+{	
+	if (first_adc_channel)
+	{
+		first_adc_channel = false;
+		
+		/* Read ADC */
+		if (ADCA_CH0_RES > AdcOffset)
+			app_regs.REG_DATA_STREAM[0] = (ADCA_CH0_RES & 0x0FFF) - AdcOffset;
+		else
+			app_regs.REG_DATA_STREAM[0] = 0;
+		
+		/* Start conversation on ADCA Channel 9 */
+		ADCA_CH0_MUXCTRL = 9 << 3;
+		ADCA_CH0_CTRL |= ADC_CH_START_bm;
+	}
+	else
+	{	
+		/* Read ADC */
+		if (ADCA_CH0_RES > AdcOffset)
+			app_regs.REG_DATA_STREAM[1] = (ADCA_CH0_RES & 0x0FFF) - AdcOffset;
+		else
+			app_regs.REG_DATA_STREAM[1] = 0;
+
+		core_func_send_event(ADD_REG_DATA_STREAM, false);
+	}
+	
+	reti();
+}
