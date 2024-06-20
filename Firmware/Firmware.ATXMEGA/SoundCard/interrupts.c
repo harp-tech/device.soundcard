@@ -187,3 +187,14 @@ ISR(ADCA_CH0_vect, ISR_NAKED)
 	
 	reti();
 }
+
+/************************************************************************/
+/* STOP CMD SENT                                                        */
+/************************************************************************/
+ISR(TCC0_OVF_vect, ISR_NAKED)
+{
+	core_func_send_event(ADD_REG_STOP, true);
+	timer_type0_stop(&TCC0);
+	
+	reti();
+}

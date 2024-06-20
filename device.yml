@@ -14,8 +14,8 @@ registers:
   Stop:
     address: 33
     type: U8
-    access: Write
-    description: Any value will stop the frequency generation (not implemented for a sound index)
+    access: [Write, Event]
+    description: Any value will stop the frequency generation (not implemented for a sound index). The time precision of this event it frequency dependent. It's +/- 2500 us at 500 Hz, +/- 750 us at 1000 Hz, +/- 250 us at 2000 Hz and bellow +/- 210 us for any frequncy above 5000 Hz.
   AttenuationLeft: &attenuation
     address: 34
     type: U16
