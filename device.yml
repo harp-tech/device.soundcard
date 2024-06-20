@@ -254,7 +254,7 @@ groupMasks:
     description: Specifies the operation mode of the digital output.
     values:
       Digital: {value: 0, description: Used as a pure digital output.}
-      HighWhenSound: {value: 2, description: High when the sound is being played. }
+      HighWhenSound: {value: 1, description: High when the sound is being played. }
   DataStreamConfiguration:
     description: Specifies the operation mode of the data stream.
     values:

@@ -447,6 +447,8 @@ void app_read_REG_DO0_CONF(void)
 bool app_write_REG_DO0_CONF(void *a)
 {
 	uint8_t reg = *((uint8_t*)a);
+	
+	if (reg & (~MSK_DO_SEL)) return false;
 
 	app_regs.REG_DO0_CONF = reg;
 	return true;
@@ -465,6 +467,8 @@ void app_read_REG_DO1_CONF(void)
 bool app_write_REG_DO1_CONF(void *a)
 {
 	uint8_t reg = *((uint8_t*)a);
+	
+	if (reg & (~MSK_DO_SEL)) return false;
 
 	app_regs.REG_DO1_CONF = reg;
 	return true;
