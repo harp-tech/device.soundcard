@@ -32,6 +32,8 @@ extern AppRegs app_regs;
 /************************************************************************/
 bool din0_previous_state = false;
 
+extern uint16_t last_sound_triggered;
+
 ISR(PORTB_INT0_vect, ISR_NAKED)
 {
 	bool din0 = read_DIN0 ? true : false;
@@ -52,6 +54,8 @@ ISR(PORTB_INT0_vect, ISR_NAKED)
 				case GM_DI_START_AND_STOP_SOUND:
 				case GM_DI_START_SOUND:
 					par_cmd_start_sound(app_regs.REG_DI0_SOUND_INDEX, app_regs.REG_DI0_ATTNUATION_LEFT, app_regs.REG_DI0_ATTENUATION_RIGHT);
+					/* Save the sound being played */
+					last_sound_triggered = app_regs.REG_DI0_SOUND_INDEX;
 					break;
 				
 				case GM_DI_STOP:
@@ -103,6 +107,8 @@ ISR(PORTD_INT0_vect, ISR_NAKED)
 				case GM_DI_START_AND_STOP_SOUND:
 				case GM_DI_START_SOUND:
 					par_cmd_start_sound(app_regs.REG_DI1_SOUND_INDEX, app_regs.REG_DI1_ATTNUATION_LEFT, app_regs.REG_DI1_ATTENUATION_RIGHT);
+					/* Save the sound being played */
+					last_sound_triggered = app_regs.REG_DI1_SOUND_INDEX;
 					break;
 				
 				case GM_DI_STOP:
