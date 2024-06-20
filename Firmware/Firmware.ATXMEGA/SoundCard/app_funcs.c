@@ -486,7 +486,9 @@ void app_read_REG_DO2_CONF(void)
 
 bool app_write_REG_DO2_CONF(void *a)
 {
-	uint8_t reg = *((uint8_t*)a);
+	uint8_t reg = *((uint8_t*)a);	
+	
+	if (reg & (~MSK_DO_SEL)) return false;
 
 	app_regs.REG_DO2_CONF = reg;
 	return true;
@@ -611,10 +613,7 @@ void app_read_REG_DATA_STREAM(void)
 
 bool app_write_REG_DATA_STREAM(void *a)
 {
-	uint16_t *reg = ((uint16_t*)a);
-
-	app_regs.REG_DATA_STREAM[0] = reg[0];
-	return true;
+	return false;
 }
 
 
