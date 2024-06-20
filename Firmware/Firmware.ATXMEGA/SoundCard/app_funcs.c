@@ -268,16 +268,16 @@ bool app_write_REG_SET_ATTENUATION_AND_PLAY_SOUND_OR_FREQ(void *a)
 /************************************************************************/
 void app_read_REG_DIGITAL_INPUTS(void)
 {
-	//app_regs.REG_DIGITAL_INPUTS = 0;
-
+	app_regs.REG_DIGITAL_INPUTS = 0;
+	
+	app_regs.REG_DIGITAL_INPUTS |= (read_DIN0) ? B_DI0 : 0;
+	app_regs.REG_DIGITAL_INPUTS |= (read_DIN1) ? B_DI1 : 0;
+	app_regs.REG_DIGITAL_INPUTS |= (read_DIN2) ? B_DI2 : 0;
 }
 
 bool app_write_REG_DIGITAL_INPUTS(void *a)
 {
-	uint8_t reg = *((uint8_t*)a);
-
-	app_regs.REG_DIGITAL_INPUTS = reg;
-	return true;
+	return false;
 }
 
 
