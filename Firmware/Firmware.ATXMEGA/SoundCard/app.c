@@ -203,7 +203,13 @@ void core_callback_visualen_to_off(void)
 /************************************************************************/
 /* Callbacks: Change on the operation mode                              */
 /************************************************************************/
-void core_callback_device_to_standby(void) {}
+extern uint16_t last_sound_triggered;
+
+void core_callback_device_to_standby(void)
+{
+	par_cmd_stop();
+	last_sound_triggered = 0;
+}
 void core_callback_device_to_active(void) {}
 void core_callback_device_to_enchanced_active(void) {}
 void core_callback_device_to_speed(void) {}
