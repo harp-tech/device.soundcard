@@ -215,7 +215,14 @@ void core_callback_t_1ms(void)
    else
       app_regs.REG_DATA_STREAM[1] = 0;
       
-   //core_func_send_event(ADD_REG_ADC_VALUES, true);   
+   if (app_regs.REG_DATA_STREAM_CONF == GM_DATA_STREAM_1KHz)
+	{
+		app_regs.REG_DATA_STREAM[2] = app_regs.REG_SET_ATTENUATION_AND_PLAY_SOUND_OR_FREQ[1];
+		app_regs.REG_DATA_STREAM[3] = app_regs.REG_SET_ATTENUATION_AND_PLAY_SOUND_OR_FREQ[2];
+		app_regs.REG_DATA_STREAM[4] = app_regs.REG_SET_ATTENUATION_AND_PLAY_SOUND_OR_FREQ[0];
+		
+		core_func_send_event(ADD_REG_DATA_STREAM, true);
+	}
 }
 
 /************************************************************************/
