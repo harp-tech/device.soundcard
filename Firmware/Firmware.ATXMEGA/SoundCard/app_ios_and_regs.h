@@ -132,8 +132,8 @@ typedef struct
 	uint8_t REG_DIGITAL_INPUTS;
 	uint8_t REG_DI0_CONF;
 	uint8_t REG_DI1_CONF;
-	uint8_t REG_DI0_SOUND_INDEX;
-	uint8_t REG_DI1_SOUND_INDEX;
+	uint16_t REG_DI0_SOUND_INDEX;
+	uint16_t REG_DI1_SOUND_INDEX;
 	uint16_t REG_DI0_ATTNUATION_LEFT;
 	uint16_t REG_DI1_ATTNUATION_LEFT;
 	uint16_t REG_DI0_ATTENUATION_RIGHT;
@@ -189,8 +189,8 @@ typedef struct
 #define ADD_REG_DIGITAL_INPUTS              40 // U8     State of the digital inputs
 #define ADD_REG_DI0_CONF                    41 // U8     Configuration of the digital input 0 (DI0)
 #define ADD_REG_DI1_CONF                    42 // U8     Configuration of the digital input 1 (DI1)
-#define ADD_REG_DI0_SOUND_INDEX             43 // U8     Sound index to be played when triggering DI0
-#define ADD_REG_DI1_SOUND_INDEX             44 // U8     Sound index to be played when triggering DI1
+#define ADD_REG_DI0_SOUND_INDEX             43 // U16    Sound index to be played when triggering DI0
+#define ADD_REG_DI1_SOUND_INDEX             44 // U16    Sound index to be played when triggering DI1
 #define ADD_REG_DI0_ATTNUATION_LEFT         45 // U16    Left channel's attenuation (1 LSB is 0.1dB) when triggering DI0
 #define ADD_REG_DI1_ATTNUATION_LEFT         46 // U16    Left channel's attenuation (1 LSB is 0.1dB) when triggering DI1
 #define ADD_REG_DI0_ATTENUATION_RIGHT       47 // U16    Right channel's attenuation (1 LSB is 0.1dB) when triggering DI0
@@ -239,7 +239,7 @@ typedef struct
 /* Memory limits */
 #define APP_REGS_ADD_MIN                    0x20
 #define APP_REGS_ADD_MAX                    0x52
-#define APP_NBYTES_OF_REG_BANK              75
+#define APP_NBYTES_OF_REG_BANK              77
 
 /************************************************************************/
 /* Registers' bits                                                      */
