@@ -158,6 +158,8 @@ void core_callback_initialize_hardware(void)
 	ADCA_CH0_CTRL |= ADC_CH_START_bm;						// Force the first conversion
 	while(!(ADCA_CH0_INTFLAGS & ADC_CH_CHIF_bm));		// Wait for conversion to finish
 	ADCA_CH0_INTFLAGS = ADC_CH_CHIF_bm;						// Clear interrupt bit
+	
+	ADCA_CH0_INTCTRL |= ADC_CH_INTLVL_LO_gc;				// Enable ADC0 interrupt
 }
 
 void core_callback_reset_registers(void) {}
@@ -189,39 +191,27 @@ void core_callback_device_to_speed(void) {}
 /************************************************************************/
 /* Callbacks: 1 ms timer                                                */
 /************************************************************************/
+bool first_adc_channel;
+
 void core_callback_t_before_exec(void) {}
 void core_callback_t_after_exec(void) {}
 void core_callback_t_new_second(void) {}
 void core_callback_t_500us(void) {}
 void core_callback_t_1ms(void)
 {
-   /* Read ADC0 */
-   ADCA_CH0_MUXCTRL = 10 << 3;							   // Select pin
-   ADCA_CH0_CTRL |= ADC_CH_START_bm;						// Start conversion
-   while(!(ADCA_CH0_INTFLAGS & ADC_CH_CHIF_bm));		// Wait for conversion to finish
-   ADCA_CH0_INTFLAGS = ADC_CH_CHIF_bm;						// Clear interrupt bit
-   if (ADCA_CH0_RES > AdcOffset)
-      app_regs.REG_DATA_STREAM[0] = (ADCA_CH0_RES & 0x0FFF) - AdcOffset;
-   else
-      app_regs.REG_DATA_STREAM[0] = 0;
-      
-   /* Read ADC1 */
-   ADCA_CH0_MUXCTRL = 9 << 3;							      // Select pin
-   ADCA_CH0_CTRL |= ADC_CH_START_bm;						// Start conversion
-   while(!(ADCA_CH0_INTFLAGS & ADC_CH_CHIF_bm));		// Wait for conversion to finish
-   ADCA_CH0_INTFLAGS = ADC_CH_CHIF_bm;						// Clear interrupt bit
-   if (ADCA_CH0_RES > AdcOffset)
-      app_regs.REG_DATA_STREAM[1] = (ADCA_CH0_RES & 0x0FFF) - AdcOffset;
-   else
-      app_regs.REG_DATA_STREAM[1] = 0;
-      
-   if (app_regs.REG_DATA_STREAM_CONF == GM_DATA_STREAM_1KHz)
+	if (app_regs.REG_DATA_STREAM_CONF == GM_DATA_STREAM_1KHz)
 	{
+		/* Read ADC */
+		core_func_mark_user_timestamp();
+			
 		app_regs.REG_DATA_STREAM[2] = app_regs.REG_SET_ATTENUATION_AND_PLAY_SOUND_OR_FREQ[1];
 		app_regs.REG_DATA_STREAM[3] = app_regs.REG_SET_ATTENUATION_AND_PLAY_SOUND_OR_FREQ[2];
 		app_regs.REG_DATA_STREAM[4] = app_regs.REG_SET_ATTENUATION_AND_PLAY_SOUND_OR_FREQ[0];
-		
-		core_func_send_event(ADD_REG_DATA_STREAM, true);
+		   
+		/* Start conversation on ADCA Channel 10 */
+		first_adc_channel = true;
+		ADCA_CH0_MUXCTRL = 10 << 3;
+		ADCA_CH0_CTRL |= ADC_CH_START_bm;
 	}
 }
 
