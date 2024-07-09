@@ -62,7 +62,7 @@ registers:
     description: Configuration of the digital input 1 (DI1)
   SoundOrFrequencyDI0: &soundIndex
     address: 43
-    type: U8
+    type: U16
     access: Write
     description: Specifies the sound index to be played when triggering DI0
   SoundOrFrequencyDI1:
@@ -108,7 +108,7 @@ registers:
   ConfigureDO2:
     <<: *configureDO
     address: 54
-    description: Configuration of the digital output 2 (DO2
+    description: Configuration of the digital output 2 (DO2)
   Reserved5:
     <<: *reserved
     address: 55
