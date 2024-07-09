@@ -506,9 +506,9 @@ bool app_write_REG_DO_SET(void *a)
 {
 	uint8_t reg = *((uint8_t*)a);
    
-   if (reg & B_DO0) set_DOUT0;
-   if (reg & B_DO1) set_DOUT1;
-   if (reg & B_DO2) set_DOUT2;
+	if (reg & B_DO0) set_DOUT0;
+	if (reg & B_DO1) set_DOUT1;
+	if (reg & B_DO2) set_DOUT2;
 
 	app_regs.REG_DO_SET = reg;
 	return true;
@@ -528,7 +528,7 @@ bool app_write_REG_DO_CLEAR(void *a)
 	
 	if (reg & B_DO0) clr_DOUT0;
 	if (reg & B_DO1) clr_DOUT1;
-	if (reg & B_DO1) clr_DOUT1;
+	if (reg & B_DO2) clr_DOUT2;
 
 	app_regs.REG_DO_CLEAR = reg;
 	return true;
@@ -548,7 +548,7 @@ bool app_write_REG_DO_TOGGLE(void *a)
 	
 	if (reg & B_DO0) tgl_DOUT0;
 	if (reg & B_DO1) tgl_DOUT1;
-	if (reg & B_DO1) tgl_DOUT1;
+	if (reg & B_DO2) tgl_DOUT2;
 
 	app_regs.REG_DO_TOGGLE = reg;
 	return true;
@@ -561,17 +561,17 @@ bool app_write_REG_DO_TOGGLE(void *a)
 void app_read_REG_DO_OUT(void)
 {
 	app_regs.REG_DO_OUT  = read_DOUT0 ? B_DO0 : 0;
-   app_regs.REG_DO_OUT |= read_DOUT1 ? B_DO1 : 0;
-   app_regs.REG_DO_OUT |= read_DOUT2 ? B_DO2 : 0;
+	app_regs.REG_DO_OUT |= read_DOUT1 ? B_DO1 : 0;
+	app_regs.REG_DO_OUT |= read_DOUT2 ? B_DO2 : 0;
 }
 
 bool app_write_REG_DO_OUT(void *a)
 {
 	uint8_t reg = *((uint8_t*)a);
    
-   if (reg & B_DO0) set_DOUT0; else clr_DOUT0;
-   if (reg & B_DO1) set_DOUT1; else clr_DOUT1;
-   if (reg & B_DO2) set_DOUT2; else clr_DOUT2;
+	if (reg & B_DO0) set_DOUT0; else clr_DOUT0;
+	if (reg & B_DO1) set_DOUT1; else clr_DOUT1;
+	if (reg & B_DO2) set_DOUT2; else clr_DOUT2;
 
 	app_regs.REG_DO_OUT = reg;
 	return true;
