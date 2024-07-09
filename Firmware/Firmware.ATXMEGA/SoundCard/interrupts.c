@@ -212,7 +212,7 @@ ISR(TCE0_OVF_vect, ISR_NAKED)
 {
 	if (app_regs.REG_DO0_CONF == GM_DO_PULSE) {clr_DOUT0;}
 	if (app_regs.REG_DO1_CONF == GM_DO_PULSE) {clr_DOUT1;}
-	if (app_regs.REG_DO1_CONF == GM_DO_PULSE) {clr_DOUT2;}
+	if (app_regs.REG_DO2_CONF == GM_DO_PULSE) {clr_DOUT2;}
 	
 	timer_type0_stop(&TCE0);
 	
