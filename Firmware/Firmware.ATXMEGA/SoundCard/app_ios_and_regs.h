@@ -123,7 +123,7 @@ typedef struct
 {
 	uint16_t REG_PLAY_SOUND_OR_FREQ;
 	uint8_t REG_STOP;
-	uint16_t REG_ATTNUATION_LEFT;
+	uint16_t REG_ATTENUATION_LEFT;
 	uint16_t REG_ATTENUATION_RIGHT;
 	uint16_t REG_ATTENUATION_BOTH[2];
 	uint16_t REG_SET_ATTENUATION_AND_PLAY_SOUND_OR_FREQ[3];
@@ -134,8 +134,8 @@ typedef struct
 	uint8_t REG_DI1_CONF;
 	uint16_t REG_DI0_SOUND_INDEX;
 	uint16_t REG_DI1_SOUND_INDEX;
-	uint16_t REG_DI0_ATTNUATION_LEFT;
-	uint16_t REG_DI1_ATTNUATION_LEFT;
+	uint16_t REG_DI0_ATTENUATION_LEFT;
+	uint16_t REG_DI1_ATTENUATION_LEFT;
 	uint16_t REG_DI0_ATTENUATION_RIGHT;
 	uint16_t REG_DI1_ATTENUATION_RIGHT;
 	uint8_t REG_RESERVED2;
@@ -180,7 +180,7 @@ typedef struct
 /* Registers */
 #define ADD_REG_PLAY_SOUND_OR_FREQ          32 // U16    Starts the sound index (if < 32) or frequency (if >= 32)
 #define ADD_REG_STOP                        33 // U8     Any value will stops the current sound
-#define ADD_REG_ATTNUATION_LEFT             34 // U16    Configure left channel's attenuation (1 LSB is 0.1dB)
+#define ADD_REG_ATTENUATION_LEFT             34 // U16    Configure left channel's attenuation (1 LSB is 0.1dB)
 #define ADD_REG_ATTENUATION_RIGHT           35 // U16    Configure right channel's attenuation (1 LSB is 0.1dB)
 #define ADD_REG_ATTENUATION_BOTH            36 // U16    Configures both attenuation on right and left channels [Att R] [Att L]
 #define ADD_REG_SET_ATTENUATION_AND_PLAY_SOUND_OR_FREQ 37 // U16    Configures attenuation and plays sound index [Att R] [Att L] [Index]
@@ -191,8 +191,8 @@ typedef struct
 #define ADD_REG_DI1_CONF                    42 // U8     Configuration of the digital input 1 (DI1)
 #define ADD_REG_DI0_SOUND_INDEX             43 // U16    Sound index to be played when triggering DI0
 #define ADD_REG_DI1_SOUND_INDEX             44 // U16    Sound index to be played when triggering DI1
-#define ADD_REG_DI0_ATTNUATION_LEFT         45 // U16    Left channel's attenuation (1 LSB is 0.1dB) when triggering DI0
-#define ADD_REG_DI1_ATTNUATION_LEFT         46 // U16    Left channel's attenuation (1 LSB is 0.1dB) when triggering DI1
+#define ADD_REG_DI0_ATTENUATION_LEFT         45 // U16    Left channel's attenuation (1 LSB is 0.1dB) when triggering DI0
+#define ADD_REG_DI1_ATTENUATION_LEFT         46 // U16    Left channel's attenuation (1 LSB is 0.1dB) when triggering DI1
 #define ADD_REG_DI0_ATTENUATION_RIGHT       47 // U16    Right channel's attenuation (1 LSB is 0.1dB) when triggering DI0
 #define ADD_REG_DI1_ATTENUATION_RIGHT       48 // U16    Right channel's attenuation (1 LSB is 0.1dB) when triggering DI1
 #define ADD_REG_RESERVED2                   49 // U8     Reserved for future purposes

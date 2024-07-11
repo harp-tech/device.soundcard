@@ -169,8 +169,8 @@ void core_callback_reset_registers(void)
 	
 	app_regs.REG_DI0_SOUND_INDEX = 2000;		// 2 KHz
 	app_regs.REG_DI1_SOUND_INDEX = 4000;		// 4 KHz
-	app_regs.REG_DI0_ATTNUATION_LEFT = 60;		// -6 DFS
-	app_regs.REG_DI1_ATTNUATION_LEFT = 60;		// -6 DFS
+	app_regs.REG_DI0_ATTENUATION_LEFT = 60;		// -6 DFS
+	app_regs.REG_DI1_ATTENUATION_LEFT = 60;		// -6 DFS
 	app_regs.REG_DI0_ATTENUATION_RIGHT = 60;	// -6 DFS
 	app_regs.REG_DI1_ATTENUATION_RIGHT = 60;	// -6 DFS
 	
@@ -211,7 +211,7 @@ void core_callback_device_to_standby(void)
 	last_sound_triggered = 0;
 }
 void core_callback_device_to_active(void) {}
-void core_callback_device_to_enchanced_active(void) {}
+void core_callback_device_to_enhanced_active(void) {}
 void core_callback_device_to_speed(void) {}
 
 /************************************************************************/
