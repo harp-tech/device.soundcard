@@ -98,7 +98,6 @@ registers:
     address: 52
     type: U8
     access: Write
-    default: 1
     maskType: DigitalOutputConfiguration
     description: Configuration of the digital output 0 (DO0)
   ConfigureDO1:
