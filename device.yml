@@ -174,12 +174,14 @@ registers:
     type: U8
     access: Write
     maskType: Adc0Configuration
+    visibility: private
     description: Configuration of analog input ADC0 (not implemented yet)
   ConfigureAdc1:
     address: 67
     type: U8
     access: Write
     maskType: Adc1Configuration
+    visibility: private
     description: Configuration of analog input ADC1 (not implemented yet)
   Reserved10:
     <<: *reserved
