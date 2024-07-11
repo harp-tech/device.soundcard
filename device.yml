@@ -256,7 +256,7 @@ groupMasks:
     description: Specifies the operation mode of the digital output.
     values:
       Digital: {value: 0, description: Used as a pure digital output.}
-      PulseForSoundStartOrFrequencyChange: {value: 1, description: Positive pulse when sound starts or frequency changes. }
+      PulseForSoundStartOrFrequencyChange: {value: 1, description: Positive 500us pulse of when sound starts or frequency changes. }
   DataStreamConfiguration:
     description: Specifies the operation mode of the data stream.
     values:
