@@ -15,7 +15,7 @@
     <FirmwarePath>..\Firmware\Harp.SoundCard</FirmwarePath>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Harp.Generators" Version="0.2.0" GeneratePathProperty="true" />
+    <PackageReference Include="Harp.Generators" Version="0.3.0" GeneratePathProperty="true" />
   </ItemGroup>
   <Target Name="TextTransform" BeforeTargets="AfterBuild">
     <PropertyGroup>
