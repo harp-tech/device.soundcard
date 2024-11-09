@@ -9,6 +9,7 @@
     <GeneratePackageOnBuild Condition="'$(Configuration)'=='Release'">true</GeneratePackageOnBuild>
     <Description>Bonsai Library containing interfaces for data acquisition and control of Harp SoundCard devices.</Description>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <PackageType>Dependency;BonsaiLibrary</PackageType>
     <PackageTags>Harp SoundCard Bonsai Rx</PackageTags>
     <PackageProjectUrl>https://harp-tech.org</PackageProjectUrl>
     <RepositoryUrl>https://github.com/harp-tech/device.soundcard.git</RepositoryUrl>
@@ -18,7 +19,7 @@
     <PackageOutputPath>..\bin\$(Configuration)</PackageOutputPath>
     <TargetFrameworks>net462;netstandard2.0</TargetFrameworks>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <VersionPrefix>0.2.0</VersionPrefix>
+    <VersionPrefix>0.3.0</VersionPrefix>
     <VersionSuffix></VersionSuffix>
     <LangVersion>9.0</LangVersion>
   </PropertyGroup>
@@ -32,6 +33,7 @@
   <ItemGroup>
     <Content Include="..\LICENSE" PackagePath="/" />
     <Content Include="..\icon.png" PackagePath="/" />
+    <EmbeddedResource Include="..\..\device.yml" />
   </ItemGroup>
 
 </Project>
