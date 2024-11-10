@@ -1,6 +1,6 @@
 %YAML 1.1
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/harp-tech/protocol/main/schema/device.json
+# yaml-language-server: $schema=https://harp-tech.org/draft-02/schema/device.json
 device: SoundCard
 whoAmI: 1280
 firmwareVersion: "2.2"
