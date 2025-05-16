@@ -1,0 +1,15 @@
+<Project>
+  <PropertyGroup>
+    <!-- Force malformed versions to be an error -->
+    <WarningsAsErrors>$(WarningsAsErrors);CS7035</WarningsAsErrors>
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(ContinuousIntegrationBuild)' == 'true'">
+    <Version Condition="$(CiBuildVersion.StartsWith('api'))">$(CiBuildVersion.Substring(3))</Version>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+  </PropertyGroup>
+  <Target Name="VersionSanityChecks" BeforeTargets="build;restore">
+    <Error Condition="'$(ContinuousIntegrationBuild)' == 'true' and '$(CiBuildVersion)' == ''" Text="CI version info not configured." />
+    <Error Condition="'api$(Version)' != '$(CiBuildVersion)'" Text="CI version info was not applied correctly." />
+  </Target>
+</Project>
