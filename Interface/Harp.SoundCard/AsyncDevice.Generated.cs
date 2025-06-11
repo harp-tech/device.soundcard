@@ -14,15 +14,18 @@ namespace Harp.SoundCard
         /// <param name="portName">
         /// The name of the serial port used to communicate with the Harp device.
         /// </param>
+        /// <param name="cancellationToken">
+        /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
+        /// </param>
         /// <returns>
         /// A task that represents the asynchronous initialization operation. The value of
         /// the <see cref="Task{TResult}.Result"/> parameter contains a new instance of
         /// the <see cref="AsyncDevice"/> class.
         /// </returns>
-        public static async Task<AsyncDevice> CreateAsync(string portName)
+        public static async Task<AsyncDevice> CreateAsync(string portName, CancellationToken cancellationToken = default)
         {
             var device = new AsyncDevice(portName);
-            var whoAmI = await device.ReadWhoAmIAsync();
+            var whoAmI = await device.ReadWhoAmIAsync(cancellationToken);
             if (whoAmI != Device.WhoAmI)
             {
                 var errorMessage = string.Format(

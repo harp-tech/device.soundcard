@@ -267,9 +267,8 @@ namespace HarpSoundCard
 
         public static int Main(string[] args)
         {
+            
             ErrorCode ec = ErrorCode.None;
-
-            bool debug = false;
             bool ignoreInputs = false;
 
             try
