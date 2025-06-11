@@ -1,0 +1,103 @@
+name: Harp.SoundCard
+on:
+  push:
+    # This prevents tag pushes from triggering this workflow
+    branches: ['*']
+  pull_request:
+  release:
+    types: [published]
+  workflow_dispatch:
+env:
+  DOTNET_NOLOGO: true
+  DOTNET_CLI_TELEMETRY_OPTOUT: true
+  DOTNET_GENERATE_ASPNET_CERTIFICATE: false
+  ContinuousIntegrationBuild: true
+  CiBuildVersion: ${{github.event.release.tag_name || 'api42.42.42'}}
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        configuration: ['Release']
+        include:
+          - configuration: Release
+            collect-packages: true
+    name: Build
+    runs-on: windows-latest
+    if: github.event_name != 'release' || startsWith(github.event.release.tag_name, 'api')
+    steps:
+      # ----------------------------------------------------------------------- Checkout
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # ----------------------------------------------------------------------- Set up tools
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.x
+
+      - name: Set up T4
+        run: dotnet tool install -g dotnet-t4 --version 3.0.0
+
+      # ----------------------------------------------------------------------- Regenerate
+      - name: Restore generators
+        run: dotnet restore Generators
+
+      - name: Run generators
+        run: dotnet build Generators --no-restore --configuration ${{matrix.configuration}}
+
+      - name: Verify pre-generated code was up-to-date
+        id: verify-dist
+        run: |
+          git add . --intent-to-add --ignore-removal
+          git diff --name-status --exit-code
+
+      # ----------------------------------------------------------------------- Build interface package
+      - name: Restore interface
+        run: dotnet restore Interface
+
+      - name: Build interface
+        run: dotnet build Interface --no-restore --configuration ${{matrix.configuration}}
+
+      - name: Pack interface
+        id: pack
+        run: dotnet pack Interface --no-restore --no-build --configuration ${{matrix.configuration}}
+
+      # ----------------------------------------------------------------------- Collect artifacts
+      - name: Collect NuGet packages
+        uses: actions/upload-artifact@v4
+        if: matrix.collect-packages && steps.pack.outcome == 'success' && always()
+        with:
+          name: Packages
+          if-no-files-found: error
+          path: Interface/bin/${{matrix.configuration}}/**
+
+  publish-packages-nuget-org:
+    name: Publish packages to NuGet.org
+    runs-on: ubuntu-latest
+    permissions:
+      # Needed to attach files to releases
+      contents: write
+    environment: public-release
+    needs: build
+    if: github.event_name == 'release'
+    steps:
+      # ----------------------------------------------------------------------- Set up .NET
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.x
+
+      # ----------------------------------------------------------------------- Download built packages
+      - name: Download built packages
+        uses: actions/download-artifact@v4
+        with:
+          name: Packages
+          path: artifacts/packages/
+
+      # ----------------------------------------------------------------------- Push to NuGet.org
+      - name: Push to NuGet.org
+        run: dotnet nuget push "artifacts/packages/*.nupkg" --api-key ${{secrets.NUGET_API_KEY}} --source ${{vars.NUGET_API_URL}}
+        env:
+          # This is a workaround for https://github.com/NuGet/Home/issues/9775
+          DOTNET_SYSTEM_NET_HTTP_USESOCKETSHTTPHANDLER: 0
