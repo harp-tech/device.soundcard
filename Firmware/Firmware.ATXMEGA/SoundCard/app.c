@@ -22,7 +22,7 @@ extern bool (*app_func_wr_pointer[])(void*);
 /************************************************************************/
 static const uint8_t default_device_name[] = "SoundCard";
 
-#define MAJOR_FW_VERSION 2
+#define MAJOR_FW_VERSION 3
 
 void hwbp_app_initialize(void)
 {
@@ -30,7 +30,7 @@ void hwbp_app_initialize(void)
    uint8_t hwH = 2;
    uint8_t hwL = 2;
    uint8_t fwH = MAJOR_FW_VERSION;
-   uint8_t fwL = 2;
+   uint8_t fwL = 0;
    uint8_t ass = 0;
    
 		/* Start core */
@@ -158,9 +158,31 @@ void core_callback_initialize_hardware(void)
 	ADCA_CH0_CTRL |= ADC_CH_START_bm;						// Force the first conversion
 	while(!(ADCA_CH0_INTFLAGS & ADC_CH_CHIF_bm));		// Wait for conversion to finish
 	ADCA_CH0_INTFLAGS = ADC_CH_CHIF_bm;						// Clear interrupt bit
+	
+	ADCA_CH0_INTCTRL |= ADC_CH_INTLVL_LO_gc;				// Enable ADC0 interrupt
 }
 
-void core_callback_reset_registers(void) {}
+void core_callback_reset_registers(void)
+{	
+	app_regs.REG_DI0_CONF = GM_DI_SYNC;
+	app_regs.REG_DI1_CONF = GM_DI_SYNC;
+	
+	app_regs.REG_DI0_SOUND_INDEX = 2000;		// 2 KHz
+	app_regs.REG_DI1_SOUND_INDEX = 4000;		// 4 KHz
+	app_regs.REG_DI0_ATTENUATION_LEFT = 60;		// -6 DFS
+	app_regs.REG_DI1_ATTENUATION_LEFT = 60;		// -6 DFS
+	app_regs.REG_DI0_ATTENUATION_RIGHT = 60;	// -6 DFS
+	app_regs.REG_DI1_ATTENUATION_RIGHT = 60;	// -6 DFS
+	
+	app_regs.REG_DO0_CONF = GM_DO_PULSE;
+	app_regs.REG_DO1_CONF = GM_DO_DIG;
+	app_regs.REG_DO2_CONF = GM_DO_DIG;
+	
+	app_regs.REG_DATA_STREAM_CONF = GM_DATA_STREAM_OFF;
+	
+	app_regs.REG_ADC0_CONF = GM_ADC0_PURE_ANALOG_INPUT;
+	app_regs.REG_ADC1_CONF = GM_ADC1_PURE_ANALOG_INPUT;
+}
    
 void core_callback_registers_were_reinitialized(void) {}
 
@@ -181,41 +203,42 @@ void core_callback_visualen_to_off(void)
 /************************************************************************/
 /* Callbacks: Change on the operation mode                              */
 /************************************************************************/
-void core_callback_device_to_standby(void) {}
+extern uint16_t last_sound_triggered;
+
+void core_callback_device_to_standby(void)
+{
+	par_cmd_stop();
+	last_sound_triggered = 0;
+}
 void core_callback_device_to_active(void) {}
-void core_callback_device_to_enchanced_active(void) {}
+void core_callback_device_to_enhanced_active(void) {}
 void core_callback_device_to_speed(void) {}
 
 /************************************************************************/
 /* Callbacks: 1 ms timer                                                */
 /************************************************************************/
+bool first_adc_channel;
+
 void core_callback_t_before_exec(void) {}
 void core_callback_t_after_exec(void) {}
 void core_callback_t_new_second(void) {}
 void core_callback_t_500us(void) {}
 void core_callback_t_1ms(void)
 {
-   /* Read ADC0 */
-   ADCA_CH0_MUXCTRL = 10 << 3;							   // Select pin
-   ADCA_CH0_CTRL |= ADC_CH_START_bm;						// Start conversion
-   while(!(ADCA_CH0_INTFLAGS & ADC_CH_CHIF_bm));		// Wait for conversion to finish
-   ADCA_CH0_INTFLAGS = ADC_CH_CHIF_bm;						// Clear interrupt bit
-   if (ADCA_CH0_RES > AdcOffset)
-      app_regs.REG_ADC_VALUES[0] = (ADCA_CH0_RES & 0x0FFF) - AdcOffset;
-   else
-      app_regs.REG_ADC_VALUES[0] = 0;
-      
-   /* Read ADC1 */
-   ADCA_CH0_MUXCTRL = 9 << 3;							      // Select pin
-   ADCA_CH0_CTRL |= ADC_CH_START_bm;						// Start conversion
-   while(!(ADCA_CH0_INTFLAGS & ADC_CH_CHIF_bm));		// Wait for conversion to finish
-   ADCA_CH0_INTFLAGS = ADC_CH_CHIF_bm;						// Clear interrupt bit
-   if (ADCA_CH0_RES > AdcOffset)
-      app_regs.REG_ADC_VALUES[1] = (ADCA_CH0_RES & 0x0FFF) - AdcOffset;
-   else
-      app_regs.REG_ADC_VALUES[1] = 0;
-      
-   //core_func_send_event(ADD_REG_ADC_VALUES, true);   
+	if (app_regs.REG_DATA_STREAM_CONF == GM_DATA_STREAM_1KHz)
+	{
+		/* Read ADC */
+		core_func_mark_user_timestamp();
+			
+		app_regs.REG_DATA_STREAM[2] = app_regs.REG_SET_ATTENUATION_AND_PLAY_SOUND_OR_FREQ[1];
+		app_regs.REG_DATA_STREAM[3] = app_regs.REG_SET_ATTENUATION_AND_PLAY_SOUND_OR_FREQ[2];
+		app_regs.REG_DATA_STREAM[4] = app_regs.REG_SET_ATTENUATION_AND_PLAY_SOUND_OR_FREQ[0];
+		   
+		/* Start conversation on ADCA Channel 10 */
+		first_adc_channel = true;
+		ADCA_CH0_MUXCTRL = 10 << 3;
+		ADCA_CH0_CTRL |= ADC_CH_START_bm;
+	}
 }
 
 /************************************************************************/
