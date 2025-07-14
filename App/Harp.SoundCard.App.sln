@@ -1,0 +1,41 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35707.178
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Harp.SoundCard.App", "Harp.SoundCard.App\Harp.SoundCard.App.csproj", "{64D0510A-F361-4B27-8951-99B62C3FC8F9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Harp.SoundCard.Design", "Harp.SoundCard.Design\Harp.SoundCard.Design.csproj", "{AF1788A5-3AE1-45C6-9D35-556441BAAF6E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Harp.SoundCard", "..\Interface\Harp.SoundCard\Harp.SoundCard.csproj", "{874C8D49-74C3-4561-A6CA-1B2E2B4BA4B7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{5DEC15B4-7B9A-49F3-BF6C-F3CA05E8AED9}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		Harp.SoundCard.nsi = Harp.SoundCard.nsi
+		README.md = README.md
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{64D0510A-F361-4B27-8951-99B62C3FC8F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{64D0510A-F361-4B27-8951-99B62C3FC8F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{64D0510A-F361-4B27-8951-99B62C3FC8F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{64D0510A-F361-4B27-8951-99B62C3FC8F9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AF1788A5-3AE1-45C6-9D35-556441BAAF6E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF1788A5-3AE1-45C6-9D35-556441BAAF6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF1788A5-3AE1-45C6-9D35-556441BAAF6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF1788A5-3AE1-45C6-9D35-556441BAAF6E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{874C8D49-74C3-4561-A6CA-1B2E2B4BA4B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{874C8D49-74C3-4561-A6CA-1B2E2B4BA4B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{874C8D49-74C3-4561-A6CA-1B2E2B4BA4B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{874C8D49-74C3-4561-A6CA-1B2E2B4BA4B7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

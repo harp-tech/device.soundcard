@@ -1,0 +1,51 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <!--If you are willing to use Windows/MacOS native APIs you will need to create 3 projects.
+    One for Windows with net8.0-windows TFM, one for MacOS with net8.0-macos and one with net8.0 TFM for Linux.-->
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <OutputPath>..\bin\$(Configuration)</OutputPath>
+    <Version>$(AppVersion)</Version>
+    <ApplicationIcon>..\Harp.SoundCard.Design\Assets\cf-logo.ico</ApplicationIcon>
+    <Name>Harp.SoundCard.App</Name>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <CFBundleName>Harp.SoundCard.App</CFBundleName>
+    <CFBundleDisplayName>Harp.SoundCard.App</CFBundleDisplayName>
+    <CFBundleIdentifier>org.fchampalimaud</CFBundleIdentifier>
+    <CFBundleVersion>$(Version)</CFBundleVersion>
+    <CFBundleShortVersionString>$(Version)</CFBundleShortVersionString>
+    <CFBundlePackageType>AAPL</CFBundlePackageType>
+    <CFBundleSignature>.</CFBundleSignature>
+    <CFBundleExecutable>Harp.SoundCard.App</CFBundleExecutable>
+    <CFBundleIconFile>cf-logo.icns</CFBundleIconFile>
+    <NSPrincipalClass>NSApplication</NSPrincipalClass>
+    <NSHighResolutionCapable>true</NSHighResolutionCapable>
+    <Copyright>Champalimaud Foundation</Copyright>
+    <ApplicationIcon>..\Harp.SoundCard.Design\Assets\cf-logo.ico</ApplicationIcon>
+    <PackageReadmeFile>..\README.md</PackageReadmeFile>
+    <RepositoryType>git</RepositoryType>
+    <BaseOutputPath>..\bin\$(Configuration)</BaseOutputPath>
+  </PropertyGroup>
+
+  <Target Name="CopyCustomContent" AfterTargets="AfterBuild" Condition="$([MSBuild]::IsOsPlatform('OSX')) or $([MSBuild]::IsOsPlatform('Linux'))">
+    <Copy SourceFiles="..\Harp.SoundCard.Design\Assets\cf-logo.icns" DestinationFolder="$(OutDir)" />
+  </Target>
+
+  <Target Name="CopyCustomContent2" AfterTargets="Publish">
+    <Copy SourceFiles="..\Harp.SoundCard.Design\Assets\cf-logo.ico" DestinationFolder="$(OutDir)\publish" />
+  </Target>
+
+  <ItemGroup>
+    <PackageReference Include="Avalonia.Desktop" Version="$(AvaloniaVersion)" />
+    <PackageReference Include="Dotnet.Bundle" Version="*" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Harp.SoundCard.Design\Harp.SoundCard.Design.csproj" />
+  </ItemGroup>
+</Project>
