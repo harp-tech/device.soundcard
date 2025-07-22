@@ -541,6 +541,7 @@ public class SoundCardViewModel : ViewModelBase
     public ReactiveCommand<Unit, Unit> ShowAboutCommand { get; private set; }
     public ReactiveCommand<Unit, Unit> ClearMessagesCommand { get; private set; }
     public ReactiveCommand<Unit, Unit> ShowMessagesCommand { get; private set; }
+    public SoundGenerationViewModel SoundGenerationViewModel { get; } = new();
 
     #endregion
 

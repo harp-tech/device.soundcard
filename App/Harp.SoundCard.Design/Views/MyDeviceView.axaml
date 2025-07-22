@@ -1298,6 +1298,7 @@
               </Grid>
             </TabItem>
             <TabItem Header="Sound generation" FontSize="20" FontWeight="SemiBold">
+              <views:SoundGenerationView DataContext="{Binding SoundGenerationViewModel}"></views:SoundGenerationView>
             </TabItem>
           </TabControl>
         </StackPanel>
