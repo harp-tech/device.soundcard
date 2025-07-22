@@ -1,0 +1,218 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:conv="clr-namespace:Harp.SoundCard.Design.Converters"
+             xmlns:vm="using:Harp.SoundCard.Design.ViewModels"
+             xmlns:system="clr-namespace:System;assembly=System.Runtime"
+             xmlns:interface="clr-namespace:Harp.SoundCard;assembly=Harp.SoundCard"
+             xmlns:sp="clr-namespace:ScottPlot.Avalonia;assembly=ScottPlot.Avalonia"
+             mc:Ignorable="d" d:DesignWidth="1800" d:DesignHeight="850"
+             x:Class="Harp.SoundCard.Design.Views.SoundGenerationView"
+             x:DataType="vm:SoundGenerationViewModel">
+  
+  <UserControl.Resources>
+    <conv:EnumToBoolConverter x:Key="EnumToBoolConverter" />
+  </UserControl.Resources>
+
+  <DockPanel>
+    <!-- Chart will be placed at the bottom -->
+    <StackPanel DockPanel.Dock="Bottom">
+      <sp:AvaPlot
+        x:Name="SignalPlot"
+        Height="300"
+        Margin="0,24,0,0" />
+      <!-- Left and right channel checkboxes -->
+      <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,8,0,0">
+          <CheckBox IsChecked="{Binding ShowLeftChannel}" Width="200">
+            <StackPanel Orientation="Horizontal" Margin="0,0,10,0" VerticalAlignment="Center">
+              <Border Width="16" Height="16" Background="#FF008B8B" CornerRadius="2" Margin="0,0,6,0" />
+              <TextBlock Text="Left channel" VerticalAlignment="Center" />
+            </StackPanel>
+          </CheckBox>
+        <CheckBox IsChecked="{Binding ShowRightChannel}" Width="200">
+          <StackPanel Orientation="Horizontal" Margin="0,0,10,0" VerticalAlignment="Center">
+            <Border Width="16" Height="16" Background="#FFFF0000" CornerRadius="2" Margin="0,0,6,0" />
+            <TextBlock Text="Right channel" VerticalAlignment="Center" />
+          </StackPanel>
+        </CheckBox>
+      </StackPanel>
+    </StackPanel>
+
+    <!-- Window section on the right -->
+    <StackPanel Margin="24,0,0,0" DockPanel.Dock="Right">
+      <TextBlock Text="Window" FontWeight="Bold" Margin="0,0,0,8" />
+      <StackPanel Orientation="Horizontal" Spacing="20">
+        <StackPanel>
+          <TextBlock Text="Left channel" FontWeight="Bold" Margin="0,0,0,8" />
+          <StackPanel Spacing="10">
+            <TextBlock Text="Duration (ms):" />
+            <NumericUpDown Value="{Binding WindowDurationLeft}" Width="140" />
+            <TextBlock Text="Type:" />
+            <ComboBox HorizontalAlignment="Center" SelectedItem="{Binding WindowTypeLeft}"
+                      ItemsSource="{Binding WindowTypes}" Width="140" />
+            <CheckBox Content="Apply to beginning" IsChecked="{Binding WindowApplyBeginLeft}" />
+            <CheckBox Content="Apply to end" IsChecked="{Binding WindowApplyEndLeft}" />
+          </StackPanel>
+        </StackPanel>
+        <StackPanel>
+          <TextBlock Text="Right channel" FontWeight="Bold" Margin="0,0,0,8" />
+          <StackPanel Spacing="10">
+            <TextBlock Text="Duration (ms):" />
+            <NumericUpDown Value="{Binding WindowDurationRight}" Width="140" />
+            <TextBlock Text="Type:" />
+            <ComboBox HorizontalAlignment="Center" SelectedItem="{Binding WindowTypeRight}"
+                      ItemsSource="{Binding WindowTypes}" Width="140" />
+            <CheckBox Content="Apply to beginning" IsChecked="{Binding WindowApplyBeginRight}" />
+            <CheckBox Content="Apply to end" IsChecked="{Binding WindowApplyEndRight}" />
+          </StackPanel>
+        </StackPanel>
+      </StackPanel>
+    </StackPanel>
+
+    <!-- Tone and noise sections on the left -->
+    <StackPanel DockPanel.Dock="Left" Orientation="Horizontal" Spacing="50">
+      <StackPanel>
+        <TextBlock Text="Pure tones" FontWeight="Bold" Margin="0,0,0,8" />
+        <StackPanel>
+          <Grid ColumnDefinitions="250,200,140" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto">
+            <!-- Header Row -->
+            <TextBlock Grid.Row="0" Grid.Column="1" Text="Left channel" FontWeight="Bold" HorizontalAlignment="Center"
+                       Margin="0,0,0,4" />
+            <TextBlock Grid.Row="0" Grid.Column="2" Text="Right channel" FontWeight="Bold" HorizontalAlignment="Center"
+                       Margin="0,0,0,4" />
+
+            <!-- Existing rows, incremented by 1 -->
+            <TextBlock Grid.Row="1" Grid.Column="0" Text="Frequency (Hz):" VerticalAlignment="Center" />
+            <NumericUpDown Grid.Row="1" Grid.Column="1" Value="{Binding FrequencyLeft}" Width="140" />
+            <NumericUpDown Grid.Row="1" Grid.Column="2" Value="{Binding FrequencyRight}" Width="140" />
+
+            <TextBlock Grid.Row="2" Grid.Column="0" Text="Duration (ms):" VerticalAlignment="Center" />
+            <NumericUpDown Grid.Row="2" Grid.Column="1" Value="{Binding DurationLeft}" Width="140" />
+            <NumericUpDown Grid.Row="2" Grid.Column="2" Value="{Binding DurationRight}" Width="140" />
+
+            <TextBlock Grid.Row="3" Grid.Column="0" Text="Full-scale amplitude (max. is 1):" VerticalAlignment="Center" />
+            <NumericUpDown Grid.Row="3" Grid.Column="1" Value="{Binding AmplitudeLeft}" Width="140" Increment="0.01"
+                           Minimum="0" Maximum="1" />
+            <StackPanel Grid.Row="3" Grid.Column="2" Orientation="Horizontal" Spacing="10">
+              <NumericUpDown Value="{Binding AmplitudeRight}" Width="140" Increment="0.01"
+                             Minimum="0" Maximum="1" />
+                <RadioButton GroupName="AmplitudeOrDbfsPulse" IsChecked="{Binding AmplitudeModePulse, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Amplitude}" />
+            </StackPanel>
+
+            <TextBlock Grid.Row="4" Grid.Column="0" Text="Decibels full scale (dBFS):" VerticalAlignment="Center" />
+            <NumericUpDown Grid.Row="4" Grid.Column="1" Value="{Binding DbfsLeft}" Width="140" Increment="0.01" />
+            <StackPanel Grid.Row="4" Grid.Column="2" Orientation="Horizontal" Spacing="10">
+              <NumericUpDown Value="{Binding DbfsRight}" Width="140" Increment="0.01" />
+              <RadioButton GroupName="AmplitudeOrDbfsPulse"
+                           IsChecked="{Binding AmplitudeModePulse, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Dbfs}" />
+            </StackPanel>
+
+            <TextBlock Grid.Row="5" Grid.Column="0" Text="Phase (degrees):" VerticalAlignment="Center" />
+            <NumericUpDown Grid.Row="5" Grid.Column="1" Value="{Binding PhaseLeft}" Width="140" Increment="1"
+                           Minimum="0" Maximum="360" />
+            <NumericUpDown Grid.Row="5" Grid.Column="2" Value="{Binding PhaseRight}" Width="140" Increment="1"
+                           Minimum="0" Maximum="360" />
+
+            <TextBlock Grid.Row="6" Grid.Column="0" Text="Use window:" VerticalAlignment="Center" />
+            <CheckBox Grid.Row="6" Grid.Column="1" IsChecked="{Binding UseWindowLeft}" HorizontalAlignment="Center" />
+            <CheckBox Grid.Row="6" Grid.Column="2" IsChecked="{Binding UseWindowRight}" HorizontalAlignment="Center" />
+          </Grid>
+
+          <StackPanel Orientation="Horizontal" Spacing="10">
+            <Button Content="Generate" Command="{Binding GenerateToneCommand}" />
+            <ComboBox SelectedItem="{Binding SampleRate, Mode=TwoWay}">
+              <ComboBox.Resources>
+                <conv:EnumDisplayConverter x:Key="EnumDisplayConverter">
+                  <conv:EnumDisplayConverter.Mappings>
+                    <system:String x:Key="SampleRate96000Hz">96 kHz</system:String>
+                    <system:String x:Key="SampleRate192000Hz">192 kHz</system:String>
+                  </conv:EnumDisplayConverter.Mappings>
+                </conv:EnumDisplayConverter>
+              </ComboBox.Resources>
+              <ComboBox.ItemTemplate>
+                <DataTemplate>
+                  <TextBlock Text="{Binding Converter={StaticResource EnumDisplayConverter}}" />
+                </DataTemplate>
+              </ComboBox.ItemTemplate>
+              <x:Static Member="interface:SampleRate.SampleRate96000Hz" />
+              <x:Static Member="interface:SampleRate.SampleRate192000Hz" />
+            </ComboBox>
+          </StackPanel>
+        </StackPanel>
+      </StackPanel>
+
+      <StackPanel>
+        <TextBlock Text="Noise" FontWeight="Bold" Margin="0,0,0,8" />
+        <StackPanel Spacing="10">
+          <Grid ColumnDefinitions="250,200,180" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto">
+            <!-- Header Row -->
+            <TextBlock Grid.Row="0" Grid.Column="1" Text="Left channel" FontWeight="Bold" HorizontalAlignment="Center"
+                       Margin="0,0,0,4" />
+            <TextBlock Grid.Row="0" Grid.Column="2" Text="Right channel" FontWeight="Bold" HorizontalAlignment="Center"
+                       Margin="0,0,0,4" />
+
+            <TextBlock Grid.Row="1" Grid.Column="0" Text="Duration (ms):" VerticalAlignment="Center" />
+            <NumericUpDown Grid.Row="1" Grid.Column="1" Value="{Binding NoiseDurationLeft}" Width="140" />
+            <NumericUpDown Grid.Row="1" Grid.Column="2" Value="{Binding NoiseDurationRight}" Width="140" />
+
+            <TextBlock Grid.Row="2" Grid.Column="0" Text="Seed:" VerticalAlignment="Center" />
+            <NumericUpDown Grid.Row="2" Grid.Column="1" Value="{Binding NoiseSeedLeft}" Width="140" />
+            <NumericUpDown Grid.Row="2" Grid.Column="2" Value="{Binding NoiseSeedRight}" Width="140" />
+
+            <TextBlock Grid.Row="3" Grid.Column="0" Text="Full-scale amplitude (max. is 1):" VerticalAlignment="Center" />
+            <NumericUpDown Grid.Row="3" Grid.Column="1" Value="{Binding NoiseAmplitudeLeft}" Width="140"
+                           Increment="0.01" Minimum="0" Maximum="1" />
+            <StackPanel Grid.Row="3" Grid.Column="2" Orientation="Horizontal" Spacing="10" Width="140">
+              <NumericUpDown Value="{Binding NoiseAmplitudeRight}" Width="140"
+                             Increment="0.01" Minimum="0" Maximum="1" />
+              <RadioButton GroupName="AmplitudeOrDbfsNoise"
+                           IsChecked="{Binding AmplitudeModeNoise, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Amplitude}" />
+            </StackPanel>
+
+            <TextBlock Grid.Row="4" Grid.Column="0" Text="Decibels full scale (dBFS):" VerticalAlignment="Center" />
+            <NumericUpDown Grid.Row="4" Grid.Column="1" Value="{Binding NoiseDbfsLeft}" Width="140" Increment="0.01" />
+            <StackPanel Grid.Row="4" Grid.Column="2" Orientation="Horizontal" Spacing="10" Width="140">
+              <NumericUpDown Value="{Binding NoiseDbfsRight}" Width="140" Increment="0.01" />
+              <RadioButton GroupName="AmplitudeOrDbfsNoise"
+                           IsChecked="{Binding AmplitudeModeNoise, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Dbfs}" />
+            </StackPanel>
+
+            <TextBlock Grid.Row="5" Grid.Column="0" Text="Use window:" VerticalAlignment="Center" />
+            <CheckBox Grid.Row="5" Grid.Column="1" IsChecked="{Binding NoiseUseWindowLeft}"
+                      HorizontalAlignment="Center" />
+            <CheckBox Grid.Row="5" Grid.Column="2" IsChecked="{Binding NoiseUseWindowRight}"
+                      HorizontalAlignment="Center" />
+
+            <TextBlock Grid.Row="6" Grid.Column="0" Text="Noise type:" VerticalAlignment="Center" />
+            <ComboBox Grid.Row="6" Grid.Column="1" HorizontalAlignment="Center" SelectedItem="{Binding NoiseTypeLeft}"
+                      ItemsSource="{Binding NoiseTypes}" Width="180" />
+            <ComboBox Grid.Row="6" Grid.Column="2" HorizontalAlignment="Center" SelectedItem="{Binding NoiseTypeRight}"
+                      ItemsSource="{Binding NoiseTypes}" Width="180" />
+          </Grid>
+
+          <StackPanel Orientation="Horizontal" Spacing="10">
+            <Button Content="Generate" Command="{Binding GenerateNoiseCommand}" />
+            <ComboBox SelectedItem="{Binding NoiseSampleRate, Mode=TwoWay}">
+              <ComboBox.Resources>
+                <conv:EnumDisplayConverter x:Key="EnumDisplayConverter">
+                  <conv:EnumDisplayConverter.Mappings>
+                    <system:String x:Key="SampleRate96000Hz">96 kHz</system:String>
+                    <system:String x:Key="SampleRate192000Hz">192 kHz</system:String>
+                  </conv:EnumDisplayConverter.Mappings>
+                </conv:EnumDisplayConverter>
+              </ComboBox.Resources>
+              <ComboBox.ItemTemplate>
+                <DataTemplate>
+                  <TextBlock Text="{Binding Converter={StaticResource EnumDisplayConverter}}" />
+                </DataTemplate>
+              </ComboBox.ItemTemplate>
+              <x:Static Member="interface:SampleRate.SampleRate96000Hz" />
+              <x:Static Member="interface:SampleRate.SampleRate192000Hz" />
+            </ComboBox>
+          </StackPanel>
+        </StackPanel>
+      </StackPanel>
+    </StackPanel>
+  </DockPanel>
+</UserControl>
