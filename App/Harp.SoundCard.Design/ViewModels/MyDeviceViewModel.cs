@@ -542,6 +542,10 @@ public class SoundCardViewModel : ViewModelBase
     public ReactiveCommand<Unit, Unit> ClearMessagesCommand { get; private set; }
     public ReactiveCommand<Unit, Unit> ShowMessagesCommand { get; private set; }
     public SoundGenerationViewModel SoundGenerationViewModel { get; } = new();
+    
+    // play sound index
+    [Reactive] public int PlaySoundIndex { get; set; }
+    public ReactiveCommand<Unit, Unit> PlaySoundIndexCommand { get; private set; }
 
     #endregion
 
@@ -560,6 +564,23 @@ public class SoundCardViewModel : ViewModelBase
 
         ClearMessagesCommand = ReactiveCommand.Create(() => { SentMessages.Clear(); });
         ShowMessagesCommand = ReactiveCommand.Create(() => { ShowWriteMessages = !ShowWriteMessages; });
+
+        PlaySoundIndexCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            if (_device == null)
+                return;
+
+            try
+            {
+                await _device.WritePlaySoundOrFrequencyAsync((ushort)PlaySoundIndex);
+                SentMessages.Add($"Wrote PlaySoundOrFrequency with value: {PlaySoundIndex}");
+            }
+            catch (HarpException ex)
+            {
+                Console.WriteLine($"Error writing PlaySoundOrFrequency with exception: {ex.Message}");
+                //Log.Error(ex, "Error writing PlaySoundOrFrequency with exception: {Exception}", ex));
+            }
+        });
 
 
         LoadDeviceInformation = ReactiveCommand.CreateFromObservable(LoadUsbInformation);
@@ -770,9 +791,6 @@ public class SoundCardViewModel : ViewModelBase
             // Device does not have a serial number, simply continue by ignoring the exception
         }
 
-        /*****************************************************************
-        * TODO: Please REVIEW all these registers and update the values
-        * ****************************************************************/
         PlaySoundOrFrequency = await _device.ReadPlaySoundOrFrequencyAsync();
         Stop = await _device.ReadStopAsync();
         AttenuationLeft = await _device.ReadAttenuationLeftAsync();
