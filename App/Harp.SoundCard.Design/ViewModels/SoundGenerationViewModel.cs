@@ -83,20 +83,33 @@ public class SoundGenerationViewModel : ViewModelBase
 
     public ReactiveCommand<Unit, Unit> GenerateToneCommand { get; }
     public ReactiveCommand<Unit, Unit> GenerateNoiseCommand { get; }
+    public ReactiveCommand<Unit, Unit> SendToDeviceCommand { get; }
 
     public event Action? PlotUpdated;
 
     [Reactive] public Plot? Plot { get; set; }
     [Reactive] public bool ShowLeftChannel { get; set; } = true;
     [Reactive] public bool ShowRightChannel { get; set; } = true;
+    [Reactive] public string SoundFileName { get; set; }
+    [Reactive] public int SaveSoundIndex { get; set; } = 2;
 
-    private DiscreteSignal? _currentSignalLeft;
-    private DiscreteSignal? _currentSignalRight;
+    [ObservableAsProperty] public bool IsSendingToDevice { get; }
+
+    [Reactive] public DiscreteSignal? CurrentSignalLeft { get; set; }
+    [Reactive] public DiscreteSignal? CurrentSignalRight { get; set; }
 
     public SoundGenerationViewModel()
     {
         GenerateToneCommand = ReactiveCommand.Create(GenerateTone);
         GenerateNoiseCommand = ReactiveCommand.Create(GenerateNoise);
+
+        var canSendToDevice = this.WhenAnyValue(x => x.CurrentSignalLeft, x => x.CurrentSignalRight)
+            .Select(tuple => tuple.Item1 != null && tuple.Item2 != null);
+        
+        SendToDeviceCommand = ReactiveCommand.Create(SendToDevice, canSendToDevice);
+        SendToDeviceCommand.IsExecuting.ToPropertyEx(this, x => x.IsSendingToDevice);
+        SendToDeviceCommand.ThrownExceptions
+            .Subscribe(ex => Console.WriteLine($"Error sending to device: {ex.Message}"));
 
         this.WhenAnyValue(x => x.Plot)
             .Subscribe(plot =>
@@ -158,6 +171,39 @@ public class SoundGenerationViewModel : ViewModelBase
         this.WhenAnyValue(x => x.NoiseDbfsRight)
             .Skip(1)
             .Subscribe(d => NoiseAmplitudeRight = DbfsToAmplitude(d));
+        
+        // handle constraints to SoundFilename
+        this.WhenAnyValue(x => x.SoundFileName)
+            .Skip(1)
+            .Subscribe(filename =>
+            {
+                const int maxLength = 170;
+                var ascii = new string(filename.Where(c => c <= 127).ToArray());
+                var sanitized = ascii.Length > maxLength ? ascii.Substring(0, maxLength) : ascii;
+                if (sanitized != filename)
+                    SoundFileName = sanitized;
+            });
+    }
+
+    private void SendToDevice()
+    {
+        if (CurrentSignalLeft == null || CurrentSignalRight == null)
+            throw new InvalidOperationException("Cannot send to device: no signal generated.");
+
+        // get data converted to 24-bit PCM and interleave channels in a single byte array
+        var soundWaveform = ConvertTo24BitPcmAndInterleaveChannels(CurrentSignalLeft.Samples, CurrentSignalRight.Samples);
+
+        var updater = new UpdateSoundWaveform
+        {
+            DeviceIndex = null,
+            SoundIndex = SaveSoundIndex,
+            SoundName = SoundFileName,
+            SampleRate = SampleRate
+        };
+        updater.Process(Observable.Return(soundWaveform))
+            .Subscribe(
+                _ => Console.WriteLine("Sound waveform sent successfully."),
+                ex => Console.WriteLine($"Error sending sound waveform: {ex.Message}"));
     }
 
     private void GenerateTone()
@@ -199,8 +245,8 @@ public class SoundGenerationViewModel : ViewModelBase
                 WindowApplyEndRight);
         }
 
-        _currentSignalLeft = signalLeft;
-        _currentSignalRight = signalRight;
+        CurrentSignalLeft = signalLeft;
+        CurrentSignalRight = signalRight;
 
         UpdateSignalSeries();
     }
@@ -265,8 +311,8 @@ public class SoundGenerationViewModel : ViewModelBase
         }
 
         // update current signals
-        _currentSignalLeft = noiseLeft;
-        _currentSignalRight = noiseRight;
+        CurrentSignalLeft = noiseLeft;
+        CurrentSignalRight = noiseRight;
         
         UpdateSignalSeries();
     }
@@ -299,11 +345,11 @@ public class SoundGenerationViewModel : ViewModelBase
 
     private void UpdateSignalSeries()
     {
-        if (_currentSignalLeft == null || _currentSignalRight == null || Plot == null)
+        if (CurrentSignalLeft == null || CurrentSignalRight == null || Plot == null)
             return;
 
-        var signalLeft = _currentSignalLeft.Samples;
-        var signalRight = _currentSignalRight.Samples;
+        var signalLeft = CurrentSignalLeft.Samples;
+        var signalRight = CurrentSignalRight.Samples;
 
         Plot.Clear();
         if (ShowLeftChannel)
@@ -358,5 +404,39 @@ public class SoundGenerationViewModel : ViewModelBase
             return amplitude;
 
         return DbfsToAmplitude(dbfs);
+    }
+
+    private static byte[] ConvertTo24BitPcmAndInterleaveChannels(float[] leftSamples, float[] rightSamples)
+    {
+        int sampleCount = Math.Max(leftSamples.Length, rightSamples.Length);
+        int bytesPerSample = 3; // 24 bits = 3 bytes
+        byte[] pcmBytes = new byte[sampleCount * 2 * bytesPerSample];
+
+        const int max24 = (1 << 23) - 1;
+        const int min24 = -(1 << 23);
+
+        for (int i = 0; i < sampleCount; i++)
+        {
+            // Left channel
+            float leftClipped = i < leftSamples.Length ? Math.Clamp(leftSamples[i], -1f, 1f) : 0f;
+            int leftPcm24 = (int)Math.Round(leftClipped * max24);
+            leftPcm24 = Math.Clamp(leftPcm24, min24, max24);
+
+            int baseIndex = i * 2 * bytesPerSample;
+            pcmBytes[baseIndex] = (byte)(leftPcm24 & 0xFF);
+            pcmBytes[baseIndex + 1] = (byte)((leftPcm24 >> 8) & 0xFF);
+            pcmBytes[baseIndex + 2] = (byte)((leftPcm24 >> 16) & 0xFF);
+
+            // Right channel
+            float rightClipped = i < rightSamples.Length ? Math.Clamp(rightSamples[i], -1f, 1f) : 0f;
+            int rightPcm24 = (int)Math.Round(rightClipped * max24);
+            rightPcm24 = Math.Clamp(rightPcm24, min24, max24);
+
+            pcmBytes[baseIndex + 3] = (byte)(rightPcm24 & 0xFF);
+            pcmBytes[baseIndex + 4] = (byte)((rightPcm24 >> 8) & 0xFF);
+            pcmBytes[baseIndex + 5] = (byte)((rightPcm24 >> 16) & 0xFF);
+        }
+
+        return pcmBytes;
     }
 }
