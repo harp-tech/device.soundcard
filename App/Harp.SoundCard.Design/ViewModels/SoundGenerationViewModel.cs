@@ -190,15 +190,20 @@ public class SoundGenerationViewModel : ViewModelBase
         if (CurrentSignalLeft == null || CurrentSignalRight == null)
             throw new InvalidOperationException("Cannot send to device: no signal generated.");
 
-        // get data converted to 24-bit PCM and interleave channels in a single byte array
-        var soundWaveform = ConvertTo24BitPcmAndInterleaveChannels(CurrentSignalLeft.Samples, CurrentSignalRight.Samples);
+        if (CurrentSignalLeft.SamplingRate != CurrentSignalRight.SamplingRate)
+            throw new InvalidOperationException(
+                "Cannot send to device: left and right signals have different sampling rates.");
+
+        // get data converted to 24-bit PCM represented as int32 and interleave channels in a single byte array
+        var soundWaveform =
+            ConvertToInt32PcmAndInterleaveChannels(CurrentSignalLeft.Samples, CurrentSignalRight.Samples);
 
         var updater = new UpdateSoundWaveform
         {
             DeviceIndex = null,
             SoundIndex = SaveSoundIndex,
             SoundName = SoundFileName,
-            SampleRate = SampleRate
+            SampleRate = (SampleRate)CurrentSignalLeft.SamplingRate
         };
         updater.Process(Observable.Return(soundWaveform))
             .Subscribe(
@@ -208,8 +213,8 @@ public class SoundGenerationViewModel : ViewModelBase
 
     private void GenerateTone()
     {
-        double amplitudeLeft = GetAmplitudeFromMode(AmplitudeLeft, DbfsLeft, AmplitudeModeNoise);
-        double amplitudeRight = GetAmplitudeFromMode(AmplitudeRight, DbfsRight, AmplitudeModeNoise);
+        double amplitudeLeft = GetAmplitudeFromMode(AmplitudeLeft, DbfsLeft, AmplitudeModePulse);
+        double amplitudeRight = GetAmplitudeFromMode(AmplitudeRight, DbfsRight, AmplitudeModePulse);
 
         var signalLeft = new SineBuilder()
             .SetParameter("frequency", FrequencyLeft)
@@ -406,37 +411,39 @@ public class SoundGenerationViewModel : ViewModelBase
         return DbfsToAmplitude(dbfs);
     }
 
-    private static byte[] ConvertTo24BitPcmAndInterleaveChannels(float[] leftSamples, float[] rightSamples)
+    private static byte[] ConvertToInt32PcmAndInterleaveChannels(float[] leftSamples, float[] rightSamples)
     {
-        int sampleCount = Math.Max(leftSamples.Length, rightSamples.Length);
-        int bytesPerSample = 3; // 24 bits = 3 bytes
-        byte[] pcmBytes = new byte[sampleCount * 2 * bytesPerSample];
+        int frameCount = Math.Max(leftSamples.Length, rightSamples.Length);
 
-        const int max24 = (1 << 23) - 1;
-        const int min24 = -(1 << 23);
+        const int channels = 2;
+        const int bytesPerSample = 4; // int32
+        byte[] bytes = new byte[frameCount * channels * bytesPerSample];
 
-        for (int i = 0; i < sampleCount; i++)
+        // 2 ^ 31 - 1 -> 24 bit PCM max value
+        double max31 = Math.Pow(2, 31) - 1;
+
+        for (int i = 0; i < frameCount; i++)
         {
-            // Left channel
-            float leftClipped = i < leftSamples.Length ? Math.Clamp(leftSamples[i], -1f, 1f) : 0f;
-            int leftPcm24 = (int)Math.Round(leftClipped * max24);
-            leftPcm24 = Math.Clamp(leftPcm24, min24, max24);
+            float l = i < leftSamples.Length ? Math.Clamp(leftSamples[i], -1f, 1f) : 0f;
+            float r = i < rightSamples.Length ? Math.Clamp(rightSamples[i], -1f, 1f) : 0f;
 
-            int baseIndex = i * 2 * bytesPerSample;
-            pcmBytes[baseIndex] = (byte)(leftPcm24 & 0xFF);
-            pcmBytes[baseIndex + 1] = (byte)((leftPcm24 >> 8) & 0xFF);
-            pcmBytes[baseIndex + 2] = (byte)((leftPcm24 >> 16) & 0xFF);
+            int li = (int)Math.Round(l * max31);
+            int ri = (int)Math.Round(r * max31);
 
-            // Right channel
-            float rightClipped = i < rightSamples.Length ? Math.Clamp(rightSamples[i], -1f, 1f) : 0f;
-            int rightPcm24 = (int)Math.Round(rightClipped * max24);
-            rightPcm24 = Math.Clamp(rightPcm24, min24, max24);
+            int baseIndex = i * channels * bytesPerSample;
 
-            pcmBytes[baseIndex + 3] = (byte)(rightPcm24 & 0xFF);
-            pcmBytes[baseIndex + 4] = (byte)((rightPcm24 >> 8) & 0xFF);
-            pcmBytes[baseIndex + 5] = (byte)((rightPcm24 >> 16) & 0xFF);
+            // little-endian int32: L then R
+            bytes[baseIndex + 0] = (byte)(li & 0xFF);
+            bytes[baseIndex + 1] = (byte)((li >> 8) & 0xFF);
+            bytes[baseIndex + 2] = (byte)((li >> 16) & 0xFF);
+            bytes[baseIndex + 3] = (byte)((li >> 24) & 0xFF);
+
+            bytes[baseIndex + 4] = (byte)(ri & 0xFF);
+            bytes[baseIndex + 5] = (byte)((ri >> 8) & 0xFF);
+            bytes[baseIndex + 6] = (byte)((ri >> 16) & 0xFF);
+            bytes[baseIndex + 7] = (byte)((ri >> 24) & 0xFF);
         }
 
-        return pcmBytes;
+        return bytes;
     }
 }
