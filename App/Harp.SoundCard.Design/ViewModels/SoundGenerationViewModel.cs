@@ -8,6 +8,9 @@ using NWaves.Signals;
 using NWaves.Signals.Builders;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
+using ReactiveUI.Validation.Abstractions;
+using ReactiveUI.Validation.Contexts;
+using ReactiveUI.Validation.Extensions;
 using ScottPlot;
 using SkiaSharp;
 
@@ -100,11 +103,43 @@ public class SoundGenerationViewModel : ViewModelBase
 
     public SoundGenerationViewModel()
     {
-        GenerateToneCommand = ReactiveCommand.Create(GenerateTone);
+        // Validation rules
+        // Left frequency must be <= Nyquist for current SampleRate
+        this.ValidationRule(
+            vm => vm.FrequencyLeft,
+            this.WhenAnyValue(vm => vm.FrequencyLeft, vm => vm.SampleRate,
+                (freq, sr) => freq >= 0 && freq <= ((int)sr / 2.0)),
+            "Left frequency must be between 0 and Nyquist (SampleRate/2)."
+        );
+
+        // Right frequency must be <= Nyquist for current SampleRate
+        this.ValidationRule(
+            vm => vm.FrequencyRight,
+            this.WhenAnyValue(vm => vm.FrequencyRight, vm => vm.SampleRate,
+                (freq, sr) => freq >= 0 && freq <= ((int)sr / 2.0)),
+            "Right frequency must be between 0 and Nyquist (SampleRate/2)."
+        );
+        
+        // duration must be positive
+        this.ValidationRule(
+            vm => vm.DurationLeft,
+            this.WhenAnyValue(vm => vm.DurationLeft,
+                duration => duration > 0),
+            "Left duration must be positive.");
+        this.ValidationRule(
+            vm => vm.DurationRight,
+            this.WhenAnyValue(vm => vm.DurationRight,
+                duration => duration > 0),
+            "Right duration must be positive.");
+        
+        var canGenerateTone = this.ValidationContext.Valid;
+        
+        GenerateToneCommand = ReactiveCommand.Create(GenerateTone, canGenerateTone);
         GenerateNoiseCommand = ReactiveCommand.Create(GenerateNoise);
 
         var canSendToDevice = this.WhenAnyValue(x => x.CurrentSignalLeft, x => x.CurrentSignalRight)
-            .Select(tuple => tuple.Item1 != null && tuple.Item2 != null);
+            .Select(tuple => tuple.Item1 != null && tuple.Item2 != null)
+            .CombineLatest(this.ValidationContext.Valid, (hasSignals, isValid) => hasSignals && isValid);
         
         SendToDeviceCommand = ReactiveCommand.Create(SendToDevice, canSendToDevice);
         SendToDeviceCommand.IsExecuting.ToPropertyEx(this, x => x.IsSendingToDevice);

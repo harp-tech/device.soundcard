@@ -6,10 +6,11 @@ using Avalonia.Platform;
 using Avalonia.Styling;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
+using ReactiveUI.Validation.Helpers;
 
 namespace Harp.SoundCard.Design.ViewModels;
 
-public class ViewModelBase : ReactiveObject
+public class ViewModelBase : ReactiveValidationObject
 {
     [Reactive] public bool IsDarkMode { get; set; }
     [Reactive] public IBrush IconColor { get; set; }
