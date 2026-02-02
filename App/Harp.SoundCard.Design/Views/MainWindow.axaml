@@ -8,6 +8,7 @@
         x:Class="Harp.SoundCard.Design.Views.MainWindow"
         Icon="/Assets/cf-logo.ico"
         WindowStartupLocation="CenterScreen"
+        SizeToContent="WidthAndHeight"
         Title="Harp.SoundCard">
         <views:SoundCardView />
 </Window>

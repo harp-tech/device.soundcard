@@ -68,8 +68,8 @@
 
             <!-- Existing rows, incremented by 1 -->
             <TextBlock Grid.Row="1" Grid.Column="0" Text="Frequency (Hz):" VerticalAlignment="Center" />
-            <NumericUpDown Grid.Row="1" Grid.Column="1" Value="{Binding FrequencyLeft}" Width="140" />
-            <NumericUpDown Grid.Row="1" Grid.Column="2" Value="{Binding FrequencyRight}" Width="140" />
+            <NumericUpDown Grid.Row="1" Grid.Column="1" Value="{Binding FrequencyLeft}" Minimum="0" Width="140" />
+            <NumericUpDown Grid.Row="1" Grid.Column="2" Value="{Binding FrequencyRight}" Minimum="0" Width="140" />
 
             <TextBlock Grid.Row="2" Grid.Column="0" Text="Duration (ms):" VerticalAlignment="Center" />
             <NumericUpDown Grid.Row="2" Grid.Column="1" Value="{Binding DurationLeft}" Width="140" />
