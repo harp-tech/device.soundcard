@@ -544,7 +544,7 @@ public class SoundCardViewModel : ViewModelBase
     public SoundGenerationViewModel SoundGenerationViewModel { get; } = new();
     
     // play sound index
-    [Reactive] public int PlaySoundIndex { get; set; }
+    [Reactive] public int PlaySoundIndex { get; set; } = 2;
     public ReactiveCommand<Unit, Unit> PlaySoundIndexCommand { get; private set; }
 
     #endregion
