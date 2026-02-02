@@ -31,7 +31,7 @@
 
       The SoundCard is a Harp device and has all the inherent Harp Devices functionalities.
 
-      The GUI was developed using [.NET](https://dotnet.microsoft.com/), [AvaloniaUI](https://avaloniaui.net/) with ReactiveUI and makes direct use of the [Bonsai.Harp](https://github.com/bonsai-rx/harp) library.
+      The GUI was developed using [.NET](https://dotnet.microsoft.com/), [AvaloniaUI](https://avaloniaui.net/) with ReactiveUI and makes direct use of the Harp.Soundcard interface (https://github.com/harp-tech/device.soundcard).
 
       As with other Harp devices, the SoundCard can also be used in [Bonsai](https://bonsai-rx.org/).  
     </md:MarkdownScrollViewer>
