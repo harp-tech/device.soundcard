@@ -11,6 +11,7 @@
     <Version>$(AppVersion)</Version>
     <ApplicationIcon>..\Harp.SoundCard.Design\Assets\cf-logo.ico</ApplicationIcon>
     <Name>Harp.SoundCard.App</Name>
+    <UseAppHost>false</UseAppHost>
   </PropertyGroup>
 
   <PropertyGroup>
