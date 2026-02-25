@@ -697,13 +697,22 @@ public class SoundCardViewModel : ViewModelBase
         return Observable.Start(() =>
         {
             var devices = SerialPort.GetPortNames();
-
+            var sortedPorts = devices;
+            
             if (OperatingSystem.IsMacOS())
-                // except with Bluetooth in the name
-                Ports = new ObservableCollection<string>(devices.Where(d => d.Contains("cu.")).Except(devices.Where(d => d.Contains("Bluetooth"))));
-            else
-                Ports = new ObservableCollection<string>(devices);
+            {
+                sortedPorts = sortedPorts.Where(port =>
+                        !port.Contains("cu.") && !port.Contains("Bluetooth") && !port.Contains("debug"))
+                    .OrderBy(port => int.Parse(port.Substring(port.LastIndexOf("tty.", StringComparison.Ordinal) + 4)))
+                    .ToArray();
+            }
+            else if (OperatingSystem.IsWindows())
+            {
+                sortedPorts = sortedPorts.OrderBy(port => int.Parse(port.Substring(3))).ToArray();
+            }
 
+            Ports.Clear();
+            Ports.AddRange(sortedPorts);
             Console.WriteLine("Loaded USB information");
             //Log.Information("Loaded USB information");
         });
