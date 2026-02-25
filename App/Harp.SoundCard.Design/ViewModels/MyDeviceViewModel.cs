@@ -556,9 +556,10 @@ public class SoundCardViewModel : ViewModelBase
     public SoundCardViewModel()
     {
         var assembly = typeof(SoundCardViewModel).Assembly;
-        var informationVersion = assembly.GetName().Version;
+        var informationVersion = FileVersionInfo.GetVersionInfo(assembly.Location).ProductVersion;
         if (informationVersion != null)
-            AppVersion = $"v{informationVersion.Major}.{informationVersion.Minor}.{informationVersion.Build}";
+            // remove everything after the + if it exists
+            AppVersion = $"v{informationVersion.Split("+")[0]}";
 
         Ports = new ObservableCollection<string>();
 
