@@ -30,6 +30,23 @@ your user to the `dialout` group is:
 sudo usermod -a -G dialout <USERNAME>
 ```
 
+### macOS
+
+On macOS, you will need to install `libusb` using Homebrew:
+
+```sh
+brew install libusb
+```
+
+After that, you will need to set the `DYLD_LIBRARY_PATH` environment variable to the location of the `homebrew`
+library paths.
+
+You can set this permanently by adding the following line to your shell profile (e.g., `.bash_profile`, `.zshrc`, etc.):
+
+```sh
+export DYLD_LIBRARY_PATH="/usr/local/lib:$DYLD_LIBRARY_PATH"
+```
+
 ## For developers
 
 ### Build Windows installer using NSIS manually
