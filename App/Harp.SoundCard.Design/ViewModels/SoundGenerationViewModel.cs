@@ -209,7 +209,7 @@ public class SoundGenerationViewModel : ViewModelBase
         this.WhenAnyValue(x => x.ShowLeftChannel, x => x.ShowRightChannel)
             .Subscribe(_ =>
             {
-                UpdateSignalSeries();
+                UpdateSignalSeries(false);
             });
 
         this.WhenAnyValue(x => x.IsDarkMode)
@@ -427,14 +427,16 @@ public class SoundGenerationViewModel : ViewModelBase
         }
     }
 
-    private void UpdateSignalSeries()
+    private void UpdateSignalSeries(bool autoScale = true)
     {
         if (CurrentSignalLeft == null || CurrentSignalRight == null || Plot == null)
             return;
 
         var signalLeft = CurrentSignalLeft.Samples;
         var signalRight = CurrentSignalRight.Samples;
-
+        
+        // save plot zoom and pan state
+        var limits = Plot.Axes.GetLimits();
         Plot.Clear();
         if (ShowLeftChannel)
             Plot.Add.Signal(signalLeft, color: Color.FromSKColor(SKColors.DarkCyan));
@@ -442,9 +444,26 @@ public class SoundGenerationViewModel : ViewModelBase
             Plot.Add.Signal(signalRight, color: Color.FromSKColor(SKColors.Red));
 
         // set X and Y limits according to the data we have
-        Plot.Axes.SetLimitsY(Math.Min(signalLeft.Min(), signalRight.Min()),
-            Math.Max(signalLeft.Max(), signalRight.Max()));
-        Plot.Axes.SetLimitsX(0, Math.Max(signalLeft.Length, signalRight.Length) - 1);
+        if(signalLeft != null && signalRight != null)
+        {
+            Plot.Axes.SetLimitsY(Math.Min(signalLeft.Min(), signalRight.Min()),
+                Math.Max(signalLeft.Max(), signalRight.Max()));
+            Plot.Axes.SetLimitsX(0, Math.Max(signalLeft.Length, signalRight.Length) - 1);
+        }
+        
+        if(autoScale)
+        {
+            Plot.Axes.AutoScale();
+        }
+        else
+        {
+            // compare current limits and if they are different, restore the old zoom and pan state
+            var newLimits = Plot.Axes.GetLimits();
+            if (limits != newLimits)
+            {
+                Plot.Axes.SetLimits(limits);
+            }            
+        }
 
         PlotUpdated?.Invoke();
     }

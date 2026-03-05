@@ -27,7 +27,6 @@ public partial class SoundGenerationView : UserControl
 
         vm.PlotUpdated += () =>
         {
-            SignalPlot.Plot.Axes.AutoScale();
             SignalPlot.Refresh();
         };
     }
