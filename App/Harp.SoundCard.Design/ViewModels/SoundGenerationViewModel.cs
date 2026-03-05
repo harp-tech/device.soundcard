@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reactive;
 using System.Reactive.Linq;
+using Avalonia;
+using Avalonia.Controls.ApplicationLifetimes;
+using Avalonia.Platform.Storage;
 using Harp.SoundCard.Design.SoundBuilders;
+using NWaves.Audio;
 using NWaves.Signals;
 using NWaves.Signals.Builders;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
-using ReactiveUI.Validation.Abstractions;
-using ReactiveUI.Validation.Contexts;
 using ReactiveUI.Validation.Extensions;
 using ScottPlot;
 using SkiaSharp;
@@ -87,6 +89,7 @@ public class SoundGenerationViewModel : ViewModelBase
     public ReactiveCommand<Unit, Unit> GenerateToneCommand { get; }
     public ReactiveCommand<Unit, Unit> GenerateNoiseCommand { get; }
     public ReactiveCommand<Unit, Unit> SendToDeviceCommand { get; }
+    public ReactiveCommand<Unit, Unit> SaveToFileCommand { get; }
 
     public event Action? PlotUpdated;
 
@@ -97,6 +100,7 @@ public class SoundGenerationViewModel : ViewModelBase
     [Reactive] public int SaveSoundIndex { get; set; } = 2;
 
     [ObservableAsProperty] public bool IsSendingToDevice { get; }
+    [ObservableAsProperty] public bool IsSavingToFile { get; }
 
     [Reactive] public DiscreteSignal? CurrentSignalLeft { get; set; }
     [Reactive] public DiscreteSignal? CurrentSignalRight { get; set; }
@@ -146,6 +150,46 @@ public class SoundGenerationViewModel : ViewModelBase
         SendToDeviceCommand.ThrownExceptions
             .Subscribe(ex => Console.WriteLine($"Error sending to device: {ex.Message}"));
 
+        var canSaveToFile = this.WhenAnyValue(x => x.CurrentSignalLeft, x => x.CurrentSignalRight)
+            .Select(tuple => tuple.Item1 != null && tuple.Item2 != null);
+        SaveToFileCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            if (CurrentSignalLeft == null || CurrentSignalRight == null)
+                throw new InvalidOperationException("Cannot save to file: no signal generated.");
+
+            if (CurrentSignalLeft.SamplingRate != CurrentSignalRight.SamplingRate)
+                throw new InvalidOperationException(
+                    "Cannot save to file: left and right signals have different sampling rates.");
+
+            if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+            {
+                var activeWindow = desktop.Windows.FirstOrDefault(w => w.IsActive) ??
+                                   desktop.MainWindow;
+                if (activeWindow == null)
+                    return;
+                var soundName = string.IsNullOrWhiteSpace(SoundFileName) ? "sound" : SoundFileName;
+                var options = new FilePickerSaveOptions
+                {
+                    Title = "Save Sound Waveform",
+                    DefaultExtension = "bin",
+                    SuggestedFileName = $"i{SaveSoundIndex}_{soundName}",
+                    ShowOverwritePrompt = true
+                };
+
+                var file = await activeWindow.StorageProvider.SaveFilePickerAsync(options);
+                if (file != null)
+                {
+                    var bytesToWrite =
+                        ConvertToInt32PcmAndInterleaveChannels(CurrentSignalLeft.Samples, CurrentSignalRight.Samples);
+                    await using var stream = await file.OpenWriteAsync();
+                    await stream.WriteAsync(bytesToWrite, 0, bytesToWrite.Length);
+                    Console.WriteLine($"Sound waveform saved to {file.Name}");
+                }
+            }
+        }, canSaveToFile);
+        SaveToFileCommand.IsExecuting.ToPropertyEx(this, x => x.IsSavingToFile);
+        SaveToFileCommand.ThrownExceptions
+            .Subscribe(ex => Console.WriteLine($"Error saving to file: {ex.Message}"));
         this.WhenAnyValue(x => x.Plot)
             .Subscribe(plot =>
             {

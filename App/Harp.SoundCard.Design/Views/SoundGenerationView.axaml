@@ -32,6 +32,7 @@
           <NumericUpDown Value="{Binding SaveSoundIndex}" Width="110" Increment="1" Minimum="2" Maximum="31" />
         </StackPanel>
         <Button Command="{Binding SendToDeviceCommand}" VerticalAlignment="Bottom">Send to device</Button>
+        <Button Command="{Binding SaveToFileCommand}" VerticalAlignment="Bottom">Save to file</Button>
       </StackPanel>
       <sp:AvaPlot
         x:Name="SignalPlot"
