@@ -33,13 +33,14 @@
         </StackPanel>
         <Button Command="{Binding SendToDeviceCommand}" VerticalAlignment="Bottom">Send to device</Button>
         <Button Command="{Binding SaveToFileCommand}" VerticalAlignment="Bottom">Save to file</Button>
+        <Button Command="{Binding ImportFromFileCommand}" VerticalAlignment="Bottom">Import file</Button>
       </StackPanel>
       <sp:AvaPlot
         x:Name="SignalPlot"
         Height="300"
         Margin="0,24,0,0" />
       <!-- Left and right channel checkboxes -->
-      <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,8,0,0">
+      <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,8,0,12">
           <CheckBox IsChecked="{Binding ShowLeftChannel}" Width="200">
             <StackPanel Orientation="Horizontal" Margin="0,0,10,0" VerticalAlignment="Center">
               <Border Width="16" Height="16" Background="#FF008B8B" CornerRadius="2" Margin="0,0,6,0" />

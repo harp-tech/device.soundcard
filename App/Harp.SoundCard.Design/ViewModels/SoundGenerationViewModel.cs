@@ -7,7 +7,9 @@ using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Platform.Storage;
 using Harp.SoundCard.Design.SoundBuilders;
-using NWaves.Audio;
+using Harp.SoundCard.Design.Views;
+using MsBox.Avalonia;
+using MsBox.Avalonia.Enums;
 using NWaves.Signals;
 using NWaves.Signals.Builders;
 using ReactiveUI;
@@ -49,8 +51,8 @@ public class SoundGenerationViewModel : ViewModelBase
     [Reactive] public double AmplitudeRight { get; set; } = 0.5;
     [Reactive] public double DbfsLeft { get; set; } = -6.0;
     [Reactive] public double DbfsRight { get; set; } = -6.0;
-    [Reactive] public float PhaseLeft { get; set; } = 0.0f;
-    [Reactive] public float PhaseRight { get; set; } = 0.0f;
+    [Reactive] public float PhaseLeft { get; set; }
+    [Reactive] public float PhaseRight { get; set; }
     [Reactive] public bool UseWindowLeft { get; set; }
     [Reactive] public bool UseWindowRight { get; set; }
     [Reactive] public SampleRate SampleRate { get; set; } = SampleRate.SampleRate96000Hz;
@@ -83,27 +85,29 @@ public class SoundGenerationViewModel : ViewModelBase
     [Reactive] public WindowType WindowTypeRight { get; set; } = WindowType.Hanning;
 
     // Charts
-    public IEnumerable<NoiseType> NoiseTypes => (NoiseType[])System.Enum.GetValues(typeof(NoiseType));
-    public IEnumerable<WindowType> WindowTypes => (WindowType[])System.Enum.GetValues(typeof(WindowType));
+    public IEnumerable<NoiseType> NoiseTypes => (NoiseType[])Enum.GetValues(typeof(NoiseType));
+    public IEnumerable<WindowType> WindowTypes => (WindowType[])Enum.GetValues(typeof(WindowType));
 
     public ReactiveCommand<Unit, Unit> GenerateToneCommand { get; }
     public ReactiveCommand<Unit, Unit> GenerateNoiseCommand { get; }
     public ReactiveCommand<Unit, Unit> SendToDeviceCommand { get; }
     public ReactiveCommand<Unit, Unit> SaveToFileCommand { get; }
+    public ReactiveCommand<Unit, Unit> ImportFromFileCommand { get; }
 
     public event Action? PlotUpdated;
 
     [Reactive] public Plot? Plot { get; set; }
     [Reactive] public bool ShowLeftChannel { get; set; } = true;
     [Reactive] public bool ShowRightChannel { get; set; } = true;
-    [Reactive] public string SoundFileName { get; set; }
+    [Reactive] public string SoundFileName { get; set; } = string.Empty;
     [Reactive] public int SaveSoundIndex { get; set; } = 2;
 
     [ObservableAsProperty] public bool IsSendingToDevice { get; }
     [ObservableAsProperty] public bool IsSavingToFile { get; }
+    [ObservableAsProperty] public bool IsImportingToFile { get; }
 
-    [Reactive] public DiscreteSignal? CurrentSignalLeft { get; set; }
-    [Reactive] public DiscreteSignal? CurrentSignalRight { get; set; }
+    [Reactive] private DiscreteSignal? CurrentSignalLeft { get; set; }
+    [Reactive] private DiscreteSignal? CurrentSignalRight { get; set; }
 
     public SoundGenerationViewModel()
     {
@@ -190,6 +194,86 @@ public class SoundGenerationViewModel : ViewModelBase
         SaveToFileCommand.IsExecuting.ToPropertyEx(this, x => x.IsSavingToFile);
         SaveToFileCommand.ThrownExceptions
             .Subscribe(ex => Console.WriteLine($"Error saving to file: {ex.Message}"));
+
+        ImportFromFileCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+            {
+                var activeWindow = desktop.Windows.FirstOrDefault(w => w.IsActive) ??
+                                   desktop.MainWindow;
+                if (activeWindow == null)
+                    return;
+
+                var options = new FilePickerOpenOptions
+                {
+                    Title = "Import Sound Waveform (.bin)",
+                    AllowMultiple = false,
+                    FileTypeFilter = new List<FilePickerFileType>
+                    {
+                        new FilePickerFileType("Binary Files") { Patterns = ["*.bin"] }
+                    }
+                };
+
+                var file = (await activeWindow.StorageProvider.OpenFilePickerAsync(options)).FirstOrDefault();
+                if (file == null || !file.Name.EndsWith(".bin", StringComparison.OrdinalIgnoreCase))
+                {
+                    // show dialog to user that file is invalid
+                    var messageBoxStandardWindow = MessageBoxManager
+                        .GetMessageBoxStandard("Invalid file",
+                            "Please select a valid .bin file containing interleaved stereo int32 PCM data.",
+                            icon: Icon.Error);
+                    await messageBoxStandardWindow.ShowAsync();
+                    return;
+                }
+
+                await using var binStream = await file.OpenReadAsync();
+                var bytesData = new byte[binStream.Length];
+                await binStream.ReadExactlyAsync(bytesData, 0, bytesData.Length);
+
+                var (leftSamples, rightSamples) = DecodeStereoInt32Pcm(bytesData);
+
+                var dialog = new ImportOptionsDialog
+                {
+                    DataContext = new ImportOptionsDialogViewModel()
+                };
+
+                var importOptions = await dialog.ShowDialog<ImportOptionsResult?>(activeWindow);
+                if (importOptions == null)
+                    return; // user cancelled
+
+                ApplyAmplificationInPlace(leftSamples, importOptions.Amplification, importOptions.SampleRate);
+                ApplyAmplificationInPlace(rightSamples, importOptions.Amplification, importOptions.SampleRate);
+
+                if (importOptions.ApplyWindowSettings)
+                {
+                    var sr = (int)importOptions.SampleRate;
+
+                    var leftFadeSamples = (int)(WindowDurationLeft * sr / 1000.0);
+                    var rightFadeSamples = (int)(WindowDurationRight * sr / 1000.0);
+
+                    var leftSignalForWindow = new DiscreteSignal(sr, leftSamples);
+                    var rightSignalForWindow = new DiscreteSignal(sr, rightSamples);
+
+                    ApplyFadeWindows(leftSignalForWindow, leftFadeSamples, WindowTypeLeft, WindowApplyBeginLeft, WindowApplyEndLeft);
+                    ApplyFadeWindows(rightSignalForWindow, rightFadeSamples, WindowTypeRight, WindowApplyBeginRight, WindowApplyEndRight);
+
+                    leftSamples = leftSignalForWindow.Samples;
+                    rightSamples = rightSignalForWindow.Samples;
+                }
+
+                SampleRate = importOptions.SampleRate;
+                NoiseSampleRate = importOptions.SampleRate;
+
+                CurrentSignalLeft = new DiscreteSignal((int)importOptions.SampleRate, leftSamples);
+                CurrentSignalRight = new DiscreteSignal((int)importOptions.SampleRate, rightSamples);
+
+                UpdateSignalSeries();
+            }
+        });
+        ImportFromFileCommand.IsExecuting.ToPropertyEx(this, x => x.IsImportingToFile);
+        ImportFromFileCommand.ThrownExceptions
+            .Subscribe(ex => Console.WriteLine($"Error importing file: {ex.Message}"));
+
         this.WhenAnyValue(x => x.Plot)
             .Subscribe(plot =>
             {
@@ -262,6 +346,41 @@ public class SoundGenerationViewModel : ViewModelBase
                 if (sanitized != filename)
                     SoundFileName = sanitized;
             });
+    }
+
+    private static (float[] left, float[] right) DecodeStereoInt32Pcm(byte[] bytesData)
+    {
+        const int bytesPerFrame = 8; // 2 x int32 (stereo)
+        if (bytesData.Length == 0 || bytesData.Length % bytesPerFrame != 0)
+            throw new InvalidOperationException("Invalid .bin format: expected interleaved stereo int32 PCM.");
+
+        int frameCount = bytesData.Length / bytesPerFrame;
+        float[] left = new float[frameCount];
+        float[] right = new float[frameCount];
+
+        // 2 ^ 31 - 1 -> 24 bit PCM max value
+        double max31 = Math.Pow(2, 31) - 1;
+        float invMax31 = 1f / (float)max31;
+        for (int i = 0; i < frameCount; i++)
+        {
+            int baseIndex = i * bytesPerFrame;
+            int li = BitConverter.ToInt32(bytesData, baseIndex);
+            int ri = BitConverter.ToInt32(bytesData, baseIndex + 4);
+            left[i] = Math.Clamp(li * invMax31, -1f, 1f);
+            right[i] = Math.Clamp(ri * invMax31, -1f, 1f);
+        }
+
+        return (left, right);
+    }
+
+    private static void ApplyAmplificationInPlace(float[] samples, float coefficient,
+        SampleRate sampleRate = SampleRate.SampleRate96000Hz)
+    {
+        if (coefficient <= 0)
+            return;
+
+        var signal = new DiscreteSignal((int)sampleRate, samples);
+        signal.Amplify(coefficient);
     }
 
     private void SendToDevice()
