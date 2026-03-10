@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Bonsai.Harp;
+using DynamicData;
 using Harp.SoundCard.Design.Views;
 using MsBox.Avalonia;
 using MsBox.Avalonia.Enums;
@@ -23,13 +24,13 @@ namespace Harp.SoundCard.Design.ViewModels;
 
 public class SoundCardViewModel : ViewModelBase
 {
-    public string AppVersion { get; set; }
+    public string AppVersion { get; set; } = string.Empty;
     public ReactiveCommand<Unit, Unit> LoadDeviceInformation { get; }
 
     #region Connection Information
 
     [Reactive] public ObservableCollection<string> Ports { get; set; }
-    [Reactive] public string SelectedPort { get; set; }
+    [Reactive] public string SelectedPort { get; set; } = string.Empty;
     [Reactive] public bool Connected { get; set; }
     [Reactive] public string ConnectButtonText { get; set; } = "Connect";
     public ReactiveCommand<Unit, Unit> ConnectAndGetBaseInfoCommand { get; }
@@ -46,7 +47,7 @@ public class SoundCardViewModel : ViewModelBase
     #region Device basic information
 
     [Reactive] public int DeviceID { get; set; }
-    [Reactive] public string DeviceName { get; set; }
+    [Reactive] public string DeviceName { get; set; } = string.Empty;
     [Reactive] public HarpVersion HardwareVersion { get; set; }
     [Reactive] public HarpVersion FirmwareVersion { get; set; }
     [Reactive] public int SerialNumber { get; set; }
@@ -535,8 +536,8 @@ public class SoundCardViewModel : ViewModelBase
     [ObservableAsProperty] public bool IsSaving { get; }
 
     [Reactive] public bool ShowWriteMessages { get; set; }
-    [Reactive] public ObservableCollection<string> HarpEvents { get; set; } = new ObservableCollection<string>();
-    [Reactive] public ObservableCollection<string> SentMessages { get; set; } = new ObservableCollection<string>();
+    [Reactive] public ObservableCollection<string> HarpEvents { get; set; } = new();
+    [Reactive] public ObservableCollection<string> SentMessages { get; set; } = new();
 
     public ReactiveCommand<Unit, Unit> ShowAboutCommand { get; private set; }
     public ReactiveCommand<Unit, Unit> ClearMessagesCommand { get; private set; }
@@ -595,8 +596,14 @@ public class SoundCardViewModel : ViewModelBase
             .Select(selectedPort => !string.IsNullOrEmpty(selectedPort));
 
         ShowAboutCommand = ReactiveCommand.CreateFromTask(async () =>
-                await new About() { DataContext = new AboutViewModel() }.ShowDialog(
-                    (Application.Current?.ApplicationLifetime as IClassicDesktopStyleApplicationLifetime)?.MainWindow));
+        {
+            var mainWindow = (Application.Current?.ApplicationLifetime as IClassicDesktopStyleApplicationLifetime)?.MainWindow;
+            if (mainWindow !=
+                null)
+            {
+                await new About { DataContext = new AboutViewModel() }.ShowDialog(mainWindow);
+            }
+        });
 
         ConnectAndGetBaseInfoCommand = ReactiveCommand.CreateFromTask(ConnectAndGetBaseInfo, canConnect);
         ConnectAndGetBaseInfoCommand.IsExecuting.ToPropertyEx(this, x => x.IsConnecting);

@@ -19,17 +19,20 @@ public class PayloadFieldConverter : IValueConverter
         if (valueType.IsValueType && !valueType.IsPrimitive)
         {
             // Try direct field access first
-            var fieldInfo = valueType.GetField(fieldName);
-            if (fieldInfo != null)
+            if (fieldName != null)
             {
-                return fieldInfo.GetValue(value);
-            }
+                var fieldInfo = valueType.GetField(fieldName);
+                if (fieldInfo != null)
+                {
+                    return fieldInfo.GetValue(value);
+                }
 
-            // Try property access second
-            var propInfo = valueType.GetProperty(fieldName);
-            if (propInfo != null)
-            {
-                return propInfo.GetValue(value);
+                // Try property access second
+                var propInfo = valueType.GetProperty(fieldName);
+                if (propInfo != null)
+                {
+                    return propInfo.GetValue(value);
+                }
             }
         }
 
@@ -38,19 +41,22 @@ public class PayloadFieldConverter : IValueConverter
         // that is actually a simple number but needs masking
         try
         {
-            int mask = GetMaskForField(valueType, fieldName);
-            if (mask != 0)
+            if (fieldName != null)
             {
-                int rawValue = System.Convert.ToInt32(value);
-                int shift = GetShiftForMask(mask);
-                int maskedValue = (rawValue & mask) >> shift;
-
-                // If targetType is an enum, convert to that enum type
-                if (targetType.IsEnum)
+                int mask = GetMaskForField(valueType, fieldName);
+                if (mask != 0)
                 {
-                    return Enum.ToObject(targetType, maskedValue);
+                    int rawValue = System.Convert.ToInt32(value);
+                    int shift = GetShiftForMask(mask);
+                    int maskedValue = (rawValue & mask) >> shift;
+
+                    // If targetType is an enum, convert to that enum type
+                    if (targetType.IsEnum)
+                    {
+                        return Enum.ToObject(targetType, maskedValue);
+                    }
+                    return maskedValue;
                 }
-                return maskedValue;
             }
         }
         catch
@@ -72,42 +78,48 @@ public class PayloadFieldConverter : IValueConverter
         if (targetType.IsValueType && !targetType.IsPrimitive)
         {
             // Create a copy of the current target value if it exists
-            object currentValue = Activator.CreateInstance(targetType);
+            object? currentValue = Activator.CreateInstance(targetType);
 
             // Set the field/property on the copy
-            var fieldInfo = targetType.GetField(fieldName);
-            if (fieldInfo != null && currentValue != null)
+            if (fieldName != null)
             {
-                object boxedCopy = currentValue;
-                fieldInfo.SetValue(boxedCopy, value);
-                return boxedCopy;
-            }
+                var fieldInfo = targetType.GetField(fieldName);
+                if (fieldInfo != null && currentValue != null)
+                {
+                    object boxedCopy = currentValue;
+                    fieldInfo.SetValue(boxedCopy, value);
+                    return boxedCopy;
+                }
 
-            var propInfo = targetType.GetProperty(fieldName);
-            if (propInfo != null && propInfo.CanWrite && currentValue != null)
-            {
-                object boxedCopy = currentValue;
-                propInfo.SetValue(boxedCopy, value);
-                return boxedCopy;
+                var propInfo = targetType.GetProperty(fieldName);
+                if (propInfo != null && propInfo.CanWrite && currentValue != null)
+                {
+                    object boxedCopy = currentValue;
+                    propInfo.SetValue(boxedCopy, value);
+                    return boxedCopy;
+                }
             }
         }
 
         // For primitive/enum types with bitmasks
         try
         {
-            int mask = GetMaskForField(targetType, fieldName);
-            if (mask != 0)
+            if (fieldName != null)
             {
-                // Get the current value if available
-                int currentValue = 0;
+                int mask = GetMaskForField(targetType, fieldName);
+                if (mask != 0)
+                {
+                    // Get the current value if available
+                    int currentValue = 0;
 
-                // Extract the value from the selected enum
-                int newValue = System.Convert.ToInt32(value);
-                int shift = GetShiftForMask(mask);
+                    // Extract the value from the selected enum
+                    int newValue = System.Convert.ToInt32(value);
+                    int shift = GetShiftForMask(mask);
 
-                // Apply the new value at the correct bit position
-                int result = (currentValue & ~mask) | ((newValue << shift) & mask);
-                return System.Convert.ChangeType(result, targetType);
+                    // Apply the new value at the correct bit position
+                    int result = (currentValue & ~mask) | ((newValue << shift) & mask);
+                    return System.Convert.ChangeType(result, targetType);
+                }
             }
         }
         catch
@@ -125,7 +137,7 @@ public class PayloadFieldConverter : IValueConverter
         // This assumes there's a static class or field with mask information
         try
         {
-            Type payloadSpecType = Type.GetType($"{type.Namespace}.{type.Name}PayloadSpec");
+            var payloadSpecType = Type.GetType($"{type.Namespace}.{type.Name}PayloadSpec");
             if (payloadSpecType != null)
             {
                 var maskField = payloadSpecType.GetField($"{fieldName}Mask", BindingFlags.Public | BindingFlags.Static);

@@ -38,7 +38,12 @@ public partial class App : Application
     private void NativeMenuItem_OnClick(object sender, EventArgs e)
     { 
         var about = new About() { DataContext = new AboutViewModel() };
-        about.ShowDialog((Application.Current.ApplicationLifetime as IClassicDesktopStyleApplicationLifetime)
-            .MainWindow);
+        if (Current?.ApplicationLifetime is not IClassicDesktopStyleApplicationLifetime desktop)
+            return;
+
+        if (desktop.MainWindow != null)
+        {
+            about.ShowDialog(desktop.MainWindow);
+        }
     }
 }

@@ -16,7 +16,7 @@ public class EnableFlagConverter : IValueConverter
         if (value == null)
             return false;
 
-        return value.ToString().Contains("Enable");
+        return value.ToString()!.Contains("Enable");
     }
 
     public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
