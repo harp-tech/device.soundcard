@@ -215,7 +215,9 @@ public class SoundGenerationViewModel : ViewModelBase
                 };
 
                 var file = (await activeWindow.StorageProvider.OpenFilePickerAsync(options)).FirstOrDefault();
-                if (file == null || !file.Name.EndsWith(".bin", StringComparison.OrdinalIgnoreCase))
+                if (file == null)
+                    return;
+                if (!file.Name.EndsWith(".bin", StringComparison.OrdinalIgnoreCase))
                 {
                     // show dialog to user that file is invalid
                     var messageBoxStandardWindow = MessageBoxManager
