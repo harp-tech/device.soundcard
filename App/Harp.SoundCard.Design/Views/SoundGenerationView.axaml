@@ -18,23 +18,6 @@
   <DockPanel>
     <!-- Chart will be placed at the bottom -->
     <StackPanel DockPanel.Dock="Bottom">
-      <!-- Section for sending the generated sound to the device -->
-      <StackPanel Orientation="Horizontal" Spacing="10" Margin="10">
-        <StackPanel Spacing="5">
-          <StackPanel Orientation="Horizontal" Spacing="5">
-            <TextBlock VerticalAlignment="Center" Text="Filename" FontWeight="SemiBold" />
-            <TextBlock VerticalAlignment="Center" Text="(optional)" />
-          </StackPanel>
-          <TextBox Text="{Binding SoundFileName}" Width="300" MaxLength="170" />
-        </StackPanel>
-        <StackPanel Spacing="5">
-          <TextBlock VerticalAlignment="Center" Text="Index" FontWeight="SemiBold" />
-          <NumericUpDown Value="{Binding SaveSoundIndex}" Width="110" Increment="1" Minimum="2" Maximum="31" />
-        </StackPanel>
-        <Button Command="{Binding SendToDeviceCommand}" VerticalAlignment="Bottom">Send to device</Button>
-        <Button Command="{Binding SaveToFileCommand}" VerticalAlignment="Bottom">Save to file</Button>
-        <Button Command="{Binding ImportFromFileCommand}" VerticalAlignment="Bottom">Import file</Button>
-      </StackPanel>
       <!-- Left and right channel checkboxes -->
       <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,8,0,0">
           <CheckBox IsChecked="{Binding ShowLeftChannel}" Width="200">
@@ -242,6 +225,39 @@
               <CheckBox Content="Apply to beginning" IsChecked="{Binding WindowApplyBeginRight}" />
               <CheckBox Content="Apply to end" IsChecked="{Binding WindowApplyEndRight}" />
             </StackPanel>
+          </StackPanel>
+        </StackPanel>
+      </StackPanel>
+      <!-- Section for sending the generated sound to the device -->
+      <StackPanel>
+        <Border BorderBrush="{DynamicResource SystemAccentColor }"
+                BorderThickness="0,0,0,2"
+                Margin="0,0,0,10"
+                Width="60"
+                HorizontalAlignment="Left">
+          <TextBlock Text="Misc" FontWeight="SemiBold" FontSize="24" Margin="0,10,0,6" />
+        </Border>
+        <StackPanel Orientation="Horizontal" Spacing="10" Margin="10">
+          <StackPanel Spacing="5">
+            <StackPanel Orientation="Horizontal" Spacing="5">
+              <TextBlock VerticalAlignment="Center" Text="Filename" FontWeight="SemiBold" />
+              <TextBlock VerticalAlignment="Center" Text="(optional)" />
+            </StackPanel>
+            <TextBox Text="{Binding SoundFileName}" Width="240" MaxLength="170" />
+          </StackPanel>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Spacing="10" Margin="10">
+          <StackPanel Spacing="5">
+            <TextBlock VerticalAlignment="Center" Text="Index" FontWeight="SemiBold" />
+            <NumericUpDown Value="{Binding SaveSoundIndex}" Width="110" Increment="1" Minimum="2" Maximum="31" />
+          </StackPanel>
+          <Button Command="{Binding SendToDeviceCommand}" VerticalAlignment="Bottom">Send to device</Button>
+        </StackPanel>
+        <StackPanel Spacing="10" Margin="10">
+          <TextBlock Text="File operations" FontWeight="SemiBold" FontSize="16"/>
+          <StackPanel Orientation="Horizontal" Spacing="10">
+            <Button Command="{Binding SaveToFileCommand}" VerticalAlignment="Bottom">Save to file</Button>
+            <Button Command="{Binding ImportFromFileCommand}" VerticalAlignment="Bottom">Import file</Button>
           </StackPanel>
         </StackPanel>
       </StackPanel>

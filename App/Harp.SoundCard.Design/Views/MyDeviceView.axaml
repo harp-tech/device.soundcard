@@ -10,7 +10,7 @@
              xmlns:system="clr-namespace:System;assembly=System.Runtime"
              xmlns:views="clr-namespace:Harp.SoundCard.Design.Views;assembly=Harp.SoundCard.Design"
              xmlns:vm="clr-namespace:Harp.SoundCard.Design.ViewModels"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             mc:Ignorable="d" d:DesignWidth="1400" d:DesignHeight="450"
              x:Class="Harp.SoundCard.Design.Views.SoundCardView"
              x:DataType="vm:SoundCardViewModel">
 
@@ -136,10 +136,10 @@
             <TextBlock Grid.Row="1" Grid.Column="3" Grid.RowSpan="2" Text="{Binding SerialNumber}"
                        FontWeight="Bold" VerticalAlignment="Center" />
           </Grid>
-          <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Vertical" Spacing="4" HorizontalAlignment="Left" VerticalAlignment="Bottom"
+          <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Vertical" Spacing="10" HorizontalAlignment="Left" VerticalAlignment="Bottom"
                       IsVisible="{Binding Connected}">
-            <TextBlock FontSize="14" FontWeight="SemiBold">Play sound index</TextBlock>
-            <StackPanel Margin="0,0,0,0" IsEnabled="{Binding Connected}"
+            <TextBlock FontSize="16" FontWeight="SemiBold">Play sound index</TextBlock>
+            <StackPanel IsEnabled="{Binding Connected}"
                         Orientation="Horizontal" Spacing="10" VerticalAlignment="Bottom">
               <NumericUpDown Value="{Binding PlaySoundIndex}" Width="110" Increment="1" Minimum="2" Maximum="31" />
               <Button Command="{Binding PlaySoundIndexCommand}" VerticalAlignment="Bottom">Play</Button>
