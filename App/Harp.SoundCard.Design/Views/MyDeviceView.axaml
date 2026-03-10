@@ -106,7 +106,7 @@
                      Margin="10,0" />
         </Panel>
         <Grid ColumnDefinitions="450,250,250,*,*" RowDefinitions="*,*" Margin="0" MinHeight="60">
-          <StackPanel Grid.RowSpan="2" VerticalAlignment="Bottom" Margin="10" Orientation="Horizontal"
+          <StackPanel Grid.RowSpan="2" VerticalAlignment="Bottom" Margin="10,0" Orientation="Horizontal"
                       Spacing="20">
             <TextBlock Text="Select a device" VerticalAlignment="Center" />
             <ComboBox Name="Ports" ItemsSource="{Binding Ports}" SelectedItem="{Binding SelectedPort}"
@@ -125,7 +125,7 @@
                 Margin="20, 0, 0, 0" IsVisible="{Binding Connected}">
             <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" VerticalAlignment="Center"
                        HorizontalAlignment="Left" Text="{Binding DeviceName}" FontWeight="Bold"
-                       FontSize="24" />
+                       FontSize="20" />
             <TextBlock Grid.Row="1" Grid.Column="0" Text="Hw " VerticalAlignment="Bottom" />
             <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding HardwareVersion}" FontWeight="Bold"
                        VerticalAlignment="Bottom" />
@@ -136,15 +136,12 @@
             <TextBlock Grid.Row="1" Grid.Column="3" Grid.RowSpan="2" Text="{Binding SerialNumber}"
                        FontWeight="Bold" VerticalAlignment="Center" />
           </Grid>
-          <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Vertical" Spacing="4" HorizontalAlignment="Left"
+          <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Vertical" Spacing="4" HorizontalAlignment="Left" VerticalAlignment="Bottom"
                       IsVisible="{Binding Connected}">
-            <TextBlock FontSize="16" FontWeight="SemiBold">Play sound index</TextBlock>
+            <TextBlock FontSize="14" FontWeight="SemiBold">Play sound index</TextBlock>
             <StackPanel Margin="0,0,0,0" IsEnabled="{Binding Connected}"
                         Orientation="Horizontal" Spacing="10" VerticalAlignment="Bottom">
-              <StackPanel Spacing="5">
-                <TextBlock VerticalAlignment="Center" Text="Index" FontWeight="SemiBold" />
-                <NumericUpDown Value="{Binding PlaySoundIndex}" Width="110" Increment="1" Minimum="2" Maximum="31" />
-              </StackPanel>
+              <NumericUpDown Value="{Binding PlaySoundIndex}" Width="110" Increment="1" Minimum="2" Maximum="31" />
               <Button Command="{Binding PlaySoundIndexCommand}" VerticalAlignment="Bottom">Play</Button>
             </StackPanel>
           </StackPanel>
