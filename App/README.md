@@ -53,14 +53,18 @@ export DYLD_LIBRARY_PATH="/usr/local/lib:$DYLD_LIBRARY_PATH"
 
 - Install NSIS 3 on your Windows machine
 - Build and publish the application using the .NET 8 SDK command-line tools
+  
+  ```sh
+  dotnet publish Harp.SoundCard.App.sln -r win-x64 -f net8.0 --self-contained /p:Configuration=Release
   ```
-      dotnet publish Harp.SoundCard.App.sln -r win-x64 -f net8.0 --self-contained /p:Configuration=Release
-  ```
+
 - Run makesis to generate the installer
+
+    ```sh
+    makensis.exe /DVERSION_MAJOR=1 /DVERSION_MINOR=2 /DVERSION_BUILD=0 /DARCHITECTURE=win-x64 .\Harp.SoundCard.nsi
+    // Adjust the version numbers and architecture as needed (e.g., arm64)
     ```
-     makensis.exe /DVERSION_MAJOR=1 /DVERSION_MINOR=2 /DVERSION_BUILD=0 /DARCHITECTURE=win-x64 .\Harp.SoundCard.nsi
-     // Adjust the version numbers and architecture as needed (e.g., arm64)
-    ```
+
 - The installer will be available at `.\bin\Release\net8.0\<ARCHITECTURE>\Harp.SoundCard.App.vx.x.x-<ARCHITECTURE>.exe`
 
 ### Build .app image for macOS
