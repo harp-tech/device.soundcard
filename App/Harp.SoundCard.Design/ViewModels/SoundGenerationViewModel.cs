@@ -297,7 +297,7 @@ public class SoundGenerationViewModel : ViewModelBase
             });
 
         this.WhenAnyValue(x => x.IsDarkMode)
-            .Subscribe(isDarkMode =>
+            .Subscribe(_ =>
             {
                 ConfigurePlotForTheme();
             });
@@ -406,7 +406,19 @@ public class SoundGenerationViewModel : ViewModelBase
         updater.Process(Observable.Return(soundWaveform))
             .Subscribe(
                 _ => Console.WriteLine("Sound waveform sent successfully."),
-                ex => Console.WriteLine($"Error sending sound waveform: {ex.Message}"));
+                async void (ex) =>
+                {
+                    if (ex is not SoundCardException)
+                        return;
+
+                    Console.WriteLine($"Error sending sound waveform: {ex.Message}");
+                    // show error dialog to user
+                    var messageBoxStandardWindow = MessageBoxManager
+                        .GetMessageBoxStandard("Error sending to device",
+                            $"SoundCard not detected.{Environment.NewLine}{Environment.NewLine}Is it properly connected and configured?",
+                            icon: Icon.Error);
+                    await messageBoxStandardWindow.ShowAsync();
+                });
     }
 
     private void GenerateTone()
