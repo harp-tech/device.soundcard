@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reactive;
 using System.Reactive.Linq;
@@ -226,6 +227,19 @@ public class SoundGenerationViewModel : ViewModelBase
                             icon: Icon.Error);
                     await messageBoxStandardWindow.ShowAsync();
                     return;
+                }
+
+                // parse file name and try to extract sound name and index
+                var nameWithoutExtension = Path.GetFileNameWithoutExtension(file.Name);
+                var parts = nameWithoutExtension.Split('_');
+                if (parts.Length >= 2 && int.TryParse(parts[0].TrimStart('i'), out int parsedIndex))
+                {
+                    SaveSoundIndex = parsedIndex;
+                    SoundFileName = string.Join('_', parts.Skip(1));
+                }
+                else
+                {
+                    SoundFileName = nameWithoutExtension;
                 }
 
                 await using var binStream = await file.OpenReadAsync();
