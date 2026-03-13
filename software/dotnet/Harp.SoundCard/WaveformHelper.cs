@@ -105,17 +105,14 @@ namespace Harp.SoundCard
                  ************************************/
                 /* Metadata command lenght: 'c' 'm' 'd' '0x80' + random + metadata  + 32768 + 2048 + 'f' */
                 /* Data command lenght:     'c' 'm' 'd' '0x81' + random + dataIndex + 32768 + 'f'        */
-                /* Reset command lenght:    'c' 'm' 'd' '0x88' + 'f'                                     */
                 var metadataCmd = new byte[4 + sizeof(int) + sizeof(SoundMetadata) + MaxBufferSize + MetadataSize + 1];
                 var dataCmd = new byte[4 + sizeof(int) + sizeof(int) + MaxBufferSize + 1];
-                var resetCmd = new byte[5];
 
                 int metadataCmdDataIndex = 4 + sizeof(int) + sizeof(SoundMetadata);
                 int dataCmdDataIndex = 4 + sizeof(int) + sizeof(int);
 
                 byte metadataCmdHeader = 0x80;
                 byte dataCmdHeader = 0x81;
-                byte resetCmdHeader = 0x88;
 
                 /*************************************
                  * Create byte array to receive replies
@@ -150,15 +147,6 @@ namespace Harp.SoundCard
                 dataCmd[2] = Convert.ToByte('d');
                 dataCmd[3] = dataCmdHeader;
                 dataCmd[dataCmd.Length - 1] = Convert.ToByte('f');
-
-                /*************************************
-                 * Prepare reset command
-                 ************************************/
-                resetCmd[0] = Convert.ToByte('c');
-                resetCmd[1] = Convert.ToByte('m');
-                resetCmd[2] = Convert.ToByte('d');
-                resetCmd[3] = resetCmdHeader;
-                resetCmd[4] = Convert.ToByte('f');
 
                 /*************************************
                  * Send metadata command and receive reply
