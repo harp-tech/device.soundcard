@@ -1,0 +1,28 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:Harp.SoundCard.Design.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="400"
+             x:Class="Harp.SoundCard.Design.Controls.WriteMessagesControl"
+             x:DataType="vm:SoundCardViewModel">
+
+  <Grid RowDefinitions="Auto,*">
+    <DockPanel Grid.Row="0">
+      <Button Content="Clear" Command="{Binding ClearMessagesCommand}" DockPanel.Dock="Right" Margin="5" />
+      <TextBlock Text="Messages Sent to Device" FontSize="16" FontWeight="SemiBold" VerticalAlignment="Center" Margin="10,0,0,0" />
+    </DockPanel>
+
+    <ListBox Grid.Row="1"
+             ItemsSource="{Binding SentMessages}"
+             ScrollViewer.VerticalScrollBarVisibility="Auto"
+             Margin="5"
+             MaxHeight="500">
+      <ListBox.ItemTemplate>
+        <DataTemplate>
+          <TextBlock Text="{Binding}" TextWrapping="Wrap" />
+        </DataTemplate>
+      </ListBox.ItemTemplate>
+    </ListBox>
+  </Grid>
+</UserControl>
