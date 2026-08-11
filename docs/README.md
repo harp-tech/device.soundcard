@@ -100,4 +100,3 @@ To install the proper drivers to interface with the device, follow the next step
 # Licensing #
 
 Each subdirectory will contain a license or, possibly, a set of licenses if it involves both hardware and software.
-
