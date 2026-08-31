@@ -6,7 +6,7 @@ whoAmI: 1280
 firmwareVersion: "3.0"
 hardwareTargets: "1.1"
 registers:
-  Start: &frequency
+  Start:
     address: 32
     type: U16
     access: Write
@@ -32,12 +32,12 @@ registers:
     <<: *attenuation
     address: 36
     length: 2
-    description: Specifies the attenuation for the right and left channels simultaneously [Att R] [Att L] (1 LSB is 0.1dB).
+    description: Specifies the attenuation for the left and right channels simultaneously [Att L] [Att R] (1 LSB is 0.1dB).
   AttenuationStart:
     <<: *attenuation
     address: 37
     length: 3
-    description: Specifies attenuation and simultaneously starts the sound index or frequency [Att R] [Att L] [Index].
+    description: Specifies attenuation and simultaneously starts the sound index or frequency [Index] [Att L] [Att R].
   Reserved0: &reserved
     address: 38
     type: U8
@@ -63,12 +63,12 @@ registers:
     <<: *configureDI
     address: 42
     description: Specifies the configuration for the digital input 1 (DI1).
-  StartDI0: &soundIndex
+  StartOnDI0: &soundIndex
     address: 43
     type: U16
     access: Write
     description: Specifies the sound index to be played when triggering DI0.
-  StartDI1:
+  StartOnDI1:
     <<: *soundIndex
     address: 44
     description: Specifies the sound index to be played when triggering DI1.
@@ -270,7 +270,7 @@ groupMasks:
     values:
       AnalogInputOnly: {value: 0, description: Used as a pure analog input.}
       ControlAttenuationLeft: {value: 1, description: Controls the attenuation of the left channel.}
-      ControlAttenuationRight: {value: 2, description: Controls the attenuation of the right channel.}
+      ControlAttenuationBoth: {value: 2, description: Controls the attenuation of both channels.}
   Adc1Configuration:
     description: Specifies the operation mode of the analog input ADC1.
     values:
