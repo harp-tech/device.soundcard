@@ -449,7 +449,7 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously reads the contents of the StartDI0 register.
+        /// Asynchronously reads the contents of the StartOnDI0 register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
@@ -458,14 +458,14 @@ namespace Harp.SoundCard
         /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
         /// property contains the register payload.
         /// </returns>
-        public async Task<ushort> ReadStartDI0Async(CancellationToken cancellationToken = default)
+        public async Task<ushort> ReadStartOnDI0Async(CancellationToken cancellationToken = default)
         {
-            var reply = await CommandAsync(HarpCommand.ReadUInt16(StartDI0.Address), cancellationToken);
-            return StartDI0.GetPayload(reply);
+            var reply = await CommandAsync(HarpCommand.ReadUInt16(StartOnDI0.Address), cancellationToken);
+            return StartOnDI0.GetPayload(reply);
         }
 
         /// <summary>
-        /// Asynchronously reads the timestamped contents of the StartDI0 register.
+        /// Asynchronously reads the timestamped contents of the StartOnDI0 register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
@@ -474,28 +474,28 @@ namespace Harp.SoundCard
         /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
         /// property contains the timestamped register payload.
         /// </returns>
-        public async Task<Timestamped<ushort>> ReadTimestampedStartDI0Async(CancellationToken cancellationToken = default)
+        public async Task<Timestamped<ushort>> ReadTimestampedStartOnDI0Async(CancellationToken cancellationToken = default)
         {
-            var reply = await CommandAsync(HarpCommand.ReadUInt16(StartDI0.Address), cancellationToken);
-            return StartDI0.GetTimestampedPayload(reply);
+            var reply = await CommandAsync(HarpCommand.ReadUInt16(StartOnDI0.Address), cancellationToken);
+            return StartOnDI0.GetTimestampedPayload(reply);
         }
 
         /// <summary>
-        /// Asynchronously writes a value to the StartDI0 register.
+        /// Asynchronously writes a value to the StartOnDI0 register.
         /// </summary>
         /// <param name="value">The value to be stored in the register.</param>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
         /// <returns>The task object representing the asynchronous write operation.</returns>
-        public async Task WriteStartDI0Async(ushort value, CancellationToken cancellationToken = default)
+        public async Task WriteStartOnDI0Async(ushort value, CancellationToken cancellationToken = default)
         {
-            var request = StartDI0.FromPayload(MessageType.Write, value);
+            var request = StartOnDI0.FromPayload(MessageType.Write, value);
             await CommandAsync(request, cancellationToken);
         }
 
         /// <summary>
-        /// Asynchronously reads the contents of the StartDI1 register.
+        /// Asynchronously reads the contents of the StartOnDI1 register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
@@ -504,14 +504,14 @@ namespace Harp.SoundCard
         /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
         /// property contains the register payload.
         /// </returns>
-        public async Task<ushort> ReadStartDI1Async(CancellationToken cancellationToken = default)
+        public async Task<ushort> ReadStartOnDI1Async(CancellationToken cancellationToken = default)
         {
-            var reply = await CommandAsync(HarpCommand.ReadUInt16(StartDI1.Address), cancellationToken);
-            return StartDI1.GetPayload(reply);
+            var reply = await CommandAsync(HarpCommand.ReadUInt16(StartOnDI1.Address), cancellationToken);
+            return StartOnDI1.GetPayload(reply);
         }
 
         /// <summary>
-        /// Asynchronously reads the timestamped contents of the StartDI1 register.
+        /// Asynchronously reads the timestamped contents of the StartOnDI1 register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
@@ -520,23 +520,23 @@ namespace Harp.SoundCard
         /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
         /// property contains the timestamped register payload.
         /// </returns>
-        public async Task<Timestamped<ushort>> ReadTimestampedStartDI1Async(CancellationToken cancellationToken = default)
+        public async Task<Timestamped<ushort>> ReadTimestampedStartOnDI1Async(CancellationToken cancellationToken = default)
         {
-            var reply = await CommandAsync(HarpCommand.ReadUInt16(StartDI1.Address), cancellationToken);
-            return StartDI1.GetTimestampedPayload(reply);
+            var reply = await CommandAsync(HarpCommand.ReadUInt16(StartOnDI1.Address), cancellationToken);
+            return StartOnDI1.GetTimestampedPayload(reply);
         }
 
         /// <summary>
-        /// Asynchronously writes a value to the StartDI1 register.
+        /// Asynchronously writes a value to the StartOnDI1 register.
         /// </summary>
         /// <param name="value">The value to be stored in the register.</param>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
         /// <returns>The task object representing the asynchronous write operation.</returns>
-        public async Task WriteStartDI1Async(ushort value, CancellationToken cancellationToken = default)
+        public async Task WriteStartOnDI1Async(ushort value, CancellationToken cancellationToken = default)
         {
-            var request = StartDI1.FromPayload(MessageType.Write, value);
+            var request = StartOnDI1.FromPayload(MessageType.Write, value);
             await CommandAsync(request, cancellationToken);
         }
 

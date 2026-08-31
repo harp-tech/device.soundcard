@@ -48,8 +48,8 @@ namespace Harp.SoundCard
             { 40, typeof(InputState) },
             { 41, typeof(ConfigureDI0) },
             { 42, typeof(ConfigureDI1) },
-            { 43, typeof(StartDI0) },
-            { 44, typeof(StartDI1) },
+            { 43, typeof(StartOnDI0) },
+            { 44, typeof(StartOnDI1) },
             { 45, typeof(AttenuationLeftDI0) },
             { 46, typeof(AttenuationLeftDI1) },
             { 47, typeof(AttenuationRightDI0) },
@@ -310,8 +310,8 @@ namespace Harp.SoundCard
     /// <seealso cref="InputState"/>
     /// <seealso cref="ConfigureDI0"/>
     /// <seealso cref="ConfigureDI1"/>
-    /// <seealso cref="StartDI0"/>
-    /// <seealso cref="StartDI1"/>
+    /// <seealso cref="StartOnDI0"/>
+    /// <seealso cref="StartOnDI1"/>
     /// <seealso cref="AttenuationLeftDI0"/>
     /// <seealso cref="AttenuationLeftDI1"/>
     /// <seealso cref="AttenuationRightDI0"/>
@@ -335,8 +335,8 @@ namespace Harp.SoundCard
     [XmlInclude(typeof(InputState))]
     [XmlInclude(typeof(ConfigureDI0))]
     [XmlInclude(typeof(ConfigureDI1))]
-    [XmlInclude(typeof(StartDI0))]
-    [XmlInclude(typeof(StartDI1))]
+    [XmlInclude(typeof(StartOnDI0))]
+    [XmlInclude(typeof(StartOnDI1))]
     [XmlInclude(typeof(AttenuationLeftDI0))]
     [XmlInclude(typeof(AttenuationLeftDI1))]
     [XmlInclude(typeof(AttenuationRightDI0))]
@@ -381,8 +381,8 @@ namespace Harp.SoundCard
     /// <seealso cref="InputState"/>
     /// <seealso cref="ConfigureDI0"/>
     /// <seealso cref="ConfigureDI1"/>
-    /// <seealso cref="StartDI0"/>
-    /// <seealso cref="StartDI1"/>
+    /// <seealso cref="StartOnDI0"/>
+    /// <seealso cref="StartOnDI1"/>
     /// <seealso cref="AttenuationLeftDI0"/>
     /// <seealso cref="AttenuationLeftDI1"/>
     /// <seealso cref="AttenuationRightDI0"/>
@@ -406,8 +406,8 @@ namespace Harp.SoundCard
     [XmlInclude(typeof(InputState))]
     [XmlInclude(typeof(ConfigureDI0))]
     [XmlInclude(typeof(ConfigureDI1))]
-    [XmlInclude(typeof(StartDI0))]
-    [XmlInclude(typeof(StartDI1))]
+    [XmlInclude(typeof(StartOnDI0))]
+    [XmlInclude(typeof(StartOnDI1))]
     [XmlInclude(typeof(AttenuationLeftDI0))]
     [XmlInclude(typeof(AttenuationLeftDI1))]
     [XmlInclude(typeof(AttenuationRightDI0))]
@@ -431,8 +431,8 @@ namespace Harp.SoundCard
     [XmlInclude(typeof(TimestampedInputState))]
     [XmlInclude(typeof(TimestampedConfigureDI0))]
     [XmlInclude(typeof(TimestampedConfigureDI1))]
-    [XmlInclude(typeof(TimestampedStartDI0))]
-    [XmlInclude(typeof(TimestampedStartDI1))]
+    [XmlInclude(typeof(TimestampedStartOnDI0))]
+    [XmlInclude(typeof(TimestampedStartOnDI1))]
     [XmlInclude(typeof(TimestampedAttenuationLeftDI0))]
     [XmlInclude(typeof(TimestampedAttenuationLeftDI1))]
     [XmlInclude(typeof(TimestampedAttenuationRightDI0))]
@@ -474,8 +474,8 @@ namespace Harp.SoundCard
     /// <seealso cref="InputState"/>
     /// <seealso cref="ConfigureDI0"/>
     /// <seealso cref="ConfigureDI1"/>
-    /// <seealso cref="StartDI0"/>
-    /// <seealso cref="StartDI1"/>
+    /// <seealso cref="StartOnDI0"/>
+    /// <seealso cref="StartOnDI1"/>
     /// <seealso cref="AttenuationLeftDI0"/>
     /// <seealso cref="AttenuationLeftDI1"/>
     /// <seealso cref="AttenuationRightDI0"/>
@@ -499,8 +499,8 @@ namespace Harp.SoundCard
     [XmlInclude(typeof(InputState))]
     [XmlInclude(typeof(ConfigureDI0))]
     [XmlInclude(typeof(ConfigureDI1))]
-    [XmlInclude(typeof(StartDI0))]
-    [XmlInclude(typeof(StartDI1))]
+    [XmlInclude(typeof(StartOnDI0))]
+    [XmlInclude(typeof(StartOnDI1))]
     [XmlInclude(typeof(AttenuationLeftDI0))]
     [XmlInclude(typeof(AttenuationLeftDI1))]
     [XmlInclude(typeof(AttenuationRightDI0))]
@@ -914,9 +914,9 @@ namespace Harp.SoundCard
     }
 
     /// <summary>
-    /// Represents a register that specifies the attenuation for the right and left channels simultaneously [Att R] [Att L] (1 LSB is 0.1dB).
+    /// Represents a register that specifies the attenuation for the left and right channels simultaneously [Att L] [Att R] (1 LSB is 0.1dB).
     /// </summary>
-    [Description("Specifies the attenuation for the right and left channels simultaneously [Att R] [Att L] (1 LSB is 0.1dB).")]
+    [Description("Specifies the attenuation for the left and right channels simultaneously [Att L] [Att R] (1 LSB is 0.1dB).")]
     public partial class AttenuationBoth
     {
         /// <summary>
@@ -1010,9 +1010,9 @@ namespace Harp.SoundCard
     }
 
     /// <summary>
-    /// Represents a register that specifies attenuation and simultaneously starts the sound index or frequency [Att R] [Att L] [Index].
+    /// Represents a register that specifies attenuation and simultaneously starts the sound index or frequency [Index] [Att L] [Att R].
     /// </summary>
-    [Description("Specifies attenuation and simultaneously starts the sound index or frequency [Att R] [Att L] [Index].")]
+    [Description("Specifies attenuation and simultaneously starts the sound index or frequency [Index] [Att L] [Att R].")]
     public partial class AttenuationStart
     {
         /// <summary>
@@ -1444,25 +1444,25 @@ namespace Harp.SoundCard
     /// Represents a register that specifies the sound index to be played when triggering DI0.
     /// </summary>
     [Description("Specifies the sound index to be played when triggering DI0.")]
-    public partial class StartDI0
+    public partial class StartOnDI0
     {
         /// <summary>
-        /// Represents the address of the <see cref="StartDI0"/> register. This field is constant.
+        /// Represents the address of the <see cref="StartOnDI0"/> register. This field is constant.
         /// </summary>
         public const int Address = 43;
 
         /// <summary>
-        /// Represents the payload type of the <see cref="StartDI0"/> register. This field is constant.
+        /// Represents the payload type of the <see cref="StartOnDI0"/> register. This field is constant.
         /// </summary>
         public const PayloadType RegisterType = PayloadType.U16;
 
         /// <summary>
-        /// Represents the length of the <see cref="StartDI0"/> register. This field is constant.
+        /// Represents the length of the <see cref="StartOnDI0"/> register. This field is constant.
         /// </summary>
         public const int RegisterLength = 1;
 
         /// <summary>
-        /// Returns the payload data for <see cref="StartDI0"/> register messages.
+        /// Returns the payload data for <see cref="StartOnDI0"/> register messages.
         /// </summary>
         /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
         /// <returns>A value representing the message payload.</returns>
@@ -1472,7 +1472,7 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Returns the timestamped payload data for <see cref="StartDI0"/> register messages.
+        /// Returns the timestamped payload data for <see cref="StartOnDI0"/> register messages.
         /// </summary>
         /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
         /// <returns>A value representing the timestamped message payload.</returns>
@@ -1482,12 +1482,12 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Returns a Harp message for the <see cref="StartDI0"/> register.
+        /// Returns a Harp message for the <see cref="StartOnDI0"/> register.
         /// </summary>
         /// <param name="messageType">The type of the Harp message.</param>
         /// <param name="value">The value to be stored in the message payload.</param>
         /// <returns>
-        /// A <see cref="HarpMessage"/> object for the <see cref="StartDI0"/> register
+        /// A <see cref="HarpMessage"/> object for the <see cref="StartOnDI0"/> register
         /// with the specified message type and payload.
         /// </returns>
         public static HarpMessage FromPayload(MessageType messageType, ushort value)
@@ -1496,14 +1496,14 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Returns a timestamped Harp message for the <see cref="StartDI0"/>
+        /// Returns a timestamped Harp message for the <see cref="StartOnDI0"/>
         /// register.
         /// </summary>
         /// <param name="timestamp">The timestamp of the message payload, in seconds.</param>
         /// <param name="messageType">The type of the Harp message.</param>
         /// <param name="value">The value to be stored in the message payload.</param>
         /// <returns>
-        /// A <see cref="HarpMessage"/> object for the <see cref="StartDI0"/> register
+        /// A <see cref="HarpMessage"/> object for the <see cref="StartOnDI0"/> register
         /// with the specified message type, timestamp, and payload.
         /// </returns>
         public static HarpMessage FromPayload(double timestamp, MessageType messageType, ushort value)
@@ -1514,25 +1514,25 @@ namespace Harp.SoundCard
 
     /// <summary>
     /// Provides methods for manipulating timestamped messages from the
-    /// StartDI0 register.
+    /// StartOnDI0 register.
     /// </summary>
-    /// <seealso cref="StartDI0"/>
-    [Description("Filters and selects timestamped messages from the StartDI0 register.")]
-    public partial class TimestampedStartDI0
+    /// <seealso cref="StartOnDI0"/>
+    [Description("Filters and selects timestamped messages from the StartOnDI0 register.")]
+    public partial class TimestampedStartOnDI0
     {
         /// <summary>
-        /// Represents the address of the <see cref="StartDI0"/> register. This field is constant.
+        /// Represents the address of the <see cref="StartOnDI0"/> register. This field is constant.
         /// </summary>
-        public const int Address = StartDI0.Address;
+        public const int Address = StartOnDI0.Address;
 
         /// <summary>
-        /// Returns timestamped payload data for <see cref="StartDI0"/> register messages.
+        /// Returns timestamped payload data for <see cref="StartOnDI0"/> register messages.
         /// </summary>
         /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
         /// <returns>A value representing the timestamped message payload.</returns>
         public static Timestamped<ushort> GetPayload(HarpMessage message)
         {
-            return StartDI0.GetTimestampedPayload(message);
+            return StartOnDI0.GetTimestampedPayload(message);
         }
     }
 
@@ -1540,25 +1540,25 @@ namespace Harp.SoundCard
     /// Represents a register that specifies the sound index to be played when triggering DI1.
     /// </summary>
     [Description("Specifies the sound index to be played when triggering DI1.")]
-    public partial class StartDI1
+    public partial class StartOnDI1
     {
         /// <summary>
-        /// Represents the address of the <see cref="StartDI1"/> register. This field is constant.
+        /// Represents the address of the <see cref="StartOnDI1"/> register. This field is constant.
         /// </summary>
         public const int Address = 44;
 
         /// <summary>
-        /// Represents the payload type of the <see cref="StartDI1"/> register. This field is constant.
+        /// Represents the payload type of the <see cref="StartOnDI1"/> register. This field is constant.
         /// </summary>
         public const PayloadType RegisterType = PayloadType.U16;
 
         /// <summary>
-        /// Represents the length of the <see cref="StartDI1"/> register. This field is constant.
+        /// Represents the length of the <see cref="StartOnDI1"/> register. This field is constant.
         /// </summary>
         public const int RegisterLength = 1;
 
         /// <summary>
-        /// Returns the payload data for <see cref="StartDI1"/> register messages.
+        /// Returns the payload data for <see cref="StartOnDI1"/> register messages.
         /// </summary>
         /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
         /// <returns>A value representing the message payload.</returns>
@@ -1568,7 +1568,7 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Returns the timestamped payload data for <see cref="StartDI1"/> register messages.
+        /// Returns the timestamped payload data for <see cref="StartOnDI1"/> register messages.
         /// </summary>
         /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
         /// <returns>A value representing the timestamped message payload.</returns>
@@ -1578,12 +1578,12 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Returns a Harp message for the <see cref="StartDI1"/> register.
+        /// Returns a Harp message for the <see cref="StartOnDI1"/> register.
         /// </summary>
         /// <param name="messageType">The type of the Harp message.</param>
         /// <param name="value">The value to be stored in the message payload.</param>
         /// <returns>
-        /// A <see cref="HarpMessage"/> object for the <see cref="StartDI1"/> register
+        /// A <see cref="HarpMessage"/> object for the <see cref="StartOnDI1"/> register
         /// with the specified message type and payload.
         /// </returns>
         public static HarpMessage FromPayload(MessageType messageType, ushort value)
@@ -1592,14 +1592,14 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Returns a timestamped Harp message for the <see cref="StartDI1"/>
+        /// Returns a timestamped Harp message for the <see cref="StartOnDI1"/>
         /// register.
         /// </summary>
         /// <param name="timestamp">The timestamp of the message payload, in seconds.</param>
         /// <param name="messageType">The type of the Harp message.</param>
         /// <param name="value">The value to be stored in the message payload.</param>
         /// <returns>
-        /// A <see cref="HarpMessage"/> object for the <see cref="StartDI1"/> register
+        /// A <see cref="HarpMessage"/> object for the <see cref="StartOnDI1"/> register
         /// with the specified message type, timestamp, and payload.
         /// </returns>
         public static HarpMessage FromPayload(double timestamp, MessageType messageType, ushort value)
@@ -1610,25 +1610,25 @@ namespace Harp.SoundCard
 
     /// <summary>
     /// Provides methods for manipulating timestamped messages from the
-    /// StartDI1 register.
+    /// StartOnDI1 register.
     /// </summary>
-    /// <seealso cref="StartDI1"/>
-    [Description("Filters and selects timestamped messages from the StartDI1 register.")]
-    public partial class TimestampedStartDI1
+    /// <seealso cref="StartOnDI1"/>
+    [Description("Filters and selects timestamped messages from the StartOnDI1 register.")]
+    public partial class TimestampedStartOnDI1
     {
         /// <summary>
-        /// Represents the address of the <see cref="StartDI1"/> register. This field is constant.
+        /// Represents the address of the <see cref="StartOnDI1"/> register. This field is constant.
         /// </summary>
-        public const int Address = StartDI1.Address;
+        public const int Address = StartOnDI1.Address;
 
         /// <summary>
-        /// Returns timestamped payload data for <see cref="StartDI1"/> register messages.
+        /// Returns timestamped payload data for <see cref="StartOnDI1"/> register messages.
         /// </summary>
         /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
         /// <returns>A value representing the timestamped message payload.</returns>
         public static Timestamped<ushort> GetPayload(HarpMessage message)
         {
-            return StartDI1.GetTimestampedPayload(message);
+            return StartOnDI1.GetTimestampedPayload(message);
         }
     }
 
@@ -3550,8 +3550,8 @@ namespace Harp.SoundCard
     /// <seealso cref="CreateInputStatePayload"/>
     /// <seealso cref="CreateConfigureDI0Payload"/>
     /// <seealso cref="CreateConfigureDI1Payload"/>
-    /// <seealso cref="CreateStartDI0Payload"/>
-    /// <seealso cref="CreateStartDI1Payload"/>
+    /// <seealso cref="CreateStartOnDI0Payload"/>
+    /// <seealso cref="CreateStartOnDI1Payload"/>
     /// <seealso cref="CreateAttenuationLeftDI0Payload"/>
     /// <seealso cref="CreateAttenuationLeftDI1Payload"/>
     /// <seealso cref="CreateAttenuationRightDI0Payload"/>
@@ -3575,8 +3575,8 @@ namespace Harp.SoundCard
     [XmlInclude(typeof(CreateInputStatePayload))]
     [XmlInclude(typeof(CreateConfigureDI0Payload))]
     [XmlInclude(typeof(CreateConfigureDI1Payload))]
-    [XmlInclude(typeof(CreateStartDI0Payload))]
-    [XmlInclude(typeof(CreateStartDI1Payload))]
+    [XmlInclude(typeof(CreateStartOnDI0Payload))]
+    [XmlInclude(typeof(CreateStartOnDI1Payload))]
     [XmlInclude(typeof(CreateAttenuationLeftDI0Payload))]
     [XmlInclude(typeof(CreateAttenuationLeftDI1Payload))]
     [XmlInclude(typeof(CreateAttenuationRightDI0Payload))]
@@ -3600,8 +3600,8 @@ namespace Harp.SoundCard
     [XmlInclude(typeof(CreateTimestampedInputStatePayload))]
     [XmlInclude(typeof(CreateTimestampedConfigureDI0Payload))]
     [XmlInclude(typeof(CreateTimestampedConfigureDI1Payload))]
-    [XmlInclude(typeof(CreateTimestampedStartDI0Payload))]
-    [XmlInclude(typeof(CreateTimestampedStartDI1Payload))]
+    [XmlInclude(typeof(CreateTimestampedStartOnDI0Payload))]
+    [XmlInclude(typeof(CreateTimestampedStartOnDI1Payload))]
     [XmlInclude(typeof(CreateTimestampedAttenuationLeftDI0Payload))]
     [XmlInclude(typeof(CreateTimestampedAttenuationLeftDI1Payload))]
     [XmlInclude(typeof(CreateTimestampedAttenuationRightDI0Payload))]
@@ -3848,16 +3848,16 @@ namespace Harp.SoundCard
 
     /// <summary>
     /// Represents an operator that creates a message payload
-    /// that specifies the attenuation for the right and left channels simultaneously [Att R] [Att L] (1 LSB is 0.1dB).
+    /// that specifies the attenuation for the left and right channels simultaneously [Att L] [Att R] (1 LSB is 0.1dB).
     /// </summary>
     [DisplayName("AttenuationBothPayload")]
-    [Description("Creates a message payload that specifies the attenuation for the right and left channels simultaneously [Att R] [Att L] (1 LSB is 0.1dB).")]
+    [Description("Creates a message payload that specifies the attenuation for the left and right channels simultaneously [Att L] [Att R] (1 LSB is 0.1dB).")]
     public partial class CreateAttenuationBothPayload
     {
         /// <summary>
-        /// Gets or sets the value that specifies the attenuation for the right and left channels simultaneously [Att R] [Att L] (1 LSB is 0.1dB).
+        /// Gets or sets the value that specifies the attenuation for the left and right channels simultaneously [Att L] [Att R] (1 LSB is 0.1dB).
         /// </summary>
-        [Description("The value that specifies the attenuation for the right and left channels simultaneously [Att R] [Att L] (1 LSB is 0.1dB).")]
+        [Description("The value that specifies the attenuation for the left and right channels simultaneously [Att L] [Att R] (1 LSB is 0.1dB).")]
         public ushort[] AttenuationBoth { get; set; }
 
         /// <summary>
@@ -3870,7 +3870,7 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Creates a message that specifies the attenuation for the right and left channels simultaneously [Att R] [Att L] (1 LSB is 0.1dB).
+        /// Creates a message that specifies the attenuation for the left and right channels simultaneously [Att L] [Att R] (1 LSB is 0.1dB).
         /// </summary>
         /// <param name="messageType">Specifies the type of the created message.</param>
         /// <returns>A new message for the AttenuationBoth register.</returns>
@@ -3882,14 +3882,14 @@ namespace Harp.SoundCard
 
     /// <summary>
     /// Represents an operator that creates a timestamped message payload
-    /// that specifies the attenuation for the right and left channels simultaneously [Att R] [Att L] (1 LSB is 0.1dB).
+    /// that specifies the attenuation for the left and right channels simultaneously [Att L] [Att R] (1 LSB is 0.1dB).
     /// </summary>
     [DisplayName("TimestampedAttenuationBothPayload")]
-    [Description("Creates a timestamped message payload that specifies the attenuation for the right and left channels simultaneously [Att R] [Att L] (1 LSB is 0.1dB).")]
+    [Description("Creates a timestamped message payload that specifies the attenuation for the left and right channels simultaneously [Att L] [Att R] (1 LSB is 0.1dB).")]
     public partial class CreateTimestampedAttenuationBothPayload : CreateAttenuationBothPayload
     {
         /// <summary>
-        /// Creates a timestamped message that specifies the attenuation for the right and left channels simultaneously [Att R] [Att L] (1 LSB is 0.1dB).
+        /// Creates a timestamped message that specifies the attenuation for the left and right channels simultaneously [Att L] [Att R] (1 LSB is 0.1dB).
         /// </summary>
         /// <param name="timestamp">The timestamp of the message payload, in seconds.</param>
         /// <param name="messageType">Specifies the type of the created message.</param>
@@ -3902,16 +3902,16 @@ namespace Harp.SoundCard
 
     /// <summary>
     /// Represents an operator that creates a message payload
-    /// that specifies attenuation and simultaneously starts the sound index or frequency [Att R] [Att L] [Index].
+    /// that specifies attenuation and simultaneously starts the sound index or frequency [Index] [Att L] [Att R].
     /// </summary>
     [DisplayName("AttenuationStartPayload")]
-    [Description("Creates a message payload that specifies attenuation and simultaneously starts the sound index or frequency [Att R] [Att L] [Index].")]
+    [Description("Creates a message payload that specifies attenuation and simultaneously starts the sound index or frequency [Index] [Att L] [Att R].")]
     public partial class CreateAttenuationStartPayload
     {
         /// <summary>
-        /// Gets or sets the value that specifies attenuation and simultaneously starts the sound index or frequency [Att R] [Att L] [Index].
+        /// Gets or sets the value that specifies attenuation and simultaneously starts the sound index or frequency [Index] [Att L] [Att R].
         /// </summary>
-        [Description("The value that specifies attenuation and simultaneously starts the sound index or frequency [Att R] [Att L] [Index].")]
+        [Description("The value that specifies attenuation and simultaneously starts the sound index or frequency [Index] [Att L] [Att R].")]
         public ushort[] AttenuationStart { get; set; }
 
         /// <summary>
@@ -3924,7 +3924,7 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Creates a message that specifies attenuation and simultaneously starts the sound index or frequency [Att R] [Att L] [Index].
+        /// Creates a message that specifies attenuation and simultaneously starts the sound index or frequency [Index] [Att L] [Att R].
         /// </summary>
         /// <param name="messageType">Specifies the type of the created message.</param>
         /// <returns>A new message for the AttenuationStart register.</returns>
@@ -3936,14 +3936,14 @@ namespace Harp.SoundCard
 
     /// <summary>
     /// Represents an operator that creates a timestamped message payload
-    /// that specifies attenuation and simultaneously starts the sound index or frequency [Att R] [Att L] [Index].
+    /// that specifies attenuation and simultaneously starts the sound index or frequency [Index] [Att L] [Att R].
     /// </summary>
     [DisplayName("TimestampedAttenuationStartPayload")]
-    [Description("Creates a timestamped message payload that specifies attenuation and simultaneously starts the sound index or frequency [Att R] [Att L] [Index].")]
+    [Description("Creates a timestamped message payload that specifies attenuation and simultaneously starts the sound index or frequency [Index] [Att L] [Att R].")]
     public partial class CreateTimestampedAttenuationStartPayload : CreateAttenuationStartPayload
     {
         /// <summary>
-        /// Creates a timestamped message that specifies attenuation and simultaneously starts the sound index or frequency [Att R] [Att L] [Index].
+        /// Creates a timestamped message that specifies attenuation and simultaneously starts the sound index or frequency [Index] [Att L] [Att R].
         /// </summary>
         /// <param name="timestamp">The timestamp of the message payload, in seconds.</param>
         /// <param name="messageType">Specifies the type of the created message.</param>
@@ -4120,33 +4120,33 @@ namespace Harp.SoundCard
     /// Represents an operator that creates a message payload
     /// that specifies the sound index to be played when triggering DI0.
     /// </summary>
-    [DisplayName("StartDI0Payload")]
+    [DisplayName("StartOnDI0Payload")]
     [Description("Creates a message payload that specifies the sound index to be played when triggering DI0.")]
-    public partial class CreateStartDI0Payload
+    public partial class CreateStartOnDI0Payload
     {
         /// <summary>
         /// Gets or sets the value that specifies the sound index to be played when triggering DI0.
         /// </summary>
         [Description("The value that specifies the sound index to be played when triggering DI0.")]
-        public ushort StartDI0 { get; set; }
+        public ushort StartOnDI0 { get; set; }
 
         /// <summary>
-        /// Creates a message payload for the StartDI0 register.
+        /// Creates a message payload for the StartOnDI0 register.
         /// </summary>
         /// <returns>The created message payload value.</returns>
         public ushort GetPayload()
         {
-            return StartDI0;
+            return StartOnDI0;
         }
 
         /// <summary>
         /// Creates a message that specifies the sound index to be played when triggering DI0.
         /// </summary>
         /// <param name="messageType">Specifies the type of the created message.</param>
-        /// <returns>A new message for the StartDI0 register.</returns>
+        /// <returns>A new message for the StartOnDI0 register.</returns>
         public HarpMessage GetMessage(MessageType messageType)
         {
-            return Harp.SoundCard.StartDI0.FromPayload(messageType, GetPayload());
+            return Harp.SoundCard.StartOnDI0.FromPayload(messageType, GetPayload());
         }
     }
 
@@ -4154,19 +4154,19 @@ namespace Harp.SoundCard
     /// Represents an operator that creates a timestamped message payload
     /// that specifies the sound index to be played when triggering DI0.
     /// </summary>
-    [DisplayName("TimestampedStartDI0Payload")]
+    [DisplayName("TimestampedStartOnDI0Payload")]
     [Description("Creates a timestamped message payload that specifies the sound index to be played when triggering DI0.")]
-    public partial class CreateTimestampedStartDI0Payload : CreateStartDI0Payload
+    public partial class CreateTimestampedStartOnDI0Payload : CreateStartOnDI0Payload
     {
         /// <summary>
         /// Creates a timestamped message that specifies the sound index to be played when triggering DI0.
         /// </summary>
         /// <param name="timestamp">The timestamp of the message payload, in seconds.</param>
         /// <param name="messageType">Specifies the type of the created message.</param>
-        /// <returns>A new timestamped message for the StartDI0 register.</returns>
+        /// <returns>A new timestamped message for the StartOnDI0 register.</returns>
         public HarpMessage GetMessage(double timestamp, MessageType messageType)
         {
-            return Harp.SoundCard.StartDI0.FromPayload(timestamp, messageType, GetPayload());
+            return Harp.SoundCard.StartOnDI0.FromPayload(timestamp, messageType, GetPayload());
         }
     }
 
@@ -4174,33 +4174,33 @@ namespace Harp.SoundCard
     /// Represents an operator that creates a message payload
     /// that specifies the sound index to be played when triggering DI1.
     /// </summary>
-    [DisplayName("StartDI1Payload")]
+    [DisplayName("StartOnDI1Payload")]
     [Description("Creates a message payload that specifies the sound index to be played when triggering DI1.")]
-    public partial class CreateStartDI1Payload
+    public partial class CreateStartOnDI1Payload
     {
         /// <summary>
         /// Gets or sets the value that specifies the sound index to be played when triggering DI1.
         /// </summary>
         [Description("The value that specifies the sound index to be played when triggering DI1.")]
-        public ushort StartDI1 { get; set; }
+        public ushort StartOnDI1 { get; set; }
 
         /// <summary>
-        /// Creates a message payload for the StartDI1 register.
+        /// Creates a message payload for the StartOnDI1 register.
         /// </summary>
         /// <returns>The created message payload value.</returns>
         public ushort GetPayload()
         {
-            return StartDI1;
+            return StartOnDI1;
         }
 
         /// <summary>
         /// Creates a message that specifies the sound index to be played when triggering DI1.
         /// </summary>
         /// <param name="messageType">Specifies the type of the created message.</param>
-        /// <returns>A new message for the StartDI1 register.</returns>
+        /// <returns>A new message for the StartOnDI1 register.</returns>
         public HarpMessage GetMessage(MessageType messageType)
         {
-            return Harp.SoundCard.StartDI1.FromPayload(messageType, GetPayload());
+            return Harp.SoundCard.StartOnDI1.FromPayload(messageType, GetPayload());
         }
     }
 
@@ -4208,19 +4208,19 @@ namespace Harp.SoundCard
     /// Represents an operator that creates a timestamped message payload
     /// that specifies the sound index to be played when triggering DI1.
     /// </summary>
-    [DisplayName("TimestampedStartDI1Payload")]
+    [DisplayName("TimestampedStartOnDI1Payload")]
     [Description("Creates a timestamped message payload that specifies the sound index to be played when triggering DI1.")]
-    public partial class CreateTimestampedStartDI1Payload : CreateStartDI1Payload
+    public partial class CreateTimestampedStartOnDI1Payload : CreateStartOnDI1Payload
     {
         /// <summary>
         /// Creates a timestamped message that specifies the sound index to be played when triggering DI1.
         /// </summary>
         /// <param name="timestamp">The timestamp of the message payload, in seconds.</param>
         /// <param name="messageType">Specifies the type of the created message.</param>
-        /// <returns>A new timestamped message for the StartDI1 register.</returns>
+        /// <returns>A new timestamped message for the StartOnDI1 register.</returns>
         public HarpMessage GetMessage(double timestamp, MessageType messageType)
         {
-            return Harp.SoundCard.StartDI1.FromPayload(timestamp, messageType, GetPayload());
+            return Harp.SoundCard.StartOnDI1.FromPayload(timestamp, messageType, GetPayload());
         }
     }
 
@@ -5226,10 +5226,10 @@ namespace Harp.SoundCard
         ControlAttenuationLeft = 1,
 
         /// <summary>
-        /// Controls the attenuation of the right channel.
+        /// Controls the attenuation of both channels.
         /// </summary>
-        [Description("Controls the attenuation of the right channel.")]
-        ControlAttenuationRight = 2
+        [Description("Controls the attenuation of both channels.")]
+        ControlAttenuationBoth = 2
     }
 
     /// <summary>
