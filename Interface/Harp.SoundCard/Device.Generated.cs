@@ -626,9 +626,9 @@ namespace Harp.SoundCard
     }
 
     /// <summary>
-    /// Represents a register that stops the frequency generator process with any input value (not implemented for a sound index). The time precision of this event is frequency dependent: +/- 2500 us at 500 Hz, +/- 750 us at 1000 Hz, +/- 250 us at 2000 Hz, and under +/- 210 us for any frequency above 5000 Hz.
+    /// Represents a register that stops the frequency generator process with any non-zero input value. Silencing a sound index is not implemented. Any non-zero write clears a pending start, so a new sound can be started immediately. The time precision of this event is frequency dependent: +/- 2500 us at 500 Hz, +/- 750 us at 1000 Hz, +/- 250 us at 2000 Hz, and under +/- 210 us for any frequency above 5000 Hz.
     /// </summary>
-    [Description("Stops the frequency generator process with any input value (not implemented for a sound index). The time precision of this event is frequency dependent: +/- 2500 us at 500 Hz, +/- 750 us at 1000 Hz, +/- 250 us at 2000 Hz, and under +/- 210 us for any frequency above 5000 Hz.")]
+    [Description("Stops the frequency generator process with any non-zero input value. Silencing a sound index is not implemented. Any non-zero write clears a pending start, so a new sound can be started immediately. The time precision of this event is frequency dependent: +/- 2500 us at 500 Hz, +/- 750 us at 1000 Hz, +/- 250 us at 2000 Hz, and under +/- 210 us for any frequency above 5000 Hz.")]
     public partial class Stop
     {
         /// <summary>
@@ -3686,16 +3686,16 @@ namespace Harp.SoundCard
 
     /// <summary>
     /// Represents an operator that creates a message payload
-    /// that stops the frequency generator process with any input value (not implemented for a sound index). The time precision of this event is frequency dependent: +/- 2500 us at 500 Hz, +/- 750 us at 1000 Hz, +/- 250 us at 2000 Hz, and under +/- 210 us for any frequency above 5000 Hz.
+    /// that stops the frequency generator process with any non-zero input value. Silencing a sound index is not implemented. Any non-zero write clears a pending start, so a new sound can be started immediately. The time precision of this event is frequency dependent: +/- 2500 us at 500 Hz, +/- 750 us at 1000 Hz, +/- 250 us at 2000 Hz, and under +/- 210 us for any frequency above 5000 Hz.
     /// </summary>
     [DisplayName("StopPayload")]
-    [Description("Creates a message payload that stops the frequency generator process with any input value (not implemented for a sound index). The time precision of this event is frequency dependent: +/- 2500 us at 500 Hz, +/- 750 us at 1000 Hz, +/- 250 us at 2000 Hz, and under +/- 210 us for any frequency above 5000 Hz.")]
+    [Description("Creates a message payload that stops the frequency generator process with any non-zero input value. Silencing a sound index is not implemented. Any non-zero write clears a pending start, so a new sound can be started immediately. The time precision of this event is frequency dependent: +/- 2500 us at 500 Hz, +/- 750 us at 1000 Hz, +/- 250 us at 2000 Hz, and under +/- 210 us for any frequency above 5000 Hz.")]
     public partial class CreateStopPayload
     {
         /// <summary>
-        /// Gets or sets the value that stops the frequency generator process with any input value (not implemented for a sound index). The time precision of this event is frequency dependent: +/- 2500 us at 500 Hz, +/- 750 us at 1000 Hz, +/- 250 us at 2000 Hz, and under +/- 210 us for any frequency above 5000 Hz.
+        /// Gets or sets the value that stops the frequency generator process with any non-zero input value. Silencing a sound index is not implemented. Any non-zero write clears a pending start, so a new sound can be started immediately. The time precision of this event is frequency dependent: +/- 2500 us at 500 Hz, +/- 750 us at 1000 Hz, +/- 250 us at 2000 Hz, and under +/- 210 us for any frequency above 5000 Hz.
         /// </summary>
-        [Description("The value that stops the frequency generator process with any input value (not implemented for a sound index). The time precision of this event is frequency dependent: +/- 2500 us at 500 Hz, +/- 750 us at 1000 Hz, +/- 250 us at 2000 Hz, and under +/- 210 us for any frequency above 5000 Hz.")]
+        [Description("The value that stops the frequency generator process with any non-zero input value. Silencing a sound index is not implemented. Any non-zero write clears a pending start, so a new sound can be started immediately. The time precision of this event is frequency dependent: +/- 2500 us at 500 Hz, +/- 750 us at 1000 Hz, +/- 250 us at 2000 Hz, and under +/- 210 us for any frequency above 5000 Hz.")]
         public byte Stop { get; set; }
 
         /// <summary>
@@ -3708,7 +3708,7 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Creates a message that stops the frequency generator process with any input value (not implemented for a sound index). The time precision of this event is frequency dependent: +/- 2500 us at 500 Hz, +/- 750 us at 1000 Hz, +/- 250 us at 2000 Hz, and under +/- 210 us for any frequency above 5000 Hz.
+        /// Creates a message that stops the frequency generator process with any non-zero input value. Silencing a sound index is not implemented. Any non-zero write clears a pending start, so a new sound can be started immediately. The time precision of this event is frequency dependent: +/- 2500 us at 500 Hz, +/- 750 us at 1000 Hz, +/- 250 us at 2000 Hz, and under +/- 210 us for any frequency above 5000 Hz.
         /// </summary>
         /// <param name="messageType">Specifies the type of the created message.</param>
         /// <returns>A new message for the Stop register.</returns>
@@ -3720,14 +3720,14 @@ namespace Harp.SoundCard
 
     /// <summary>
     /// Represents an operator that creates a timestamped message payload
-    /// that stops the frequency generator process with any input value (not implemented for a sound index). The time precision of this event is frequency dependent: +/- 2500 us at 500 Hz, +/- 750 us at 1000 Hz, +/- 250 us at 2000 Hz, and under +/- 210 us for any frequency above 5000 Hz.
+    /// that stops the frequency generator process with any non-zero input value. Silencing a sound index is not implemented. Any non-zero write clears a pending start, so a new sound can be started immediately. The time precision of this event is frequency dependent: +/- 2500 us at 500 Hz, +/- 750 us at 1000 Hz, +/- 250 us at 2000 Hz, and under +/- 210 us for any frequency above 5000 Hz.
     /// </summary>
     [DisplayName("TimestampedStopPayload")]
-    [Description("Creates a timestamped message payload that stops the frequency generator process with any input value (not implemented for a sound index). The time precision of this event is frequency dependent: +/- 2500 us at 500 Hz, +/- 750 us at 1000 Hz, +/- 250 us at 2000 Hz, and under +/- 210 us for any frequency above 5000 Hz.")]
+    [Description("Creates a timestamped message payload that stops the frequency generator process with any non-zero input value. Silencing a sound index is not implemented. Any non-zero write clears a pending start, so a new sound can be started immediately. The time precision of this event is frequency dependent: +/- 2500 us at 500 Hz, +/- 750 us at 1000 Hz, +/- 250 us at 2000 Hz, and under +/- 210 us for any frequency above 5000 Hz.")]
     public partial class CreateTimestampedStopPayload : CreateStopPayload
     {
         /// <summary>
-        /// Creates a timestamped message that stops the frequency generator process with any input value (not implemented for a sound index). The time precision of this event is frequency dependent: +/- 2500 us at 500 Hz, +/- 750 us at 1000 Hz, +/- 250 us at 2000 Hz, and under +/- 210 us for any frequency above 5000 Hz.
+        /// Creates a timestamped message that stops the frequency generator process with any non-zero input value. Silencing a sound index is not implemented. Any non-zero write clears a pending start, so a new sound can be started immediately. The time precision of this event is frequency dependent: +/- 2500 us at 500 Hz, +/- 750 us at 1000 Hz, +/- 250 us at 2000 Hz, and under +/- 210 us for any frequency above 5000 Hz.
         /// </summary>
         /// <param name="timestamp">The timestamp of the message payload, in seconds.</param>
         /// <param name="messageType">Specifies the type of the created message.</param>
@@ -4893,21 +4893,21 @@ namespace Harp.SoundCard
         public ushort Adc1 { get; set; }
 
         /// <summary>
-        /// Gets or sets a value that the current amplitude of the left channel.
+        /// Gets or sets a value that the last amplitude of the left channel set by a register write.
         /// </summary>
-        [Description("The current amplitude of the left channel.")]
+        [Description("The last amplitude of the left channel set by a register write.")]
         public ushort AttenuationLeft { get; set; }
 
         /// <summary>
-        /// Gets or sets a value that the current amplitude of the right channel.
+        /// Gets or sets a value that the last amplitude of the right channel set by a register write.
         /// </summary>
-        [Description("The current amplitude of the right channel.")]
+        [Description("The last amplitude of the right channel set by a register write.")]
         public ushort AttenuationRight { get; set; }
 
         /// <summary>
-        /// Gets or sets a value that the output sound index (if less than 32) or frequency (if greater or equal than 32) being played.
+        /// Gets or sets a value that the last sound index (if less than 32) or frequency (if greater or equal than 32) set by a register write.
         /// </summary>
-        [Description("The output sound index (if less than 32) or frequency (if greater or equal than 32) being played.")]
+        [Description("The last sound index (if less than 32) or frequency (if greater or equal than 32) set by a register write.")]
         public ushort Frequency { get; set; }
 
         /// <summary>
@@ -5020,9 +5020,9 @@ namespace Harp.SoundCard
         /// </summary>
         /// <param name="adc0">The sampled analog input value on ADC0.</param>
         /// <param name="adc1">The sampled analog input value on ADC1.</param>
-        /// <param name="attenuationLeft">The current amplitude of the left channel.</param>
-        /// <param name="attenuationRight">The current amplitude of the right channel.</param>
-        /// <param name="frequency">The output sound index (if less than 32) or frequency (if greater or equal than 32) being played.</param>
+        /// <param name="attenuationLeft">The last amplitude of the left channel set by a register write.</param>
+        /// <param name="attenuationRight">The last amplitude of the right channel set by a register write.</param>
+        /// <param name="frequency">The last sound index (if less than 32) or frequency (if greater or equal than 32) set by a register write.</param>
         public AdcControlStatePayload(
             ushort adc0,
             ushort adc1,
@@ -5048,17 +5048,17 @@ namespace Harp.SoundCard
         public ushort Adc1;
 
         /// <summary>
-        /// The current amplitude of the left channel.
+        /// The last amplitude of the left channel set by a register write.
         /// </summary>
         public ushort AttenuationLeft;
 
         /// <summary>
-        /// The current amplitude of the right channel.
+        /// The last amplitude of the right channel set by a register write.
         /// </summary>
         public ushort AttenuationRight;
 
         /// <summary>
-        /// The output sound index (if less than 32) or frequency (if greater or equal than 32) being played.
+        /// The last sound index (if less than 32) or frequency (if greater or equal than 32) set by a register write.
         /// </summary>
         public ushort Frequency;
 
@@ -5184,9 +5184,9 @@ namespace Harp.SoundCard
         Digital = 0,
 
         /// <summary>
-        /// Positive 500us pulse when sound starts or frequency changes.
+        /// Positive 400us pulse when sound starts or frequency changes.
         /// </summary>
-        [Description("Positive 500us pulse when sound starts or frequency changes.")]
+        [Description("Positive 400us pulse when sound starts or frequency changes.")]
         PulseOnStart = 1
     }
 
