@@ -9,14 +9,15 @@ registers:
   Start:
     address: 32
     type: U16
-    access: Write
+    access: [Write, Event]
     description: Starts the sound index (if less than 32) or waveform generator (if greater or equal than 32).
   Stop:
     address: 33
     type: U8
     access: [Write, Event]
     description: >-
-      Stops the frequency generator process with any input value (not implemented for a sound index).
+      Stops the frequency generator process with any non-zero input value. Silencing a sound index is not
+      implemented. Any non-zero write clears a pending start, so a new sound can be started immediately.
       The time precision of this event is frequency dependent: +/- 2500 us at 500 Hz, +/- 750 us at 1000 Hz,
       +/- 250 us at 2000 Hz, and under +/- 210 us for any frequency above 5000 Hz.
   AttenuationLeft: &attenuation
@@ -165,13 +166,13 @@ registers:
         description: The sampled analog input value on ADC1.
       AttenuationLeft:
         offset: 2
-        description: The current amplitude of the left channel.
+        description: The last amplitude of the left channel set by a register write.
       AttenuationRight:
         offset: 3
-        description: The current amplitude of the right channel.
+        description: The last amplitude of the right channel set by a register write.
       Frequency:
         offset: 4
-        description: The output sound index (if less than 32) or frequency (if greater or equal than 32) being played.
+        description: The last sound index (if less than 32) or frequency (if greater or equal than 32) set by a register write.
   ConfigureAdc0:
     address: 66
     type: U8
@@ -259,7 +260,7 @@ groupMasks:
     description: Specifies the operation mode of the digital output.
     values:
       Digital: {value: 0, description: Used as a pure digital output.}
-      PulseOnStart: {value: 1, description: Positive 500us pulse when sound starts or frequency changes. }
+      PulseOnStart: {value: 1, description: Positive 400us pulse when sound starts or frequency changes. }
   AdcControlStateConfiguration:
     description: Specifies the operation mode of the ADC control stream.
     values:
