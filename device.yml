@@ -10,7 +10,9 @@ registers:
     address: 32
     type: U16
     access: [Write, Event]
-    description: Starts the sound index (if less than 32) or waveform generator (if greater or equal than 32).
+    minValue: 2
+    maxValue: 39999
+    description: Starts the sound index if the value is less than 32, or otherwise the waveform generator at the specified frequency in Hz.
   Stop:
     address: 33
     type: U8
@@ -53,7 +55,7 @@ registers:
     type: U8
     access: Event
     maskType: DigitalInputs
-    description: Reports the state of the digital inputs.
+    description: Reports the state of the digital inputs. Events are sent only for inputs configured in Digital mode.
   ConfigureDI0: &configureDI
     address: 41
     type: U8
@@ -68,11 +70,13 @@ registers:
     address: 43
     type: U16
     access: Write
-    description: Specifies the sound index to be played when triggering DI0.
+    minValue: 2
+    maxValue: 39999
+    description: Specifies the sound index or frequency to start when triggering DI0, following the same rules as Start.
   StartOnDI1:
     <<: *soundIndex
     address: 44
-    description: Specifies the sound index to be played when triggering DI1.
+    description: Specifies the sound index or frequency to start when triggering DI1, following the same rules as Start.
   AttenuationLeftDI0:
     <<: *attenuation
     address: 45
@@ -166,13 +170,13 @@ registers:
         description: The sampled analog input value on ADC1.
       AttenuationLeft:
         offset: 2
-        description: The last amplitude of the left channel set by a register write.
+        description: The last attenuation of the left channel set by a register write.
       AttenuationRight:
         offset: 3
-        description: The last amplitude of the right channel set by a register write.
+        description: The last attenuation of the right channel set by a register write.
       Frequency:
         offset: 4
-        description: The last sound index (if less than 32) or frequency (if greater or equal than 32) set by a register write.
+        description: The last sound index or frequency set by a register write, following the same rules as Start.
   ConfigureAdc0:
     address: 66
     type: U8

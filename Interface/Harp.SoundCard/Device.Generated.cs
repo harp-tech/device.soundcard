@@ -530,9 +530,9 @@ namespace Harp.SoundCard
     }
 
     /// <summary>
-    /// Represents a register that starts the sound index (if less than 32) or waveform generator (if greater or equal than 32).
+    /// Represents a register that starts the sound index if the value is less than 32, or otherwise the waveform generator at the specified frequency in Hz.
     /// </summary>
-    [Description("Starts the sound index (if less than 32) or waveform generator (if greater or equal than 32).")]
+    [Description("Starts the sound index if the value is less than 32, or otherwise the waveform generator at the specified frequency in Hz.")]
     public partial class Start
     {
         /// <summary>
@@ -1150,9 +1150,9 @@ namespace Harp.SoundCard
     }
 
     /// <summary>
-    /// Represents a register that reports the state of the digital inputs.
+    /// Represents a register that reports the state of the digital inputs. Events are sent only for inputs configured in Digital mode.
     /// </summary>
-    [Description("Reports the state of the digital inputs.")]
+    [Description("Reports the state of the digital inputs. Events are sent only for inputs configured in Digital mode.")]
     public partial class InputState
     {
         /// <summary>
@@ -1441,9 +1441,9 @@ namespace Harp.SoundCard
     }
 
     /// <summary>
-    /// Represents a register that specifies the sound index to be played when triggering DI0.
+    /// Represents a register that specifies the sound index or frequency to start when triggering DI0, following the same rules as Start.
     /// </summary>
-    [Description("Specifies the sound index to be played when triggering DI0.")]
+    [Description("Specifies the sound index or frequency to start when triggering DI0, following the same rules as Start.")]
     public partial class StartOnDI0
     {
         /// <summary>
@@ -1537,9 +1537,9 @@ namespace Harp.SoundCard
     }
 
     /// <summary>
-    /// Represents a register that specifies the sound index to be played when triggering DI1.
+    /// Represents a register that specifies the sound index or frequency to start when triggering DI1, following the same rules as Start.
     /// </summary>
-    [Description("Specifies the sound index to be played when triggering DI1.")]
+    [Description("Specifies the sound index or frequency to start when triggering DI1, following the same rules as Start.")]
     public partial class StartOnDI1
     {
         /// <summary>
@@ -3632,17 +3632,19 @@ namespace Harp.SoundCard
 
     /// <summary>
     /// Represents an operator that creates a message payload
-    /// that starts the sound index (if less than 32) or waveform generator (if greater or equal than 32).
+    /// that starts the sound index if the value is less than 32, or otherwise the waveform generator at the specified frequency in Hz.
     /// </summary>
     [DisplayName("StartPayload")]
-    [Description("Creates a message payload that starts the sound index (if less than 32) or waveform generator (if greater or equal than 32).")]
+    [Description("Creates a message payload that starts the sound index if the value is less than 32, or otherwise the waveform generator at the specified frequency in Hz.")]
     public partial class CreateStartPayload
     {
         /// <summary>
-        /// Gets or sets the value that starts the sound index (if less than 32) or waveform generator (if greater or equal than 32).
+        /// Gets or sets the value that starts the sound index if the value is less than 32, or otherwise the waveform generator at the specified frequency in Hz.
         /// </summary>
-        [Description("The value that starts the sound index (if less than 32) or waveform generator (if greater or equal than 32).")]
-        public ushort Start { get; set; }
+        [Range(min: 2, max: 39999)]
+        [Editor(DesignTypes.NumericUpDownEditor, DesignTypes.UITypeEditor)]
+        [Description("The value that starts the sound index if the value is less than 32, or otherwise the waveform generator at the specified frequency in Hz.")]
+        public ushort Start { get; set; } = 2;
 
         /// <summary>
         /// Creates a message payload for the Start register.
@@ -3654,7 +3656,7 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Creates a message that starts the sound index (if less than 32) or waveform generator (if greater or equal than 32).
+        /// Creates a message that starts the sound index if the value is less than 32, or otherwise the waveform generator at the specified frequency in Hz.
         /// </summary>
         /// <param name="messageType">Specifies the type of the created message.</param>
         /// <returns>A new message for the Start register.</returns>
@@ -3666,14 +3668,14 @@ namespace Harp.SoundCard
 
     /// <summary>
     /// Represents an operator that creates a timestamped message payload
-    /// that starts the sound index (if less than 32) or waveform generator (if greater or equal than 32).
+    /// that starts the sound index if the value is less than 32, or otherwise the waveform generator at the specified frequency in Hz.
     /// </summary>
     [DisplayName("TimestampedStartPayload")]
-    [Description("Creates a timestamped message payload that starts the sound index (if less than 32) or waveform generator (if greater or equal than 32).")]
+    [Description("Creates a timestamped message payload that starts the sound index if the value is less than 32, or otherwise the waveform generator at the specified frequency in Hz.")]
     public partial class CreateTimestampedStartPayload : CreateStartPayload
     {
         /// <summary>
-        /// Creates a timestamped message that starts the sound index (if less than 32) or waveform generator (if greater or equal than 32).
+        /// Creates a timestamped message that starts the sound index if the value is less than 32, or otherwise the waveform generator at the specified frequency in Hz.
         /// </summary>
         /// <param name="timestamp">The timestamp of the message payload, in seconds.</param>
         /// <param name="messageType">Specifies the type of the created message.</param>
@@ -3956,16 +3958,16 @@ namespace Harp.SoundCard
 
     /// <summary>
     /// Represents an operator that creates a message payload
-    /// that reports the state of the digital inputs.
+    /// that reports the state of the digital inputs. Events are sent only for inputs configured in Digital mode.
     /// </summary>
     [DisplayName("InputStatePayload")]
-    [Description("Creates a message payload that reports the state of the digital inputs.")]
+    [Description("Creates a message payload that reports the state of the digital inputs. Events are sent only for inputs configured in Digital mode.")]
     public partial class CreateInputStatePayload
     {
         /// <summary>
-        /// Gets or sets the value that reports the state of the digital inputs.
+        /// Gets or sets the value that reports the state of the digital inputs. Events are sent only for inputs configured in Digital mode.
         /// </summary>
-        [Description("The value that reports the state of the digital inputs.")]
+        [Description("The value that reports the state of the digital inputs. Events are sent only for inputs configured in Digital mode.")]
         public DigitalInputs InputState { get; set; }
 
         /// <summary>
@@ -3978,7 +3980,7 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Creates a message that reports the state of the digital inputs.
+        /// Creates a message that reports the state of the digital inputs. Events are sent only for inputs configured in Digital mode.
         /// </summary>
         /// <param name="messageType">Specifies the type of the created message.</param>
         /// <returns>A new message for the InputState register.</returns>
@@ -3990,14 +3992,14 @@ namespace Harp.SoundCard
 
     /// <summary>
     /// Represents an operator that creates a timestamped message payload
-    /// that reports the state of the digital inputs.
+    /// that reports the state of the digital inputs. Events are sent only for inputs configured in Digital mode.
     /// </summary>
     [DisplayName("TimestampedInputStatePayload")]
-    [Description("Creates a timestamped message payload that reports the state of the digital inputs.")]
+    [Description("Creates a timestamped message payload that reports the state of the digital inputs. Events are sent only for inputs configured in Digital mode.")]
     public partial class CreateTimestampedInputStatePayload : CreateInputStatePayload
     {
         /// <summary>
-        /// Creates a timestamped message that reports the state of the digital inputs.
+        /// Creates a timestamped message that reports the state of the digital inputs. Events are sent only for inputs configured in Digital mode.
         /// </summary>
         /// <param name="timestamp">The timestamp of the message payload, in seconds.</param>
         /// <param name="messageType">Specifies the type of the created message.</param>
@@ -4118,17 +4120,19 @@ namespace Harp.SoundCard
 
     /// <summary>
     /// Represents an operator that creates a message payload
-    /// that specifies the sound index to be played when triggering DI0.
+    /// that specifies the sound index or frequency to start when triggering DI0, following the same rules as Start.
     /// </summary>
     [DisplayName("StartOnDI0Payload")]
-    [Description("Creates a message payload that specifies the sound index to be played when triggering DI0.")]
+    [Description("Creates a message payload that specifies the sound index or frequency to start when triggering DI0, following the same rules as Start.")]
     public partial class CreateStartOnDI0Payload
     {
         /// <summary>
-        /// Gets or sets the value that specifies the sound index to be played when triggering DI0.
+        /// Gets or sets the value that specifies the sound index or frequency to start when triggering DI0, following the same rules as Start.
         /// </summary>
-        [Description("The value that specifies the sound index to be played when triggering DI0.")]
-        public ushort StartOnDI0 { get; set; }
+        [Range(min: 2, max: 39999)]
+        [Editor(DesignTypes.NumericUpDownEditor, DesignTypes.UITypeEditor)]
+        [Description("The value that specifies the sound index or frequency to start when triggering DI0, following the same rules as Start.")]
+        public ushort StartOnDI0 { get; set; } = 2;
 
         /// <summary>
         /// Creates a message payload for the StartOnDI0 register.
@@ -4140,7 +4144,7 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Creates a message that specifies the sound index to be played when triggering DI0.
+        /// Creates a message that specifies the sound index or frequency to start when triggering DI0, following the same rules as Start.
         /// </summary>
         /// <param name="messageType">Specifies the type of the created message.</param>
         /// <returns>A new message for the StartOnDI0 register.</returns>
@@ -4152,14 +4156,14 @@ namespace Harp.SoundCard
 
     /// <summary>
     /// Represents an operator that creates a timestamped message payload
-    /// that specifies the sound index to be played when triggering DI0.
+    /// that specifies the sound index or frequency to start when triggering DI0, following the same rules as Start.
     /// </summary>
     [DisplayName("TimestampedStartOnDI0Payload")]
-    [Description("Creates a timestamped message payload that specifies the sound index to be played when triggering DI0.")]
+    [Description("Creates a timestamped message payload that specifies the sound index or frequency to start when triggering DI0, following the same rules as Start.")]
     public partial class CreateTimestampedStartOnDI0Payload : CreateStartOnDI0Payload
     {
         /// <summary>
-        /// Creates a timestamped message that specifies the sound index to be played when triggering DI0.
+        /// Creates a timestamped message that specifies the sound index or frequency to start when triggering DI0, following the same rules as Start.
         /// </summary>
         /// <param name="timestamp">The timestamp of the message payload, in seconds.</param>
         /// <param name="messageType">Specifies the type of the created message.</param>
@@ -4172,17 +4176,19 @@ namespace Harp.SoundCard
 
     /// <summary>
     /// Represents an operator that creates a message payload
-    /// that specifies the sound index to be played when triggering DI1.
+    /// that specifies the sound index or frequency to start when triggering DI1, following the same rules as Start.
     /// </summary>
     [DisplayName("StartOnDI1Payload")]
-    [Description("Creates a message payload that specifies the sound index to be played when triggering DI1.")]
+    [Description("Creates a message payload that specifies the sound index or frequency to start when triggering DI1, following the same rules as Start.")]
     public partial class CreateStartOnDI1Payload
     {
         /// <summary>
-        /// Gets or sets the value that specifies the sound index to be played when triggering DI1.
+        /// Gets or sets the value that specifies the sound index or frequency to start when triggering DI1, following the same rules as Start.
         /// </summary>
-        [Description("The value that specifies the sound index to be played when triggering DI1.")]
-        public ushort StartOnDI1 { get; set; }
+        [Range(min: 2, max: 39999)]
+        [Editor(DesignTypes.NumericUpDownEditor, DesignTypes.UITypeEditor)]
+        [Description("The value that specifies the sound index or frequency to start when triggering DI1, following the same rules as Start.")]
+        public ushort StartOnDI1 { get; set; } = 2;
 
         /// <summary>
         /// Creates a message payload for the StartOnDI1 register.
@@ -4194,7 +4200,7 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Creates a message that specifies the sound index to be played when triggering DI1.
+        /// Creates a message that specifies the sound index or frequency to start when triggering DI1, following the same rules as Start.
         /// </summary>
         /// <param name="messageType">Specifies the type of the created message.</param>
         /// <returns>A new message for the StartOnDI1 register.</returns>
@@ -4206,14 +4212,14 @@ namespace Harp.SoundCard
 
     /// <summary>
     /// Represents an operator that creates a timestamped message payload
-    /// that specifies the sound index to be played when triggering DI1.
+    /// that specifies the sound index or frequency to start when triggering DI1, following the same rules as Start.
     /// </summary>
     [DisplayName("TimestampedStartOnDI1Payload")]
-    [Description("Creates a timestamped message payload that specifies the sound index to be played when triggering DI1.")]
+    [Description("Creates a timestamped message payload that specifies the sound index or frequency to start when triggering DI1, following the same rules as Start.")]
     public partial class CreateTimestampedStartOnDI1Payload : CreateStartOnDI1Payload
     {
         /// <summary>
-        /// Creates a timestamped message that specifies the sound index to be played when triggering DI1.
+        /// Creates a timestamped message that specifies the sound index or frequency to start when triggering DI1, following the same rules as Start.
         /// </summary>
         /// <param name="timestamp">The timestamp of the message payload, in seconds.</param>
         /// <param name="messageType">Specifies the type of the created message.</param>
@@ -4893,21 +4899,21 @@ namespace Harp.SoundCard
         public ushort Adc1 { get; set; }
 
         /// <summary>
-        /// Gets or sets a value that the last amplitude of the left channel set by a register write.
+        /// Gets or sets a value that the last attenuation of the left channel set by a register write.
         /// </summary>
-        [Description("The last amplitude of the left channel set by a register write.")]
+        [Description("The last attenuation of the left channel set by a register write.")]
         public ushort AttenuationLeft { get; set; }
 
         /// <summary>
-        /// Gets or sets a value that the last amplitude of the right channel set by a register write.
+        /// Gets or sets a value that the last attenuation of the right channel set by a register write.
         /// </summary>
-        [Description("The last amplitude of the right channel set by a register write.")]
+        [Description("The last attenuation of the right channel set by a register write.")]
         public ushort AttenuationRight { get; set; }
 
         /// <summary>
-        /// Gets or sets a value that the last sound index (if less than 32) or frequency (if greater or equal than 32) set by a register write.
+        /// Gets or sets a value that the last sound index or frequency set by a register write, following the same rules as Start.
         /// </summary>
-        [Description("The last sound index (if less than 32) or frequency (if greater or equal than 32) set by a register write.")]
+        [Description("The last sound index or frequency set by a register write, following the same rules as Start.")]
         public ushort Frequency { get; set; }
 
         /// <summary>
@@ -5020,9 +5026,9 @@ namespace Harp.SoundCard
         /// </summary>
         /// <param name="adc0">The sampled analog input value on ADC0.</param>
         /// <param name="adc1">The sampled analog input value on ADC1.</param>
-        /// <param name="attenuationLeft">The last amplitude of the left channel set by a register write.</param>
-        /// <param name="attenuationRight">The last amplitude of the right channel set by a register write.</param>
-        /// <param name="frequency">The last sound index (if less than 32) or frequency (if greater or equal than 32) set by a register write.</param>
+        /// <param name="attenuationLeft">The last attenuation of the left channel set by a register write.</param>
+        /// <param name="attenuationRight">The last attenuation of the right channel set by a register write.</param>
+        /// <param name="frequency">The last sound index or frequency set by a register write, following the same rules as Start.</param>
         public AdcControlStatePayload(
             ushort adc0,
             ushort adc1,
@@ -5048,17 +5054,17 @@ namespace Harp.SoundCard
         public ushort Adc1;
 
         /// <summary>
-        /// The last amplitude of the left channel set by a register write.
+        /// The last attenuation of the left channel set by a register write.
         /// </summary>
         public ushort AttenuationLeft;
 
         /// <summary>
-        /// The last amplitude of the right channel set by a register write.
+        /// The last attenuation of the right channel set by a register write.
         /// </summary>
         public ushort AttenuationRight;
 
         /// <summary>
-        /// The last sound index (if less than 32) or frequency (if greater or equal than 32) set by a register write.
+        /// The last sound index or frequency set by a register write, following the same rules as Start.
         /// </summary>
         public ushort Frequency;
 
