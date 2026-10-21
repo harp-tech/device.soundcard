@@ -118,7 +118,7 @@ ISR(PORTD_INT0_vect, ISR_NAKED)
 		}
 		else
 		{
-			switch (app_regs.REG_DI0_CONF)
+			switch (app_regs.REG_DI1_CONF)
 			{
 				case GM_DI_SYNC:
 					app_regs.REG_DIGITAL_INPUTS &= ~B_DI1;				
