@@ -247,7 +247,7 @@ typedef struct
 #define B_DI0                              (1<<0)       // Digital input 0
 #define B_DI1                              (1<<1)       // Digital input 1
 #define B_DI2                              (1<<2)       // Digital input 2
-#define MSK_DI_SEL                         (7<<0)       // 
+#define MSK_DI_SEL                         (3<<0)       //
 #define GM_DI_SYNC                         (0<<0)       // Used as a pure digital input
 #define GM_DI_START_AND_STOP_SOUND         (1<<0)       // Starts sound when rising edge and stop when falling edge
 #define GM_DI_START_SOUND                  (2<<0)       // Starts sound when rising edge

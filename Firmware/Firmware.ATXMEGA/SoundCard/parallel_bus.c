@@ -58,8 +58,8 @@ uint8_t command_to_send;
 #define send_last_byte(byte)    PORTA_OUT = byte; \
                                 set_CMD_WRITE; \
                                 while (!read_CMD_LATCHED); \
-                                if (read_CMD_NOT_EXEC)  { clr_CMD_WRITE; while (read_CMD_LATCHED); set_DOUT2; return false;} \
-                                else                    { clr_CMD_WRITE; while (read_CMD_LATCHED); clr_DOUT2; return true; }
+                                if (read_CMD_NOT_EXEC)  { clr_CMD_WRITE; while (read_CMD_LATCHED); return false;} \
+                                else                    { clr_CMD_WRITE; while (read_CMD_LATCHED); return true; }
 
 
 /************************************************************************/
