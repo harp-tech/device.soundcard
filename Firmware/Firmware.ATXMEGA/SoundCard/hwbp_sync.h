@@ -37,7 +37,7 @@ void trigger_sync_timer (void);
 #if defined(__AVR_ATxmega16A4U__)
     #define INCREASE_LOST_SYNC_COUNTER
 #else
-    #define INCREASE_LOST_SYNC_COUNTER device_lost_sync_counter++
+    #define INCREASE_LOST_SYNC_COUNTER if(++device_lost_sync_counter == 255) device_lost_sync_counter = 254; if(device_lost_sync_counter >= 5 ) commonbank.R_HEARTBEAT &= ~B_IS_SYNCHRONIZED
 #endif
 
 
