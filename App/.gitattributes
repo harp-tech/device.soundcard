@@ -1,0 +1,35 @@
+* text=auto eol=lf
+
+# Text files (explicit for clarity; all normalized to LF)
+*.cs         text eol=lf diff=csharp
+*.csproj     text eol=lf
+*.sln        text eol=lf
+*.props      text eol=lf
+*.targets    text eol=lf
+*.axaml      text eol=lf
+*.json       text eol=lf
+*.yml        text eol=lf
+*.yaml       text eol=lf
+*.md         text eol=lf
+*.sh         text eol=lf
+
+# SVG is XML text; keep it normalized and diffable.
+*.svg        text eol=lf
+*.svgz       binary
+
+# NSIS installer scripts -> keep as text and diffable.
+*.nsi        text eol=lf diff=nsis
+*.nsh        text eol=lf diff=nsis
+
+# Windows command scripts should remain CRLF.
+*.bat        text eol=crlf
+*.cmd        text eol=crlf
+
+# Binary assets (no EOL conversion, no text diffs)
+*.png        binary
+*.jpg        binary
+*.jpeg       binary
+*.gif        binary
+*.bmp        binary
+*.ico        binary
+*.icns       binary
