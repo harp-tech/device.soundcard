@@ -1249,7 +1249,7 @@ void APP_Tasks ( void )
                         stop_sine_gen = true;
                     }
                 }
-                else if (new_sound_index < 40000)
+                else if (new_sound_index <= 40000)
                 {
                     new_right_sinewave_freq = new_sound_index;
                     new_sine_gen_frequency_is_available = true;

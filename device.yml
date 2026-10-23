@@ -11,7 +11,7 @@ registers:
     type: U16
     access: [Write, Event]
     minValue: 2
-    maxValue: 39999
+    maxValue: 40000
     description: Starts the sound index if the value is less than 32, or otherwise the waveform generator at the specified frequency in Hz.
   Stop:
     address: 33
@@ -71,7 +71,7 @@ registers:
     type: U16
     access: Write
     minValue: 2
-    maxValue: 39999
+    maxValue: 40000
     description: Specifies the sound index or frequency to start when triggering DI0, following the same rules as Start.
   StartOnDI1:
     <<: *soundIndex

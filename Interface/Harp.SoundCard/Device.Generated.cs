@@ -3641,7 +3641,7 @@ namespace Harp.SoundCard
         /// <summary>
         /// Gets or sets the value that starts the sound index if the value is less than 32, or otherwise the waveform generator at the specified frequency in Hz.
         /// </summary>
-        [Range(min: 2, max: 39999)]
+        [Range(min: 2, max: 40000)]
         [Editor(DesignTypes.NumericUpDownEditor, DesignTypes.UITypeEditor)]
         [Description("The value that starts the sound index if the value is less than 32, or otherwise the waveform generator at the specified frequency in Hz.")]
         public ushort Start { get; set; } = 2;
@@ -4129,7 +4129,7 @@ namespace Harp.SoundCard
         /// <summary>
         /// Gets or sets the value that specifies the sound index or frequency to start when triggering DI0, following the same rules as Start.
         /// </summary>
-        [Range(min: 2, max: 39999)]
+        [Range(min: 2, max: 40000)]
         [Editor(DesignTypes.NumericUpDownEditor, DesignTypes.UITypeEditor)]
         [Description("The value that specifies the sound index or frequency to start when triggering DI0, following the same rules as Start.")]
         public ushort StartOnDI0 { get; set; } = 2;
@@ -4185,7 +4185,7 @@ namespace Harp.SoundCard
         /// <summary>
         /// Gets or sets the value that specifies the sound index or frequency to start when triggering DI1, following the same rules as Start.
         /// </summary>
-        [Range(min: 2, max: 39999)]
+        [Range(min: 2, max: 40000)]
         [Editor(DesignTypes.NumericUpDownEditor, DesignTypes.UITypeEditor)]
         [Description("The value that specifies the sound index or frequency to start when triggering DI1, following the same rules as Start.")]
         public ushort StartOnDI1 { get; set; } = 2;

@@ -128,7 +128,7 @@ bool app_write_REG_PLAY_SOUND_OR_FREQ(void *a)
 {
 	uint16_t reg = *((uint16_t*)a);
    
-   if (reg <= 1 || reg >= 40000)
+   if (reg <= 1 || reg > 40000)
       return false;
 
    if (last_sound_triggered != 0)
@@ -237,7 +237,7 @@ bool app_write_REG_SET_ATTENUATION_AND_PLAY_SOUND_OR_FREQ(void *a)
 {
 	uint16_t *reg = ((uint16_t*)a);
 	
-	if (reg[0] <= 1 || reg[0] >= 40000)
+	if (reg[0] <= 1 || reg[0] > 40000)
 		return false;
 
 	if (last_sound_triggered != 0)
@@ -334,7 +334,7 @@ bool app_write_REG_DI0_SOUND_INDEX(void *a)
 {
 	uint16_t reg = *((uint16_t*)a);
 	
-	if (reg <= 1 || reg >= 40000)
+	if (reg <= 1 || reg > 40000)
 		return false;
 
 	app_regs.REG_DI0_SOUND_INDEX = reg;
@@ -355,7 +355,7 @@ bool app_write_REG_DI1_SOUND_INDEX(void *a)
 {
 	uint16_t reg = *((uint16_t*)a);
 	
-	if (reg <= 1 || reg >= 40000)
+	if (reg <= 1 || reg > 40000)
 		return false;
 
 	app_regs.REG_DI1_SOUND_INDEX = reg;
