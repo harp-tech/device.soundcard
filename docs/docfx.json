@@ -1,0 +1,80 @@
+{
+  "$schema": "https://raw.githubusercontent.com/dotnet/docfx/main/schemas/docfx.schema.json",
+  "metadata": [
+    {
+      "src": [
+        {
+          "src": "../Interface/",
+          "files": "**/*.csproj",
+          "exclude": "**/*.App.csproj"
+        }
+      ],
+      "output": "../artifacts/docs/api/",
+      "enumSortOrder": "declaringOrder",
+      "memberLayout": "separatePages",
+      "filter": "filter.yml"
+    }
+  ],
+  "build": {
+    "content": [
+      {
+        "files": [
+          "*.md",
+          "toc.yml",
+          "{articles,tutorials,examples}/**/*.md",
+          "{articles,tutorials,examples}/**/toc.yml"
+        ],
+        "exclude": "README.md"
+      },
+      {
+        "src": "../artifacts/docs/api/",
+        "dest": "api",
+        "files": "**/*.yml"
+      }
+    ],
+    "resource": [
+      {
+        "files": [
+          "images/**",
+          "workflows/**/*.{bonsai,svg}",
+          "{articles,tutorials,examples}/**/*.{bonsai,svg}"
+        ]
+      }
+    ],
+    "overwrite": [
+      "apidoc/**/*.md"
+    ],
+    "output": "../artifacts/docs/site/",
+    "template": [
+      "default",
+      "modern",
+      "harp-docfx/template",
+      "template"
+    ],
+    "sitemap": {
+      "baseUrl": "https://harp-tech.org/device.soundcard"
+    },
+    "globalMetadata": {
+      "_appName": "SoundCard",
+      "_appTitle": "Harp.SoundCard",
+      "_appFooter": "&copy; harp-tech and Contributors. Made with <a href=\"https://dotnet.github.io/docfx\">docfx</a>",
+      "_enableNewTab": true,
+      "_enableSearch": true,
+      "_gitContribute": {
+        "apiSpecFolder": "docs/apidoc"
+      }
+    },
+    "markdownEngineProperties": {
+      "markdigExtensions": [
+        "attributes",
+        "customcontainers"
+      ]
+    },
+    "xref": [
+      "https://harp-tech.org/xrefmap.yml",
+      "https://bonsai-rx.org/docs/xrefmap.yml",
+      "https://bonsai-rx.org/numerics/xrefmap.yml",
+      "https://horizongir.github.io/reactive/xrefmap.yml"
+    ]
+  }
+}
