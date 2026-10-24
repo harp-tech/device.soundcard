@@ -1,0 +1,34 @@
+- name: Introduction
+- name: Overview
+  href: ../index.md
+- name: Specs
+- name: SoundCard
+  href: soundcard-overview.md
+- name: Peripherals
+  href: ./peripherals/toc.yml
+- name: Getting Started
+- name: Ports and Connections
+  href: connections.md
+- name: Installation
+  href: installation.md
+- name: SoundCard GUI
+  href: upload-waveform-gui.md
+- name: Bonsai
+  href: harp-bonsai.md
+- name: Bonsai Workflows
+- name: Play Sounds
+  href: play-sound.md
+- name: Adjust Volume
+  href: adjust-volume.md
+- name: Configure Digital Input
+  href: configure-digitalinput.md
+- name: Configure Digital Output
+  href: configure-digitaloutput.md
+- name: Configure Analog Input
+  href: configure-analoginput.md
+- name: Data Management
+- name: Logging and Analysis
+  href: logging-analysis.md
+- name: Troubleshooting
+- name: Errors
+  href: troubleshooting.md

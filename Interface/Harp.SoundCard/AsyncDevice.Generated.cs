@@ -49,14 +49,14 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously reads the contents of the PlaySoundOrFrequency register.
+        /// Asynchronously reads the contents of the <see cref="PlaySoundOrFrequency"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
         /// <returns>
-        /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
-        /// property contains the register payload.
+        /// A task that represents the asynchronous read operation. The task result contains
+        /// the register payload.
         /// </returns>
         public async Task<ushort> ReadPlaySoundOrFrequencyAsync(CancellationToken cancellationToken = default)
         {
@@ -65,14 +65,14 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously reads the timestamped contents of the PlaySoundOrFrequency register.
+        /// Asynchronously reads the timestamped contents of the <see cref="PlaySoundOrFrequency"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
         /// <returns>
-        /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
-        /// property contains the timestamped register payload.
+        /// A task that represents the asynchronous read operation. The task result contains
+        /// the timestamped register payload.
         /// </returns>
         public async Task<Timestamped<ushort>> ReadTimestampedPlaySoundOrFrequencyAsync(CancellationToken cancellationToken = default)
         {
@@ -81,9 +81,9 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously writes a value to the PlaySoundOrFrequency register.
+        /// Asynchronously writes a value to the <see cref="PlaySoundOrFrequency"/> register.
         /// </summary>
-        /// <param name="value">The value to be stored in the register.</param>
+        /// <param name="value">The value to write in the register.</param>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
@@ -95,14 +95,14 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously reads the contents of the Stop register.
+        /// Asynchronously reads the contents of the <see cref="Stop"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
         /// <returns>
-        /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
-        /// property contains the register payload.
+        /// A task that represents the asynchronous read operation. The task result contains
+        /// the register payload.
         /// </returns>
         public async Task<byte> ReadStopAsync(CancellationToken cancellationToken = default)
         {
@@ -111,14 +111,14 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously reads the timestamped contents of the Stop register.
+        /// Asynchronously reads the timestamped contents of the <see cref="Stop"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
         /// <returns>
-        /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
-        /// property contains the timestamped register payload.
+        /// A task that represents the asynchronous read operation. The task result contains
+        /// the timestamped register payload.
         /// </returns>
         public async Task<Timestamped<byte>> ReadTimestampedStopAsync(CancellationToken cancellationToken = default)
         {
@@ -127,9 +127,9 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously writes a value to the Stop register.
+        /// Asynchronously writes a value to the <see cref="Stop"/> register.
         /// </summary>
-        /// <param name="value">The value to be stored in the register.</param>
+        /// <param name="value">The value to write in the register.</param>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
@@ -141,14 +141,14 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously reads the contents of the AttenuationLeft register.
+        /// Asynchronously reads the contents of the <see cref="AttenuationLeft"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
         /// <returns>
-        /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
-        /// property contains the register payload.
+        /// A task that represents the asynchronous read operation. The task result contains
+        /// the register payload.
         /// </returns>
         public async Task<ushort> ReadAttenuationLeftAsync(CancellationToken cancellationToken = default)
         {
@@ -157,14 +157,14 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously reads the timestamped contents of the AttenuationLeft register.
+        /// Asynchronously reads the timestamped contents of the <see cref="AttenuationLeft"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
         /// <returns>
-        /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
-        /// property contains the timestamped register payload.
+        /// A task that represents the asynchronous read operation. The task result contains
+        /// the timestamped register payload.
         /// </returns>
         public async Task<Timestamped<ushort>> ReadTimestampedAttenuationLeftAsync(CancellationToken cancellationToken = default)
         {
@@ -173,9 +173,9 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously writes a value to the AttenuationLeft register.
+        /// Asynchronously writes a value to the <see cref="AttenuationLeft"/> register.
         /// </summary>
-        /// <param name="value">The value to be stored in the register.</param>
+        /// <param name="value">The value to write in the register.</param>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
@@ -187,14 +187,14 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously reads the contents of the AttenuationRight register.
+        /// Asynchronously reads the contents of the <see cref="AttenuationRight"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
         /// <returns>
-        /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
-        /// property contains the register payload.
+        /// A task that represents the asynchronous read operation. The task result contains
+        /// the register payload.
         /// </returns>
         public async Task<ushort> ReadAttenuationRightAsync(CancellationToken cancellationToken = default)
         {
@@ -203,14 +203,14 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously reads the timestamped contents of the AttenuationRight register.
+        /// Asynchronously reads the timestamped contents of the <see cref="AttenuationRight"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
         /// <returns>
-        /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
-        /// property contains the timestamped register payload.
+        /// A task that represents the asynchronous read operation. The task result contains
+        /// the timestamped register payload.
         /// </returns>
         public async Task<Timestamped<ushort>> ReadTimestampedAttenuationRightAsync(CancellationToken cancellationToken = default)
         {
@@ -219,9 +219,9 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously writes a value to the AttenuationRight register.
+        /// Asynchronously writes a value to the <see cref="AttenuationRight"/> register.
         /// </summary>
-        /// <param name="value">The value to be stored in the register.</param>
+        /// <param name="value">The value to write in the register.</param>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
@@ -233,14 +233,14 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously reads the contents of the AttenuationBoth register.
+        /// Asynchronously reads the contents of the <see cref="AttenuationBoth"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
         /// <returns>
-        /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
-        /// property contains the register payload.
+        /// A task that represents the asynchronous read operation. The task result contains
+        /// the register payload.
         /// </returns>
         public async Task<ushort[]> ReadAttenuationBothAsync(CancellationToken cancellationToken = default)
         {
@@ -249,14 +249,14 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously reads the timestamped contents of the AttenuationBoth register.
+        /// Asynchronously reads the timestamped contents of the <see cref="AttenuationBoth"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
         /// <returns>
-        /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
-        /// property contains the timestamped register payload.
+        /// A task that represents the asynchronous read operation. The task result contains
+        /// the timestamped register payload.
         /// </returns>
         public async Task<Timestamped<ushort[]>> ReadTimestampedAttenuationBothAsync(CancellationToken cancellationToken = default)
         {
@@ -265,9 +265,9 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously writes a value to the AttenuationBoth register.
+        /// Asynchronously writes a value to the <see cref="AttenuationBoth"/> register.
         /// </summary>
-        /// <param name="value">The value to be stored in the register.</param>
+        /// <param name="value">The value to write in the register.</param>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
@@ -279,14 +279,14 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously reads the contents of the AttenuationAndPlaySoundOrFreq register.
+        /// Asynchronously reads the contents of the <see cref="AttenuationAndPlaySoundOrFreq"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
         /// <returns>
-        /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
-        /// property contains the register payload.
+        /// A task that represents the asynchronous read operation. The task result contains
+        /// the register payload.
         /// </returns>
         public async Task<ushort[]> ReadAttenuationAndPlaySoundOrFreqAsync(CancellationToken cancellationToken = default)
         {
@@ -295,14 +295,14 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously reads the timestamped contents of the AttenuationAndPlaySoundOrFreq register.
+        /// Asynchronously reads the timestamped contents of the <see cref="AttenuationAndPlaySoundOrFreq"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
         /// <returns>
-        /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
-        /// property contains the timestamped register payload.
+        /// A task that represents the asynchronous read operation. The task result contains
+        /// the timestamped register payload.
         /// </returns>
         public async Task<Timestamped<ushort[]>> ReadTimestampedAttenuationAndPlaySoundOrFreqAsync(CancellationToken cancellationToken = default)
         {
@@ -311,9 +311,9 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously writes a value to the AttenuationAndPlaySoundOrFreq register.
+        /// Asynchronously writes a value to the <see cref="AttenuationAndPlaySoundOrFreq"/> register.
         /// </summary>
-        /// <param name="value">The value to be stored in the register.</param>
+        /// <param name="value">The value to write in the register.</param>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
@@ -325,14 +325,14 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously reads the contents of the InputState register.
+        /// Asynchronously reads the contents of the <see cref="InputState"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
         /// <returns>
-        /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
-        /// property contains the register payload.
+        /// A task that represents the asynchronous read operation. The task result contains
+        /// the register payload.
         /// </returns>
         public async Task<DigitalInputs> ReadInputStateAsync(CancellationToken cancellationToken = default)
         {
@@ -341,14 +341,14 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously reads the timestamped contents of the InputState register.
+        /// Asynchronously reads the timestamped contents of the <see cref="InputState"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
         /// <returns>
-        /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
-        /// property contains the timestamped register payload.
+        /// A task that represents the asynchronous read operation. The task result contains
+        /// the timestamped register payload.
         /// </returns>
         public async Task<Timestamped<DigitalInputs>> ReadTimestampedInputStateAsync(CancellationToken cancellationToken = default)
         {
@@ -357,14 +357,14 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously reads the contents of the ConfigureDI0 register.
+        /// Asynchronously reads the contents of the <see cref="ConfigureDI0"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
         /// <returns>
-        /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
-        /// property contains the register payload.
+        /// A task that represents the asynchronous read operation. The task result contains
+        /// the register payload.
         /// </returns>
         public async Task<DigitalInputConfiguration> ReadConfigureDI0Async(CancellationToken cancellationToken = default)
         {
@@ -373,14 +373,14 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously reads the timestamped contents of the ConfigureDI0 register.
+        /// Asynchronously reads the timestamped contents of the <see cref="ConfigureDI0"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
         /// <returns>
-        /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
-        /// property contains the timestamped register payload.
+        /// A task that represents the asynchronous read operation. The task result contains
+        /// the timestamped register payload.
         /// </returns>
         public async Task<Timestamped<DigitalInputConfiguration>> ReadTimestampedConfigureDI0Async(CancellationToken cancellationToken = default)
         {
@@ -389,9 +389,9 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously writes a value to the ConfigureDI0 register.
+        /// Asynchronously writes a value to the <see cref="ConfigureDI0"/> register.
         /// </summary>
-        /// <param name="value">The value to be stored in the register.</param>
+        /// <param name="value">The value to write in the register.</param>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
@@ -403,14 +403,14 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously reads the contents of the ConfigureDI1 register.
+        /// Asynchronously reads the contents of the <see cref="ConfigureDI1"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
         /// <returns>
-        /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
-        /// property contains the register payload.
+        /// A task that represents the asynchronous read operation. The task result contains
+        /// the register payload.
         /// </returns>
         public async Task<DigitalInputConfiguration> ReadConfigureDI1Async(CancellationToken cancellationToken = default)
         {
@@ -419,14 +419,14 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously reads the timestamped contents of the ConfigureDI1 register.
+        /// Asynchronously reads the timestamped contents of the <see cref="ConfigureDI1"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
         /// <returns>
-        /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
-        /// property contains the timestamped register payload.
+        /// A task that represents the asynchronous read operation. The task result contains
+        /// the timestamped register payload.
         /// </returns>
         public async Task<Timestamped<DigitalInputConfiguration>> ReadTimestampedConfigureDI1Async(CancellationToken cancellationToken = default)
         {
@@ -435,9 +435,9 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously writes a value to the ConfigureDI1 register.
+        /// Asynchronously writes a value to the <see cref="ConfigureDI1"/> register.
         /// </summary>
-        /// <param name="value">The value to be stored in the register.</param>
+        /// <param name="value">The value to write in the register.</param>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
@@ -449,14 +449,14 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously reads the contents of the ConfigureDI2 register.
+        /// Asynchronously reads the contents of the <see cref="ConfigureDI2"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
         /// <returns>
-        /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
-        /// property contains the register payload.
+        /// A task that represents the asynchronous read operation. The task result contains
+        /// the register payload.
         /// </returns>
         public async Task<DigitalInputConfiguration> ReadConfigureDI2Async(CancellationToken cancellationToken = default)
         {
@@ -465,14 +465,14 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously reads the timestamped contents of the ConfigureDI2 register.
+        /// Asynchronously reads the timestamped contents of the <see cref="ConfigureDI2"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
         /// <returns>
-        /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
-        /// property contains the timestamped register payload.
+        /// A task that represents the asynchronous read operation. The task result contains
+        /// the timestamped register payload.
         /// </returns>
         public async Task<Timestamped<DigitalInputConfiguration>> ReadTimestampedConfigureDI2Async(CancellationToken cancellationToken = default)
         {
@@ -481,9 +481,9 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously writes a value to the ConfigureDI2 register.
+        /// Asynchronously writes a value to the <see cref="ConfigureDI2"/> register.
         /// </summary>
-        /// <param name="value">The value to be stored in the register.</param>
+        /// <param name="value">The value to write in the register.</param>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
@@ -495,14 +495,14 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously reads the contents of the SoundIndexDI0 register.
+        /// Asynchronously reads the contents of the <see cref="SoundIndexDI0"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
         /// <returns>
-        /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
-        /// property contains the register payload.
+        /// A task that represents the asynchronous read operation. The task result contains
+        /// the register payload.
         /// </returns>
         public async Task<byte> ReadSoundIndexDI0Async(CancellationToken cancellationToken = default)
         {
@@ -511,14 +511,14 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously reads the timestamped contents of the SoundIndexDI0 register.
+        /// Asynchronously reads the timestamped contents of the <see cref="SoundIndexDI0"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
         /// <returns>
-        /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
-        /// property contains the timestamped register payload.
+        /// A task that represents the asynchronous read operation. The task result contains
+        /// the timestamped register payload.
         /// </returns>
         public async Task<Timestamped<byte>> ReadTimestampedSoundIndexDI0Async(CancellationToken cancellationToken = default)
         {
@@ -527,9 +527,9 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously writes a value to the SoundIndexDI0 register.
+        /// Asynchronously writes a value to the <see cref="SoundIndexDI0"/> register.
         /// </summary>
-        /// <param name="value">The value to be stored in the register.</param>
+        /// <param name="value">The value to write in the register.</param>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
@@ -541,14 +541,14 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously reads the contents of the SoundIndexDI1 register.
+        /// Asynchronously reads the contents of the <see cref="SoundIndexDI1"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
         /// <returns>
-        /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
-        /// property contains the register payload.
+        /// A task that represents the asynchronous read operation. The task result contains
+        /// the register payload.
         /// </returns>
         public async Task<byte> ReadSoundIndexDI1Async(CancellationToken cancellationToken = default)
         {
@@ -557,14 +557,14 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously reads the timestamped contents of the SoundIndexDI1 register.
+        /// Asynchronously reads the timestamped contents of the <see cref="SoundIndexDI1"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
         /// <returns>
-        /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
-        /// property contains the timestamped register payload.
+        /// A task that represents the asynchronous read operation. The task result contains
+        /// the timestamped register payload.
         /// </returns>
         public async Task<Timestamped<byte>> ReadTimestampedSoundIndexDI1Async(CancellationToken cancellationToken = default)
         {
@@ -573,9 +573,9 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously writes a value to the SoundIndexDI1 register.
+        /// Asynchronously writes a value to the <see cref="SoundIndexDI1"/> register.
         /// </summary>
-        /// <param name="value">The value to be stored in the register.</param>
+        /// <param name="value">The value to write in the register.</param>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
@@ -587,14 +587,14 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously reads the contents of the SoundIndexDI2 register.
+        /// Asynchronously reads the contents of the <see cref="SoundIndexDI2"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
         /// <returns>
-        /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
-        /// property contains the register payload.
+        /// A task that represents the asynchronous read operation. The task result contains
+        /// the register payload.
         /// </returns>
         public async Task<byte> ReadSoundIndexDI2Async(CancellationToken cancellationToken = default)
         {
@@ -603,14 +603,14 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously reads the timestamped contents of the SoundIndexDI2 register.
+        /// Asynchronously reads the timestamped contents of the <see cref="SoundIndexDI2"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
         /// <returns>
-        /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
-        /// property contains the timestamped register payload.
+        /// A task that represents the asynchronous read operation. The task result contains
+        /// the timestamped register payload.
         /// </returns>
         public async Task<Timestamped<byte>> ReadTimestampedSoundIndexDI2Async(CancellationToken cancellationToken = default)
         {
@@ -619,9 +619,9 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously writes a value to the SoundIndexDI2 register.
+        /// Asynchronously writes a value to the <see cref="SoundIndexDI2"/> register.
         /// </summary>
-        /// <param name="value">The value to be stored in the register.</param>
+        /// <param name="value">The value to write in the register.</param>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
@@ -633,14 +633,14 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously reads the contents of the FrequencyDI0 register.
+        /// Asynchronously reads the contents of the <see cref="FrequencyDI0"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
         /// <returns>
-        /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
-        /// property contains the register payload.
+        /// A task that represents the asynchronous read operation. The task result contains
+        /// the register payload.
         /// </returns>
         public async Task<ushort> ReadFrequencyDI0Async(CancellationToken cancellationToken = default)
         {
@@ -649,14 +649,14 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously reads the timestamped contents of the FrequencyDI0 register.
+        /// Asynchronously reads the timestamped contents of the <see cref="FrequencyDI0"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
         /// <returns>
-        /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
-        /// property contains the timestamped register payload.
+        /// A task that represents the asynchronous read operation. The task result contains
+        /// the timestamped register payload.
         /// </returns>
         public async Task<Timestamped<ushort>> ReadTimestampedFrequencyDI0Async(CancellationToken cancellationToken = default)
         {
@@ -665,9 +665,9 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously writes a value to the FrequencyDI0 register.
+        /// Asynchronously writes a value to the <see cref="FrequencyDI0"/> register.
         /// </summary>
-        /// <param name="value">The value to be stored in the register.</param>
+        /// <param name="value">The value to write in the register.</param>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
@@ -679,14 +679,14 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously reads the contents of the FrequencyDI1 register.
+        /// Asynchronously reads the contents of the <see cref="FrequencyDI1"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
         /// <returns>
-        /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
-        /// property contains the register payload.
+        /// A task that represents the asynchronous read operation. The task result contains
+        /// the register payload.
         /// </returns>
         public async Task<ushort> ReadFrequencyDI1Async(CancellationToken cancellationToken = default)
         {
@@ -695,14 +695,14 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously reads the timestamped contents of the FrequencyDI1 register.
+        /// Asynchronously reads the timestamped contents of the <see cref="FrequencyDI1"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
         /// <returns>
-        /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
-        /// property contains the timestamped register payload.
+        /// A task that represents the asynchronous read operation. The task result contains
+        /// the timestamped register payload.
         /// </returns>
         public async Task<Timestamped<ushort>> ReadTimestampedFrequencyDI1Async(CancellationToken cancellationToken = default)
         {
@@ -711,9 +711,9 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously writes a value to the FrequencyDI1 register.
+        /// Asynchronously writes a value to the <see cref="FrequencyDI1"/> register.
         /// </summary>
-        /// <param name="value">The value to be stored in the register.</param>
+        /// <param name="value">The value to write in the register.</param>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
@@ -725,14 +725,14 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously reads the contents of the FrequencyDI2 register.
+        /// Asynchronously reads the contents of the <see cref="FrequencyDI2"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
         /// <returns>
-        /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
-        /// property contains the register payload.
+        /// A task that represents the asynchronous read operation. The task result contains
+        /// the register payload.
         /// </returns>
         public async Task<ushort> ReadFrequencyDI2Async(CancellationToken cancellationToken = default)
         {
@@ -741,14 +741,14 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously reads the timestamped contents of the FrequencyDI2 register.
+        /// Asynchronously reads the timestamped contents of the <see cref="FrequencyDI2"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
         /// <returns>
-        /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
-        /// property contains the timestamped register payload.
+        /// A task that represents the asynchronous read operation. The task result contains
+        /// the timestamped register payload.
         /// </returns>
         public async Task<Timestamped<ushort>> ReadTimestampedFrequencyDI2Async(CancellationToken cancellationToken = default)
         {
@@ -757,9 +757,9 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously writes a value to the FrequencyDI2 register.
+        /// Asynchronously writes a value to the <see cref="FrequencyDI2"/> register.
         /// </summary>
-        /// <param name="value">The value to be stored in the register.</param>
+        /// <param name="value">The value to write in the register.</param>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
@@ -771,14 +771,14 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously reads the contents of the AttenuationLeftDI0 register.
+        /// Asynchronously reads the contents of the <see cref="AttenuationLeftDI0"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
         /// <returns>
-        /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
-        /// property contains the register payload.
+        /// A task that represents the asynchronous read operation. The task result contains
+        /// the register payload.
         /// </returns>
         public async Task<ushort> ReadAttenuationLeftDI0Async(CancellationToken cancellationToken = default)
         {
@@ -787,14 +787,14 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously reads the timestamped contents of the AttenuationLeftDI0 register.
+        /// Asynchronously reads the timestamped contents of the <see cref="AttenuationLeftDI0"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
         /// <returns>
-        /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
-        /// property contains the timestamped register payload.
+        /// A task that represents the asynchronous read operation. The task result contains
+        /// the timestamped register payload.
         /// </returns>
         public async Task<Timestamped<ushort>> ReadTimestampedAttenuationLeftDI0Async(CancellationToken cancellationToken = default)
         {
@@ -803,9 +803,9 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously writes a value to the AttenuationLeftDI0 register.
+        /// Asynchronously writes a value to the <see cref="AttenuationLeftDI0"/> register.
         /// </summary>
-        /// <param name="value">The value to be stored in the register.</param>
+        /// <param name="value">The value to write in the register.</param>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
@@ -817,14 +817,14 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously reads the contents of the AttenuationLeftDI1 register.
+        /// Asynchronously reads the contents of the <see cref="AttenuationLeftDI1"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
         /// <returns>
-        /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
-        /// property contains the register payload.
+        /// A task that represents the asynchronous read operation. The task result contains
+        /// the register payload.
         /// </returns>
         public async Task<ushort> ReadAttenuationLeftDI1Async(CancellationToken cancellationToken = default)
         {
@@ -833,14 +833,14 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously reads the timestamped contents of the AttenuationLeftDI1 register.
+        /// Asynchronously reads the timestamped contents of the <see cref="AttenuationLeftDI1"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
         /// <returns>
-        /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
-        /// property contains the timestamped register payload.
+        /// A task that represents the asynchronous read operation. The task result contains
+        /// the timestamped register payload.
         /// </returns>
         public async Task<Timestamped<ushort>> ReadTimestampedAttenuationLeftDI1Async(CancellationToken cancellationToken = default)
         {
@@ -849,9 +849,9 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously writes a value to the AttenuationLeftDI1 register.
+        /// Asynchronously writes a value to the <see cref="AttenuationLeftDI1"/> register.
         /// </summary>
-        /// <param name="value">The value to be stored in the register.</param>
+        /// <param name="value">The value to write in the register.</param>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
@@ -863,14 +863,14 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously reads the contents of the AttenuationLeftDI2 register.
+        /// Asynchronously reads the contents of the <see cref="AttenuationLeftDI2"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
         /// <returns>
-        /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
-        /// property contains the register payload.
+        /// A task that represents the asynchronous read operation. The task result contains
+        /// the register payload.
         /// </returns>
         public async Task<ushort> ReadAttenuationLeftDI2Async(CancellationToken cancellationToken = default)
         {
@@ -879,14 +879,14 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously reads the timestamped contents of the AttenuationLeftDI2 register.
+        /// Asynchronously reads the timestamped contents of the <see cref="AttenuationLeftDI2"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
         /// <returns>
-        /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
-        /// property contains the timestamped register payload.
+        /// A task that represents the asynchronous read operation. The task result contains
+        /// the timestamped register payload.
         /// </returns>
         public async Task<Timestamped<ushort>> ReadTimestampedAttenuationLeftDI2Async(CancellationToken cancellationToken = default)
         {
@@ -895,9 +895,9 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously writes a value to the AttenuationLeftDI2 register.
+        /// Asynchronously writes a value to the <see cref="AttenuationLeftDI2"/> register.
         /// </summary>
-        /// <param name="value">The value to be stored in the register.</param>
+        /// <param name="value">The value to write in the register.</param>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
@@ -909,14 +909,14 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously reads the contents of the AttenuationRightDI0 register.
+        /// Asynchronously reads the contents of the <see cref="AttenuationRightDI0"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
         /// <returns>
-        /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
-        /// property contains the register payload.
+        /// A task that represents the asynchronous read operation. The task result contains
+        /// the register payload.
         /// </returns>
         public async Task<ushort> ReadAttenuationRightDI0Async(CancellationToken cancellationToken = default)
         {
@@ -925,14 +925,14 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously reads the timestamped contents of the AttenuationRightDI0 register.
+        /// Asynchronously reads the timestamped contents of the <see cref="AttenuationRightDI0"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
         /// <returns>
-        /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
-        /// property contains the timestamped register payload.
+        /// A task that represents the asynchronous read operation. The task result contains
+        /// the timestamped register payload.
         /// </returns>
         public async Task<Timestamped<ushort>> ReadTimestampedAttenuationRightDI0Async(CancellationToken cancellationToken = default)
         {
@@ -941,9 +941,9 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously writes a value to the AttenuationRightDI0 register.
+        /// Asynchronously writes a value to the <see cref="AttenuationRightDI0"/> register.
         /// </summary>
-        /// <param name="value">The value to be stored in the register.</param>
+        /// <param name="value">The value to write in the register.</param>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
@@ -955,14 +955,14 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously reads the contents of the AttenuationRightDI1 register.
+        /// Asynchronously reads the contents of the <see cref="AttenuationRightDI1"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
         /// <returns>
-        /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
-        /// property contains the register payload.
+        /// A task that represents the asynchronous read operation. The task result contains
+        /// the register payload.
         /// </returns>
         public async Task<ushort> ReadAttenuationRightDI1Async(CancellationToken cancellationToken = default)
         {
@@ -971,14 +971,14 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously reads the timestamped contents of the AttenuationRightDI1 register.
+        /// Asynchronously reads the timestamped contents of the <see cref="AttenuationRightDI1"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
         /// <returns>
-        /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
-        /// property contains the timestamped register payload.
+        /// A task that represents the asynchronous read operation. The task result contains
+        /// the timestamped register payload.
         /// </returns>
         public async Task<Timestamped<ushort>> ReadTimestampedAttenuationRightDI1Async(CancellationToken cancellationToken = default)
         {
@@ -987,9 +987,9 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously writes a value to the AttenuationRightDI1 register.
+        /// Asynchronously writes a value to the <see cref="AttenuationRightDI1"/> register.
         /// </summary>
-        /// <param name="value">The value to be stored in the register.</param>
+        /// <param name="value">The value to write in the register.</param>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
@@ -1001,14 +1001,14 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously reads the contents of the AttenuationRightDI2 register.
+        /// Asynchronously reads the contents of the <see cref="AttenuationRightDI2"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
         /// <returns>
-        /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
-        /// property contains the register payload.
+        /// A task that represents the asynchronous read operation. The task result contains
+        /// the register payload.
         /// </returns>
         public async Task<ushort> ReadAttenuationRightDI2Async(CancellationToken cancellationToken = default)
         {
@@ -1017,14 +1017,14 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously reads the timestamped contents of the AttenuationRightDI2 register.
+        /// Asynchronously reads the timestamped contents of the <see cref="AttenuationRightDI2"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
         /// <returns>
-        /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
-        /// property contains the timestamped register payload.
+        /// A task that represents the asynchronous read operation. The task result contains
+        /// the timestamped register payload.
         /// </returns>
         public async Task<Timestamped<ushort>> ReadTimestampedAttenuationRightDI2Async(CancellationToken cancellationToken = default)
         {
@@ -1033,9 +1033,9 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously writes a value to the AttenuationRightDI2 register.
+        /// Asynchronously writes a value to the <see cref="AttenuationRightDI2"/> register.
         /// </summary>
-        /// <param name="value">The value to be stored in the register.</param>
+        /// <param name="value">The value to write in the register.</param>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
@@ -1047,14 +1047,14 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously reads the contents of the AttenuationAndSoundIndexDI0 register.
+        /// Asynchronously reads the contents of the <see cref="AttenuationAndSoundIndexDI0"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
         /// <returns>
-        /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
-        /// property contains the register payload.
+        /// A task that represents the asynchronous read operation. The task result contains
+        /// the register payload.
         /// </returns>
         public async Task<ushort[]> ReadAttenuationAndSoundIndexDI0Async(CancellationToken cancellationToken = default)
         {
@@ -1063,14 +1063,14 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously reads the timestamped contents of the AttenuationAndSoundIndexDI0 register.
+        /// Asynchronously reads the timestamped contents of the <see cref="AttenuationAndSoundIndexDI0"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
         /// <returns>
-        /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
-        /// property contains the timestamped register payload.
+        /// A task that represents the asynchronous read operation. The task result contains
+        /// the timestamped register payload.
         /// </returns>
         public async Task<Timestamped<ushort[]>> ReadTimestampedAttenuationAndSoundIndexDI0Async(CancellationToken cancellationToken = default)
         {
@@ -1079,9 +1079,9 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously writes a value to the AttenuationAndSoundIndexDI0 register.
+        /// Asynchronously writes a value to the <see cref="AttenuationAndSoundIndexDI0"/> register.
         /// </summary>
-        /// <param name="value">The value to be stored in the register.</param>
+        /// <param name="value">The value to write in the register.</param>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
@@ -1093,14 +1093,14 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously reads the contents of the AttenuationAndSoundIndexDI1 register.
+        /// Asynchronously reads the contents of the <see cref="AttenuationAndSoundIndexDI1"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
         /// <returns>
-        /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
-        /// property contains the register payload.
+        /// A task that represents the asynchronous read operation. The task result contains
+        /// the register payload.
         /// </returns>
         public async Task<ushort[]> ReadAttenuationAndSoundIndexDI1Async(CancellationToken cancellationToken = default)
         {
@@ -1109,14 +1109,14 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously reads the timestamped contents of the AttenuationAndSoundIndexDI1 register.
+        /// Asynchronously reads the timestamped contents of the <see cref="AttenuationAndSoundIndexDI1"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
         /// <returns>
-        /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
-        /// property contains the timestamped register payload.
+        /// A task that represents the asynchronous read operation. The task result contains
+        /// the timestamped register payload.
         /// </returns>
         public async Task<Timestamped<ushort[]>> ReadTimestampedAttenuationAndSoundIndexDI1Async(CancellationToken cancellationToken = default)
         {
@@ -1125,9 +1125,9 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously writes a value to the AttenuationAndSoundIndexDI1 register.
+        /// Asynchronously writes a value to the <see cref="AttenuationAndSoundIndexDI1"/> register.
         /// </summary>
-        /// <param name="value">The value to be stored in the register.</param>
+        /// <param name="value">The value to write in the register.</param>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
@@ -1139,14 +1139,14 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously reads the contents of the AttenuationAndSoundIndexDI2 register.
+        /// Asynchronously reads the contents of the <see cref="AttenuationAndSoundIndexDI2"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
         /// <returns>
-        /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
-        /// property contains the register payload.
+        /// A task that represents the asynchronous read operation. The task result contains
+        /// the register payload.
         /// </returns>
         public async Task<ushort[]> ReadAttenuationAndSoundIndexDI2Async(CancellationToken cancellationToken = default)
         {
@@ -1155,14 +1155,14 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously reads the timestamped contents of the AttenuationAndSoundIndexDI2 register.
+        /// Asynchronously reads the timestamped contents of the <see cref="AttenuationAndSoundIndexDI2"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
         /// <returns>
-        /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
-        /// property contains the timestamped register payload.
+        /// A task that represents the asynchronous read operation. The task result contains
+        /// the timestamped register payload.
         /// </returns>
         public async Task<Timestamped<ushort[]>> ReadTimestampedAttenuationAndSoundIndexDI2Async(CancellationToken cancellationToken = default)
         {
@@ -1171,9 +1171,9 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously writes a value to the AttenuationAndSoundIndexDI2 register.
+        /// Asynchronously writes a value to the <see cref="AttenuationAndSoundIndexDI2"/> register.
         /// </summary>
-        /// <param name="value">The value to be stored in the register.</param>
+        /// <param name="value">The value to write in the register.</param>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
@@ -1185,14 +1185,14 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously reads the contents of the AttenuationAndFrequencyDI0 register.
+        /// Asynchronously reads the contents of the <see cref="AttenuationAndFrequencyDI0"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
         /// <returns>
-        /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
-        /// property contains the register payload.
+        /// A task that represents the asynchronous read operation. The task result contains
+        /// the register payload.
         /// </returns>
         public async Task<ushort[]> ReadAttenuationAndFrequencyDI0Async(CancellationToken cancellationToken = default)
         {
@@ -1201,14 +1201,14 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously reads the timestamped contents of the AttenuationAndFrequencyDI0 register.
+        /// Asynchronously reads the timestamped contents of the <see cref="AttenuationAndFrequencyDI0"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
         /// <returns>
-        /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
-        /// property contains the timestamped register payload.
+        /// A task that represents the asynchronous read operation. The task result contains
+        /// the timestamped register payload.
         /// </returns>
         public async Task<Timestamped<ushort[]>> ReadTimestampedAttenuationAndFrequencyDI0Async(CancellationToken cancellationToken = default)
         {
@@ -1217,9 +1217,9 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously writes a value to the AttenuationAndFrequencyDI0 register.
+        /// Asynchronously writes a value to the <see cref="AttenuationAndFrequencyDI0"/> register.
         /// </summary>
-        /// <param name="value">The value to be stored in the register.</param>
+        /// <param name="value">The value to write in the register.</param>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
@@ -1231,14 +1231,14 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously reads the contents of the AttenuationAndFrequencyDI1 register.
+        /// Asynchronously reads the contents of the <see cref="AttenuationAndFrequencyDI1"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
         /// <returns>
-        /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
-        /// property contains the register payload.
+        /// A task that represents the asynchronous read operation. The task result contains
+        /// the register payload.
         /// </returns>
         public async Task<ushort[]> ReadAttenuationAndFrequencyDI1Async(CancellationToken cancellationToken = default)
         {
@@ -1247,14 +1247,14 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously reads the timestamped contents of the AttenuationAndFrequencyDI1 register.
+        /// Asynchronously reads the timestamped contents of the <see cref="AttenuationAndFrequencyDI1"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
         /// <returns>
-        /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
-        /// property contains the timestamped register payload.
+        /// A task that represents the asynchronous read operation. The task result contains
+        /// the timestamped register payload.
         /// </returns>
         public async Task<Timestamped<ushort[]>> ReadTimestampedAttenuationAndFrequencyDI1Async(CancellationToken cancellationToken = default)
         {
@@ -1263,9 +1263,9 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously writes a value to the AttenuationAndFrequencyDI1 register.
+        /// Asynchronously writes a value to the <see cref="AttenuationAndFrequencyDI1"/> register.
         /// </summary>
-        /// <param name="value">The value to be stored in the register.</param>
+        /// <param name="value">The value to write in the register.</param>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
@@ -1277,14 +1277,14 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously reads the contents of the AttenuationAndFrequencyDI2 register.
+        /// Asynchronously reads the contents of the <see cref="AttenuationAndFrequencyDI2"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
         /// <returns>
-        /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
-        /// property contains the register payload.
+        /// A task that represents the asynchronous read operation. The task result contains
+        /// the register payload.
         /// </returns>
         public async Task<ushort[]> ReadAttenuationAndFrequencyDI2Async(CancellationToken cancellationToken = default)
         {
@@ -1293,14 +1293,14 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously reads the timestamped contents of the AttenuationAndFrequencyDI2 register.
+        /// Asynchronously reads the timestamped contents of the <see cref="AttenuationAndFrequencyDI2"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
         /// <returns>
-        /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
-        /// property contains the timestamped register payload.
+        /// A task that represents the asynchronous read operation. The task result contains
+        /// the timestamped register payload.
         /// </returns>
         public async Task<Timestamped<ushort[]>> ReadTimestampedAttenuationAndFrequencyDI2Async(CancellationToken cancellationToken = default)
         {
@@ -1309,9 +1309,9 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously writes a value to the AttenuationAndFrequencyDI2 register.
+        /// Asynchronously writes a value to the <see cref="AttenuationAndFrequencyDI2"/> register.
         /// </summary>
-        /// <param name="value">The value to be stored in the register.</param>
+        /// <param name="value">The value to write in the register.</param>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
@@ -1323,14 +1323,14 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously reads the contents of the ConfigureDO0 register.
+        /// Asynchronously reads the contents of the <see cref="ConfigureDO0"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
         /// <returns>
-        /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
-        /// property contains the register payload.
+        /// A task that represents the asynchronous read operation. The task result contains
+        /// the register payload.
         /// </returns>
         public async Task<DigitalOutputConfiguration> ReadConfigureDO0Async(CancellationToken cancellationToken = default)
         {
@@ -1339,14 +1339,14 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously reads the timestamped contents of the ConfigureDO0 register.
+        /// Asynchronously reads the timestamped contents of the <see cref="ConfigureDO0"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
         /// <returns>
-        /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
-        /// property contains the timestamped register payload.
+        /// A task that represents the asynchronous read operation. The task result contains
+        /// the timestamped register payload.
         /// </returns>
         public async Task<Timestamped<DigitalOutputConfiguration>> ReadTimestampedConfigureDO0Async(CancellationToken cancellationToken = default)
         {
@@ -1355,9 +1355,9 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously writes a value to the ConfigureDO0 register.
+        /// Asynchronously writes a value to the <see cref="ConfigureDO0"/> register.
         /// </summary>
-        /// <param name="value">The value to be stored in the register.</param>
+        /// <param name="value">The value to write in the register.</param>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
@@ -1369,14 +1369,14 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously reads the contents of the ConfigureDO1 register.
+        /// Asynchronously reads the contents of the <see cref="ConfigureDO1"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
         /// <returns>
-        /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
-        /// property contains the register payload.
+        /// A task that represents the asynchronous read operation. The task result contains
+        /// the register payload.
         /// </returns>
         public async Task<DigitalOutputConfiguration> ReadConfigureDO1Async(CancellationToken cancellationToken = default)
         {
@@ -1385,14 +1385,14 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously reads the timestamped contents of the ConfigureDO1 register.
+        /// Asynchronously reads the timestamped contents of the <see cref="ConfigureDO1"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
         /// <returns>
-        /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
-        /// property contains the timestamped register payload.
+        /// A task that represents the asynchronous read operation. The task result contains
+        /// the timestamped register payload.
         /// </returns>
         public async Task<Timestamped<DigitalOutputConfiguration>> ReadTimestampedConfigureDO1Async(CancellationToken cancellationToken = default)
         {
@@ -1401,9 +1401,9 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously writes a value to the ConfigureDO1 register.
+        /// Asynchronously writes a value to the <see cref="ConfigureDO1"/> register.
         /// </summary>
-        /// <param name="value">The value to be stored in the register.</param>
+        /// <param name="value">The value to write in the register.</param>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
@@ -1415,14 +1415,14 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously reads the contents of the ConfigureDO2 register.
+        /// Asynchronously reads the contents of the <see cref="ConfigureDO2"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
         /// <returns>
-        /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
-        /// property contains the register payload.
+        /// A task that represents the asynchronous read operation. The task result contains
+        /// the register payload.
         /// </returns>
         public async Task<DigitalOutputConfiguration> ReadConfigureDO2Async(CancellationToken cancellationToken = default)
         {
@@ -1431,14 +1431,14 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously reads the timestamped contents of the ConfigureDO2 register.
+        /// Asynchronously reads the timestamped contents of the <see cref="ConfigureDO2"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
         /// <returns>
-        /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
-        /// property contains the timestamped register payload.
+        /// A task that represents the asynchronous read operation. The task result contains
+        /// the timestamped register payload.
         /// </returns>
         public async Task<Timestamped<DigitalOutputConfiguration>> ReadTimestampedConfigureDO2Async(CancellationToken cancellationToken = default)
         {
@@ -1447,9 +1447,9 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously writes a value to the ConfigureDO2 register.
+        /// Asynchronously writes a value to the <see cref="ConfigureDO2"/> register.
         /// </summary>
-        /// <param name="value">The value to be stored in the register.</param>
+        /// <param name="value">The value to write in the register.</param>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
@@ -1461,14 +1461,14 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously reads the contents of the PulseDO0 register.
+        /// Asynchronously reads the contents of the <see cref="PulseDO0"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
         /// <returns>
-        /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
-        /// property contains the register payload.
+        /// A task that represents the asynchronous read operation. The task result contains
+        /// the register payload.
         /// </returns>
         public async Task<byte> ReadPulseDO0Async(CancellationToken cancellationToken = default)
         {
@@ -1477,14 +1477,14 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously reads the timestamped contents of the PulseDO0 register.
+        /// Asynchronously reads the timestamped contents of the <see cref="PulseDO0"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
         /// <returns>
-        /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
-        /// property contains the timestamped register payload.
+        /// A task that represents the asynchronous read operation. The task result contains
+        /// the timestamped register payload.
         /// </returns>
         public async Task<Timestamped<byte>> ReadTimestampedPulseDO0Async(CancellationToken cancellationToken = default)
         {
@@ -1493,9 +1493,9 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously writes a value to the PulseDO0 register.
+        /// Asynchronously writes a value to the <see cref="PulseDO0"/> register.
         /// </summary>
-        /// <param name="value">The value to be stored in the register.</param>
+        /// <param name="value">The value to write in the register.</param>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
@@ -1507,14 +1507,14 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously reads the contents of the PulseDO1 register.
+        /// Asynchronously reads the contents of the <see cref="PulseDO1"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
         /// <returns>
-        /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
-        /// property contains the register payload.
+        /// A task that represents the asynchronous read operation. The task result contains
+        /// the register payload.
         /// </returns>
         public async Task<byte> ReadPulseDO1Async(CancellationToken cancellationToken = default)
         {
@@ -1523,14 +1523,14 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously reads the timestamped contents of the PulseDO1 register.
+        /// Asynchronously reads the timestamped contents of the <see cref="PulseDO1"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
         /// <returns>
-        /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
-        /// property contains the timestamped register payload.
+        /// A task that represents the asynchronous read operation. The task result contains
+        /// the timestamped register payload.
         /// </returns>
         public async Task<Timestamped<byte>> ReadTimestampedPulseDO1Async(CancellationToken cancellationToken = default)
         {
@@ -1539,9 +1539,9 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously writes a value to the PulseDO1 register.
+        /// Asynchronously writes a value to the <see cref="PulseDO1"/> register.
         /// </summary>
-        /// <param name="value">The value to be stored in the register.</param>
+        /// <param name="value">The value to write in the register.</param>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
@@ -1553,14 +1553,14 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously reads the contents of the PulseDO2 register.
+        /// Asynchronously reads the contents of the <see cref="PulseDO2"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
         /// <returns>
-        /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
-        /// property contains the register payload.
+        /// A task that represents the asynchronous read operation. The task result contains
+        /// the register payload.
         /// </returns>
         public async Task<byte> ReadPulseDO2Async(CancellationToken cancellationToken = default)
         {
@@ -1569,14 +1569,14 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously reads the timestamped contents of the PulseDO2 register.
+        /// Asynchronously reads the timestamped contents of the <see cref="PulseDO2"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
         /// <returns>
-        /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
-        /// property contains the timestamped register payload.
+        /// A task that represents the asynchronous read operation. The task result contains
+        /// the timestamped register payload.
         /// </returns>
         public async Task<Timestamped<byte>> ReadTimestampedPulseDO2Async(CancellationToken cancellationToken = default)
         {
@@ -1585,9 +1585,9 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously writes a value to the PulseDO2 register.
+        /// Asynchronously writes a value to the <see cref="PulseDO2"/> register.
         /// </summary>
-        /// <param name="value">The value to be stored in the register.</param>
+        /// <param name="value">The value to write in the register.</param>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
@@ -1599,14 +1599,14 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously reads the contents of the OutputSet register.
+        /// Asynchronously reads the contents of the <see cref="OutputSet"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
         /// <returns>
-        /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
-        /// property contains the register payload.
+        /// A task that represents the asynchronous read operation. The task result contains
+        /// the register payload.
         /// </returns>
         public async Task<DigitalOutputs> ReadOutputSetAsync(CancellationToken cancellationToken = default)
         {
@@ -1615,14 +1615,14 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously reads the timestamped contents of the OutputSet register.
+        /// Asynchronously reads the timestamped contents of the <see cref="OutputSet"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
         /// <returns>
-        /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
-        /// property contains the timestamped register payload.
+        /// A task that represents the asynchronous read operation. The task result contains
+        /// the timestamped register payload.
         /// </returns>
         public async Task<Timestamped<DigitalOutputs>> ReadTimestampedOutputSetAsync(CancellationToken cancellationToken = default)
         {
@@ -1631,9 +1631,9 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously writes a value to the OutputSet register.
+        /// Asynchronously writes a value to the <see cref="OutputSet"/> register.
         /// </summary>
-        /// <param name="value">The value to be stored in the register.</param>
+        /// <param name="value">The value to write in the register.</param>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
@@ -1645,14 +1645,14 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously reads the contents of the OutputClear register.
+        /// Asynchronously reads the contents of the <see cref="OutputClear"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
         /// <returns>
-        /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
-        /// property contains the register payload.
+        /// A task that represents the asynchronous read operation. The task result contains
+        /// the register payload.
         /// </returns>
         public async Task<DigitalOutputs> ReadOutputClearAsync(CancellationToken cancellationToken = default)
         {
@@ -1661,14 +1661,14 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously reads the timestamped contents of the OutputClear register.
+        /// Asynchronously reads the timestamped contents of the <see cref="OutputClear"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
         /// <returns>
-        /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
-        /// property contains the timestamped register payload.
+        /// A task that represents the asynchronous read operation. The task result contains
+        /// the timestamped register payload.
         /// </returns>
         public async Task<Timestamped<DigitalOutputs>> ReadTimestampedOutputClearAsync(CancellationToken cancellationToken = default)
         {
@@ -1677,9 +1677,9 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously writes a value to the OutputClear register.
+        /// Asynchronously writes a value to the <see cref="OutputClear"/> register.
         /// </summary>
-        /// <param name="value">The value to be stored in the register.</param>
+        /// <param name="value">The value to write in the register.</param>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
@@ -1691,14 +1691,14 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously reads the contents of the OutputToggle register.
+        /// Asynchronously reads the contents of the <see cref="OutputToggle"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
         /// <returns>
-        /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
-        /// property contains the register payload.
+        /// A task that represents the asynchronous read operation. The task result contains
+        /// the register payload.
         /// </returns>
         public async Task<DigitalOutputs> ReadOutputToggleAsync(CancellationToken cancellationToken = default)
         {
@@ -1707,14 +1707,14 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously reads the timestamped contents of the OutputToggle register.
+        /// Asynchronously reads the timestamped contents of the <see cref="OutputToggle"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
         /// <returns>
-        /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
-        /// property contains the timestamped register payload.
+        /// A task that represents the asynchronous read operation. The task result contains
+        /// the timestamped register payload.
         /// </returns>
         public async Task<Timestamped<DigitalOutputs>> ReadTimestampedOutputToggleAsync(CancellationToken cancellationToken = default)
         {
@@ -1723,9 +1723,9 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously writes a value to the OutputToggle register.
+        /// Asynchronously writes a value to the <see cref="OutputToggle"/> register.
         /// </summary>
-        /// <param name="value">The value to be stored in the register.</param>
+        /// <param name="value">The value to write in the register.</param>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
@@ -1737,14 +1737,14 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously reads the contents of the OutputState register.
+        /// Asynchronously reads the contents of the <see cref="OutputState"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
         /// <returns>
-        /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
-        /// property contains the register payload.
+        /// A task that represents the asynchronous read operation. The task result contains
+        /// the register payload.
         /// </returns>
         public async Task<DigitalOutputs> ReadOutputStateAsync(CancellationToken cancellationToken = default)
         {
@@ -1753,14 +1753,14 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously reads the timestamped contents of the OutputState register.
+        /// Asynchronously reads the timestamped contents of the <see cref="OutputState"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
         /// <returns>
-        /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
-        /// property contains the timestamped register payload.
+        /// A task that represents the asynchronous read operation. The task result contains
+        /// the timestamped register payload.
         /// </returns>
         public async Task<Timestamped<DigitalOutputs>> ReadTimestampedOutputStateAsync(CancellationToken cancellationToken = default)
         {
@@ -1769,9 +1769,9 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously writes a value to the OutputState register.
+        /// Asynchronously writes a value to the <see cref="OutputState"/> register.
         /// </summary>
-        /// <param name="value">The value to be stored in the register.</param>
+        /// <param name="value">The value to write in the register.</param>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
@@ -1783,14 +1783,14 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously reads the contents of the ConfigureAdc register.
+        /// Asynchronously reads the contents of the <see cref="ConfigureAdc"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
         /// <returns>
-        /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
-        /// property contains the register payload.
+        /// A task that represents the asynchronous read operation. The task result contains
+        /// the register payload.
         /// </returns>
         public async Task<AdcConfiguration> ReadConfigureAdcAsync(CancellationToken cancellationToken = default)
         {
@@ -1799,14 +1799,14 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously reads the timestamped contents of the ConfigureAdc register.
+        /// Asynchronously reads the timestamped contents of the <see cref="ConfigureAdc"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
         /// <returns>
-        /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
-        /// property contains the timestamped register payload.
+        /// A task that represents the asynchronous read operation. The task result contains
+        /// the timestamped register payload.
         /// </returns>
         public async Task<Timestamped<AdcConfiguration>> ReadTimestampedConfigureAdcAsync(CancellationToken cancellationToken = default)
         {
@@ -1815,9 +1815,9 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously writes a value to the ConfigureAdc register.
+        /// Asynchronously writes a value to the <see cref="ConfigureAdc"/> register.
         /// </summary>
-        /// <param name="value">The value to be stored in the register.</param>
+        /// <param name="value">The value to write in the register.</param>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
@@ -1829,14 +1829,14 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously reads the contents of the AnalogData register.
+        /// Asynchronously reads the contents of the <see cref="AnalogData"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
         /// <returns>
-        /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
-        /// property contains the register payload.
+        /// A task that represents the asynchronous read operation. The task result contains
+        /// the register payload.
         /// </returns>
         public async Task<AnalogDataPayload> ReadAnalogDataAsync(CancellationToken cancellationToken = default)
         {
@@ -1845,14 +1845,14 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously reads the timestamped contents of the AnalogData register.
+        /// Asynchronously reads the timestamped contents of the <see cref="AnalogData"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
         /// <returns>
-        /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
-        /// property contains the timestamped register payload.
+        /// A task that represents the asynchronous read operation. The task result contains
+        /// the timestamped register payload.
         /// </returns>
         public async Task<Timestamped<AnalogDataPayload>> ReadTimestampedAnalogDataAsync(CancellationToken cancellationToken = default)
         {
@@ -1861,14 +1861,14 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously reads the contents of the Commands register.
+        /// Asynchronously reads the contents of the <see cref="Commands"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
         /// <returns>
-        /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
-        /// property contains the register payload.
+        /// A task that represents the asynchronous read operation. The task result contains
+        /// the register payload.
         /// </returns>
         public async Task<ControllerCommand> ReadCommandsAsync(CancellationToken cancellationToken = default)
         {
@@ -1877,14 +1877,14 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously reads the timestamped contents of the Commands register.
+        /// Asynchronously reads the timestamped contents of the <see cref="Commands"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
         /// <returns>
-        /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
-        /// property contains the timestamped register payload.
+        /// A task that represents the asynchronous read operation. The task result contains
+        /// the timestamped register payload.
         /// </returns>
         public async Task<Timestamped<ControllerCommand>> ReadTimestampedCommandsAsync(CancellationToken cancellationToken = default)
         {
@@ -1893,9 +1893,9 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously writes a value to the Commands register.
+        /// Asynchronously writes a value to the <see cref="Commands"/> register.
         /// </summary>
-        /// <param name="value">The value to be stored in the register.</param>
+        /// <param name="value">The value to write in the register.</param>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
@@ -1907,14 +1907,14 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously reads the contents of the EnableEvents register.
+        /// Asynchronously reads the contents of the <see cref="EnableEvents"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
         /// <returns>
-        /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
-        /// property contains the register payload.
+        /// A task that represents the asynchronous read operation. The task result contains
+        /// the register payload.
         /// </returns>
         public async Task<SoundCardEvents> ReadEnableEventsAsync(CancellationToken cancellationToken = default)
         {
@@ -1923,14 +1923,14 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously reads the timestamped contents of the EnableEvents register.
+        /// Asynchronously reads the timestamped contents of the <see cref="EnableEvents"/> register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
         /// <returns>
-        /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
-        /// property contains the timestamped register payload.
+        /// A task that represents the asynchronous read operation. The task result contains
+        /// the timestamped register payload.
         /// </returns>
         public async Task<Timestamped<SoundCardEvents>> ReadTimestampedEnableEventsAsync(CancellationToken cancellationToken = default)
         {
@@ -1939,9 +1939,9 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Asynchronously writes a value to the EnableEvents register.
+        /// Asynchronously writes a value to the <see cref="EnableEvents"/> register.
         /// </summary>
-        /// <param name="value">The value to be stored in the register.</param>
+        /// <param name="value">The value to write in the register.</param>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
