@@ -7,6 +7,10 @@ on:
   release:
     types: [published]
   workflow_dispatch:
+    inputs:
+      publish-documentation:
+        description: "Publish documentation to GitHub Pages?"
+        default: "false"
 env:
   DOTNET_NOLOGO: true
   DOTNET_CLI_TELEMETRY_OPTOUT: true
@@ -14,17 +18,35 @@ env:
   ContinuousIntegrationBuild: true
   CiBuildVersion: ${{github.event.release.tag_name || 'api42.42.42'}}
 jobs:
-  build:
+
+  # =====================================================================================================================================================================
+  # Build interface
+  #  ___      _ _    _   _     _            __             
+  # | _ )_  _(_) |__| | (_)_ _| |_ ___ _ _ / _|__ _ __ ___ 
+  # | _ \ || | | / _` | | | ' \  _/ -_) '_|  _/ _` / _/ -_)
+  # |___/\_,_|_|_\__,_| |_|_||_\__\___|_| |_| \__,_\__\___|
+  # =====================================================================================================================================================================
+  build-interface:
     strategy:
       fail-fast: false
       matrix:
-        configuration: ['Release']
+        platform:
+          - name: Windows x64
+            os: windows-latest
+          - name: Linux x64
+            os: ubuntu-latest
+          - name: macOS x64
+            os: macos-latest
+        configuration: ['debug', 'release']
         include:
-          - configuration: Release
+          - platform:
+              os: windows-latest
+            configuration: release
             collect-packages: true
-    name: Build
-    runs-on: windows-latest
-    if: github.event_name != 'release' || startsWith(github.event.release.tag_name, 'api')
+    name: Build Interface (${{ matrix.platform.name }} ${{ matrix.configuration }})
+    runs-on: ${{ matrix.platform.os }}
+    outputs:
+      need-workflow-image-render: ${{steps.configure-build.outputs.need-workflow-image-render}}
     steps:
       # ----------------------------------------------------------------------- Checkout
       - name: Checkout
@@ -36,15 +58,17 @@ jobs:
         with:
           dotnet-version: 8.x
 
-      - name: Set up T4
-        run: dotnet tool install -g dotnet-t4 --version 3.0.0
+      - name: Set up .NET tools
+        run: dotnet tool restore
+
+      # ----------------------------------------------------------------------- Configure build
+      - name: Configure build
+        id: configure-build
+        uses: harp-tech/configure-build@v1
 
       # ----------------------------------------------------------------------- Regenerate
-      - name: Restore generators
-        run: dotnet restore Generators
-
       - name: Run generators
-        run: dotnet build Generators --no-restore --configuration ${{matrix.configuration}}
+        run: dotnet harp.toolkit generate interface -o Interface/${{github.workflow}}
 
       - name: Verify pre-generated code was up-to-date
         id: verify-dist
@@ -70,34 +94,175 @@ jobs:
         with:
           name: Packages
           if-no-files-found: error
-          path: Interface/bin/${{matrix.configuration}}/**
+          path: artifacts/package/${{matrix.configuration}}/**
 
-  publish-packages-nuget-org:
-    name: Publish packages to NuGet.org
+      # ----------------------------------------------------------------------- Upload release assets
+      - name: Upload release assets
+        if: matrix.collect-packages && steps.pack.outcome == 'success' && github.event_name == 'release'
+        run: gh release upload --repo ${{github.repository}} ${{github.event.release.tag_name}} artifacts/package/${{matrix.configuration}}/** --clobber
+        env:
+          GH_TOKEN: ${{github.token}}
+
+# =====================================================================================================================================================================
+  # Build documentation
+  #  ___      _ _    _      _                            _        _   _
+  # | _ )_  _(_) |__| |  __| |___  __ _  _ _ __  ___ _ _| |_ __ _| |_(_)___ _ _
+  # | _ \ || | | / _` | / _` / _ \/ _| || | '  \/ -_) ' \  _/ _` |  _| / _ \ ' \
+  # |___/\_,_|_|_\__,_| \__,_\___/\__|\_,_|_|_|_\___|_||_\__\__,_|\__|_\___/_||_|
+  # =====================================================================================================================================================================
+  build-documentation:
+    name: Build documentation
     runs-on: ubuntu-latest
-    permissions:
-      # Needed to attach files to releases
-      contents: write
-    environment: public-release
-    needs: build
-    if: github.event_name == 'release'
     steps:
-      # ----------------------------------------------------------------------- Set up .NET
-      - name: Setup .NET
+      # ----------------------------------------------------------------------- Checkout
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      # ----------------------------------------------------------------------- Set up tools
+      - name: Set up .NET
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 8.x
 
+      - name: Set up .NET tools
+        run: dotnet tool restore
+
+      # ----------------------------------------------------------------------- Configure build
+      - name: Configure build
+        id: configure-build
+        uses: bonsai-rx/configure-build@v1
+
+      # ----------------------------------------------------------------------- Restore
+      - name: Restore
+        run: dotnet restore Interface
+
+      # ----------------------------------------------------------------------- Build metadata
+      - name: Build metadata
+        id: build-metadata
+        run: dotnet docfx metadata docs/docfx.json --noRestore
+
+      # ----------------------------------------------------------------------- Build documentation
+      - name: Build documentation
+        id: build-documentation
+        run: dotnet docfx build docs/docfx.json
+
+      # ----------------------------------------------------------------------- Collect artifacts
+      - name: Collect documentation metadata
+        uses: actions/upload-artifact@v4
+        if: steps.build-metadata.outcome == 'success' && always()
+        with:
+          name: DocumentationMetadata
+          if-no-files-found: error
+          path: artifacts/docs/api/
+
+      - name: Collect documentation artifact
+        uses: actions/upload-artifact@v4
+        if: steps.build-documentation.outcome == 'success' && always()
+        with:
+          name: DocumentationWebsite
+          if-no-files-found: error
+          path: artifacts/docs/site/
+
+  # =====================================================================================================================================================================
+  # Render workflow images
+  #  ___             _                          _    __ _              _
+  # | _ \___ _ _  __| |___ _ _  __ __ _____ _ _| |__/ _| |_____ __ __ (_)_ __  __ _ __ _ ___ ___
+  # |   / -_) ' \/ _` / -_) '_| \ V  V / _ \ '_| / /  _| / _ \ V  V / | | '  \/ _` / _` / -_|_-<
+  # |_|_\___|_||_\__,_\___|_|    \_/\_/\___/_| |_\_\_| |_\___/\_/\_/  |_|_|_|_\__,_\__, \___/__/
+  #                                                                                |___/
+  # =====================================================================================================================================================================
+  workflow-images:
+    name: Render workflow images
+    runs-on: windows-latest
+    needs: build-interface
+    if: needs.build-interface.outputs.need-workflow-image-render == 'true'
+    steps:
+      # ----------------------------------------------------------------------- Checkout
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
       # ----------------------------------------------------------------------- Download built packages
-      - name: Download built packages
+      - name: Download packages for rendering
         uses: actions/download-artifact@v4
         with:
           name: Packages
           path: artifacts/packages/
 
-      # ----------------------------------------------------------------------- Push to NuGet.org
-      - name: Push to NuGet.org
-        run: dotnet nuget push "artifacts/packages/*.nupkg" --api-key ${{secrets.NUGET_API_KEY}} --source ${{vars.NUGET_API_URL}}
-        env:
-          # This is a workaround for https://github.com/NuGet/Home/issues/9775
-          DOTNET_SYSTEM_NET_HTTP_USESOCKETSHTTPHANDLER: 0
+      # ----------------------------------------------------------------------- Set up Bonsai environments
+      - name: Set up Bonsai environments
+        uses: bonsai-rx/setup-bonsai@v1
+        with:
+          environment-paths: '**/.bonsai/'
+          inject-packages: artifacts/packages/*.nupkg
+
+      # ----------------------------------------------------------------------- Render
+      - name: Render images
+        id: render
+        run: pwsh ./docs/export-images.ps1 -OutputFolder artifacts/docs/site/ -Verbose
+
+      # ----------------------------------------------------------------------- Collect artifacts
+      - name: Collect images
+        uses: actions/upload-artifact@v4
+        if: steps.render.outcome == 'success' && always()
+        with:
+          name: DocumentationWorkflowImages
+          if-no-files-found: error
+          path: artifacts/docs/site/
+
+  # =====================================================================================================================================================================
+  # Publish documentation
+  #  ___      _    _ _    _         _                            _        _   _
+  # | _ \_  _| |__| (_)__| |_    __| |___  __ _  _ _ __  ___ _ _| |_ __ _| |_(_)___ _ _
+  # |  _/ || | '_ \ | (_-< ' \  / _` / _ \/ _| || | '  \/ -_) ' \  _/ _` |  _| / _ \ ' \
+  # |_|  \_,_|_.__/_|_/__/_||_| \__,_\___/\__|\_,_|_|_|_\___|_||_\__\__,_|\__|_\___/_||_|
+  # =====================================================================================================================================================================
+  publish-documentation:
+    name: Publish documentation
+    runs-on: ubuntu-latest
+    # Publishing is not strictly necessary here, but if we're going to do a public release we want to wait to publish the docs until it goes out
+    # Add "publish-packages-nuget-org"  requirements back if necessary
+    needs: [build-documentation, workflow-images]
+    permissions:
+      # Both required by actions/deploy-pages
+      pages: write
+      id-token: write
+    environment:
+      # Intentionally not using the "default" github-pages environment as it's not compatible with this workflow
+      name: documentation-website
+      url: ${{steps.publish.outputs.page_url}}
+    # Only run if the workflow isn't dying and build-documentation was successful and either A) we're releasing or B) we have continuous deployment enabled
+    if: |
+      !cancelled() && !failure() && needs.build-documentation.result == 'success'
+      && (github.event_name == 'release'
+        || (github.event_name == 'workflow_dispatch' && github.event.inputs.publish-documentation == 'true')
+        || (vars.CONTINUOUS_DOCUMENTATION && github.event_name != 'pull_request')
+      )
+    steps:
+      # ----------------------------------------------------------------------- Download documentation website components
+      # It is intentional that we use two independent download steps here as it ensures that workflow images are permitted
+      # to overwrite any conflicts in the docfx output but not the other way around.
+      - name: Download documentation website
+        uses: actions/download-artifact@v4
+        with:
+          name: DocumentationWebsite
+
+      - name: Download workflow images
+        if: ${{needs.workflow-images.result == 'success'}}
+        uses: actions/download-artifact@v4
+        with:
+          name: DocumentationWorkflowImages
+
+      # ----------------------------------------------------------------------- Collect artifacts
+      - name: Upload final documentation website artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '.'
+
+      # ----------------------------------------------------------------------- Publish to GitHub Pages
+      - name: Publish to GitHub Pages
+        id: publish
+        uses: actions/deploy-pages@v4
