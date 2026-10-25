@@ -4,7 +4,9 @@
                  xmlns:rx="clr-namespace:Bonsai.Reactive;assembly=Bonsai.Core"
                  xmlns:harp="clr-namespace:Bonsai.Harp;assembly=Bonsai.Harp"
                  xmlns:p1="clr-namespace:Harp.SoundCard;assembly=Harp.SoundCard"
+                 xmlns:wie="clr-namespace:Bonsai.Windows.Input;assembly=Bonsai.Windows.Input"
                  xmlns:ui="clr-namespace:Bonsai.Design;assembly=Bonsai.Design"
+                 xmlns:viz="clr-namespace:Bonsai.Design.Visualizers;assembly=Bonsai.Design.Visualizers"
                  xmlns="https://bonsai-rx.org/2018/workflow">
   <Workflow>
     <Nodes>
@@ -39,23 +41,19 @@
         <Name>SoundCard Events</Name>
       </Expression>
       <Expression xsi:type="Annotation">
-        <Name>Poll Analog Data</Name>
+        <Name>Enable Analog Data Stream</Name>
         <Text><![CDATA[]]></Text>
       </Expression>
       <Expression xsi:type="Combinator">
-        <Combinator xsi:type="rx:Timer">
-          <rx:DueTime>PT0S</rx:DueTime>
-          <rx:Period>PT0.1S</rx:Period>
+        <Combinator xsi:type="wie:KeyDown">
+          <wie:Filter>A</wie:Filter>
+          <wie:SuppressRepetitions>false</wie:SuppressRepetitions>
         </Combinator>
       </Expression>
       <Expression xsi:type="p1:CreateMessage">
-        <harp:MessageType>Read</harp:MessageType>
-        <harp:Payload xsi:type="p1:CreateAnalogDataPayload">
-          <p1:Adc0>0</p1:Adc0>
-          <p1:Adc1>0</p1:Adc1>
-          <p1:AttenuationLeft>0</p1:AttenuationLeft>
-          <p1:AttenuationRight>0</p1:AttenuationRight>
-          <p1:Frequency>0</p1:Frequency>
+        <harp:MessageType>Write</harp:MessageType>
+        <harp:Payload xsi:type="p1:CreateEnableAdcControlStatePayload">
+          <p1:EnableAdcControlState>SampleRate1000Hz</p1:EnableAdcControlState>
         </harp:Payload>
       </Expression>
       <Expression xsi:type="MulticastSubject">
@@ -69,23 +67,23 @@
         <Name>SoundCard Events</Name>
       </Expression>
       <Expression xsi:type="p1:Parse">
-        <harp:Register xsi:type="p1:AnalogData" />
+        <harp:Register xsi:type="p1:AdcControlState" />
       </Expression>
       <Expression xsi:type="MemberSelector">
         <Selector>Adc0</Selector>
       </Expression>
       <Expression xsi:type="ui:VisualizerWindow">
+        <ui:VisualizerType xsi:type="TypeMapping" TypeArguments="viz:TimeSeriesVisualizer" />
         <ui:Visible>true</ui:Visible>
         <ui:Location>
           <ui:X>400</ui:X>
           <ui:Y>100</ui:Y>
         </ui:Location>
         <ui:Size>
-          <ui:Width>300</ui:Width>
+          <ui:Width>400</ui:Width>
           <ui:Height>300</ui:Height>
         </ui:Size>
         <ui:WindowState xsi:nil="true" />
-        <ui:VisualizerType xsi:type="TypeMapping" TypeArguments="ui:ObjectTextVisualizer" />
       </Expression>
     </Nodes>
     <Edges>

@@ -16,7 +16,7 @@
       <Expression xsi:type="p1:CreateMessage">
         <harp:MessageType>Write</harp:MessageType>
         <harp:Payload xsi:type="p1:CreateConfigureDO0Payload">
-          <p1:ConfigureDO0>HighWhenSound</p1:ConfigureDO0>
+          <p1:ConfigureDO0>PulseOnStart</p1:ConfigureDO0>
         </harp:Payload>
       </Expression>
       <Expression xsi:type="MulticastSubject">
