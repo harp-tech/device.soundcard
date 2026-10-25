@@ -15,12 +15,12 @@
       </Expression>
       <Expression xsi:type="p1:CreateMessage">
         <harp:MessageType>Write</harp:MessageType>
-        <harp:Payload xsi:type="p1:CreateAttenuationAndPlaySoundOrFreqPayload">
-          <p1:AttenuationAndPlaySoundOrFreq>
+        <harp:Payload xsi:type="p1:CreateAttenuationStartPayload">
+          <p1:AttenuationStart>
             <p1:unsignedShort>2</p1:unsignedShort>
             <p1:unsignedShort>200</p1:unsignedShort>
             <p1:unsignedShort>200</p1:unsignedShort>
-          </p1:AttenuationAndPlaySoundOrFreq>
+          </p1:AttenuationStart>
         </harp:Payload>
       </Expression>
       <Expression xsi:type="MulticastSubject">

@@ -17,7 +17,7 @@
         </Combinator>
       </Expression>
       <Expression xsi:type="p1:Parse">
-        <harp:Register xsi:type="p1:TimestampedPlaySoundOrFrequency" />
+        <harp:Register xsi:type="p1:TimestampedStart" />
       </Expression>
       <Expression xsi:type="ui:VisualizerWindow">
         <ui:Visible>true</ui:Visible>
@@ -31,11 +31,28 @@
         </ui:Size>
         <ui:WindowState xsi:nil="true" />
       </Expression>
+      <Expression xsi:type="p1:Parse">
+        <harp:Register xsi:type="p1:TimestampedStop" />
+      </Expression>
+      <Expression xsi:type="ui:VisualizerWindow">
+        <ui:Visible>true</ui:Visible>
+        <ui:Location>
+          <ui:X>720</ui:X>
+          <ui:Y>100</ui:Y>
+        </ui:Location>
+        <ui:Size>
+          <ui:Width>300</ui:Width>
+          <ui:Height>300</ui:Height>
+        </ui:Size>
+        <ui:WindowState xsi:nil="true" />
+      </Expression>
     </Nodes>
     <Edges>
       <Edge From="0" To="1" Label="Source1" />
       <Edge From="1" To="2" Label="Source1" />
       <Edge From="2" To="3" Label="Source1" />
+      <Edge From="1" To="4" Label="Source1" />
+      <Edge From="4" To="5" Label="Source1" />
     </Edges>
   </Workflow>
 </WorkflowBuilder>

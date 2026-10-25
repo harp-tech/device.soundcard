@@ -15,8 +15,8 @@
       </Expression>
       <Expression xsi:type="p1:CreateMessage">
         <harp:MessageType>Write</harp:MessageType>
-        <harp:Payload xsi:type="p1:CreatePlaySoundOrFrequencyPayload">
-          <p1:PlaySoundOrFrequency>2</p1:PlaySoundOrFrequency>
+        <harp:Payload xsi:type="p1:CreateStartPayload">
+          <p1:Start>2</p1:Start>
         </harp:Payload>
       </Expression>
       <Expression xsi:type="MulticastSubject">

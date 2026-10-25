@@ -1,8 +1,8 @@
 ---
-uid: Harp.SoundCard.SoundIndexDI0
+uid: Harp.SoundCard.CreateStartOnDI0Payload
 ---
 
-### Configure Digital Input Trigger
+### Trigger Sound Playback
 
 :::workflow
 ![Configure Digital Input Trigger](../workflows/configureDI-triggersound.bonsai)

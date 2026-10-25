@@ -88,7 +88,7 @@ This article will cover the ports, controls and indicators on the SoundCard and 
 
 1. Connect a digital output from another device to one of the digital input pins (IN0-IN2).
 2. Connect the ground of the other device to one of the GND pins, so that both share a common ground.
-3. Refer to the [Configure Digital Input](configure-digitalinput.md) article to configure the digital input mode in Bonsai.
+3. Refer to the [Configure Digital Inputs](configure-digitalinput.md) article to configure the digital input mode in Bonsai.
 
 > [!NOTE]
 > The digital input lines run on 3.3 V logic levels but are 5 V tolerant.
@@ -99,7 +99,7 @@ This article will cover the ports, controls and indicators on the SoundCard and 
 
 1. Connect one of the digital output pins (OUT0-OUT2) to a digital input on the other device.
 2. Connect the ground of the other device to one of the GND pins, so that both share a common ground.
-3. Follow the [Configure Digital Output](configure-digitaloutput.md) article to configure the digital output mode in Bonsai.
+3. Follow the [Control Digital Outputs](configure-digitaloutput.md) article to configure the digital output mode in Bonsai.
 
 > [!NOTE]
 > The logic level of the digital output lines is set to 5 V by default, but can be switched to 3.3 V using the **OUT voltage** jumper located near the **Interface** connector. The setting applies to all three outputs.
@@ -112,7 +112,7 @@ This article will cover the ports, controls and indicators on the SoundCard and 
 
 1. Connect an analog output from another device to one of the analog input pins (ADC0-ADC1).
 2. Connect the ground of the other device to one of the GND pins, so that both share a common ground.
-3. Follow the [Configure Analog Input](configure-analoginput.md) article to configure the analog input mode in Bonsai.
+3. Follow the [Acquire Analog Data](configure-analoginput.md) article to stream the analog inputs in Bonsai.
 
 > [!NOTE]
 > The analog input lines accept a voltage range from 0 to 5 V.

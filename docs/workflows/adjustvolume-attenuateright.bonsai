@@ -9,7 +9,7 @@
     <Nodes>
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="wie:KeyDown">
-          <wie:Filter>A</wie:Filter>
+          <wie:Filter>S</wie:Filter>
           <wie:SuppressRepetitions>false</wie:SuppressRepetitions>
         </Combinator>
       </Expression>

@@ -2,7 +2,7 @@
 uid: Harp.SoundCard.CreateAttenuationLeftPayload
 ---
 
-### Attenuate Left Channel
+### Attenuate Channels
 
 :::workflow
 ![Attenuate Left Channel](../workflows/adjustvolume-attenuateleft.bonsai)
