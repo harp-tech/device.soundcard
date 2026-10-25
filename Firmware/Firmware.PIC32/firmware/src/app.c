@@ -434,15 +434,10 @@ void proc_sinewave_generator(void)
                     if (new_sine_gen_frequency_is_available)
                     {
                         new_sine_gen_frequency_is_available = false;
-                        
-                        if (right_sinewave_freq != new_right_sinewave_freq)
-                        {
-                            /* Update only if the new frequency is different */
-                            right_sinewave_freq = new_right_sinewave_freq;
+                        right_sinewave_freq = new_right_sinewave_freq;
 
-                            //set_SOUND_IS_ON;
-                            trigger_pin_sinewave_is_on(96000, i);
-                        }
+                        //set_SOUND_IS_ON;
+                        trigger_pin_sinewave_is_on(96000, i);
                     }
                     
                     if (stop_sine_gen)

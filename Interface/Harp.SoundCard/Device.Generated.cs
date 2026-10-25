@@ -5190,9 +5190,9 @@ namespace Harp.SoundCard
         Digital = 0,
 
         /// <summary>
-        /// Positive 400us pulse when sound starts or frequency changes.
+        /// Positive 400us pulse when a sound or frequency starts.
         /// </summary>
-        [Description("Positive 400us pulse when sound starts or frequency changes.")]
+        [Description("Positive 400us pulse when a sound or frequency starts.")]
         PulseOnStart = 1
     }
 

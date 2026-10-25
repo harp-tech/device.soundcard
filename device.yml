@@ -264,7 +264,7 @@ groupMasks:
     description: Specifies the operation mode of the digital output.
     values:
       Digital: {value: 0, description: Used as a pure digital output.}
-      PulseOnStart: {value: 1, description: Positive 400us pulse when sound starts or frequency changes. }
+      PulseOnStart: {value: 1, description: Positive 400us pulse when a sound or frequency starts. }
   AdcControlStateConfiguration:
     description: Specifies the operation mode of the ADC control stream.
     values:
