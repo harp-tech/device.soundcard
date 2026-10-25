@@ -42,6 +42,7 @@ High performance sound card with two output channels using 24 bits DACs at 192kH
 
 | Version | Notes |
 | ------- | ----- |
+| 3.0 | <ul><li>Reworked the register map: renamed `PlaySoundOrFrequency` to `Start` and added `Start` and `Stop` events</li><li>Replaced the per-input sound index, frequency and attenuation registers with `StartOnDI0`/`StartOnDI1` and per-input attenuation registers; dropped triggering from **IN2**</li><li>Replaced the digital output pulse registers with the `PulseOnStart` output mode (400 µs pulse)</li><li>Replaced the polled `AnalogData` register with the 1 kHz `AdcControlState` event stream</li><li>Added `InputState` events for inputs in `Digital` mode</li><li>Fixed **OUT2** being driven by the sound memory controller status and **IN1** using the **IN0** configuration</li><li>Updated Harp core to 1.15</li></ul> |
 | 2.2 | <ul><li>Update harp core to 1.13</li><li>Bpod serial communication support dropped</li></ul> |
 | 2.1 | <ul><li>New sine wave generator</li><li>Refactor interface scripts to take libusb dependency from NuGet</li><li>Add prototype device schema and interface</li><li>Update interface to use new generators</li></ul> |
 | 2.0 | <ul><li>Initial firmware release</li></ul> |

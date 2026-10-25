@@ -13,7 +13,7 @@ The complete workflow is shown below:
 
 ### Play Sound Index
 
-Sounds can be played from the `SoundCard` onboard memory by specifying the sound index in the [`PlaySoundOrFrequency`] register payload. Sound duration and amplitude are determined by the properties of the stored waveform.
+Sounds can be played from the `SoundCard` onboard memory by specifying the sound index in the [`Start`] register payload. Values from 2 to 31 select a sound index, and values from 32 upwards are interpreted as a frequency for the sine wave generator instead. Sound duration and amplitude are determined by the properties of the stored waveform.
 
 :::workflow
 ![Play Sound Index Keydown](../workflows/playsound-indexkeydown.bonsai)
@@ -21,18 +21,21 @@ Sounds can be played from the `SoundCard` onboard memory by specifying the sound
 
 - Insert a [`KeyDown`] source and set the `Filter` property to `A`.
 - Insert a [`CreateMessage`] operator to construct a [`HarpMessage`] command and configure these properties:
-    - `Payload` - Select [`PlaySoundOrFrequencyPayload`] from the property dropdown menu.
-    - `PlaySoundOrFrequency` - Set the index of the sound you want to play from the `SoundCard` onboard memory (2-31).
+    - `Payload` - Select [`StartPayload`] from the property dropdown menu.
+    - `Start` - Set the index of the sound you want to play from the `SoundCard` onboard memory (2–31).
 - Insert a [`MulticastSubject`] operator named `SoundCard Commands`.
 
 Run the workflow and press the <kbd>A</kbd> key to play the sound.
 
 > [!TIP]
-> You can terminate the sound early by playing an empty sound index.
+> Starting a new sound index while another is playing replaces it immediately. The [`Stop`] register does not stop sound indices, so to end a sound early, start another index, for example a short silent waveform.
+
+> [!WARNING]
+> Starting a sound index that has not been uploaded to the device does nothing: the command is accepted but no sound plays and no [`Start`] event is emitted. Refer to the [Upload waveforms with Bonsai](../tutorials/upload-waveform-bonsai.md) tutorial to store sounds on the device.
 
 ### Play Pure Tone Frequency
 
-Pure tones can be played from the `SoundCard` internal sine wave generator by specifying the frequency in the [`PlaySoundOrFrequency`] register payload. Sounds will be played continuously at the device's max amplitude until stopped.
+Pure tones can be played from the `SoundCard` internal sine wave generator by specifying the frequency in Hz in the [`Start`] register payload (32–40000). Tones play continuously at the current channel attenuation until stopped.
 
 :::workflow
 ![Play Sound Frequency](../workflows/playsound-frequency.bonsai)
@@ -40,8 +43,8 @@ Pure tones can be played from the `SoundCard` internal sine wave generator by sp
 
 - Insert a [`KeyDown`] source and set the `Filter` property to `S`.
 - Insert a [`CreateMessage`] operator and configure these properties:
-    - `Payload` - Select [`PlaySoundOrFrequencyPayload`].
-    - `PlaySoundOrFrequency` - Set the desired frequency in Hz (e.g. 1000).
+    - `Payload` - Select [`StartPayload`].
+    - `Start` - Set the desired frequency in Hz (e.g. 1000).
 - Insert a [`MulticastSubject`] operator named `SoundCard Commands`.
 
 In a separate branch:
@@ -52,10 +55,13 @@ In a separate branch:
     - `Stop` - Set the value to 1 (any non-zero value stops playback).
 - Insert a [`MulticastSubject`] operator named `SoundCard Commands`.
 
-Run the workflow, press the <kbd>S</kbd> key to play the sound, and press the <kbd>D</kbd> key to stop playback.
+Run the workflow, press the <kbd>S</kbd> key to play the tone, and press the <kbd>D</kbd> key to stop playback.
 
 > [!WARNING]
-> The [`Stop`] register can only be used to stop playback from the internal sine wave generator, not sounds from the onboard memory.
+> The [`Stop`] register can only be used to stop playback from the internal sine wave generator, not sounds from the onboard memory. Closing the connection to the device also stops the sine wave generator.
+
+> [!WARNING]
+> Writing the frequency that is already playing to the [`Start`] register emits no [`Start`] event, and the device then rejects every further [`Start`] command with an error until you write to the [`Stop`] register. Write a different frequency to change the tone, or stop it first.
 
 ### Alternative: Play Sound with Timer
 
@@ -67,32 +73,40 @@ You can replace [`KeyDown`] with other operators to trigger sound playback with 
 
 - Insert a [`Timer`] operator and set the `DueTime` property to the number of seconds to wait before playing the sound (e.g. 5 seconds).
 - Insert a [`CreateMessage`] operator and configure these properties:
-    - `Payload` - Select [`PlaySoundOrFrequencyPayload`].
-    - `PlaySoundOrFrequency` - Set the index of the sound you want to play from the `SoundCard` onboard memory (2-31).
+    - `Payload` - Select [`StartPayload`].
+    - `Start` - Set the index of the sound you want to play from the `SoundCard` onboard memory (2–31).
 - Insert a [`MulticastSubject`] operator named `SoundCard Commands`.
 
 Run the workflow and the sound will play after 5 seconds.
 
 ### Visualize Sound Events
 
-To visualize which sound was played and when, we can filter the [`HarpMessages`] coming from the device and decode them using the workflow below:
+The SoundCard reports every sound start as a [`Start`] event and every stop as a [`Stop`] event. This includes sounds started or stopped from the digital inputs, so the events are the record of what the device actually played and when. To visualize them, filter the [`HarpMessages`] coming from the device and decode them using the workflow below:
 
 :::workflow
 ![Play Sound Visualize Events](../workflows/playsound-visualizeevents.bonsai)
 :::
 
 - Insert a [`SubscribeSubject`] operator named `SoundCard Events`. This will listen to [`HarpMessages`] broadcast from the [`PublishSubject`] named `SoundCard Events` in the Harp device pattern.
-- Insert a [`FilterMessageType`] operator and configure the `MessageType` property to `Event`.
-- Insert a [`Parse`] operator and configure the `Register` property to `TimestampedPlaySoundOrFrequency`.
+- Insert a [`FilterMessageType`] operator and configure the `MessageType` property to `Event`. This drops the replies to the [`Start`] and [`Stop`] commands sent by this workflow, which carry the same register addresses as the events.
+- Insert a [`Parse`] operator and configure the `Register` property to `TimestampedStart`.
 - Insert a [`VisualizerWindow`] operator. This will automatically open a window displaying the parsed events when the workflow starts.
 
-Run the workflow and press the <kbd>A</kbd> key to play a sound. The visualizer will display:
+In a separate branch from the [`FilterMessageType`] operator:
+
+- Insert a [`Parse`] operator and configure the `Register` property to `TimestampedStop`.
+- Insert a [`VisualizerWindow`] operator.
+
+Run the workflow and press the <kbd>A</kbd> key to play a sound. The first visualizer will display:
 
 ```text
 2@15346.973344
 ```
 
-The first number corresponds to the `Payload` value, in this case the sound index or frequency, and the second number is the timestamp on the device clock.
+The first number corresponds to the `Payload` value, in this case the sound index or frequency that started, and the second number is the timestamp on the device clock. Press <kbd>S</kbd> and then <kbd>D</kbd> to see a [`Stop`] event in the second visualizer. Its payload is the last value written to the [`Stop`] register.
+
+> [!NOTE]
+> The [`Start`] event is emitted when the device confirms that playback began, about 0.2 to 0.3 ms after the command. A new [`Start`] command sent before that confirmation is rejected with an error.
 
 [!INCLUDE [](version-footer.md)]
 
@@ -105,9 +119,9 @@ The first number corresponds to the `Payload` value, in this case the sound inde
 [`KeyDown`]: xref:Bonsai.Windows.Input.KeyDown
 [`MulticastSubject`]: xref:Bonsai.Expressions.MulticastSubject
 [`Parse`]: xref:Harp.SoundCard.Parse
-[`PlaySoundOrFrequency`]: xref:Harp.SoundCard.PlaySoundOrFrequency
-[`PlaySoundOrFrequencyPayload`]: xref:Harp.SoundCard.CreatePlaySoundOrFrequencyPayload
 [`PublishSubject`]: xref:Bonsai.Reactive.PublishSubject
+[`Start`]: xref:Harp.SoundCard.Start
+[`StartPayload`]: xref:Harp.SoundCard.CreateStartPayload
 [`Stop`]: xref:Harp.SoundCard.Stop
 [`StopPayload`]: xref:Harp.SoundCard.CreateStopPayload
 [`SubscribeSubject`]: xref:Bonsai.Expressions.SubscribeSubject

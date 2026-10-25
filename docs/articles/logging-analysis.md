@@ -22,7 +22,7 @@ While the workflow is running, registers are logged as the device produces messa
 
 The `harp-python` library imports data stored in the Harp binary format as [pandas](https://pandas.pydata.org/) DataFrames, which can then be analyzed with any `pandas` compatible plotting or analysis library.
 
-The following example demonstrates how to read and plot data from the [`PlaySoundOrFrequency`](play-sound.md) register.
+The following example demonstrates how to read and plot data from the [`Start`](play-sound.md) register, which records every sound the device started.
 
 > [!NOTE]
 > This example requires a Python environment with [harp-python](installation.md#software-packages) and [`matplotlib`](https://matplotlib.org/) installed.
@@ -36,13 +36,13 @@ import matplotlib.pyplot as plt
 device = harp.create_reader("./Data/SoundCard.harp")
 
 # Read data from a specific register
-play_sound_or_frequency_df = device.PlaySoundOrFrequency.read()
+start_df = device.Start.read()
 
 # Inspect DataFrame
-print(play_sound_or_frequency_df.head())
+print(start_df.head())
 
 # Plot sound onset times
-play_sound_or_frequency_df.plot()
+start_df.plot()
 plt.show()
 ```
 

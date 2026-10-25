@@ -2,7 +2,7 @@
 uid: Harp.SoundCard.CreateAttenuationBothPayload
 ---
 
-### Attenuate Both Channels
+### Attenuate Channels
 
 :::workflow
 ![Attenuate Both Channels](../workflows/adjustvolume-attenuateboth.bonsai)

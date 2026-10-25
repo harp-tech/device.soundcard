@@ -50,7 +50,7 @@ pip install harp-python
 
 ## Firmware
 
-New features are added and bugs are fixed with firmware updates which are published on the [release page](https://github.com/harp-tech/device.soundcard/releases) in the SoundCard repository. Each firmware release is tagged with a `fw` prefix (e.g. `fw2.2-harp1.13`), and the files can be found in the "Assets" section. To update the firmware:
+New features are added and bugs are fixed with firmware updates which are published on the [release page](https://github.com/harp-tech/device.soundcard/releases) in the SoundCard repository. Each firmware release is tagged with a `fw` prefix (e.g. `fw3.0-harp1.15`), and the files can be found in the "Assets" section. To update the firmware:
 
 - Download two files matching this format for the hardware version of your device:
     - `SoundCard-*.hex` - Firmware for the 8-bit device interface microcontroller.

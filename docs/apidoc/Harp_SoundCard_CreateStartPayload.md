@@ -1,5 +1,5 @@
 ---
-uid: Harp.SoundCard.CreatePlaySoundOrFrequencyPayload
+uid: Harp.SoundCard.CreateStartPayload
 ---
 
 ### Play Sound Index

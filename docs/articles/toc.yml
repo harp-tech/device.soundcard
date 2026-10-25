@@ -20,12 +20,14 @@
   href: play-sound.md
 - name: Adjust Volume
   href: adjust-volume.md
-- name: Configure Digital Input
+- name: Configure Digital Inputs
   href: configure-digitalinput.md
-- name: Configure Digital Output
+- name: Control Digital Outputs
   href: configure-digitaloutput.md
-- name: Configure Analog Input
+- name: Acquire Analog Data
   href: configure-analoginput.md
+- name: Advanced Configuration
+  href: advanced-configuration.md
 - name: Data Management
 - name: Logging and Analysis
   href: logging-analysis.md
