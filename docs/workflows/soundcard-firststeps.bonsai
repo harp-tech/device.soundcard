@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <WorkflowBuilder Version="2.9.0"
                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                  xmlns:rx="clr-namespace:Bonsai.Reactive;assembly=Bonsai.Core"
@@ -38,7 +38,7 @@
         <Name>SoundCard Events</Name>
       </Expression>
       <Expression xsi:type="Annotation">
-        <Name>First Steps</Name>
+        <Name>First steps</Name>
         <Text><![CDATA[]]></Text>
       </Expression>
       <Expression xsi:type="Combinator">

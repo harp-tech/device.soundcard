@@ -55,7 +55,7 @@
       "baseUrl": "https://harp-tech.org/device.soundcard"
     },
     "globalMetadata": {
-      "_appName": "SoundCard",
+      "_appName": "Sound Card",
       "_appTitle": "Harp.SoundCard",
       "_appFooter": "&copy; harp-tech and Contributors. Made with <a href=\"https://dotnet.github.io/docfx\">docfx</a>",
       "_enableNewTab": true,

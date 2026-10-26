@@ -1,33 +1,31 @@
-## Acquire Analog Data
+# Acquire analog data
 
-This article will cover how to stream the analog input channels on the SoundCard to read analog data coming from other devices. Refer to the [connections](./connections.md#analog-input) article to set up the hardware connection.
+The Sound Card samples the voltage on **ADC0** and **ADC1** at 1 kHz and broadcasts each sample as an [`AdcControlState`] event together with the current sound parameters. Refer to the [connections](./ports-connections.md?tabs=analoginputs#connections) article to set up an analog signal on **ADC0**, which we will use for the rest of these examples.
 
-The complete workflow is shown below:
+This article covers how to enable the analog data stream and visualize the analog data in Bonsai.
+
+The complete workflow is shown below. Copy and paste it into Bonsai to get started immediately, or build each section by following the step-by-step instructions in the following sections.
 
 :::workflow
-![Acquire Analog Data Top Level](../workflows/acquireanalogdata-toplevel.bonsai)
+![Acquire analog data](../workflows/acquireanalogdata-toplevel.bonsai)
 :::
 
-> [!NOTE]
-> The SoundCard samples **ADC0** and **ADC1** at 1 kHz and broadcasts each sample as an [`AdcControlState`] event together with the current sound parameters. The stream is off at power-up and has to be enabled.
+## Enable analog data stream
 
-### Enable Analog Data Stream
-
-To start the stream, write `SampleRate1000Hz` to the [`EnableAdcControlState`] register. Write `Disabled` to stop it.
+The stream is off at power-up. Writing `SampleRate1000Hz` to the [`EnableAdcControlState`] register starts it, and writing `Disabled` stops it.
 
 :::workflow
 ![Enable Analog Data Stream](../workflows/acquireanalogdata-enablestream.bonsai)
 :::
 
-- Insert a [`KeyDown`] source and set the `Filter` property to `A`.
-- Insert a [`CreateMessage`] operator and configure these properties:
-    - `Payload` - Select [`EnableAdcControlStatePayload`].
+- Insert a [`KeyDown`] operator and set the `Filter` property to `A`.
+- Insert a [`CreateMessage`] operator and configure the following properties:
     - `EnableAdcControlState` - Select `SampleRate1000Hz`.
 - Insert a [`MulticastSubject`] operator named `SoundCard Commands`.
 
-Run the workflow and press <kbd>A</kbd>. The device starts broadcasting [`AdcControlState`] events at 1 kHz, which are saved in the [logged data](./logging-analysis.md). Move on to the next section to visualize the analog data while the workflow is running.
+Run the workflow and press <kbd>A</kbd>. The device starts broadcasting [`AdcControlState`] events at 1 kHz, which are saved in the [logged data](./logging-analysis.md).
 
-### Visualize Analog Data
+## Visualize analog data
 
 Each [`AdcControlState`] event carries five values:
 
@@ -39,16 +37,16 @@ Each [`AdcControlState`] event carries five values:
 | `AttenuationRight` | The last right channel attenuation written to the attenuation registers. |
 | `Frequency` | The last sound index or frequency written to the [`Start`] or [`AttenuationStart`] registers. |
 
-To plot the analog data, parse the [`HarpMessages`] coming from the device, select one channel, and decode them using the workflow below:
+The workflow below will show you how to decode the events, select one channel, and plot it:
 
 :::workflow
 ![Visualize Analog Data](../workflows/acquireanalogdata-visualizedata.bonsai)
 :::
 
-- Insert a [`SubscribeSubject`] operator named `SoundCard Events`. This will listen to [`HarpMessages`] broadcast from the [`PublishSubject`] named `SoundCard Events` in the Harp device pattern.
-- Insert a [`Parse`] operator and configure the `Register` property to `AdcControlState`.
+- Insert a [`SubscribeSubject`] operator named `SoundCard Events`.
+- Insert a [`Parse`] operator and set the `Register` property to `AdcControlState`.
 - Insert a [`MemberSelector`] operator and set the `Selector` property to `Adc0`. This selects the data from the first analog input channel.
-- Insert a [`VisualizerWindow`] operator and set the `VisualizerType` property to `TimeSeriesVisualizer`. This will automatically open a window plotting the analog input values when the workflow starts.
+- Insert a [`VisualizerWindow`] operator and set the `VisualizerType` property to `TimeSeriesVisualizer`.
 
 Run the workflow and press <kbd>A</kbd> to enable the stream. The visualizer plots the voltage on **ADC0** as a 12-bit value.
 
@@ -58,20 +56,17 @@ Run the workflow and press <kbd>A</kbd> to enable the stream. The visualizer plo
 > [!WARNING]
 > **TODO**: Verify the analog input range and scaling on hardware. The repository README states 3.3 V maximum (5 V tolerant), while the firmware subtracts a fixed offset from the 12-bit conversion so that readings span about 0 to 3915. Confirm the full-scale voltage and update this note and the connections article accordingly.
 
-[!INCLUDE [](version-footer.md)]
+[!INCLUDE [](../includes/version-footer.md)]
 
 <!--Reference Style Links -->
 [`AdcControlState`]: xref:Harp.SoundCard.AdcControlState
 [`AttenuationStart`]: xref:Harp.SoundCard.AttenuationStart
 [`CreateMessage`]: xref:Harp.SoundCard.CreateMessage
 [`EnableAdcControlState`]: xref:Harp.SoundCard.EnableAdcControlState
-[`EnableAdcControlStatePayload`]: xref:Harp.SoundCard.CreateEnableAdcControlStatePayload
-[`HarpMessages`]: xref:Bonsai.Harp.HarpMessage
 [`KeyDown`]: xref:Bonsai.Windows.Input.KeyDown
 [`MemberSelector`]: xref:Bonsai.Expressions.MemberSelectorBuilder
 [`MulticastSubject`]: xref:Bonsai.Expressions.MulticastSubject
 [`Parse`]: xref:Harp.SoundCard.Parse
-[`PublishSubject`]: xref:Bonsai.Reactive.PublishSubject
 [`Start`]: xref:Harp.SoundCard.Start
 [`Stop`]: xref:Harp.SoundCard.Stop
 [`SubscribeSubject`]: xref:Bonsai.Expressions.SubscribeSubject
