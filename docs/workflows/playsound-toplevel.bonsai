@@ -40,7 +40,7 @@
         <Name>SoundCard Events</Name>
       </Expression>
       <Expression xsi:type="Annotation">
-        <Name>Play Sound Index</Name>
+        <Name>Play sound index</Name>
         <Text><![CDATA[]]></Text>
       </Expression>
       <Expression xsi:type="Combinator">
@@ -59,7 +59,7 @@
         <Name>SoundCard Commands</Name>
       </Expression>
       <Expression xsi:type="Annotation">
-        <Name>Play Pure Tone Frequency</Name>
+        <Name>Play pure tone frequency</Name>
         <Text><![CDATA[]]></Text>
       </Expression>
       <Expression xsi:type="Combinator">
@@ -93,7 +93,7 @@
         <Name>SoundCard Commands</Name>
       </Expression>
       <Expression xsi:type="Annotation">
-        <Name>Visualize Sound Events</Name>
+        <Name>Visualize sound events</Name>
         <Text><![CDATA[]]></Text>
       </Expression>
       <Expression xsi:type="SubscribeSubject">

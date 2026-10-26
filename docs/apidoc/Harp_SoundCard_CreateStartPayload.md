@@ -2,14 +2,14 @@
 uid: Harp.SoundCard.CreateStartPayload
 ---
 
-### Play Sound Index
+### Play sound index
 
 :::workflow
-![Play Sound Index Keydown](../workflows/playsound-indexkeydown.bonsai)
+![Play Sound Index](../workflows/playsound-indexkeydown.bonsai)
 :::
 
-### Play Pure Tone Frequency
+### Play pure tone frequency
 
 :::workflow
-![Play Sound Frequency](../workflows/playsound-frequency.bonsai)
+![Play Pure Tone Frequency](../workflows/playsound-frequency.bonsai)
 :::

@@ -2,8 +2,8 @@
 uid: Harp.SoundCard.ConfigureDO0
 ---
 
-### Signal Sound Playback
+### Signal sound playback
 
 :::workflow
-![Configure DO Signal Sound](../workflows/configureDO-signalsound.bonsai)
+![Signal Sound Playback](../workflows/controldigitaloutputs-signalsound.bonsai)
 :::

@@ -2,8 +2,8 @@
 uid: Harp.SoundCard.OutputState
 ---
 
-### Set All Outputs
+### Set all outputs
 
 :::workflow
-![Configure DO Set Output State](../workflows/configureDO-setoutputstate.bonsai)
+![Set All Outputs](../workflows/controldigitaloutputs-setoutputstate.bonsai)
 :::

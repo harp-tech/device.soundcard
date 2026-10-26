@@ -39,7 +39,7 @@
         <Name>SoundCard Events</Name>
       </Expression>
       <Expression xsi:type="Annotation">
-        <Name>Attenuate and Play Sound</Name>
+        <Name>Attenuate and play sound</Name>
         <Text><![CDATA[]]></Text>
       </Expression>
       <Expression xsi:type="Combinator">
@@ -62,7 +62,7 @@
         <Name>SoundCard Commands</Name>
       </Expression>
       <Expression xsi:type="Annotation">
-        <Name>Attenuate Channels</Name>
+        <Name>Attenuate channels</Name>
         <Text><![CDATA[]]></Text>
       </Expression>
       <Expression xsi:type="Combinator">

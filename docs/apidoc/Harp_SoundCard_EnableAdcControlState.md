@@ -2,7 +2,7 @@
 uid: Harp.SoundCard.EnableAdcControlState
 ---
 
-### Enable Analog Data Stream
+### Enable analog data stream
 
 :::workflow
 ![Enable Analog Data Stream](../workflows/acquireanalogdata-enablestream.bonsai)

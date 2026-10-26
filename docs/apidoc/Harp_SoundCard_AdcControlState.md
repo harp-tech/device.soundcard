@@ -2,7 +2,7 @@
 uid: Harp.SoundCard.AdcControlState
 ---
 
-### Visualize Analog Data
+### Visualize analog data
 
 :::workflow
 ![Visualize Analog Data](../workflows/acquireanalogdata-visualizedata.bonsai)

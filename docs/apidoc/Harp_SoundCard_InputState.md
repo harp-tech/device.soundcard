@@ -2,8 +2,8 @@
 uid: Harp.SoundCard.InputState
 ---
 
-### Visualize Digital Input Events
+### Visualize digital input events
 
 :::workflow
-![Configure Digital Input Visualize Events](../workflows/configureDI-visualizeevents.bonsai)
+![Visualize Digital Input Events](../workflows/configuredigitalinputs-visualizeevents.bonsai)
 :::

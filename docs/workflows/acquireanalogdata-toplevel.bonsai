@@ -41,7 +41,7 @@
         <Name>SoundCard Events</Name>
       </Expression>
       <Expression xsi:type="Annotation">
-        <Name>Enable Analog Data Stream</Name>
+        <Name>Enable analog data stream</Name>
         <Text><![CDATA[]]></Text>
       </Expression>
       <Expression xsi:type="Combinator">
@@ -60,7 +60,7 @@
         <Name>SoundCard Commands</Name>
       </Expression>
       <Expression xsi:type="Annotation">
-        <Name>Visualize Analog Data</Name>
+        <Name>Visualize analog data</Name>
         <Text><![CDATA[]]></Text>
       </Expression>
       <Expression xsi:type="SubscribeSubject">
