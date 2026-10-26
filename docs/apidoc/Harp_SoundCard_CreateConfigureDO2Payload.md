@@ -2,8 +2,8 @@
 uid: Harp.SoundCard.CreateConfigureDO2Payload
 ---
 
-### Signal Sound Playback
+### Signal sound playback
 
 :::workflow
-![Configure DO2 Signal Sound](../workflows/apidoc-configuredo2.bonsai)
+![Signal Sound Playback on DO2](../workflows/apidoc-configuredo2.bonsai)
 :::

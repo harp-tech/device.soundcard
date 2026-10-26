@@ -2,8 +2,8 @@
 uid: Harp.SoundCard.CreateAttenuationRightPayload
 ---
 
-### Attenuate Channels
+### Attenuate channels
 
 :::workflow
-![Attenuate Right Channel](../workflows/adjustvolume-attenuateright.bonsai)
+![Attenuate Right Channel](../workflows/apidoc-attenuationright.bonsai)
 :::

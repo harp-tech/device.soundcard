@@ -2,25 +2,25 @@
 uid: Harp.SoundCard.Device
 ---
 
-Use the [Harp device pattern](https://harp-tech.org/articles/operators.html#device-pattern) to initialize the device, log data, and send commands to and receive messages from the SoundCard.
+Use the [Harp device pattern](https://harp-tech.org/articles/operators.html#device-pattern) to initialize the device, log data, and send commands to and receive messages from the Sound Card.
 
 :::workflow
 ![Harp Device Pattern](../workflows/harp-devicepattern.bonsai)
 :::
 
 Check out the following in-depth guides to learn how to access the device functionality with the `Harp.SoundCard` package:
-- [Play Sounds](../articles/play-sound.md)
-- [Adjust Volume](../articles/adjust-volume.md)
-- [Configure Digital Inputs](../articles/configure-digitalinput.md)
-- [Control Digital Outputs](../articles/configure-digitaloutput.md)
-- [Acquire Analog Data](../articles/configure-analoginput.md)
-- [Advanced Configuration](../articles/advanced-configuration.md)
+- [Play sounds](../articles/play-sound.md)
+- [Adjust volume](../articles/adjust-volume.md)
+- [Configure digital inputs](../articles/configure-digitalinputs.md)
+- [Control digital outputs](../articles/control-digitaloutputs.md)
+- [Acquire analog data](../articles/acquire-analogdata.md)
+- [Advanced configuration](../articles/advanced-configuration.md)
 
 Refer to the register table below for a complete listing of the available registers on the device.
 
 <table>
   <thead>
-    <tr><th colspan="2">SoundCard</th></tr>
+    <tr><th colspan="2">Sound Card</th></tr>
   </thead>
   <tbody>
     <tr><td>whoAmI</td><td>1280</td></tr>

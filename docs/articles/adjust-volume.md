@@ -1,74 +1,61 @@
-## Adjust Volume
+# Adjust volume
 
-By default, the [`Start`] register will play the sound at the amplitude of the stored waveform or at maximum amplitude for the pure tone frequency generator. This article will demonstrate how to adjust the volume by setting the attenuation level with other registers.
+The Sound Card plays stored sounds at the amplitude of the stored waveform and pure tones at maximum amplitude unless an attenuation is set for the output channels. Refer to the [connections](./ports-connections.md?tabs=audio#connections) article to set up an amplifier and speaker on an output channel, which we will use for the rest of these examples.
 
-> [!NOTE]
-> The maximum volume for playback of stored waveforms depends on its recorded amplitude. Upload waveforms at full 24-bit depth to maximize the volume.
+This article covers how to set the attenuation when starting a sound and how to change it while a sound is playing in Bonsai.
 
-> [!WARNING]
-> Attenuation is set on a per-channel basis, does not stack (each command replaces the previous value), and persists. Any sound you play afterwards with the [`Start`] register will play at the most recently set channel attenuation level until you change it.
-
-The complete workflow is shown below:
+The complete workflow is shown below. Copy and paste it into Bonsai to get started immediately, or build each section by following the step-by-step instructions in the following sections.
 
 :::workflow
-![Adjust Volume Top Level](../workflows/adjustvolume-toplevel.bonsai)
+![Adjust volume](../workflows/adjustvolume-toplevel.bonsai)
 :::
 
-### Attenuate and Play Sound
+## Attenuate and play sound
 
-Use the [`AttenuationStart`] register as a drop-in replacement for the [`Start`] register to start sound playback and set the channel attenuation at the same time in 0.1 dB steps.
+The [`AttenuationStart`] register starts a sound index or pure tone and sets the attenuation of both channels in 0.1 dB steps at the same time. Attenuation is set per channel, does not stack (each command replaces the previous value), and persists: any sound you play afterwards with the [`Start`] register plays at the most recently set attenuation until you change it.
 
 :::workflow
-![Attenuate Channels and Play Sound](../workflows/adjustvolume-attenuation.bonsai)
+![Attenuate and Play Sound](../workflows/adjustvolume-attenuation.bonsai)
 :::
 
-- Insert a [`KeyDown`] source and set the `Filter` property to `A`.
-- Insert a [`CreateMessage`] operator and configure these properties:
-    - `Payload` - Select [`AttenuationStartPayload`].
-    - `AttenuationStart` - Click on the dialog button in the property grid to open the member collection editor. Add three members:
-        - The sound index or pure tone frequency to be played (e.g. 2).
-        - The attenuation of the left channel (e.g. 200 = -20 dB).
-        - The attenuation of the right channel (e.g. 200 = -20 dB).
+- Insert a [`KeyDown`] operator and set the `Filter` property to `A`.
+- Insert a [`CreateMessage`] operator and configure the following properties:
+    - `AttenuationStart` - Click on the dialog button in the property grid to open the member collection editor. Add three members: the sound index or pure tone frequency to be played (e.g. 2), the attenuation of the left channel (e.g. 200 = -20 dB), and the attenuation of the right channel (e.g. 200 = -20 dB).
 - Insert a [`MulticastSubject`] operator named `SoundCard Commands`.
 
 Run the workflow and press the <kbd>A</kbd> key to play the sound at reduced volume.
 
+> [!NOTE]
+> The maximum volume for playback of stored waveforms depends on the recorded amplitude. Upload waveforms at full 24-bit depth to maximize the volume.
+
 > [!TIP]
 > Just like the [`Start`] register, pure tone playback must be stopped explicitly via the [`Stop`] register. The device reports an [`AttenuationStart`] command as a [`Start`] event.
 
-### Attenuate Channels
+## Attenuate channels
 
-Use the [`AttenuationBoth`] register to adjust the channel volume before or during sound playback.
+The [`AttenuationBoth`] register sets the attenuation of both channels before or during sound playback. Use the [`AttenuationLeft`] or [`AttenuationRight`] registers to set each channel independently.
 
 :::workflow
-![Attenuate Both Channels](../workflows/adjustvolume-attenuateboth.bonsai)
+![Attenuate Channels](../workflows/adjustvolume-attenuateboth.bonsai)
 :::
 
-- Insert a [`KeyDown`] source and set the `Filter` property to `S`.
-- Insert a [`CreateMessage`] operator and configure these properties:
-    - `Payload` - Select [`AttenuationBothPayload`].
-    - `AttenuationBoth` - Click on the dialog button in the property grid to open the member collection editor. Add two members:
-        - The left channel attenuation (e.g. 100 = -10 dB).
-        - The right channel attenuation (e.g. 100 = -10 dB).
+- Insert a [`KeyDown`] operator and set the `Filter` property to `S`.
+- Insert a [`CreateMessage`] operator and configure the following properties:
+    - `AttenuationBoth` - Click on the dialog button in the property grid to open the member collection editor. Add two members: the left channel attenuation (e.g. 100 = -10 dB) and the right channel attenuation (e.g. 100 = -10 dB).
 - Insert a [`MulticastSubject`] operator named `SoundCard Commands`.
 
-Run the workflow and press <kbd>A</kbd> to play the sound with the [`AttenuationStart`] register and <kbd>S</kbd> to dynamically change the volume while the sound is playing. If you are using the same values as the examples above, the sound will become louder (going from more attenuation to less).
-
-> [!TIP]
-> Use the [`AttenuationLeft`] or [`AttenuationRight`] channels to set the attenuation level for each channel independently.
+Run the workflow and press <kbd>A</kbd> to play the sound with the [`AttenuationStart`] register and <kbd>S</kbd> to change the volume while the sound is playing. With the values above, the sound becomes louder, going from more attenuation to less.
 
 > [!NOTE]
-> These registers set the volume for sounds started from Bonsai. Sounds triggered from the digital inputs use their own attenuation registers, as described in the [Configure Digital Inputs](configure-digitalinput.md) article.
+> These registers set the volume for sounds started from Bonsai. Sounds triggered from the digital inputs use their own attenuation registers, as described in the [Configure digital inputs](configure-digitalinputs.md) article.
 
-[!INCLUDE [](version-footer.md)]
+[!INCLUDE [](../includes/version-footer.md)]
 
 <!--Reference Style Links -->
-[`AttenuationStart`]: xref:Harp.SoundCard.AttenuationStart
-[`AttenuationStartPayload`]: xref:Harp.SoundCard.CreateAttenuationStartPayload
+[`AttenuationBoth`]: xref:Harp.SoundCard.AttenuationBoth
 [`AttenuationLeft`]: xref:Harp.SoundCard.AttenuationLeft
 [`AttenuationRight`]: xref:Harp.SoundCard.AttenuationRight
-[`AttenuationBoth`]: xref:Harp.SoundCard.AttenuationBoth
-[`AttenuationBothPayload`]: xref:Harp.SoundCard.CreateAttenuationBothPayload
+[`AttenuationStart`]: xref:Harp.SoundCard.AttenuationStart
 [`CreateMessage`]: xref:Harp.SoundCard.CreateMessage
 [`KeyDown`]: xref:Bonsai.Windows.Input.KeyDown
 [`MulticastSubject`]: xref:Bonsai.Expressions.MulticastSubject

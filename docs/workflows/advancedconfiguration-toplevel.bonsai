@@ -39,7 +39,7 @@
         <Name>SoundCard Events</Name>
       </Expression>
       <Expression xsi:type="Annotation">
-        <Name>Delete Stored Sounds</Name>
+        <Name>Delete stored sounds</Name>
         <Text><![CDATA[]]></Text>
       </Expression>
       <Expression xsi:type="Combinator">
