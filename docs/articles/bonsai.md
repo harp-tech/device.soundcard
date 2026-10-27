@@ -24,7 +24,7 @@ Before beginning:
 > [!TIP]
 > If your workflow does not look like the one above, make sure that the [Harp.SoundCard and Bonsai.StarterPack](./installation.md#software-packages) packages are installed.
 
-- Click on the [`SoundCard (Device)`] operator and set the `PortName` property to the communications port for the device (e.g. COM8).
+- Click on the [`SoundCard (Device)`] operator and set the `PortName` property to the communications port for the device (e.g. `COM8`).
 - Click on the [`SoundCardDataWriter (DeviceDataWriter)`] operator and set the `Path` property for the name and location of the save folder (e.g. `SoundCard.harp`).
 - Press the "Start" button in Bonsai to run the workflow.
 

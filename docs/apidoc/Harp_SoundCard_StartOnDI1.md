@@ -2,8 +2,8 @@
 uid: Harp.SoundCard.StartOnDI1
 ---
 
-### Trigger sound playback
+### Set mode and sound
 
 :::workflow
-![Trigger Sound Playback on DI1](../workflows/apidoc-startondi1.bonsai)
+![Set Mode and Sound on DI1](../workflows/apidoc-startondi1.bonsai)
 :::

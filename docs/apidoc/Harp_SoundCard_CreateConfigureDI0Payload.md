@@ -2,8 +2,14 @@
 uid: Harp.SoundCard.CreateConfigureDI0Payload
 ---
 
-### Trigger sound playback
+### Set mode and sound
 
 :::workflow
-![Trigger Sound Playback](../workflows/configuredigitalinputs-triggersound.bonsai)
+![Set Mode and Sound](../workflows/configuredigitalinputs-setmodeandsound.bonsai)
+:::
+
+### Visualize digital input events
+
+:::workflow
+![Visualize Digital Input Events](../workflows/configuredigitalinputs-visualizeevents.bonsai)
 :::
