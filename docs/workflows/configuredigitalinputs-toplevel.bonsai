@@ -40,7 +40,7 @@
         <Name>SoundCard Events</Name>
       </Expression>
       <Expression xsi:type="Annotation">
-        <Name>Trigger sound playback</Name>
+        <Name>Set mode and sound</Name>
         <Text><![CDATA[]]></Text>
       </Expression>
       <Expression xsi:type="Combinator">
@@ -52,7 +52,7 @@
       <Expression xsi:type="p1:CreateMessage">
         <harp:MessageType>Write</harp:MessageType>
         <harp:Payload xsi:type="p1:CreateConfigureDI0Payload">
-          <p1:ConfigureDI0>Start</p1:ConfigureDI0>
+          <p1:ConfigureDI0>StartAndStop</p1:ConfigureDI0>
         </harp:Payload>
       </Expression>
       <Expression xsi:type="MulticastSubject">
@@ -61,7 +61,7 @@
       <Expression xsi:type="p1:CreateMessage">
         <harp:MessageType>Write</harp:MessageType>
         <harp:Payload xsi:type="p1:CreateStartOnDI0Payload">
-          <p1:StartOnDI0>2</p1:StartOnDI0>
+          <p1:StartOnDI0>500</p1:StartOnDI0>
         </harp:Payload>
       </Expression>
       <Expression xsi:type="MulticastSubject">
@@ -107,8 +107,8 @@
       </Expression>
       <Expression xsi:type="p1:CreateMessage">
         <harp:MessageType>Write</harp:MessageType>
-        <harp:Payload xsi:type="p1:CreateConfigureDI1Payload">
-          <p1:ConfigureDI1>Digital</p1:ConfigureDI1>
+        <harp:Payload xsi:type="p1:CreateConfigureDI0Payload">
+          <p1:ConfigureDI0>Digital</p1:ConfigureDI0>
         </harp:Payload>
       </Expression>
       <Expression xsi:type="MulticastSubject">

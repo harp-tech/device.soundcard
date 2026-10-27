@@ -16,8 +16,8 @@
       </Expression>
       <Expression xsi:type="p1:CreateMessage">
         <harp:MessageType>Write</harp:MessageType>
-        <harp:Payload xsi:type="p1:CreateConfigureDI1Payload">
-          <p1:ConfigureDI1>Digital</p1:ConfigureDI1>
+        <harp:Payload xsi:type="p1:CreateConfigureDI0Payload">
+          <p1:ConfigureDI0>Digital</p1:ConfigureDI0>
         </harp:Payload>
       </Expression>
       <Expression xsi:type="MulticastSubject">
