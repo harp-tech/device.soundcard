@@ -1,8 +1,8 @@
 # Control digital outputs
 
-The Sound Card emits a TTL pulse on **OUT0**, **OUT1**, or **OUT2** every time a sound starts, and the same lines can be driven directly from Bonsai. Refer to the [connections](./ports-connections.md?tabs=digitaloutputs#connections) article to set up a digital input of another device on **OUT0** and **OUT1**, which we will use for the rest of these examples.
+The Sound Card can emit a TTL pulse on its digital outputs (**OUT0**–**OUT2**) every time a sound starts, and the outputs can also be controlled directly from Bonsai. Refer to the [connections](./ports-connections.md?tabs=digitaloutputs#connections) article to connect **OUT0** to a digital input on another device, which we will use for the rest of these examples.
 
-This article covers how to signal sound playback on an output, drive the outputs from workflow events, and set all outputs at once in Bonsai.
+This article covers how to signal sound playback on an output, set and clear outputs, toggle outputs, and write all outputs at once in Bonsai.
 
 The complete workflow is shown below. Copy and paste it into Bonsai to get started immediately, or build each section by following the step-by-step instructions in the following sections.
 
@@ -10,9 +10,11 @@ The complete workflow is shown below. Copy and paste it into Bonsai to get start
 ![Control digital outputs](../workflows/controldigitaloutputs-toplevel.bonsai)
 :::
 
+[!INCLUDE [](../includes/digitaloutputs-load-warning.md)]
+
 ## Signal sound playback
 
-The [`ConfigureDO0`] register set to `PulseOnStart` makes **OUT0** emit a 400 µs pulse every time a sound or pure tone starts and every time the frequency of the pure tone changes, whether the sound was started from Bonsai or from a digital input.
+Each digital output line has a configuration mode register that sets what the line does (e.g. [`ConfigureDO0`] for **OUT0**). In `PulseOnStart` mode, the line emits a 400 µs pulse every time a sound or pure tone starts and every time the frequency of the pure tone changes, whether the sound was started from Bonsai or from a digital input.
 
 :::workflow
 ![Signal Sound Playback](../workflows/controldigitaloutputs-signalsound.bonsai)
@@ -20,78 +22,97 @@ The [`ConfigureDO0`] register set to `PulseOnStart` makes **OUT0** emit a 400 µ
 
 - Insert a [`KeyDown`] operator and set the `Filter` property to `A`.
 - Insert a [`CreateMessage`] operator and configure the following properties:
+    - `Payload` - Select `ConfigureDO0Payload`.
     - `ConfigureDO0` - Select `PulseOnStart`.
-- Insert a [`MulticastSubject`] operator named `SoundCard Commands`.
-
-Run the workflow and press <kbd>A</kbd> to set the configuration, then play a sound and check the TTL pulse on the other device.
-
-> [!NOTE]
-> **OUT0** is in `PulseOnStart` mode at power-up, and **OUT1** and **OUT2** are in `Digital` mode. The workflow sets the mode explicitly so that the example does not depend on what ran before it.
-
-## Signal workflow events
-
-The [`OutputSet`], [`OutputClear`], and [`OutputToggle`] registers drive the output lines directly to signal other workflow events in Bonsai. This example drives **OUT1**, leaving **OUT0** to signal sound playback, and sets its mode to `Digital` first with the [`ConfigureDO1`] register.
-
-:::workflow
-![Signal Workflow Events](../workflows/controldigitaloutputs-signalworkflowevents.bonsai)
-:::
-
-- Insert a [`KeyDown`] operator and set the `Filter` property to `S`.
-- Insert a [`CreateMessage`] operator and configure the following properties:
-    - `ConfigureDO1` - Select `Digital`.
-- Insert a [`MulticastSubject`] operator named `SoundCard Commands`.
-- Insert a [`CreateMessage`] operator and configure the following properties:
-    - `OutputSet` - Select the line to set high (e.g. `DO1`).
 - Insert a [`MulticastSubject`] operator named `SoundCard Commands`.
 
 In a separate branch:
 
+- Insert a [`KeyDown`] operator and set the `Filter` property to `S`.
+- Insert a [`CreateMessage`] operator and configure the following properties:
+    - `Payload` - Select `StartPayload`.
+    - `Start` - Set the index of the sound to play (e.g. `2`).
+- Insert a [`MulticastSubject`] operator named `SoundCard Commands`.
+
+Run the workflow and press <kbd>A</kbd> to set the configuration, then press <kbd>S</kbd> to play sound index 2 and check the TTL pulse on the other device.
+
+## Set and clear outputs
+
+In `Digital` mode, the output line can be controlled directly to signal other workflow events in Bonsai. This example reconfigures **OUT0** to `Digital` mode first with the [`ConfigureDO0`] register, so the same connection can be used. It then demonstrates how to control the output line with [`OutputSet`] and [`OutputClear`].
+
+:::workflow
+![Set and Clear Outputs](../workflows/controldigitaloutputs-setclearoutputs.bonsai)
+:::
+
 - Insert a [`KeyDown`] operator and set the `Filter` property to `D`.
 - Insert a [`CreateMessage`] operator and configure the following properties:
-    - `OutputClear` - Select the line to clear low (e.g. `DO1`).
+    - `Payload` - Select `ConfigureDO0Payload`.
+    - `ConfigureDO0` - Select `Digital`.
 - Insert a [`MulticastSubject`] operator named `SoundCard Commands`.
 
 In a separate branch:
 
 - Insert a [`KeyDown`] operator and set the `Filter` property to `F`.
 - Insert a [`CreateMessage`] operator and configure the following properties:
-    - `OutputToggle` - Select the line to toggle between low and high (e.g. `DO1`).
+    - `Payload` - Select `OutputSetPayload`.
+    - `OutputSet` - Select the line to set high (e.g. `DO0`).
 - Insert a [`MulticastSubject`] operator named `SoundCard Commands`.
 
-Run the workflow and press <kbd>S</kbd>, <kbd>D</kbd>, or <kbd>F</kbd> to set, clear, or toggle **OUT1**, then check the TTL signal on the other device.
-
-> [!NOTE]
-> A single command can drive several lines at once. To set, clear, or toggle multiple lines simultaneously, type the names separated by a comma (e.g. `DO1, DO2`) in the `OutputSet`, `OutputClear`, or `OutputToggle` field. Lines not specified remain unchanged.
-
-> [!WARNING]
-> Set a line to `Digital` mode before driving it. A line in `PulseOnStart` mode that was set high is cleared 400 µs after the next sound starts.
-
-> [!NOTE]
-> Software-triggered outputs are subject to operating system and hardware communication latencies.
-
-## Set all outputs
-
-The [`OutputState`] register writes the state of all three digital output lines with a single command.
-
-:::workflow
-![Set All Outputs](../workflows/controldigitaloutputs-setoutputstate.bonsai)
-:::
+In a separate branch:
 
 - Insert a [`KeyDown`] operator and set the `Filter` property to `G`.
 - Insert a [`CreateMessage`] operator and configure the following properties:
-    - `OutputState` - Select the lines to set high (e.g. `DO1, DO2`).
+    - `Payload` - Select `OutputClearPayload`.
+    - `OutputClear` - Select the line to clear low (e.g. `DO0`).
 - Insert a [`MulticastSubject`] operator named `SoundCard Commands`.
 
-Run the workflow and press <kbd>G</kbd>. **OUT1** and **OUT2** go high and **OUT0** goes low.
+Run the workflow and press <kbd>D</kbd> to enable `Digital` mode, then press <kbd>F</kbd> or <kbd>G</kbd> to set or clear **OUT0** and check the TTL signal on the other device.
+
+> [!NOTE]
+> A single command can control several lines at once. To set or clear multiple lines simultaneously, type the names separated by a comma (e.g. `DO1, DO2`) in the `OutputSet` or `OutputClear` field. Lines not specified remain unchanged.
+
+> [!NOTE]
+> Software-triggered outputs are subject to operating system and hardware communication latencies (typically 10-15 ms).
+
+## Toggle outputs
+
+The [`OutputToggle`] register flips the output line between low and high with a single command, so a workflow event can alternate the line without keeping track of its current state.
+
+:::workflow
+![Toggle Outputs](../workflows/controldigitaloutputs-toggleoutputs.bonsai)
+:::
+
+- Insert a [`KeyDown`] operator and set the `Filter` property to `H`.
+- Insert a [`CreateMessage`] operator and configure the following properties:
+    - `Payload` - Select `OutputTogglePayload`.
+    - `OutputToggle` - Select the line to toggle (e.g. `DO0`).
+- Insert a [`MulticastSubject`] operator named `SoundCard Commands`.
+
+Run the workflow and press <kbd>H</kbd> repeatedly to toggle **OUT0** between high and low, then check the TTL signal on the other device.
+
+## Write all outputs
+
+The [`OutputState`] register writes the state of all digital output lines with a single command. Selected lines are set high and all other lines are set low. Use it to set the whole output bank to a known state, for example when initializing an experiment.
+
+:::workflow
+![Write All Outputs](../workflows/controldigitaloutputs-writealloutputs.bonsai)
+:::
+
+- Insert a [`KeyDown`] operator and set the `Filter` property to `J`.
+- Insert a [`CreateMessage`] operator and configure the following properties:
+    - `Payload` - Select `OutputStatePayload`.
+    - `OutputState` - Select the lines to set high (e.g. `DO0, DO1`). All other lines are set low.
+- Insert a [`MulticastSubject`] operator named `SoundCard Commands`.
+
+Run the workflow and press <kbd>J</kbd>. **OUT0** goes high and **OUT1** and **OUT2** go low.
 
 > [!WARNING]
-> [`OutputState`] acts on every digital output line of the Sound Card. Any line not specified in the payload will be cleared low. Make sure to list every line that should stay high (e.g. `DO1, DO2`). To change only selected lines, use [`OutputSet`], [`OutputClear`], or [`OutputToggle`].
+> [`OutputState`] acts on every digital output line of the Sound Card. To change only selected lines, use [`OutputSet`], [`OutputClear`], or [`OutputToggle`].
 
 [!INCLUDE [](../includes/version-footer.md)]
 
 <!--Reference Style Links -->
 [`ConfigureDO0`]: xref:Harp.SoundCard.ConfigureDO0
-[`ConfigureDO1`]: xref:Harp.SoundCard.ConfigureDO1
 [`CreateMessage`]: xref:Harp.SoundCard.CreateMessage
 [`KeyDown`]: xref:Bonsai.Windows.Input.KeyDown
 [`MulticastSubject`]: xref:Bonsai.Expressions.MulticastSubject

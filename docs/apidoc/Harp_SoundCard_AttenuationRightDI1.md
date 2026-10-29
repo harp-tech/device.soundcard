@@ -2,8 +2,8 @@
 uid: Harp.SoundCard.AttenuationRightDI1
 ---
 
-### Set trigger volume
+### Set volume of triggered sounds
 
 :::workflow
-![Set Trigger Volume on DI1](../workflows/apidoc-attenuationleftdi1.bonsai)
+![Set Volume of Triggered Sounds on DI1](../workflows/apidoc-attenuationleftdi1.bonsai)
 :::

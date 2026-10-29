@@ -20,6 +20,7 @@ The sounds uploaded to the device persist across power cycles. Writing `DeleteAl
 
 - Insert a [`KeyDown`] operator and set the `Filter` property to `A`.
 - Insert a [`CreateMessage`] operator and configure the following properties:
+    - `Payload` - Select `Pic32CommandsPayload`.
     - `Pic32Commands` - Select `DeleteAllSounds`.
 - Insert a [`MulticastSubject`] operator named `SoundCard Commands`.
 

@@ -22,6 +22,7 @@ Play sounds from the onboard sound bank memory by writing the sound index to the
 
 - Insert a [`KeyDown`] operator and set the `Filter` property to `A`.
 - Insert a [`CreateMessage`] operator and configure the following properties:
+    - `Payload` - Select `StartPayload`.
     - `Start` - Set the index of the sound you want to play from the onboard memory (e.g. `2`).
 - Insert a [`MulticastSubject`] operator named `SoundCard Commands`.
 
@@ -40,6 +41,7 @@ Pure tones are played from the internal sine wave generator by writing the frequ
 
 - Insert a [`KeyDown`] operator and set the `Filter` property to `S`.
 - Insert a [`CreateMessage`] operator and configure the following properties:
+    - `Payload` - Select `StartPayload`.
     - `Start` - Set the desired frequency in Hz (e.g. `500`).
 - Insert a [`MulticastSubject`] operator named `SoundCard Commands`.
 
@@ -47,6 +49,7 @@ In a separate branch:
 
 - Insert a [`KeyDown`] operator and set the `Filter` property to `D`.
 - Insert a [`CreateMessage`] operator and configure the following properties:
+    - `Payload` - Select `StopPayload`.
     - `Stop` - Set the value to `1` (any non-zero value stops playback).
 - Insert a [`MulticastSubject`] operator named `SoundCard Commands`.
 
@@ -101,6 +104,7 @@ You can replace [`KeyDown`] with other operators to play sounds with other trigg
     - `DueTime` - Set the number of seconds to wait after the workflow starts to play the sound (e.g. `00:00:02` for two seconds).
     - `Period` - Leave this unspecified so that the [`Timer`] only triggers once.
 - Insert a [`CreateMessage`] operator and configure the following properties:
+    - `Payload` - Select `StartPayload`.
     - `Start` - Set the index of the sound you want to play from the onboard memory (e.g. `2`).
 - Insert a [`MulticastSubject`] operator named `SoundCard Commands`.
 

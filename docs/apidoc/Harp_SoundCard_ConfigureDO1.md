@@ -2,8 +2,8 @@
 uid: Harp.SoundCard.ConfigureDO1
 ---
 
-### Signal workflow events
+### Set and clear outputs
 
 :::workflow
-![Signal Workflow Events](../workflows/controldigitaloutputs-signalworkflowevents.bonsai)
+![Set and Clear Outputs on DO1](../workflows/apidoc-configuredo1.bonsai)
 :::

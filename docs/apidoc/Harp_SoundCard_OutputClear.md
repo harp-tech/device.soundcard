@@ -2,8 +2,8 @@
 uid: Harp.SoundCard.OutputClear
 ---
 
-### Signal workflow events
+### Set and clear outputs
 
 :::workflow
-![Signal Workflow Events](../workflows/controldigitaloutputs-signalworkflowevents.bonsai)
+![Set and Clear Outputs](../workflows/controldigitaloutputs-setclearoutputs.bonsai)
 :::
