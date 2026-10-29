@@ -2,8 +2,6 @@
 
 The Sound Card plays waveforms stored in its onboard memory and pure tones from an internal sine wave generator. 
 
-Refer to the [connections](./ports-connections.md?tabs=audio#connections) article to set up an amplifier and speaker on an output channel. Then, upload a sound to sound index 2 with the [Sound Card GUI](./soundcard-gui.md), or in [Bonsai](../tutorials/upload-waveform-bonsai.md). We will use this setup for the rest of these examples.
-
 This article covers how to play a stored sound, play and stop a pure tone, and visualize sound events in Bonsai.
 
 The complete workflow is shown below. Copy and paste it into Bonsai to get started immediately, or build each section by following the step-by-step instructions in the following sections.
@@ -14,7 +12,7 @@ The complete workflow is shown below. Copy and paste it into Bonsai to get start
 
 ## Play sound index
 
-Play sounds from the onboard sound bank memory by writing the sound index to the [`Start`] register. Values from 2 to 31 select a sound index, and values from 32 upwards are interpreted as a frequency for the sine wave generator instead (covered in the next section). Sound duration and amplitude are determined by the properties of the stored waveform.
+Play sounds from the onboard sound bank by writing the sound index to the [`Start`] register. Values from 2 to 31 select a sound index, and values from 32 upwards are interpreted as a frequency for the sine wave generator instead (covered in the next section). Sound duration and amplitude are determined by the properties of the stored waveform.
 
 :::workflow
 ![Play Sound Index](../workflows/playsound-indexkeydown.bonsai)

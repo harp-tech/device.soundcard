@@ -10,8 +10,8 @@ Bonsai is a visual reactive programming language for building interactive experi
 We will use an introductory example to get started with the device in Bonsai. This example plays a sound 5 seconds after the workflow starts. We revisit this example in more detail in the "Examples" section.
 
 Before beginning:
-
-- Connect the [USB (Computer)](ports-connections.md) cable to the computer.
+- Connect an amplifier and speaker to an output channel by following the [audio connection](ports-connections.md?tabs=audio#connections) instructions.
+- Connect the power supply and **USB(Computer)** cable by following the [power and PC connection](ports-connections.md?tabs=powerandpc#connections) instructions.
 - Upload a sound to sound index 2 with the [Sound Card GUI](./soundcard-gui.md) or in [Bonsai](../tutorials/upload-waveform-bonsai.md).
 - Launch "Bonsai" from the Windows Start menu.
 - Hover over the workflow cell below, and click on the "Copy" icon on the top right.
@@ -28,7 +28,7 @@ Before beginning:
 - Click on the [`SoundCardDataWriter (DeviceDataWriter)`] operator and set the `Path` property for the name and location of the save folder (e.g. `SoundCard.harp`).
 - Press the "Start" button in Bonsai to run the workflow.
 
-After 5 seconds, the sound plays and the **AUDIO** LED on the board turns on for its duration.
+After 5 seconds, the sound plays and the [AUDIO](ports-connections.md#indicators) LED on the board turns on for its duration.
 
 The device is ready to use! If, instead, you hear nothing or an error appears in Bonsai, check out the [troubleshooting](errors.md) section.
 

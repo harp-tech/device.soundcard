@@ -12,17 +12,30 @@
         <Name>SoundCard Events</Name>
       </Expression>
       <Expression xsi:type="p1:Parse">
-        <harp:Register xsi:type="p1:AdcControlState" />
+        <harp:Register xsi:type="p1:TimestampedAdcControlState" />
+      </Expression>
+      <Expression xsi:type="ui:VisualizerWindow">
+        <ui:VisualizerType xsi:type="TypeMapping" TypeArguments="ui:ObjectTextVisualizer" />
+        <ui:Visible>true</ui:Visible>
+        <ui:Location>
+          <ui:X>400</ui:X>
+          <ui:Y>100</ui:Y>
+        </ui:Location>
+        <ui:Size>
+          <ui:Width>500</ui:Width>
+          <ui:Height>300</ui:Height>
+        </ui:Size>
+        <ui:WindowState xsi:nil="true" />
       </Expression>
       <Expression xsi:type="MemberSelector">
-        <Selector>Adc0</Selector>
+        <Selector>Value.Adc0</Selector>
       </Expression>
       <Expression xsi:type="ui:VisualizerWindow">
         <ui:VisualizerType xsi:type="TypeMapping" TypeArguments="viz:TimeSeriesVisualizer" />
         <ui:Visible>true</ui:Visible>
         <ui:Location>
           <ui:X>400</ui:X>
-          <ui:Y>100</ui:Y>
+          <ui:Y>450</ui:Y>
         </ui:Location>
         <ui:Size>
           <ui:Width>400</ui:Width>
@@ -34,7 +47,8 @@
     <Edges>
       <Edge From="0" To="1" Label="Source1" />
       <Edge From="1" To="2" Label="Source1" />
-      <Edge From="2" To="3" Label="Source1" />
+      <Edge From="1" To="3" Label="Source1" />
+      <Edge From="3" To="4" Label="Source1" />
     </Edges>
   </Workflow>
 </WorkflowBuilder>
