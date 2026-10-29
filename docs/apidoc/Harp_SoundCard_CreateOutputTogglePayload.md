@@ -2,8 +2,8 @@
 uid: Harp.SoundCard.CreateOutputTogglePayload
 ---
 
-### Signal workflow events
+### Toggle outputs
 
 :::workflow
-![Signal Workflow Events](../workflows/controldigitaloutputs-signalworkflowevents.bonsai)
+![Toggle Outputs](../workflows/controldigitaloutputs-toggleoutputs.bonsai)
 :::

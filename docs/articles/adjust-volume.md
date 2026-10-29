@@ -22,6 +22,7 @@ The complete workflow is shown below. Copy and paste it into Bonsai to get start
 
 - Insert a [`KeyDown`] operator and set the `Filter` property to `A`.
 - Insert a [`CreateMessage`] operator and configure the following properties:
+    - `Payload` - Select `AttenuationStartPayload`.
     - `AttenuationStart` - Click on the dialog button in the property grid to open the member collection editor. Add three members:
         - The sound index or pure tone frequency to be played (e.g. `2`).
         - The attenuation of the left channel (e.g. `200` = -20 dB).
@@ -46,6 +47,7 @@ Use [`AttenuationBoth`] to set the attenuation of both channels before or during
 
 - Insert a [`KeyDown`] operator and set the `Filter` property to `S`.
 - Insert a [`CreateMessage`] operator and configure the following properties:
+    - `Payload` - Select `AttenuationBothPayload`.
     - `AttenuationBoth` - Click on the dialog button in the property grid to open the member collection editor. Add two members:
         - The left channel attenuation (e.g. `100` = -10 dB).
         - The right channel attenuation (e.g. `100` = -10 dB).

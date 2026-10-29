@@ -82,9 +82,11 @@ This article will cover the ports, controls, and status indicators on the Sound 
 
 ![Harp Sound Card Digital Input](../images/connection-digitalinputs.svg){width=600}
 
-1. Connect a digital output from another device to **IN0**, **IN1**, or **IN2** on the **Interface** connector. The digital input lines run on 3.3 V logic levels but are 5 V tolerant.
+1. Connect a digital output from another device to **IN0** or **IN1** on the **Interface** connector. The digital input lines run on 3.3 V logic levels but are 5 V tolerant.
 2. Connect the ground of the other device to any **GND** pin, so that both share a common ground.
 3. Refer to the [Configure digital inputs](configure-digitalinputs.md) article to trigger sounds from the inputs in Bonsai.
+
+[!INCLUDE [](../includes/in2-note.md)]
 
 # [Digital outputs](#tab/digitaloutputs)
 
@@ -92,10 +94,10 @@ This article will cover the ports, controls, and status indicators on the Sound 
 
 1. Connect **OUT0**, **OUT1**, or **OUT2** on the **Interface** connector to a digital input on the other device.
 2. Connect the ground of the other device to any **GND** pin, so that both share a common ground.
-3. Set the logic level of the outputs with the **OUT voltage** jumper located near the **Interface** connector. The default is 5 V and the alternative is 3.3 V; the setting applies to all three outputs.
-4. Refer to the [Control digital outputs](control-digitaloutputs.md) article to drive the outputs in Bonsai.
+3. Set the voltage level of the outputs with the **OUT voltage** jumper located near the **Interface** connector. The default is 5 V and the alternative is 3.3 V; the setting applies to all three outputs.
+4. Refer to the [Control digital outputs](control-digitaloutputs.md) article to control the outputs in Bonsai.
 
-![OUT Voltage Jumper](../images/connection-digitaloutputs-jumper.svg){width=150}
+[!INCLUDE [](../includes/digitaloutputs-load-warning.md)]
 
 # [Analog inputs](#tab/analoginputs)
 
