@@ -103,12 +103,9 @@ This article will cover the ports, controls, and status indicators on the Sound 
 
 ![Harp Sound Card Analog Input](../images/connection-analoginputs.svg){width=600}
 
-1. Connect an analog output from another device to **ADC0** or **ADC1** on the **Interface** connector.
+1. Connect an analog output (0–5 V) from another device to **ADC0** or **ADC1** on the **Interface** connector.
 2. Connect the ground of the other device to any **GND** pin, so that both share a common ground.
 3. Refer to the [Acquire analog data](acquire-analogdata.md) article to stream the analog inputs in Bonsai.
-
-> [!WARNING]
-> **TODO**: Verify the analog input voltage range on hardware. The repository README states 3.3 V maximum (5 V tolerant), while earlier documentation stated 0 to 5 V.
 
 # [Harp synchronization](#tab/harpsynchronization)
 

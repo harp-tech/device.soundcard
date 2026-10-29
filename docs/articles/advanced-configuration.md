@@ -1,6 +1,6 @@
 # Advanced configuration
 
-The Sound Card has two microcontrollers: an interface controller that handles Harp messages and the digital and analog lines, and a sound memory controller (PIC32) that stores and plays the waveforms. Refer to the [connections](./ports-connections.md?tabs=audio#connections) article to set up the device, which we will use for the rest of these examples.
+The Sound Card has two microcontrollers: an interface controller that handles Harp messages and the digital and analog lines, and a sound memory controller (PIC32) that stores and plays the waveforms.
 
 This article covers how to send commands to the sound memory controller in Bonsai.
 
@@ -24,13 +24,10 @@ The sounds uploaded to the device persist across power cycles. Writing `DeleteAl
     - `Pic32Commands` - Select `DeleteAllSounds`.
 - Insert a [`MulticastSubject`] operator named `SoundCard Commands`.
 
-Run the workflow and press the <kbd>A</kbd> key to erase the stored sounds. Refer to the [Upload waveforms with Bonsai](../tutorials/upload-waveform-bonsai.md) tutorial to store new sounds on the device.
+Run the workflow and press the <kbd>A</kbd> key to erase the stored sounds. To store new sounds on the device, use the [Sound Card GUI](./soundcard-gui.md) or follow the [Upload waveforms with Bonsai](../tutorials/upload-waveform-bonsai.md) tutorial.
 
 > [!WARNING]
 > Deleting sounds erases the onboard flash memory and restarts the sound memory controller. This cannot be undone, and the device does not respond to sound commands while the controller restarts.
-
-> [!WARNING]
-> The `EnableBootloader` and `DisableBootloader` values of the [`Pic32Commands`] register are used to update the sound memory controller firmware, as described in the [Installation](installation.md#firmware) article. Sending `EnableBootloader` stops sound playback until the controller is restarted with `DisableBootloader`.
 
 [!INCLUDE [](../includes/version-footer.md)]
 

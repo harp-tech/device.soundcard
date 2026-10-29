@@ -1,8 +1,15 @@
 # Sound Card GUI
 
-The Sound Card GUI generates pure tone and white noise waveforms and uploads them to the Sound Card without writing a Bonsai workflow. Use it to prepare the sound bank before an experiment; for playback with precise timing, and for uploading arbitrary waveforms, use [Bonsai](bonsai.md) and the [Upload waveforms with Bonsai](../tutorials/upload-waveform-bonsai.md) tutorial instead.
+The Sound Card GUI provides an interface to generate and upload waveforms to the Sound Card.
 
-Before beginning, [install the GUI](installation.md#software-packages), follow the hardware setup [guide](ports-connections.md?tabs=audio#connections), and connect the USB Mini-B and USB Micro-B cables to the computer. Launch "Harp.SoundCard.App" from the Windows Start menu.
+> [!TIP]
+> Alternatively, you can play [pure tones](play-sound.md) with the onboard sine wave generator or [upload waveforms in Bonsai](../tutorials/upload-waveform-bonsai.md), which offers greater flexibility and functionality.
+
+Before beginning:
+- [Install the GUI](installation.md#software-packages).
+- Connect an amplifier and speaker to an output channel by following the [audio connection](ports-connections.md?tabs=audio#connections) instructions.
+- Connect the power supply and both USB cables by following the [power and PC connection](ports-connections.md?tabs=powerandpc#connections) instructions. The GUI needs the **USB (Soundbank)** cable to upload sounds.
+- Launch "Harp.SoundCard.App" from the Windows Start menu.
 
 ![Sound Card GUI](../images/soundcard-gui-labelled.svg)
 

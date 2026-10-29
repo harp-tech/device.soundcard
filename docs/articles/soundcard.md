@@ -23,7 +23,7 @@
 - Synchronization accuracy: 22 ± 16 µs (between clock generator and this device)
 - Digital outputs: 3 (3.3 V or 5 V, default 5 V, adjustable by jumper setting)
 - Digital inputs: 3 (5 V tolerant)
-- Analog inputs: 2 (5 V tolerant, 12-bit analog-to-digital conversion)
+- Analog inputs: 2 (0–5 V, 12-bit analog-to-digital conversion)
 
 ## Benchmarks
 
