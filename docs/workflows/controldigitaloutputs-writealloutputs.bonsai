@@ -9,14 +9,14 @@
     <Nodes>
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="wie:KeyDown">
-          <wie:Filter>G</wie:Filter>
+          <wie:Filter>J</wie:Filter>
           <wie:SuppressRepetitions>false</wie:SuppressRepetitions>
         </Combinator>
       </Expression>
       <Expression xsi:type="p1:CreateMessage">
         <harp:MessageType>Write</harp:MessageType>
         <harp:Payload xsi:type="p1:CreateOutputStatePayload">
-          <p1:OutputState>DO1 DO2</p1:OutputState>
+          <p1:OutputState>DO0</p1:OutputState>
         </harp:Payload>
       </Expression>
       <Expression xsi:type="MulticastSubject">

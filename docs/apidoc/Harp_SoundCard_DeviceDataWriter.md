@@ -2,7 +2,7 @@
 uid: Harp.SoundCard.DeviceDataWriter
 ---
 
-### Harp Device Pattern
+### Harp device pattern
 
 :::workflow
 ![Harp Device Pattern](../workflows/harp-devicepattern.bonsai)

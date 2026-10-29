@@ -1,6 +1,6 @@
 # Configure digital inputs
 
-The digital inputs on the Sound Card can start and stop sound playback from TTL signals on **IN0** and **IN1**, with a volume set per input. **IN2** does not support triggering, but can be read as a plain digital input. Refer to the [connections](./ports-connections.md?tabs=digitalinputs#connections) article to set up a digital signal on **IN0**, which we will use for the rest of these examples.
+The Sound Card can start and stop sound playback from TTL signals on its digital inputs (**IN0**, **IN1**), with a volume set per input. The inputs can also be used as general-purpose digital inputs. Refer to the [connections](./ports-connections.md?tabs=digitalinputs#connections) article to set up a digital signal on **IN0**, which we will use for the rest of these examples.
 
 This article covers how to configure the digital input mode, set the volume of triggered sounds, and visualize the state of the inputs in Bonsai.
 
@@ -9,6 +9,8 @@ The complete workflow is shown below. Copy and paste it into Bonsai to get start
 :::workflow
 ![Configure digital inputs](../workflows/configuredigitalinputs-toplevel.bonsai)
 :::
+
+[!INCLUDE [](../includes/in2-note.md)]
 
 ## Set mode and sound
 
@@ -31,9 +33,11 @@ There are multiple ways to combine and use the digital input functionality. This
 
 - Insert a [`KeyDown`] operator and set the `Filter` property to `A`.
 - Insert a [`CreateMessage`] operator and configure the following properties:
+    - `Payload` - Select `ConfigureDI0Payload`.
     - `ConfigureDI0` - Select `StartAndStop`.
 - Insert a [`MulticastSubject`] operator named `SoundCard Commands`.
 - Insert a [`CreateMessage`] operator and configure the following properties:
+    - `Payload` - Select `StartOnDI0Payload`.
     - `StartOnDI0` - Set the frequency in Hz to start (e.g. `500`).
 - Insert a [`MulticastSubject`] operator named `SoundCard Commands`.
 
@@ -42,30 +46,32 @@ Run the workflow and press <kbd>A</kbd> to set the configuration, then send a TT
 > [!NOTE]
 > Just like sounds triggered from Bonsai, sounds triggered from the digital inputs report [`Start`] and [`Stop`] events. Refer to the [Play sounds](play-sound.md) article to visualize the events.
 
-## Set trigger volume
+## Set volume of triggered sounds
 
-Sounds triggered from a digital input play at the attenuation stored in the [`AttenuationLeftDI0`] and [`AttenuationRightDI0`] registers, in 0.1 dB steps, independently of the attenuation set for sounds started from Bonsai. The default is 60 (-6 dB) on both channels.
+Each digital input line also has its own attenuation registers for the left and right channel (e.g. [`AttenuationLeftDI0`] and [`AttenuationRightDI0`] for **IN0**). Sounds triggered from a digital input always play at this attenuation, regardless of what is set in the registers covered in the [Adjust volume](./adjust-volume.md) article.
 
 :::workflow
-![Set Trigger Volume](../workflows/configuredigitalinputs-triggervolume.bonsai)
+![Set Volume of Triggered Sounds](../workflows/configuredigitalinputs-triggeredvolume.bonsai)
 :::
 
 - Insert a [`KeyDown`] operator and set the `Filter` property to `S`.
 - Insert a [`CreateMessage`] operator and configure the following properties:
-    - `AttenuationLeftDI0` - Set the attenuation of the left channel (e.g. `200` = -20 dB).
+    - `Payload` - Select `AttenuationLeftDI0Payload`.
+    - `AttenuationLeftDI0` - Set the attenuation of the left channel (e.g. `200` = -20 dB). The default value is 60 (-6 dB).
 - Insert a [`MulticastSubject`] operator named `SoundCard Commands`.
 - Insert a [`CreateMessage`] operator and configure the following properties:
-    - `AttenuationRightDI0` - Set the attenuation of the right channel (e.g. `200` = -20 dB).
+    - `Payload` - Select `AttenuationRightDI0Payload`.
+    - `AttenuationRightDI0` - Set the attenuation of the right channel (e.g. `200` = -20 dB). The default value is 60 (-6 dB).
 - Insert a [`MulticastSubject`] operator named `SoundCard Commands`.
 
 Run the workflow, press <kbd>S</kbd>, and trigger **IN0** again. The sound plays at the new volume.
 
-> [!NOTE]
-> These registers only affect sounds triggered from the digital inputs. Use the registers in the [Adjust volume](adjust-volume.md) article to set the volume of sounds started from Bonsai.
+> [!WARNING]
+> The attenuation is applied for every triggered sound, even when the value is zero. A triggered sound will overwrite the channel attenuation for sounds played afterwards with [`Start`].
 
 ## Visualize digital input events
 
-The digital inputs do not report a line status under any of the trigger mode configurations (`Start`, `StartAndStop`, `Stop`). Set the inputs to `Digital` mode to use them as general purpose digital inputs. Rising and falling edges are reported as [`InputState`] events. This example reconfigures **IN0** to `Digital` mode, so the same connection can be used, and demonstrates how to visualize those events.
+The digital inputs do not report a line status under any of the trigger mode configurations (`Start`, `StartAndStop`, `Stop`). To use them as general purpose digital inputs, set the mode to `Digital`. Rising and falling edges are reported as [`InputState`] events. This example reconfigures **IN0** to `Digital` mode, so the same connection can be used, and demonstrates how to visualize those events.
 
 :::workflow
 ![Visualize Digital Input Events](../workflows/configuredigitalinputs-visualizeevents.bonsai)
@@ -73,6 +79,7 @@ The digital inputs do not report a line status under any of the trigger mode con
 
 - Insert a [`KeyDown`] operator and set the `Filter` property to `D`.
 - Insert a [`CreateMessage`] operator and configure the following properties:
+    - `Payload` - Select `ConfigureDI0Payload`.
     - `ConfigureDI0` - Select `Digital`.
 - Insert a [`MulticastSubject`] operator named `SoundCard Commands`.
 

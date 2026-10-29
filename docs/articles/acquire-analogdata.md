@@ -20,6 +20,7 @@ The stream is off at power-up. Writing `SampleRate1000Hz` to the [`EnableAdcCont
 
 - Insert a [`KeyDown`] operator and set the `Filter` property to `A`.
 - Insert a [`CreateMessage`] operator and configure the following properties:
+    - `Payload` - Select `EnableAdcControlStatePayload`.
     - `EnableAdcControlState` - Select `SampleRate1000Hz`.
 - Insert a [`MulticastSubject`] operator named `SoundCard Commands`.
 
