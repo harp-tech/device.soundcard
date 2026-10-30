@@ -4,10 +4,10 @@
 
 ## Key features
 
-- Internal memory to store sounds, enabling low-latency sound delivery
-- Pre-selected sounds can be triggered using an external TTL
-- Internal wave generator allows the user to configure a pure tone without loading a sound file
-- Stereo 24-bit output at up to 192 kHz sampling rate
+- Internal memory to store sounds, enabling low-latency sound delivery.
+- Pre-selected sounds can be triggered using an external TTL.
+- Internal wave generator allows the user to play a pure tone without loading a sound file.
+- Stereo 24-bit output at up to 192 kHz sampling rate.
 
 ## Specs
 

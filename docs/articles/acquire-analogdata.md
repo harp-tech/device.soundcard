@@ -12,7 +12,7 @@ The complete workflow is shown below. Copy and paste it into Bonsai to get start
 
 ## Enable analog data stream
 
-The stream is off by default, enable it by configuring the [`EnableAdcControlState`] register.
+The analog data stream is off by default, enable it by configuring [`EnableAdcControlState`].
 
 :::workflow
 ![Enable Analog Data Stream](../workflows/acquireanalogdata-enablestream.bonsai)

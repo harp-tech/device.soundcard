@@ -54,7 +54,7 @@ In a separate branch:
 Run the workflow, press the <kbd>S</kbd> key to play the tone, and press the <kbd>D</kbd> key to stop playback.
 
 > [!WARNING]
-> The [`Stop`] register can only be used to stop playback from the internal sine wave generator, not sounds from the onboard memory. Closing the connection to the device also stops the sine wave generator.
+> [`Stop`] can only be used to stop playback from the internal sine wave generator, not sounds from the onboard memory. Closing the connection to the device also stops the sine wave generator.
 
 ## Visualize sound events
 

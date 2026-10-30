@@ -6,9 +6,9 @@ This article will cover the ports, controls, and status indicators on the Sound 
 
 ![Harp Sound Card Device Pinout](../images/soundcard-devicepinout.svg){width=600}
 
-**12V PWR (Barrel Jack)** - This port powers the Sound Card and requires a 12 V power supply.
-
 ### Ports
+
+**12V PWR (Barrel Jack)** - This port powers the Sound Card and requires a 12 V power supply.
 
 **USB (Soundbank, Micro-B)** - This port connects to the device's onboard sound memory bank for uploading of waveforms. Once the sounds have been uploaded, the cable can be disconnected, as it is not required for sound playback.
 
@@ -16,7 +16,7 @@ This article will cover the ports, controls, and status indicators on the Sound 
 
 **CLK IN (Stereo Jack)** - This [Harp](https://harp-tech.org/articles/about.html) clock input port accepts a clock output from any compatible Harp clock generator or synchronizer (e.g. [Timestamp Generator Gen3](https://github.com/harp-tech/device.timestampgeneratorgen3)), which can be used to synchronize the internal clocks of connected devices.
 
-**Interface (Screw Terminal)** - These general purpose input/output (GPIO) pins can be used to communicate with external devices, for example to trigger sound playback or control volume. Refer to the connection guide below for more information.
+**Interface (Screw Terminal)** - These general purpose input/output (GPIO) pins can be used to communicate with external devices, for example to trigger or signal sound playback. Refer to the connection guide below for more information.
 
 **Left Channel (RCA)** - This port can be used independently for mono output or together with the right channel for stereo output. Needs to be connected to an external amplifier and speakers.
 
@@ -60,17 +60,20 @@ This article will cover the ports, controls, and status indicators on the Sound 
 
 ![Harp Sound Card Audio Setup](../images/connection-audio.svg){width=600}
 
-1. Connect the **Left Channel** or **Right Channel** port on the Sound Card to the input port of an amplifier with an RCA cable. Any external amplifier that accepts line-level RCA inputs is supported. For high-fidelity applications, consider using the Harp [Audio Amplifier](./peripherals/audioamplifier.md), pictured above.
+1. Connect the **Left Channel** or **Right Channel** port on the Sound Card to the **IN** port of the Audio Amplifier with an RCA cable.
 2. Connect the positive (+) speaker output of the amplifier, usually red, to the positive terminal of the speaker. Any speaker with an impedance from 4 to 8 Ω can be used with the Audio Amplifier; the XT25SC90-04 (Peerless by Tymphany) offers a good frequency response up to 80 kHz.
 3. Connect the negative (−) speaker output of the amplifier, usually black, to the negative terminal of the speaker.
 4. Repeat steps 1 to 3 with a second amplifier and speaker for the other channel for stereo output.
+
+> [!NOTE]
+> Third-party amplifiers that accept line-level RCA inputs can be connected in the same way. Check the amplifier specifications for supported speaker impedance and power ratings when selecting a speaker. Consider using the Audio Amplifier for high-fidelity applications, as its performance with the Sound Card has been characterized in this [publication](https://doi.org/10.1016/j.ohx.2024.e00555).
 
 # [Power and PC](#tab/powerandpc)
 
 ![Harp Sound Card Power and PC](../images/connection-powerandpc.svg){width=600}
 
 1. Connect a 12 V power supply to the **12V PWR** port of the Sound Card.
-2. If you are using the Audio Amplifier, connect two separate 12 V power supplies to the **Power** ports of the Audio Amplifier, one per input.
+2. If you are using the Audio Amplifier, connect two separate 12 V power supplies to the **Power** ports of the Audio Amplifier, one per input. Otherwise, power the third-party amplifier according to the manufacturer's specifications.
 3. Connect the **USB (Computer)** port to the computer with a USB Mini-B cable.
 4. If you are uploading waveforms to the Sound Card, connect the **USB (Soundbank)** port to the computer with a USB Micro-B cable. The cable is not required for playback of sounds.
 
