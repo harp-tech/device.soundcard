@@ -67,20 +67,17 @@ The second visualizer plots the `Adc0` value over time as a 12-bit value:
 Vary the output voltage of the other device to see the plot change.
 
 > [!NOTE]
-> The attenuation and frequency fields report the last commands sent from Bonsai. Sounds triggered from the digital inputs do not update them.
+> The attenuation and frequency fields report the last commands sent from Bonsai. Sounds triggered from the digital inputs will overwrite the attenuation levels, but will not update these fields.
 
 [!INCLUDE [](../includes/version-footer.md)]
 
 <!--Reference Style Links -->
 [`AdcControlState`]: xref:Harp.SoundCard.AdcControlState
-[`AttenuationStart`]: xref:Harp.SoundCard.AttenuationStart
 [`CreateMessage`]: xref:Harp.SoundCard.CreateMessage
 [`EnableAdcControlState`]: xref:Harp.SoundCard.EnableAdcControlState
 [`KeyDown`]: xref:Bonsai.Windows.Input.KeyDown
 [`MemberSelector`]: xref:Bonsai.Expressions.MemberSelectorBuilder
 [`MulticastSubject`]: xref:Bonsai.Expressions.MulticastSubject
 [`Parse`]: xref:Harp.SoundCard.Parse
-[`Start`]: xref:Harp.SoundCard.Start
-[`Stop`]: xref:Harp.SoundCard.Stop
 [`SubscribeSubject`]: xref:Bonsai.Expressions.SubscribeSubject
 [`VisualizerWindow`]: xref:Bonsai.Design.VisualizerWindow

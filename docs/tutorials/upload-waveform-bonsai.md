@@ -2,14 +2,14 @@
 
 The [Harp.SoundCard](../articles/installation.md#software-packages) Bonsai package supports preload and update of sound waveforms during runtime. The following exercises will demonstrate how to generate and load various waveforms for upload to the Sound Card in Bonsai.
 
-## Prerequisites
+> [!TIP]
+> Alternatively, you can generate and upload waveforms with the [Sound Card GUI](../articles/soundcard-gui.md) without building a workflow.
 
-- Install the following packages from the Bonsai [package manager](https://bonsai-rx.org/docs/articles/packages.html):
-   - `Bonsai.Windows.Input`
-   - `Bonsai.Dsp`
-   - `Bonsai.Dsp.Design`
-   - `Bonsai.Audio`
-   - `Bonsai.Numerics`
+Before beginning:
+- Install the `Harp.SoundCard`, `Bonsai.Numerics`, and `Bonsai.StarterPack` packages from the [Bonsai package manager](https://bonsai-rx.org/docs/articles/packages.html).
+- Connect an amplifier and speaker to an output channel by following the [audio connection](../articles/ports-connections.md?tabs=audio#connections) instructions.
+- Connect the power supply and both USB cables by following the [power and PC connection](../articles/ports-connections.md?tabs=powerandpc#connections) instructions. Uploading needs the **USB (Soundbank)** cable.
+- Launch "Bonsai" from the Windows Start menu.
 
 ## UpdateSoundWaveform
 

@@ -16,5 +16,3 @@ A: Only one interface connection to the Sound Card can be opened at one time. Ch
 
 <!--Reference Style Links -->
 [`Device`]: xref:Harp.SoundCard.Device
-[`Start`]: xref:Harp.SoundCard.Start
-[`Stop`]: xref:Harp.SoundCard.Stop

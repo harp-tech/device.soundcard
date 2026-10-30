@@ -153,7 +153,7 @@
       <Expression xsi:type="p1:CreateMessage">
         <harp:MessageType>Write</harp:MessageType>
         <harp:Payload xsi:type="p1:CreateOutputStatePayload">
-          <p1:OutputState>DO0</p1:OutputState>
+          <p1:OutputState>DO0, DO1</p1:OutputState>
         </harp:Payload>
       </Expression>
       <Expression xsi:type="MulticastSubject">

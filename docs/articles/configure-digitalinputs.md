@@ -113,7 +113,6 @@ The first value lists the inputs that read high, in this case `DI0` on the risin
 [`Parse`]: xref:Harp.SoundCard.Parse
 [`Start`]: xref:Harp.SoundCard.Start
 [`StartOnDI0`]: xref:Harp.SoundCard.StartOnDI0
-[`StartOnDI1`]: xref:Harp.SoundCard.StartOnDI1
 [`Stop`]: xref:Harp.SoundCard.Stop
 [`SubscribeSubject`]: xref:Bonsai.Expressions.SubscribeSubject
 [`VisualizerWindow`]: xref:Bonsai.Design.VisualizerWindow
