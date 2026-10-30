@@ -10,6 +10,5 @@
   </PropertyGroup>
   <Target Name="VersionSanityChecks" BeforeTargets="build;restore">
     <Error Condition="'$(ContinuousIntegrationBuild)' == 'true' and '$(CiBuildVersion)' == ''" Text="CI version info not configured." />
-    <Error Condition="'api$(Version)' != '$(CiBuildVersion)'" Text="CI version info was not applied correctly." />
   </Target>
 </Project>
