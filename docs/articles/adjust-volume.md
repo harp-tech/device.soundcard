@@ -33,7 +33,7 @@ Run the workflow and press the <kbd>A</kbd> key to play the sound at reduced vol
 > The maximum volume for playback of stored waveforms depends on the recorded amplitude. Upload waveforms at full 24-bit depth to maximize the volume.
 
 > [!TIP]
-> Just like the [`Start`] register, pure tone playback must be stopped explicitly via the [`Stop`] register. The device reports an [`AttenuationStart`] command as a [`Start`] event.
+> Just like [`Start`], pure tone playback must be stopped explicitly via [`Stop`]. The device reports an [`AttenuationStart`] command as a [`Start`] event.
 
 ## Attenuate channels
 
@@ -54,14 +54,15 @@ Use [`AttenuationBoth`] to set the attenuation of both channels before or during
 Run the workflow and press <kbd>A</kbd> to play the sound with [`AttenuationStart`] and <kbd>S</kbd> to change the volume with [`AttenuationBoth`] while the sound is playing. With the values above, the sound becomes louder, going from more attenuation to less.
 
 > [!NOTE]
-> These registers set the volume for sounds started from Bonsai. Sounds triggered from the digital inputs use their own attenuation registers, as described in the [Configure digital inputs](configure-digitalinputs.md) article.
+> Use [`AttenuationLeft`] or [`AttenuationRight`] to set the attenuation of each channel independently.
 
 > [!NOTE]
-> Use the [`AttenuationLeft`] or [`AttenuationRight`] registers to set the attenuation of each channel independently.
+> You can check the attenuation currently set on each channel with the `AttenuationLeft` and `AttenuationRight` fields of the [`AdcControlState`] event. Refer to the [Acquire analog data](./acquire-analogdata.md) article to enable and visualize the event.
 
 [!INCLUDE [](../includes/version-footer.md)]
 
 <!--Reference Style Links -->
+[`AdcControlState`]: xref:Harp.SoundCard.AdcControlState
 [`AttenuationBoth`]: xref:Harp.SoundCard.AttenuationBoth
 [`AttenuationLeft`]: xref:Harp.SoundCard.AttenuationLeft
 [`AttenuationRight`]: xref:Harp.SoundCard.AttenuationRight

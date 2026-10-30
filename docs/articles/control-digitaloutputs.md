@@ -38,7 +38,7 @@ Run the workflow and press <kbd>A</kbd> to set the configuration, then press <kb
 
 ## Set and clear outputs
 
-In `Digital` mode, the output line can be controlled directly to signal other workflow events in Bonsai. This example reconfigures **OUT0** to `Digital` mode first with the [`ConfigureDO0`] register, so the same connection can be used. It then demonstrates how to control the output line with [`OutputSet`] and [`OutputClear`].
+In `Digital` mode, the output line can be controlled directly to signal other workflow events in Bonsai. This example reconfigures **OUT0** to `Digital` mode first with [`ConfigureDO0`], so the same connection can be used. It then demonstrates how to control the output line with [`OutputSet`] and [`OutputClear`].
 
 :::workflow
 ![Set and Clear Outputs](../workflows/controldigitaloutputs-setclearoutputs.bonsai)
@@ -76,7 +76,7 @@ Run the workflow and press <kbd>D</kbd> to enable `Digital` mode, then press <kb
 
 ## Toggle outputs
 
-The [`OutputToggle`] register flips the output line between low and high with a single command, so a workflow event can alternate the line without keeping track of its current state.
+[`OutputToggle`] flips the output line between low and high with a single command, so a workflow event can alternate the line without keeping track of its current state.
 
 :::workflow
 ![Toggle Outputs](../workflows/controldigitaloutputs-toggleoutputs.bonsai)
@@ -92,7 +92,7 @@ Run the workflow and press <kbd>H</kbd> repeatedly to toggle **OUT0** between hi
 
 ## Write all outputs
 
-The [`OutputState`] register writes the state of all digital output lines with a single command. Selected lines are set high and all other lines are set low. Use it to set the whole output bank to a known state, for example when initializing an experiment.
+[`OutputState`] writes the state of all digital output lines with a single command. Selected lines are set high and all other lines are set low. Use it to set the whole output bank to a known state, for example when initializing an experiment.
 
 :::workflow
 ![Write All Outputs](../workflows/controldigitaloutputs-writealloutputs.bonsai)
@@ -104,7 +104,7 @@ The [`OutputState`] register writes the state of all digital output lines with a
     - `OutputState` - Select the lines to set high (e.g. `DO0, DO1`). All other lines are set low.
 - Insert a [`MulticastSubject`] operator named `SoundCard Commands`.
 
-Run the workflow and press <kbd>J</kbd>. **OUT0** goes high and **OUT1** and **OUT2** go low.
+Run the workflow and press <kbd>J</kbd>. **OUT0** and **OUT1** goes high and **OUT2** goes low.
 
 > [!WARNING]
 > [`OutputState`] acts on every digital output line of the Sound Card. To change only selected lines, use [`OutputSet`], [`OutputClear`], or [`OutputToggle`].
