@@ -104,7 +104,7 @@ Run the workflow and press <kbd>H</kbd> repeatedly to toggle **OUT0** between hi
     - `OutputState` - Select the lines to set high (e.g. `DO0, DO1`). All other lines are set low.
 - Insert a [`MulticastSubject`] operator named `SoundCard Commands`.
 
-Run the workflow and press <kbd>J</kbd>. **OUT0** and **OUT1** goes high and **OUT2** goes low.
+Run the workflow and press <kbd>J</kbd>, then check the TTL signal on the other device. **OUT0** and **OUT1** will be set to high and **OUT2** will go low.
 
 > [!WARNING]
 > [`OutputState`] acts on every digital output line of the Sound Card. To change only selected lines, use [`OutputSet`], [`OutputClear`], or [`OutputToggle`].
