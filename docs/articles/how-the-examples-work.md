@@ -1,4 +1,4 @@
-# About these examples
+# How the examples work
 
 The example articles demonstrate how to use the device in Bonsai. Each article walks you through a specific task, such as acquiring data, controlling peripherals, or configuring the device. When additional hardware is required, the article includes a link to the relevant connection instructions.
 
