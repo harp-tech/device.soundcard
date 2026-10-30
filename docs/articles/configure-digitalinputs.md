@@ -21,9 +21,9 @@ Each digital input line has a configuration mode register that sets what the sig
 | Mode | Description |
 | --- | --- |
 | `Digital` | The input is read as a regular digital input and reports its state as [`InputState`] events. |
-| `Start` | A rising edge starts the sound. Use this mode for sound index playback. For pure tone playback, pair it with the [`Stop`] register or with another digital input in `Stop` mode. |
+| `Start` | A rising edge starts the sound. Use this mode for sound index playback. For pure tone playback, pair it with a [`Stop`] command or with another digital input in `Stop` mode. |
 | `StartAndStop` | A rising edge starts the sound and a falling edge stops the sound. Use this mode for pure tone playback as the stop signal only acts on the sine wave generator. |
-| `Stop` | A rising edge stops the pure tone that is playing. Use this mode for pure tone playback by pairing it with a [`Start`] register or another digital input in `Start` mode. |
+| `Stop` | A rising edge stops the pure tone that is playing. Use this mode for pure tone playback by pairing it with a [`Start`] command or another digital input in `Start` mode. |
 
 [`StartOnDI0`] follows the same rules as [`Start`], whereby values from 2 to 31 select a stored sound index, and values from 32 to 40000 set the frequency of a pure tone in Hz.
 
