@@ -7,7 +7,7 @@ This article covers how data from the device is logged to disk, and how to read 
 Data from the device is logged by the [`DeviceDataWriter`] operator in the Harp device pattern, which saves raw data from all device registers in the Harp binary format to the folder set in its `Path` property:
 
 :::workflow
-![Harp Device Pattern](../workflows/harp-devicepattern.bonsai)
+![Harp device pattern](../workflows/harp-devicepattern.bonsai)
 :::
 
 While the workflow is running, data is logged as the device executes commands and reports events. Two properties of the [`Device`] operator are also important for logging:

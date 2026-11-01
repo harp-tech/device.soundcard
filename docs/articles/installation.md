@@ -17,7 +17,7 @@ The WinUSB driver is required to upload waveforms to the onboard sound memory ba
 - Select "Harp Sound Card" from the list. If the device is not available, go to "Options" > "List All Devices".
 - Select the "WinUSB" driver and click "Install Driver".
 
-# [Sound Card GUI](#tab/soundcardgui)
+# [GUI](#tab/gui)
 
 The Sound Card GUI offers a graphical interface for [generating and uploading waveforms](soundcard-gui.md).
 

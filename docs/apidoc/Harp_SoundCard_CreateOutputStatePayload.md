@@ -5,5 +5,5 @@ uid: Harp.SoundCard.CreateOutputStatePayload
 ### Write all outputs
 
 :::workflow
-![Write All Outputs](../workflows/controldigitaloutputs-writealloutputs.bonsai)
+![Write all outputs](../workflows/controldigitaloutputs-writealloutputs.bonsai)
 :::

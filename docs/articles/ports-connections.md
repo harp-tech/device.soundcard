@@ -10,9 +10,9 @@ This article will cover the ports, controls, and status indicators on the Sound 
 
 **12V PWR (Barrel Jack)** - This port powers the Sound Card and requires a 12 V power supply.
 
-**USB (Soundbank, Micro-B)** - This port connects to the device's onboard sound memory bank for uploading of waveforms. Once the sounds have been uploaded, the cable can be disconnected, as it is not required for sound playback.
+**USB (Soundbank, Micro-B)** - This port connects to the device's onboard sound memory bank for uploading waveforms. Once the sounds have been uploaded, the cable can be disconnected, as it is not required for sound playback.
 
-**USB (Computer, Mini-B)** - This port connects to the device's internal controller to control sound playback with [Bonsai](bonsai.md) or the [GUI](soundcard-gui.md).
+**USB (Computer, Mini-B)** - This port connects to the device's internal controller to control sound playback with [Bonsai](bonsai.md) or the [Sound Card GUI](soundcard-gui.md).
 
 **CLK IN (Stereo Jack)** - This [Harp](https://harp-tech.org/articles/about.html) clock input port accepts a clock output from any compatible Harp clock generator or synchronizer (e.g. [Timestamp Generator Gen3](https://github.com/harp-tech/device.timestampgeneratorgen3)), which can be used to synchronize the internal clocks of connected devices.
 
@@ -28,7 +28,7 @@ This article will cover the ports, controls, and status indicators on the Sound 
 
 ### Indicators
 
-**STATE** - The LED cycles on and off with a period of:
+**STATE** - This LED cycles on and off with a period of:
 
 - 2 seconds when it's communicating with Bonsai
 - 4 seconds when in standby
@@ -85,8 +85,8 @@ This article will cover the ports, controls, and status indicators on the Sound 
 
 ![Harp Sound Card Digital Input](../images/connection-digitalinputs.svg){width=600}
 
-1. Connect a digital output from another device to **IN0** or **IN1** on the **Interface** connector. The digital input lines run on 3.3 V logic levels but are 5 V tolerant.
-2. Connect the ground of the other device to any **GND** pin, so that both share a common ground.
+1. Connect a digital output from an external device to **IN0** or **IN1** on the **Interface** connector. The digital input lines run on 3.3 V logic levels but are 5 V tolerant.
+2. Connect the ground of the external device to any **GND** pin, so that both share a common ground.
 3. Refer to the [Configure digital inputs](configure-digitalinputs.md) article to trigger sounds from the inputs in Bonsai.
 
 [!INCLUDE [](../includes/in2-note.md)]
@@ -95,8 +95,8 @@ This article will cover the ports, controls, and status indicators on the Sound 
 
 ![Harp Sound Card Digital Output](../images/connection-digitaloutputs.svg){width=600}
 
-1. Connect **OUT0**, **OUT1**, or **OUT2** on the **Interface** connector to a digital input on the other device.
-2. Connect the ground of the other device to any **GND** pin, so that both share a common ground.
+1. Connect **OUT0**, **OUT1**, or **OUT2** on the **Interface** connector to a digital input on an external device.
+2. Connect the ground of the external device to any **GND** pin, so that both share a common ground.
 3. Set the voltage level of the outputs with the **OUT voltage** jumper located near the **Interface** connector. The default is 5 V and the alternative is 3.3 V; the setting applies to all three outputs.
 4. Refer to the [Control digital outputs](control-digitaloutputs.md) article to control the outputs in Bonsai.
 
@@ -106,8 +106,8 @@ This article will cover the ports, controls, and status indicators on the Sound 
 
 ![Harp Sound Card Analog Input](../images/connection-analoginputs.svg){width=600}
 
-1. Connect an analog output (0–5 V) from another device to **ADC0** or **ADC1** on the **Interface** connector.
-2. Connect the ground of the other device to any **GND** pin, so that both share a common ground.
+1. Connect an analog output (0–5 V) from an external device to **ADC0** or **ADC1** on the **Interface** connector.
+2. Connect the ground of the external device to any **GND** pin, so that both share a common ground.
 3. Refer to the [Acquire analog data](acquire-analogdata.md) article to stream the analog inputs in Bonsai.
 
 # [Harp synchronization](#tab/harpsynchronization)

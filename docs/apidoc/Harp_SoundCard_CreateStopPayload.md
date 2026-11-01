@@ -2,8 +2,8 @@
 uid: Harp.SoundCard.CreateStopPayload
 ---
 
-### Play pure tone frequency
+### Play pure tone
 
 :::workflow
-![Play Pure Tone Frequency](../workflows/playsound-frequency.bonsai)
+![Play pure tone](../workflows/playsound-frequency.bonsai)
 :::

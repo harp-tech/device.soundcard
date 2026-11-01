@@ -2,14 +2,14 @@
 uid: Harp.SoundCard.Stop
 ---
 
-### Play pure tone frequency
+### Play pure tone
 
 :::workflow
-![Play Pure Tone Frequency](../workflows/playsound-frequency.bonsai)
+![Play pure tone](../workflows/playsound-frequency.bonsai)
 :::
 
 ### Visualize sound events
 
 :::workflow
-![Visualize Sound Events](../workflows/playsound-visualizeevents.bonsai)
+![Visualize sound events](../workflows/playsound-visualizeevents.bonsai)
 :::

@@ -15,7 +15,7 @@ The complete workflow is shown below. Copy and paste it into Bonsai to get start
 The analog data stream is off by default, enable it by configuring [`EnableAdcControlState`].
 
 :::workflow
-![Enable Analog Data Stream](../workflows/acquireanalogdata-enablestream.bonsai)
+![Enable analog data stream](../workflows/acquireanalogdata-enablestream.bonsai)
 :::
 
 - Insert a [`KeyDown`] operator and set the `Filter` property to `A`.
@@ -41,7 +41,7 @@ Each [`AdcControlState`] event carries five values:
 The workflow below will show you how to decode and visualize the events, and plot one channel:
 
 :::workflow
-![Visualize Analog Data](../workflows/acquireanalogdata-visualizedata.bonsai)
+![Visualize analog data](../workflows/acquireanalogdata-visualizedata.bonsai)
 :::
 
 - Insert a [`SubscribeSubject`] operator named `SoundCard Events`.
@@ -64,7 +64,7 @@ The second visualizer plots the `Adc0` value over time as a 12-bit value:
 
 ![Acquire Analog Data TimeSeriesVisualizer](../images/acquire-analogdata-timeseriesvisualizer.jpg){width=300}
 
-Vary the output voltage of the other device to see the plot change.
+Vary the output voltage of the external device to see the plot change.
 
 > [!NOTE]
 > The attenuation and frequency fields report the last commands sent from Bonsai. Sounds triggered from the digital inputs will overwrite the attenuation levels, but will not update these fields.

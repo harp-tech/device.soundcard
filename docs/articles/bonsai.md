@@ -10,6 +10,7 @@ Bonsai is a visual reactive programming language for building interactive experi
 We will use an introductory example to get started with the device in Bonsai. This example plays a sound 5 seconds after the workflow starts. We revisit this example in more detail in the "Examples" section.
 
 Before beginning:
+- Install [Bonsai](installation.md?tabs=bonsai#software-packages) and add the `Harp.SoundCard` and `Bonsai.StarterPack` packages.
 - Connect an amplifier and speaker to an output channel by following the [audio connection](ports-connections.md?tabs=audio#connections) instructions.
 - Connect the power supply and **USB(Computer)** cable by following the [power and PC connection](ports-connections.md?tabs=powerandpc#connections) instructions.
 - Upload a sound to sound index 2 with the [Sound Card GUI](./soundcard-gui.md) or in [Bonsai](../tutorials/upload-waveform-bonsai.md).
@@ -18,7 +19,7 @@ Before beginning:
 - Paste the workflow into Bonsai.
 
 :::workflow
-![Sound Card First Steps](../workflows/soundcard-firststeps.bonsai)
+![Sound Card first steps](../workflows/soundcard-firststeps.bonsai)
 :::
 
 > [!TIP]
