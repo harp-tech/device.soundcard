@@ -1,6 +1,6 @@
 # Adjust volume
 
-By default, the Sound Card plays stored sounds at the amplitude of the stored waveform and pure tones at maximum amplitude. The volume can be adjusted by setting an attenuation for the output channels. 
+By default, the Sound Card plays stored sounds at the amplitude of the stored waveform and pure tones at maximum amplitude. The volume can be adjusted by setting an attenuation for the output channels. Upload a sound to sound index 2 with the [Sound Card GUI](./soundcard-gui.md) or in [Bonsai](../tutorials/upload-waveform-bonsai.md), which we will use for these examples.
 
 This article covers how to set the attenuation when starting a sound and how to change it while a sound is playing in Bonsai.
 
@@ -15,7 +15,7 @@ The complete workflow is shown below. Copy and paste it into Bonsai to get start
 [`AttenuationStart`] starts playback of a sound index or pure tone and sets the attenuation of the left and right channels at the same time,  in 0.1 dB steps. Each command replaces the previous value rather than adding to it. The attenuation also stays in effect: any sound you play afterwards with [`Start`] plays at that level until you change it.
 
 :::workflow
-![Attenuate and Play Sound](../workflows/adjustvolume-attenuation.bonsai)
+![Attenuate and play sound](../workflows/adjustvolume-attenuation.bonsai)
 :::
 
 - Insert a [`KeyDown`] operator and set the `Filter` property to `A`.
@@ -32,15 +32,15 @@ Run the workflow and press the <kbd>A</kbd> key to play the sound at reduced vol
 > [!NOTE]
 > The maximum volume for playback of stored waveforms depends on the recorded amplitude. Upload waveforms at full 24-bit depth to maximize the volume.
 
-> [!TIP]
-> Just like [`Start`], pure tone playback must be stopped explicitly via [`Stop`]. The device reports an [`AttenuationStart`] command as a [`Start`] event.
+> [!NOTE]
+> A pure tone played with [`AttenuationStart`] keeps playing until you send a [`Stop`] command. [`AttenuationStart`] does not have an event of its own; the device reports the command as a [`Start`] event.
 
 ## Attenuate channels
 
 Use [`AttenuationBoth`] to set the attenuation of both channels before or during sound playback.
 
 :::workflow
-![Attenuate Channels](../workflows/adjustvolume-attenuateboth.bonsai)
+![Attenuate channels](../workflows/adjustvolume-attenuateboth.bonsai)
 :::
 
 - Insert a [`KeyDown`] operator and set the `Filter` property to `S`.

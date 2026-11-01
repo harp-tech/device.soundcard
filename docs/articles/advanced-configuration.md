@@ -1,8 +1,8 @@
 # Advanced configuration
 
-The Sound Card has two microcontrollers: an interface controller that handles Harp messages and the digital and analog lines, and a sound memory controller (PIC32) that stores and plays the waveforms.
+The Sound Card has two microcontrollers: an interface controller that handles Harp communication, and a sound memory controller (PIC32) that stores and plays the waveforms.
 
-This article covers how to send commands to the sound memory controller in Bonsai.
+This article covers how to send commands to the sound memory controller in Bonsai to delete stored sounds.
 
 The complete workflow is shown below. Copy and paste it into Bonsai to get started immediately, or build each section by following the step-by-step instructions in the following sections.
 
@@ -15,7 +15,7 @@ The complete workflow is shown below. Copy and paste it into Bonsai to get start
 The sounds uploaded to the device persist across power cycles. Writing `DeleteAllSounds` to the [`Pic32Commands`] register erases every stored sound.
 
 :::workflow
-![Delete Stored Sounds](../workflows/advancedconfiguration-deletesounds.bonsai)
+![Delete stored sounds](../workflows/advancedconfiguration-deletesounds.bonsai)
 :::
 
 - Insert a [`KeyDown`] operator and set the `Filter` property to `A`.

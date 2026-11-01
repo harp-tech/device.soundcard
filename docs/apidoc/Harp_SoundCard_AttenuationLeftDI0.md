@@ -5,5 +5,5 @@ uid: Harp.SoundCard.AttenuationLeftDI0
 ### Set volume of triggered sounds
 
 :::workflow
-![Set Volume of Triggered Sounds](../workflows/configuredigitalinputs-triggeredvolume.bonsai)
+![Set volume of triggered sounds](../workflows/configuredigitalinputs-triggeredvolume.bonsai)
 :::

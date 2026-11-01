@@ -59,7 +59,7 @@
         <Name>SoundCard Commands</Name>
       </Expression>
       <Expression xsi:type="Annotation">
-        <Name>Play pure tone frequency</Name>
+        <Name>Play pure tone</Name>
         <Text><![CDATA[]]></Text>
       </Expression>
       <Expression xsi:type="Combinator">

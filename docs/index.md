@@ -10,7 +10,7 @@ The Sound Card provides:
 
 - Wideband frequency support up to 80 kHz for experiments involving ultrasonic communication.
 - Low-latency sound playback via onboard waveform storage and digital input triggering for close-loop experiments.
-- Convenient generation of auditory stimuli, with a [GUI](articles/soundcard-gui.md) to create and upload waveforms and an onboard sine wave generator for pure tones.
+- Convenient generation of auditory stimuli, with a graphical user interface to create and upload waveforms and an onboard sine wave generator for pure tones.
 - Hardware timestamping and synchronization with other [Harp](https://harp-tech.org/articles/about.html) devices for seamless alignment of experimental data.
 - [Bonsai](https://bonsai-rx.org/) integration for flexible experiment acquisition and control.
 

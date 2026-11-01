@@ -6,9 +6,9 @@ The Sound Card GUI provides an interface to generate and upload waveforms to the
 > Alternatively, you can play [pure tones](play-sound.md) with the onboard sine wave generator or [upload waveforms in Bonsai](../tutorials/upload-waveform-bonsai.md), which offers greater flexibility and functionality.
 
 Before beginning:
-- [Install the GUI](installation.md#software-packages).
+- Install the [Sound Card GUI](installation.md?tabs=gui#software-packages).
 - Connect an amplifier and speaker to an output channel by following the [audio connection](ports-connections.md?tabs=audio#connections) instructions.
-- Connect the power supply and both USB cables by following the [power and PC connection](ports-connections.md?tabs=powerandpc#connections) instructions. The GUI needs the **USB (Soundbank)** cable to upload sounds.
+- Connect the power supply and both USB cables by following the [power and PC connection](ports-connections.md?tabs=powerandpc#connections) instructions. The Sound Card GUI needs the **USB (Soundbank)** cable to upload sounds.
 - Launch "Harp.SoundCard.App" from the Windows Start menu.
 
 ![Sound Card GUI](../images/soundcard-gui-labelled.svg)
@@ -27,7 +27,6 @@ Before beginning:
 > [!TIP]
 > dBFS is the standard unit for audio levels and maps more naturally to perceived loudness.
 
-> [!WARNING]
-> Only one program can access the device's COM port at a time. Close the GUI before starting a Bonsai workflow that uses the device. If you run into an error, check out the [troubleshooting](./errors.md) article.
+If an error appears in the Sound Card GUI or you hear nothing, check out the [troubleshooting](errors.md) section.
 
 [!INCLUDE [](../includes/version-footer.md)]

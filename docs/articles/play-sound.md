@@ -1,6 +1,6 @@
 # Play sounds
 
-The Sound Card plays waveforms stored in its onboard memory and pure tones from an internal sine wave generator. 
+The Sound Card plays waveforms stored in its onboard memory and pure tones from an internal sine wave generator. Upload a sound to sound index 2 with the [Sound Card GUI](./soundcard-gui.md) or in [Bonsai](../tutorials/upload-waveform-bonsai.md), which we will use for these examples.
 
 This article covers how to play a stored sound, play and stop a pure tone, and visualize sound events in Bonsai.
 
@@ -15,7 +15,7 @@ The complete workflow is shown below. Copy and paste it into Bonsai to get start
 Play sounds from the onboard sound bank by writing the sound index to the [`Start`] register. Values from 2 to 31 select a sound index, and values from 32 upwards are interpreted as a frequency for the sine wave generator instead (covered in the next section). Sound duration and amplitude are determined by the properties of the stored waveform.
 
 :::workflow
-![Play Sound Index](../workflows/playsound-indexkeydown.bonsai)
+![Play sound index](../workflows/playsound-indexkeydown.bonsai)
 :::
 
 - Insert a [`KeyDown`] operator and set the `Filter` property to `A`.
@@ -27,14 +27,14 @@ Play sounds from the onboard sound bank by writing the sound index to the [`Star
 Run the workflow and press the <kbd>A</kbd> key to play the sound.
 
 > [!TIP]
-> By default, sound index playback will continue to the end of the waveform. To end a sound early, [`Start`] another sound index, for example a short silent waveform. Playing a sound index that is empty or a pure tone frequency (covered in the next section) will not terminate the current playing sound index.
+> By default, sound index playback will continue to the end of the waveform. To end a sound early, [`Start`] another sound index, for example a short silent waveform. Playing a sound index that is empty or a pure tone (covered in the next section) will not terminate the current playing sound index.
 
-## Play pure tone frequency
+## Play pure tone
 
 Pure tones are played from the internal sine wave generator by writing the frequency in Hz (32–40000) to [`Start`]. Tones play continuously until the sine wave generator is turned off by a [`Stop`] command.
 
 :::workflow
-![Play Pure Tone Frequency](../workflows/playsound-frequency.bonsai)
+![Play pure tone](../workflows/playsound-frequency.bonsai)
 :::
 
 - Insert a [`KeyDown`] operator and set the `Filter` property to `S`.
@@ -54,14 +54,14 @@ In a separate branch:
 Run the workflow, press the <kbd>S</kbd> key to play the tone, and press the <kbd>D</kbd> key to stop playback.
 
 > [!WARNING]
-> [`Stop`] can only be used to stop playback from the internal sine wave generator, not sounds from the onboard memory. Closing the connection to the device also stops the sine wave generator.
+> [`Stop`] can only be used to stop playback from the internal sine wave generator, not playback of sound indices from the onboard memory. Closing the connection to the device also stops the sine wave generator.
 
 ## Visualize sound events
 
 The Sound Card reports every sound start as a [`Start`] event and a termination of the internal sine wave generator as a [`Stop`] event. This includes sounds started or stopped from the [digital inputs](./configure-digitalinputs.md). The workflow below will show you how to filter, decode and visualize the events:
 
 :::workflow
-![Visualize Sound Events](../workflows/playsound-visualizeevents.bonsai)
+![Visualize sound events](../workflows/playsound-visualizeevents.bonsai)
 :::
 
 - Insert a [`SubscribeSubject`] operator named `SoundCard Events`.
@@ -95,7 +95,7 @@ The first number is the non-zero value we used for [`Stop`], and the second numb
 You can replace [`KeyDown`] with other operators to play sounds with other triggers in Bonsai, for instance a [`Timer`] to send triggers after a set time has elapsed.
 
 :::workflow
-![Play Sound Timer](../workflows/playsound-timer.bonsai)
+![Play sound with Timer](../workflows/playsound-timer.bonsai)
 :::
 
 - Insert a [`Timer`] operator and configure the following properties:

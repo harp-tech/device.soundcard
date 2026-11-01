@@ -13,11 +13,11 @@
 
 - Maximum sampling rate: 192 kHz
 - Number of channels: 2
-- Bit depth: 24 bits
+- Audio output: 24-bit stereo
 - Input voltage: 12 V DC
 - Output voltage: 2 V rms
-- Flash memory: 30 indices, 8 MB per index (2 million samples)
-- Sound duration: 10.922 s at 96 kHz sample rate, or 5.461 s at 192 kHz sample rate
+- Sound memory bank: 30 audio storage indices, each with 8 MiB of capacity (approximately 1 million stereo sample pairs stored as 32-bit integers)
+- Sound duration: Each index can store up to 10.922 s of stereo audio at 96 kHz, or 5.461 s at 192 kHz
 - Timestamp resolution: 32 µs
 - Synchronization frequency: 1 Hz
 - Synchronization accuracy: 22 ± 16 µs (between clock generator and this device)
