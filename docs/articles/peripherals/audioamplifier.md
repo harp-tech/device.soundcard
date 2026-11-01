@@ -1,6 +1,6 @@
 # Audio Amplifier
 
-The Harp Sound Card Audio Amplifier is a peripheral for the Sound Card that amplifies one output channel with low distortion to drive a speaker. Refer to the [connections](../ports-connections.md?tabs=audio#connections) article to set up the amplifier.
+The Harp Audio Amplifier is a peripheral for the Sound Card that amplifies one output channel with low distortion to drive a speaker. Refer to the [connections](../ports-connections.md?tabs=audio#connections) article to set up the amplifier.
 
 ![Harp Audio Amplifier](../../images/audioamplifier-board.jpg){width=450}
 
