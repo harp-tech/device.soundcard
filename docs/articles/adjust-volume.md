@@ -2,6 +2,8 @@
 
 By default, the Sound Card plays stored sounds at the amplitude of the stored waveform and pure tones at maximum amplitude. The volume can be adjusted by setting an attenuation for the output channels. Upload a sound to sound index 2 with the [Sound Card GUI](./soundcard-gui.md) or in [Bonsai](../tutorials/upload-waveform-bonsai.md), which we will use for these examples.
 
+[!INCLUDE [](../includes/puretone-rightchannel-note.md)]
+
 This article covers how to set the attenuation when starting a sound and how to change it while a sound is playing in Bonsai.
 
 The complete workflow is shown below. Copy and paste it into Bonsai to get started immediately, or build each section by following the step-by-step instructions in the following sections.
