@@ -68,6 +68,8 @@ This article will cover the ports, controls, and status indicators on the Sound 
 > [!NOTE]
 > Third-party amplifiers that accept line-level RCA inputs can be connected in the same way. Check the amplifier specifications for supported speaker impedance and power ratings when selecting a speaker. Consider using the Audio Amplifier for high-fidelity applications, as its performance with the Sound Card has been characterized in this [publication](https://doi.org/10.1016/j.ohx.2024.e00555).
 
+[!INCLUDE [](../includes/puretone-rightchannel-note.md)]
+
 # [Power and PC](#tab/powerandpc)
 
 ![Harp Sound Card Power and PC](../images/connection-powerandpc.svg){width=600}

@@ -2,6 +2,8 @@
 
 The Sound Card can start and stop sound playback from TTL signals on its digital inputs (**IN0**, **IN1**), with a volume set per input. The inputs can also be used as general-purpose digital inputs (e.g. to timestamp events from external devices on the device clock). Refer to the [connections](./ports-connections.md?tabs=digitalinputs#connections) article to set up a digital input signal on **IN0**, which we will use for the rest of these examples.
 
+[!INCLUDE [](../includes/puretone-rightchannel-note.md)]
+
 This article covers how to configure the digital input mode, set the volume of triggered sounds, and visualize the state of the inputs in Bonsai.
 
 The complete workflow is shown below. Copy and paste it into Bonsai to get started immediately, or build each section by following the step-by-step instructions in the following sections.

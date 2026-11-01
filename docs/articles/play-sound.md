@@ -2,6 +2,8 @@
 
 The Sound Card plays waveforms stored in its onboard memory and pure tones from an internal sine wave generator. Upload a sound to sound index 2 with the [Sound Card GUI](./soundcard-gui.md) or in [Bonsai](../tutorials/upload-waveform-bonsai.md), which we will use for these examples.
 
+[!INCLUDE [](../includes/puretone-rightchannel-note.md)]
+
 This article covers how to play a stored sound, play and stop a pure tone, and visualize sound events in Bonsai.
 
 The complete workflow is shown below. Copy and paste it into Bonsai to get started immediately, or build each section by following the step-by-step instructions in the following sections.

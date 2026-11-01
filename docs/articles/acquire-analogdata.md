@@ -2,6 +2,8 @@
 
 The Sound Card can sample the voltage on its analog inputs at 1 kHz and stream each sample to Bonsai together with the current sound parameters. Refer to the [connections](./ports-connections.md?tabs=analoginputs#connections) article to set up an analog signal on **ADC0**, which we will use for the rest of these examples.
 
+[!INCLUDE [](../includes/puretone-rightchannel-note.md)]
+
 This article covers how to enable the analog data stream and visualize the analog data in Bonsai.
 
 The complete workflow is shown below. Copy and paste it into Bonsai to get started immediately, or build each section by following the step-by-step instructions in the following sections.
