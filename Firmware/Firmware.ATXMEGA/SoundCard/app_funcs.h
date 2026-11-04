@@ -7,55 +7,55 @@
 /* Define if not defined                                                */
 /************************************************************************/
 #ifndef bool
-	#define bool uint8_t
+    #define bool uint8_t
 #endif
 #ifndef true
-	#define true 1
+    #define true 1
 #endif
 #ifndef false
-	#define false 0
+    #define false 0
 #endif
 
 
 /************************************************************************/
 /* Prototypes                                                           */
 /************************************************************************/
-void app_read_REG_PLAY_SOUND_OR_FREQ(void);
+void app_read_REG_START(void);
 void app_read_REG_STOP(void);
 void app_read_REG_ATTENUATION_LEFT(void);
 void app_read_REG_ATTENUATION_RIGHT(void);
 void app_read_REG_ATTENUATION_BOTH(void);
-void app_read_REG_SET_ATTENUATION_AND_PLAY_SOUND_OR_FREQ(void);
+void app_read_REG_ATTENUATION_START(void);
 void app_read_REG_RESERVED0(void);
 void app_read_REG_RESERVED1(void);
-void app_read_REG_DIGITAL_INPUTS(void);
-void app_read_REG_DI0_CONF(void);
-void app_read_REG_DI1_CONF(void);
-void app_read_REG_DI0_SOUND_INDEX(void);
-void app_read_REG_DI1_SOUND_INDEX(void);
-void app_read_REG_DI0_ATTENUATION_LEFT(void);
-void app_read_REG_DI1_ATTENUATION_LEFT(void);
-void app_read_REG_DI0_ATTENUATION_RIGHT(void);
-void app_read_REG_DI1_ATTENUATION_RIGHT(void);
+void app_read_REG_INPUT_STATE(void);
+void app_read_REG_CONFIGURE_DI0(void);
+void app_read_REG_CONFIGURE_DI1(void);
+void app_read_REG_START_ON_DI0(void);
+void app_read_REG_START_ON_DI1(void);
+void app_read_REG_ATTENUATION_LEFT_DI0(void);
+void app_read_REG_ATTENUATION_LEFT_DI1(void);
+void app_read_REG_ATTENUATION_RIGHT_DI0(void);
+void app_read_REG_ATTENUATION_RIGHT_DI1(void);
 void app_read_REG_RESERVED2(void);
 void app_read_REG_RESERVED3(void);
 void app_read_REG_RESERVED4(void);
-void app_read_REG_DO0_CONF(void);
-void app_read_REG_DO1_CONF(void);
-void app_read_REG_DO2_CONF(void);
+void app_read_REG_CONFIGURE_DO0(void);
+void app_read_REG_CONFIGURE_DO1(void);
+void app_read_REG_CONFIGURE_DO2(void);
 void app_read_REG_RESERVED5(void);
 void app_read_REG_RESERVED6(void);
 void app_read_REG_RESERVED7(void);
-void app_read_REG_DO_SET(void);
-void app_read_REG_DO_CLEAR(void);
-void app_read_REG_DO_TOGGLE(void);
-void app_read_REG_DO_OUT(void);
+void app_read_REG_OUTPUT_SET(void);
+void app_read_REG_OUTPUT_CLEAR(void);
+void app_read_REG_OUTPUT_TOGGLE(void);
+void app_read_REG_OUTPUT_STATE(void);
 void app_read_REG_RESERVED8(void);
 void app_read_REG_RESERVED9(void);
-void app_read_REG_DATA_STREAM_CONF(void);
-void app_read_REG_DATA_STREAM(void);
-void app_read_REG_ADC0_CONF(void);
-void app_read_REG_ADC1_CONF(void);
+void app_read_REG_ENABLE_ADC_CONTROL_STATE(void);
+void app_read_REG_ADC_CONTROL_STATE(void);
+void app_read_REG_CONFIGURE_ADC0(void);
+void app_read_REG_CONFIGURE_ADC1(void);
 void app_read_REG_RESERVED10(void);
 void app_read_REG_RESERVED11(void);
 void app_read_REG_RESERVED12(void);
@@ -70,44 +70,44 @@ void app_read_REG_RESERVED20(void);
 void app_read_REG_RESERVED21(void);
 void app_read_REG_RESERVED22(void);
 void app_read_REG_RESERVED23(void);
-void app_read_REG_COMMANDS(void);
+void app_read_REG_PIC32_COMMANDS(void);
 
-bool app_write_REG_PLAY_SOUND_OR_FREQ(void *a);
+bool app_write_REG_START(void *a);
 bool app_write_REG_STOP(void *a);
 bool app_write_REG_ATTENUATION_LEFT(void *a);
 bool app_write_REG_ATTENUATION_RIGHT(void *a);
 bool app_write_REG_ATTENUATION_BOTH(void *a);
-bool app_write_REG_SET_ATTENUATION_AND_PLAY_SOUND_OR_FREQ(void *a);
+bool app_write_REG_ATTENUATION_START(void *a);
 bool app_write_REG_RESERVED0(void *a);
 bool app_write_REG_RESERVED1(void *a);
-bool app_write_REG_DIGITAL_INPUTS(void *a);
-bool app_write_REG_DI0_CONF(void *a);
-bool app_write_REG_DI1_CONF(void *a);
-bool app_write_REG_DI0_SOUND_INDEX(void *a);
-bool app_write_REG_DI1_SOUND_INDEX(void *a);
-bool app_write_REG_DI0_ATTENUATION_LEFT(void *a);
-bool app_write_REG_DI1_ATTENUATION_LEFT(void *a);
-bool app_write_REG_DI0_ATTENUATION_RIGHT(void *a);
-bool app_write_REG_DI1_ATTENUATION_RIGHT(void *a);
+bool app_write_REG_INPUT_STATE(void *a);
+bool app_write_REG_CONFIGURE_DI0(void *a);
+bool app_write_REG_CONFIGURE_DI1(void *a);
+bool app_write_REG_START_ON_DI0(void *a);
+bool app_write_REG_START_ON_DI1(void *a);
+bool app_write_REG_ATTENUATION_LEFT_DI0(void *a);
+bool app_write_REG_ATTENUATION_LEFT_DI1(void *a);
+bool app_write_REG_ATTENUATION_RIGHT_DI0(void *a);
+bool app_write_REG_ATTENUATION_RIGHT_DI1(void *a);
 bool app_write_REG_RESERVED2(void *a);
 bool app_write_REG_RESERVED3(void *a);
 bool app_write_REG_RESERVED4(void *a);
-bool app_write_REG_DO0_CONF(void *a);
-bool app_write_REG_DO1_CONF(void *a);
-bool app_write_REG_DO2_CONF(void *a);
+bool app_write_REG_CONFIGURE_DO0(void *a);
+bool app_write_REG_CONFIGURE_DO1(void *a);
+bool app_write_REG_CONFIGURE_DO2(void *a);
 bool app_write_REG_RESERVED5(void *a);
 bool app_write_REG_RESERVED6(void *a);
 bool app_write_REG_RESERVED7(void *a);
-bool app_write_REG_DO_SET(void *a);
-bool app_write_REG_DO_CLEAR(void *a);
-bool app_write_REG_DO_TOGGLE(void *a);
-bool app_write_REG_DO_OUT(void *a);
+bool app_write_REG_OUTPUT_SET(void *a);
+bool app_write_REG_OUTPUT_CLEAR(void *a);
+bool app_write_REG_OUTPUT_TOGGLE(void *a);
+bool app_write_REG_OUTPUT_STATE(void *a);
 bool app_write_REG_RESERVED8(void *a);
 bool app_write_REG_RESERVED9(void *a);
-bool app_write_REG_DATA_STREAM_CONF(void *a);
-bool app_write_REG_DATA_STREAM(void *a);
-bool app_write_REG_ADC0_CONF(void *a);
-bool app_write_REG_ADC1_CONF(void *a);
+bool app_write_REG_ENABLE_ADC_CONTROL_STATE(void *a);
+bool app_write_REG_ADC_CONTROL_STATE(void *a);
+bool app_write_REG_CONFIGURE_ADC0(void *a);
+bool app_write_REG_CONFIGURE_ADC1(void *a);
 bool app_write_REG_RESERVED10(void *a);
 bool app_write_REG_RESERVED11(void *a);
 bool app_write_REG_RESERVED12(void *a);
@@ -122,7 +122,7 @@ bool app_write_REG_RESERVED20(void *a);
 bool app_write_REG_RESERVED21(void *a);
 bool app_write_REG_RESERVED22(void *a);
 bool app_write_REG_RESERVED23(void *a);
-bool app_write_REG_COMMANDS(void *a);
+bool app_write_REG_PIC32_COMMANDS(void *a);
 
 
 #endif /* _APP_FUNCTIONS_H_ */

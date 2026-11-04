@@ -1,0 +1,144 @@
+# yaml-language-server: $schema=https://harp-tech.org/draft-02/schema/ios.json
+DIN0:
+  port: PORTB
+  pinNumber: 0
+  direction: input
+  pinMode: pullup
+  triggerMode: toggle
+  interruptPriority: low
+  interruptNumber: 0
+  description: Digital input 0
+DIN1:
+  port: PORTD
+  pinNumber: 0
+  direction: input
+  pinMode: pullup
+  triggerMode: toggle
+  interruptPriority: low
+  interruptNumber: 0
+  description: Digital input 1
+DIN2:
+  port: PORTC
+  pinNumber: 0
+  direction: input
+  pinMode: pullup
+  triggerMode: none
+  interruptPriority: "off"
+  description: Digital input 2
+CMD_LATCHED:
+  port: PORTC
+  pinNumber: 5
+  direction: input
+  pinMode: pullup
+  triggerMode: rising
+  interruptPriority: low
+  interruptNumber: 1
+  description: Command read from the PAR bus
+CMD_NOT_EXEC:
+  port: PORTD
+  pinNumber: 5
+  direction: input
+  pinMode: pullup
+  triggerMode: rising
+  interruptPriority: "off"
+  description: Command on the PAR bus can't be executed
+SOUND_IS_ON:
+  port: PORTC
+  pinNumber: 6
+  direction: input
+  pinMode: pullup
+  triggerMode: toggle
+  interruptPriority: low
+  interruptNumber: 0
+  description: Line is high when sound is being played
+PAR0:
+  port: PORTA
+  pinNumber: 0
+  direction: output
+  allowRead: false
+  initialState: low
+  description: Digital bus pin 0
+PAR1:
+  port: PORTA
+  pinNumber: 1
+  direction: output
+  allowRead: false
+  initialState: low
+  description: Digital bus pin 1
+PAR2:
+  port: PORTA
+  pinNumber: 2
+  direction: output
+  allowRead: false
+  initialState: low
+  description: Digital bus pin 2
+PAR3:
+  port: PORTA
+  pinNumber: 3
+  direction: output
+  allowRead: false
+  initialState: low
+  description: Digital bus pin 3
+PAR4:
+  port: PORTA
+  pinNumber: 4
+  direction: output
+  allowRead: false
+  initialState: low
+  description: Digital bus pin 4
+PAR5:
+  port: PORTA
+  pinNumber: 5
+  direction: output
+  allowRead: false
+  initialState: low
+  description: Digital bus pin 5
+PAR6:
+  port: PORTA
+  pinNumber: 6
+  direction: output
+  allowRead: false
+  initialState: low
+  description: Digital bus pin 6
+PAR7:
+  port: PORTA
+  pinNumber: 7
+  direction: output
+  allowRead: false
+  initialState: low
+  description: Digital bus pin 7
+DOUT0:
+  port: PORTD
+  pinNumber: 1
+  direction: output
+  allowRead: true
+  initialState: low
+  description: Digital output 0
+DOUT1:
+  port: PORTC
+  pinNumber: 3
+  direction: output
+  allowRead: true
+  initialState: low
+  description: Digital output 1
+DOUT2:
+  port: PORTC
+  pinNumber: 4
+  direction: output
+  allowRead: true
+  initialState: low
+  description: Digital output 2
+BOOTLOADER_EN:
+  port: PORTC
+  pinNumber: 7
+  direction: output
+  allowRead: false
+  initialState: low
+  description: Enables bootloader on PIC32 and buffers
+CMD_WRITE:
+  port: PORTC
+  pinNumber: 1
+  direction: output
+  allowRead: false
+  initialState: low
+  description: Command available on the PAR bus

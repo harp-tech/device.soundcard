@@ -20,9 +20,7 @@ extern bool (*app_func_wr_pointer[])(void*);
 /************************************************************************/
 /* Initialize app                                                       */
 /************************************************************************/
-static const uint8_t default_device_name[] = "SoundCard";
-
-#define MAJOR_FW_VERSION 3
+static const uint8_t default_device_name[] = DEVICE_NAME;
 
 void hwbp_app_initialize(void)
 {
@@ -30,12 +28,12 @@ void hwbp_app_initialize(void)
    uint8_t hwH = 2;
    uint8_t hwL = 2;
    uint8_t fwH = MAJOR_FW_VERSION;
-   uint8_t fwL = 0;
+   uint8_t fwL = MINOR_FW_VERSION;
    uint8_t ass = 0;
-   
+
 		/* Start core */
 	core_func_start_core(
-		1280,
+		WHO_AM_I,
 		hwH, hwL,
 		fwH, fwL,
 		ass,
@@ -164,24 +162,24 @@ void core_callback_initialize_hardware(void)
 
 void core_callback_reset_registers(void)
 {	
-	app_regs.REG_DI0_CONF = GM_DI_SYNC;
-	app_regs.REG_DI1_CONF = GM_DI_SYNC;
+	app_regs.REG_CONFIGURE_DI0 = GM_DI_MODE_DIGITAL;
+	app_regs.REG_CONFIGURE_DI1 = GM_DI_MODE_DIGITAL;
 	
-	app_regs.REG_DI0_SOUND_INDEX = 2000;		// 2 KHz
-	app_regs.REG_DI1_SOUND_INDEX = 4000;		// 4 KHz
-	app_regs.REG_DI0_ATTENUATION_LEFT = 60;		// -6 DFS
-	app_regs.REG_DI1_ATTENUATION_LEFT = 60;		// -6 DFS
-	app_regs.REG_DI0_ATTENUATION_RIGHT = 60;	// -6 DFS
-	app_regs.REG_DI1_ATTENUATION_RIGHT = 60;	// -6 DFS
+	app_regs.REG_START_ON_DI0 = 2000;		// 2 KHz
+	app_regs.REG_START_ON_DI1 = 4000;		// 4 KHz
+	app_regs.REG_ATTENUATION_LEFT_DI0 = 60;		// -6 DFS
+	app_regs.REG_ATTENUATION_LEFT_DI1 = 60;		// -6 DFS
+	app_regs.REG_ATTENUATION_RIGHT_DI0 = 60;	// -6 DFS
+	app_regs.REG_ATTENUATION_RIGHT_DI1 = 60;	// -6 DFS
 	
-	app_regs.REG_DO0_CONF = GM_DO_PULSE;
-	app_regs.REG_DO1_CONF = GM_DO_DIG;
-	app_regs.REG_DO2_CONF = GM_DO_DIG;
+	app_regs.REG_CONFIGURE_DO0 = GM_DO_MODE_PULSE_ON_START;
+	app_regs.REG_CONFIGURE_DO1 = GM_DO_MODE_DIGITAL;
+	app_regs.REG_CONFIGURE_DO2 = GM_DO_MODE_DIGITAL;
 	
-	app_regs.REG_DATA_STREAM_CONF = GM_DATA_STREAM_OFF;
+	app_regs.REG_ENABLE_ADC_CONTROL_STATE = 0;
 	
-	app_regs.REG_ADC0_CONF = GM_ADC0_PURE_ANALOG_INPUT;
-	app_regs.REG_ADC1_CONF = GM_ADC1_PURE_ANALOG_INPUT;
+	app_regs.REG_CONFIGURE_ADC0 = GM_ADC_MODE_ANALOG_INPUT;
+	app_regs.REG_CONFIGURE_ADC1 = GM_ADC_MODE_ANALOG_INPUT;
 }
    
 void core_callback_registers_were_reinitialized(void) {}
@@ -225,14 +223,14 @@ void core_callback_t_new_second(void) {}
 void core_callback_t_500us(void) {}
 void core_callback_t_1ms(void)
 {
-	if (app_regs.REG_DATA_STREAM_CONF == GM_DATA_STREAM_1KHz)
+	if (app_regs.REG_ENABLE_ADC_CONTROL_STATE == 1)
 	{
 		/* Read ADC */
 		core_func_mark_user_timestamp();
 			
-		app_regs.REG_DATA_STREAM[2] = app_regs.REG_SET_ATTENUATION_AND_PLAY_SOUND_OR_FREQ[1];
-		app_regs.REG_DATA_STREAM[3] = app_regs.REG_SET_ATTENUATION_AND_PLAY_SOUND_OR_FREQ[2];
-		app_regs.REG_DATA_STREAM[4] = app_regs.REG_SET_ATTENUATION_AND_PLAY_SOUND_OR_FREQ[0];
+		app_regs.REG_ADC_CONTROL_STATE[2] = app_regs.REG_ATTENUATION_START[1];
+		app_regs.REG_ADC_CONTROL_STATE[3] = app_regs.REG_ATTENUATION_START[2];
+		app_regs.REG_ADC_CONTROL_STATE[4] = app_regs.REG_ATTENUATION_START[0];
 		   
 		/* Start conversation on ADCA Channel 10 */
 		first_adc_channel = true;

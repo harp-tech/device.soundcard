@@ -44,35 +44,35 @@ ISR(PORTB_INT0_vect, ISR_NAKED)
 		
 		if (din0)
 		{
-			switch (app_regs.REG_DI0_CONF)
+			switch (app_regs.REG_CONFIGURE_DI0)
 			{
-				case GM_DI_SYNC:
-					app_regs.REG_DIGITAL_INPUTS |= B_DI0;
-					core_func_send_event(ADD_REG_DIGITAL_INPUTS, true);
+				case GM_DI_MODE_DIGITAL:
+					app_regs.REG_INPUT_STATE |= B_DI0;
+					core_func_send_event(ADD_REG_INPUT_STATE, true);
 					break;
 				
-				case GM_DI_START_AND_STOP_SOUND:
-				case GM_DI_START_SOUND:
-					par_cmd_start_sound(app_regs.REG_DI0_SOUND_INDEX, app_regs.REG_DI0_ATTENUATION_LEFT, app_regs.REG_DI0_ATTENUATION_RIGHT);
+				case GM_DI_MODE_START_AND_STOP:
+				case GM_DI_MODE_START:
+					par_cmd_start_sound(app_regs.REG_START_ON_DI0, app_regs.REG_ATTENUATION_LEFT_DI0, app_regs.REG_ATTENUATION_RIGHT_DI0);
 					/* Save the sound being played */
-					last_sound_triggered = app_regs.REG_DI0_SOUND_INDEX;
+					last_sound_triggered = app_regs.REG_START_ON_DI0;
 					break;
 				
-				case GM_DI_STOP:
+				case GM_DI_MODE_STOP:
 					par_cmd_stop();
 					break;
 			}
 		}
 		else
 		{
-			switch (app_regs.REG_DI0_CONF)
+			switch (app_regs.REG_CONFIGURE_DI0)
 			{
-				case GM_DI_SYNC:
-					app_regs.REG_DIGITAL_INPUTS &= ~B_DI0;				
-					core_func_send_event(ADD_REG_DIGITAL_INPUTS, true);
+				case GM_DI_MODE_DIGITAL:
+					app_regs.REG_INPUT_STATE &= ~B_DI0;				
+					core_func_send_event(ADD_REG_INPUT_STATE, true);
 					break;
 				
-				case GM_DI_START_AND_STOP_SOUND:
+				case GM_DI_MODE_START_AND_STOP:
 					par_cmd_stop();
 					break;
 			}
@@ -97,35 +97,35 @@ ISR(PORTD_INT0_vect, ISR_NAKED)
 		
 		if (din1)
 		{
-			switch (app_regs.REG_DI1_CONF)
+			switch (app_regs.REG_CONFIGURE_DI1)
 			{
-				case GM_DI_SYNC:
-					app_regs.REG_DIGITAL_INPUTS |= B_DI1;
-					core_func_send_event(ADD_REG_DIGITAL_INPUTS, true);
+				case GM_DI_MODE_DIGITAL:
+					app_regs.REG_INPUT_STATE |= B_DI1;
+					core_func_send_event(ADD_REG_INPUT_STATE, true);
 					break;
 				
-				case GM_DI_START_AND_STOP_SOUND:
-				case GM_DI_START_SOUND:
-					par_cmd_start_sound(app_regs.REG_DI1_SOUND_INDEX, app_regs.REG_DI1_ATTENUATION_LEFT, app_regs.REG_DI1_ATTENUATION_RIGHT);
+				case GM_DI_MODE_START_AND_STOP:
+				case GM_DI_MODE_START:
+					par_cmd_start_sound(app_regs.REG_START_ON_DI1, app_regs.REG_ATTENUATION_LEFT_DI1, app_regs.REG_ATTENUATION_RIGHT_DI1);
 					/* Save the sound being played */
-					last_sound_triggered = app_regs.REG_DI1_SOUND_INDEX;
+					last_sound_triggered = app_regs.REG_START_ON_DI1;
 					break;
 				
-				case GM_DI_STOP:
+				case GM_DI_MODE_STOP:
 					par_cmd_stop();
 					break;
 			}
 		}
 		else
 		{
-			switch (app_regs.REG_DI1_CONF)
+			switch (app_regs.REG_CONFIGURE_DI1)
 			{
-				case GM_DI_SYNC:
-					app_regs.REG_DIGITAL_INPUTS &= ~B_DI1;				
-					core_func_send_event(ADD_REG_DIGITAL_INPUTS, true);
+				case GM_DI_MODE_DIGITAL:
+					app_regs.REG_INPUT_STATE &= ~B_DI1;				
+					core_func_send_event(ADD_REG_INPUT_STATE, true);
 					break;
 				
-				case GM_DI_START_AND_STOP_SOUND:
+				case GM_DI_MODE_START_AND_STOP:
 					par_cmd_stop();
 					break;
 			}
@@ -172,9 +172,9 @@ ISR(ADCA_CH0_vect, ISR_NAKED)
 		
 		/* Read ADC */
 		if (ADCA_CH0_RES > AdcOffset)
-			app_regs.REG_DATA_STREAM[0] = (ADCA_CH0_RES & 0x0FFF) - AdcOffset;
+			app_regs.REG_ADC_CONTROL_STATE[0] = (ADCA_CH0_RES & 0x0FFF) - AdcOffset;
 		else
-			app_regs.REG_DATA_STREAM[0] = 0;
+			app_regs.REG_ADC_CONTROL_STATE[0] = 0;
 		
 		/* Start conversation on ADCA Channel 9 */
 		ADCA_CH0_MUXCTRL = 9 << 3;
@@ -184,11 +184,11 @@ ISR(ADCA_CH0_vect, ISR_NAKED)
 	{	
 		/* Read ADC */
 		if (ADCA_CH0_RES > AdcOffset)
-			app_regs.REG_DATA_STREAM[1] = (ADCA_CH0_RES & 0x0FFF) - AdcOffset;
+			app_regs.REG_ADC_CONTROL_STATE[1] = (ADCA_CH0_RES & 0x0FFF) - AdcOffset;
 		else
-			app_regs.REG_DATA_STREAM[1] = 0;
+			app_regs.REG_ADC_CONTROL_STATE[1] = 0;
 
-		core_func_send_event(ADD_REG_DATA_STREAM, false);
+		core_func_send_event(ADD_REG_ADC_CONTROL_STATE, false);
 	}
 	
 	reti();
@@ -210,9 +210,9 @@ ISR(TCC0_OVF_vect, ISR_NAKED)
 /************************************************************************/
 ISR(TCE0_OVF_vect, ISR_NAKED)
 {
-	if (app_regs.REG_DO0_CONF == GM_DO_PULSE) {clr_DOUT0;}
-	if (app_regs.REG_DO1_CONF == GM_DO_PULSE) {clr_DOUT1;}
-	if (app_regs.REG_DO2_CONF == GM_DO_PULSE) {clr_DOUT2;}
+	if (app_regs.REG_CONFIGURE_DO0 == GM_DO_MODE_PULSE_ON_START) {clr_DOUT0;}
+	if (app_regs.REG_CONFIGURE_DO1 == GM_DO_MODE_PULSE_ON_START) {clr_DOUT1;}
+	if (app_regs.REG_CONFIGURE_DO2 == GM_DO_MODE_PULSE_ON_START) {clr_DOUT2;}
 	
 	timer_type0_stop(&TCE0);
 	

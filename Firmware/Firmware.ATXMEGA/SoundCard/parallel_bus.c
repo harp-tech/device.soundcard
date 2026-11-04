@@ -125,7 +125,7 @@ ISR(PORTC_INT1_vect, ISR_NAKED)
 
    if (read_SOUND_IS_ON){
       //set_DOUT0;
-	  //core_func_send_event(ADD_REG_PLAY_SOUND_OR_FREQ, true);
+	  //core_func_send_event(ADD_REG_START, true);
    }
    //else
       //clr_DOUT0;
@@ -139,14 +139,14 @@ ISR(PORTC_INT0_vect, ISR_NAKED)
    {
       if (last_sound_triggered != 0)
       {
-			app_regs.REG_PLAY_SOUND_OR_FREQ = last_sound_triggered;
-			core_func_send_event(ADD_REG_PLAY_SOUND_OR_FREQ, true);
+			app_regs.REG_START = last_sound_triggered;
+			core_func_send_event(ADD_REG_START, true);
 			last_sound_triggered = 0; // The event was sent and a new sound can be trigger
 		}
 		
-		if (app_regs.REG_DO0_CONF == GM_DO_PULSE) {set_DOUT0;}
-		if (app_regs.REG_DO1_CONF == GM_DO_PULSE) {set_DOUT1;}
-		if (app_regs.REG_DO2_CONF == GM_DO_PULSE) {set_DOUT2;}
+		if (app_regs.REG_CONFIGURE_DO0 == GM_DO_MODE_PULSE_ON_START) {set_DOUT0;}
+		if (app_regs.REG_CONFIGURE_DO1 == GM_DO_MODE_PULSE_ON_START) {set_DOUT1;}
+		if (app_regs.REG_CONFIGURE_DO2 == GM_DO_MODE_PULSE_ON_START) {set_DOUT2;}
 		
 		/* Set timer for 400s to clear the digital output */
 		/* Is can't be higher!! */
