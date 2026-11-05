@@ -425,7 +425,6 @@ public class SoundCardViewModel : ViewModelBase
     [ObservableAsProperty] public bool IsSaving { get; }
 
     [Reactive] public bool ShowWriteMessages { get; set; }
-    [Reactive] public ObservableCollection<string> HarpEvents { get; set; } = new();
     [Reactive] public ObservableCollection<string> SentMessages { get; set; } = new();
 
     public ReactiveCommand<Unit, Unit> ShowAboutCommand { get; private set; }
@@ -526,7 +525,6 @@ public class SoundCardViewModel : ViewModelBase
             {
                 if (isConnected && _deviceEventsObservable is not null)
                 {
-                    // Subscribe on the UI thread so that the HarpEvents collection can be updated safely.
                     SubscribeToEvents(_deviceEventsObservable);
                 }
                 else
@@ -942,9 +940,8 @@ public class SoundCardViewModel : ViewModelBase
     private void SubscribeToEvents(IObservable<string> deviceEvents)
     {
         _deviceEventsSubscription = deviceEvents
-            .ObserveOn(RxApp.MainThreadScheduler)
             .Subscribe(
-                msg => HarpEvents.Add(msg.ToString()),
+                _ => { },
                 ex => Debug.WriteLine($"Error in device events: {ex}")
             );
     }
