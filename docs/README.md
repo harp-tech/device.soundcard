@@ -1,7 +1,7 @@
 ## Harp Soundcard
 This is a high performance sound card with two output channels using 24 bits DACs at 192kHz sample rate. 
 
-![HarpSoundcard](./Assets/pcb.png)
+![HarpSoundcard](./images/pcb.png)
 
 
 ### Hardware Compatibility
@@ -76,7 +76,7 @@ To install the proper drivers to interface with the device, follow the next step
 
 5 - (2) Select the WinUSB driver and click Install WCID Driver.
 
-![Zadig](./Assets/zadig.png)
+![Zadig](./images/zadig.png)
 
 
 ## Firmware ##
