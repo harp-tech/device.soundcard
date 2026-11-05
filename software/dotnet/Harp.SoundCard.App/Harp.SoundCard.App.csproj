@@ -26,7 +26,6 @@
     <NSHighResolutionCapable>true</NSHighResolutionCapable>
     <Copyright>harp-tech</Copyright>
     <ApplicationIcon>..\Harp.SoundCard.Design\Assets\logo.ico</ApplicationIcon>
-    <PackageReadmeFile>README.md</PackageReadmeFile>
     <RepositoryType>git</RepositoryType>
     <BaseOutputPath>..\bin\$(Configuration)</BaseOutputPath>
   </PropertyGroup>
