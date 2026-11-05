@@ -1,0 +1,23 @@
+- name: Introduction
+- href: ../index.md
+- name: Specs
+- href: soundcard.md
+- name: Peripherals
+  href: peripherals/toc.yml
+- name: Getting started
+- href: ports-connections.md
+- href: installation.md
+- href: soundcard-gui.md
+- href: bonsai.md
+- name: Examples
+- href: how-the-examples-work.md
+- href: play-sound.md
+- href: adjust-volume.md
+- href: configure-digitalinputs.md
+- href: control-digitaloutputs.md
+- href: acquire-analogdata.md
+- href: advanced-configuration.md
+- name: Data management
+- href: logging-analysis.md
+- name: Troubleshooting
+- href: errors.md
