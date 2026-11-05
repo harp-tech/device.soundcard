@@ -131,20 +131,18 @@ public class PayloadFieldConverter : IValueConverter
         return value;
     }
 
-    private int GetMaskForField(Type type, string fieldName)
+    private static int GetMaskForField(Type type, string fieldName)
     {
         // Try to find mask by reflection from payload specification
         // This assumes there's a static class or field with mask information
         try
         {
-            var payloadSpecType = Type.GetType($"{type.Namespace}.{type.Name}PayloadSpec");
-            if (payloadSpecType != null)
+            if (type.Namespace is string typeNamespace &&
+                Type.GetType($"{typeNamespace}.{type.Name}PayloadSpec") is Type payloadSpecType)
             {
                 var maskField = payloadSpecType.GetField($"{fieldName}Mask", BindingFlags.Public | BindingFlags.Static);
-                if (maskField != null)
-                {
-                    return (int)maskField.GetValue(null);
-                }
+                if (maskField?.GetValue(null) is int value)
+                    return value;
             }
         }
         catch
@@ -154,7 +152,7 @@ public class PayloadFieldConverter : IValueConverter
         return 0;
     }
 
-    private int GetShiftForMask(int mask)
+    private static int GetShiftForMask(int mask)
     {
         int shift = 0;
         while ((mask & 1) == 0 && shift < 32)

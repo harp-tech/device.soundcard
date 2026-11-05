@@ -48,8 +48,8 @@ public class SoundCardViewModel : ViewModelBase
 
     [Reactive] public int DeviceID { get; set; }
     [Reactive] public string DeviceName { get; set; } = string.Empty;
-    [Reactive] public HarpVersion HardwareVersion { get; set; }
-    [Reactive] public HarpVersion FirmwareVersion { get; set; }
+    [Reactive] public HarpVersion? HardwareVersion { get; set; }
+    [Reactive] public HarpVersion? FirmwareVersion { get; set; }
     [Reactive] public int SerialNumber { get; set; }
 
     #endregion
@@ -60,8 +60,8 @@ public class SoundCardViewModel : ViewModelBase
     [Reactive] public byte Stop { get; set; }
     [Reactive] public ushort AttenuationLeft { get; set; }
     [Reactive] public ushort AttenuationRight { get; set; }
-    [Reactive] public ushort[] AttenuationBoth { get; set; }
-    [Reactive] public ushort[] AttenuationStart { get; set; }
+    [Reactive] public ushort[] AttenuationBoth { get; set; } = new ushort[2];
+    [Reactive] public ushort[] AttenuationStart { get; set; } = new ushort[3];
     [Reactive] public DigitalInputs InputState { get; set; }
     [Reactive] public DigitalInputConfiguration ConfigureDI0 { get; set; }
     [Reactive] public DigitalInputConfiguration ConfigureDI1 { get; set; }
@@ -440,7 +440,7 @@ public class SoundCardViewModel : ViewModelBase
     #endregion
 
     private Harp.SoundCard.AsyncDevice? _device;
-    private IObservable<string> _deviceEventsObservable;
+    private IObservable<string>? _deviceEventsObservable;
     private IDisposable? _deviceEventsSubscription;
 
     public SoundCardViewModel()
@@ -524,10 +524,10 @@ public class SoundCardViewModel : ViewModelBase
             .ObserveOn(RxApp.MainThreadScheduler)
             .Subscribe(isConnected =>
             {
-                if (isConnected && _deviceEventsObservable != null)
+                if (isConnected && _deviceEventsObservable is not null)
                 {
                     // Subscribe on the UI thread so that the HarpEvents collection can be updated safely.
-                    SubscribeToEvents();
+                    SubscribeToEvents(_deviceEventsObservable);
                 }
                 else
                 {
@@ -891,7 +891,7 @@ public class SoundCardViewModel : ViewModelBase
                 "EnableAdcControlState");
 
             // Save the configuration to the device permanently
-            if (savePermanently)
+            if (savePermanently && _deviceEventsObservable is not null)
             {
                 // To prevent multiple calls to the device while it is resetting
                 _deviceEventsSubscription?.Dispose();
@@ -906,7 +906,7 @@ public class SoundCardViewModel : ViewModelBase
                 await Task.Delay(4000);
 
                 // Re-subscribe to the device events observable
-                SubscribeToEvents();
+                SubscribeToEvents(_deviceEventsObservable);
             }
         });
     }
@@ -939,9 +939,9 @@ public class SoundCardViewModel : ViewModelBase
         });
     }
 
-    private void SubscribeToEvents()
+    private void SubscribeToEvents(IObservable<string> deviceEvents)
     {
-        _deviceEventsSubscription = _deviceEventsObservable
+        _deviceEventsSubscription = deviceEvents
             .ObserveOn(RxApp.MainThreadScheduler)
             .Subscribe(
                 msg => HarpEvents.Add(msg.ToString()),
