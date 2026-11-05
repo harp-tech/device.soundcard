@@ -58,8 +58,8 @@ uint8_t command_to_send;
 #define send_last_byte(byte)    PORTA_OUT = byte; \
                                 set_CMD_WRITE; \
                                 while (!read_CMD_LATCHED); \
-                                if (read_CMD_NOT_EXEC)  { clr_CMD_WRITE; while (read_CMD_LATCHED); set_DOUT2; return false;} \
-                                else                    { clr_CMD_WRITE; while (read_CMD_LATCHED); clr_DOUT2; return true; }
+                                if (read_CMD_NOT_EXEC)  { clr_CMD_WRITE; while (read_CMD_LATCHED); return false;} \
+                                else                    { clr_CMD_WRITE; while (read_CMD_LATCHED); return true; }
 
 
 /************************************************************************/
@@ -125,7 +125,7 @@ ISR(PORTC_INT1_vect, ISR_NAKED)
 
    if (read_SOUND_IS_ON){
       //set_DOUT0;
-	  //core_func_send_event(ADD_REG_PLAY_SOUND_OR_FREQ, true);
+	  //core_func_send_event(ADD_REG_START, true);
    }
    //else
       //clr_DOUT0;
@@ -139,16 +139,19 @@ ISR(PORTC_INT0_vect, ISR_NAKED)
    {
       if (last_sound_triggered != 0)
       {
-         app_regs.REG_PLAY_SOUND_OR_FREQ = last_sound_triggered;
-	     core_func_send_event(ADD_REG_PLAY_SOUND_OR_FREQ, true);
-	     last_sound_triggered = 0; // The event was sent and a new sound can be trigger
-	  }
-	  
-      //set_DOUT0;
-   }
-   else
-   {
-      //clr_DOUT0;
+			app_regs.REG_START = last_sound_triggered;
+			core_func_send_event(ADD_REG_START, true);
+			last_sound_triggered = 0; // The event was sent and a new sound can be trigger
+		}
+		
+		if (app_regs.REG_CONFIGURE_DO0 == GM_DO_MODE_PULSE_ON_START) {set_DOUT0;}
+		if (app_regs.REG_CONFIGURE_DO1 == GM_DO_MODE_PULSE_ON_START) {set_DOUT1;}
+		if (app_regs.REG_CONFIGURE_DO2 == GM_DO_MODE_PULSE_ON_START) {set_DOUT2;}
+		
+		/* Set timer for 400s to clear the digital output */
+		/* Is can't be higher!! */
+		timer_type0_enable(&TCE0, TIMER_PRESCALER_DIV64, 400/2, INT_LEVEL_LOW);
+		
    }
    
    reti();
@@ -182,7 +185,11 @@ void par_cmd_stop(void)
 }
 
 bool par_cmd_stop_callback (void)
-{
+{	
+	// Measurements show that this timer equal to 476 us put all the real stops
+	// inside a interval of +/- 200 us
+	timer_type0_enable(&TCC0, TIMER_PRESCALER_DIV64, 476/2, INT_LEVEL_LOW);
+	
    send_last_byte(cmd_stop[CMD_STOP_LEN - 1]);
 }
 

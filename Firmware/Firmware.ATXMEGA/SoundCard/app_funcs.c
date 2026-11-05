@@ -10,129 +10,121 @@
 extern AppRegs app_regs;
 
 void (*app_func_rd_pointer[])(void) = {
-	&app_read_REG_PLAY_SOUND_OR_FREQ,
+	&app_read_REG_START,
 	&app_read_REG_STOP,
-	&app_read_REG_ATTNUATION_LEFT,
+	&app_read_REG_ATTENUATION_LEFT,
 	&app_read_REG_ATTENUATION_RIGHT,
 	&app_read_REG_ATTENUATION_BOTH,
-	&app_read_REG_SET_ATTENUATION_AND_PLAY_SOUND_OR_FREQ,
+	&app_read_REG_ATTENUATION_START,
 	&app_read_REG_RESERVED0,
 	&app_read_REG_RESERVED1,
-	&app_read_REG_DIGITAL_INPUTS,
-	&app_read_REG_DI0_CONF,
-	&app_read_REG_DI1_CONF,
-	&app_read_REG_DI2_CONF,
-	&app_read_REG_DI0_SOUND_INDEX,
-	&app_read_REG_DI1_SOUND_INDEX,
-	&app_read_REG_DI2_SOUND_INDEX,
-	&app_read_REG_DI0_FREQ,
-	&app_read_REG_DI1_FREQ,
-	&app_read_REG_DI2_FREQ,
-	&app_read_REG_DI0_ATTNUATION_LEFT,
-	&app_read_REG_DI1_ATTNUATION_LEFT,
-	&app_read_REG_DI2_ATTNUATION_LEFT,
-	&app_read_REG_DI0_ATTENUATION_RIGHT,
-	&app_read_REG_DI1_ATTENUATION_RIGHT,
-	&app_read_REG_DI2_ATTENUATION_RIGHT,
-	&app_read_REG_DI0_ATTENUATION_AND_SOUND_INDEX,
-	&app_read_REG_DI1_ATTENUATION_AND_SOUND_INDEX,
-	&app_read_REG_DI2_ATTENUATION_AND_SOUND_INDEX,
-	&app_read_REG_DI0_ATTENUATION_AND_FREQUENCY,
-	&app_read_REG_DI1_ATTENUATION_AND_FREQUENCY,
-	&app_read_REG_DI2_ATTENUATION_AND_FReQUENCY,
+	&app_read_REG_INPUT_STATE,
+	&app_read_REG_CONFIGURE_DI0,
+	&app_read_REG_CONFIGURE_DI1,
+	&app_read_REG_START_ON_DI0,
+	&app_read_REG_START_ON_DI1,
+	&app_read_REG_ATTENUATION_LEFT_DI0,
+	&app_read_REG_ATTENUATION_LEFT_DI1,
+	&app_read_REG_ATTENUATION_RIGHT_DI0,
+	&app_read_REG_ATTENUATION_RIGHT_DI1,
 	&app_read_REG_RESERVED2,
 	&app_read_REG_RESERVED3,
 	&app_read_REG_RESERVED4,
-	&app_read_REG_DO0_CONF,
-	&app_read_REG_DO1_CONF,
-	&app_read_REG_DO2_CONF,
-	&app_read_REG_DO0_PULSE,
-	&app_read_REG_DO1_PULSE,
-	&app_read_REG_DO2_PULSE,
+	&app_read_REG_CONFIGURE_DO0,
+	&app_read_REG_CONFIGURE_DO1,
+	&app_read_REG_CONFIGURE_DO2,
 	&app_read_REG_RESERVED5,
 	&app_read_REG_RESERVED6,
 	&app_read_REG_RESERVED7,
-	&app_read_REG_DO_SET,
-	&app_read_REG_DO_CLEAR,
-	&app_read_REG_DO_TOGGLE,
-	&app_read_REG_DO_OUT,
+	&app_read_REG_OUTPUT_SET,
+	&app_read_REG_OUTPUT_CLEAR,
+	&app_read_REG_OUTPUT_TOGGLE,
+	&app_read_REG_OUTPUT_STATE,
 	&app_read_REG_RESERVED8,
 	&app_read_REG_RESERVED9,
-	&app_read_REG_ADC_CONF,
-	&app_read_REG_ADC_VALUES,
-	&app_read_REG_COMMANDS,
+	&app_read_REG_ENABLE_ADC_CONTROL_STATE,
+	&app_read_REG_ADC_CONTROL_STATE,
+	&app_read_REG_CONFIGURE_ADC0,
+	&app_read_REG_CONFIGURE_ADC1,
 	&app_read_REG_RESERVED10,
 	&app_read_REG_RESERVED11,
 	&app_read_REG_RESERVED12,
-	&app_read_REG_EVNT_ENABLE
+	&app_read_REG_RESERVED13,
+	&app_read_REG_RESERVED14,
+	&app_read_REG_RESERVED15,
+	&app_read_REG_RESERVED16,
+	&app_read_REG_RESERVED17,
+	&app_read_REG_RESERVED18,
+	&app_read_REG_RESERVED19,
+	&app_read_REG_RESERVED20,
+	&app_read_REG_RESERVED21,
+	&app_read_REG_RESERVED22,
+	&app_read_REG_RESERVED23,
+	&app_read_REG_PIC32_COMMANDS
 };
 
 bool (*app_func_wr_pointer[])(void*) = {
-	&app_write_REG_PLAY_SOUND_OR_FREQ,
+	&app_write_REG_START,
 	&app_write_REG_STOP,
-	&app_write_REG_ATTNUATION_LEFT,
+	&app_write_REG_ATTENUATION_LEFT,
 	&app_write_REG_ATTENUATION_RIGHT,
 	&app_write_REG_ATTENUATION_BOTH,
-	&app_write_REG_SET_ATTENUATION_AND_PLAY_SOUND_OR_FREQ,
+	&app_write_REG_ATTENUATION_START,
 	&app_write_REG_RESERVED0,
 	&app_write_REG_RESERVED1,
-	&app_write_REG_DIGITAL_INPUTS,
-	&app_write_REG_DI0_CONF,
-	&app_write_REG_DI1_CONF,
-	&app_write_REG_DI2_CONF,
-	&app_write_REG_DI0_SOUND_INDEX,
-	&app_write_REG_DI1_SOUND_INDEX,
-	&app_write_REG_DI2_SOUND_INDEX,
-	&app_write_REG_DI0_FREQ,
-	&app_write_REG_DI1_FREQ,
-	&app_write_REG_DI2_FREQ,
-	&app_write_REG_DI0_ATTNUATION_LEFT,
-	&app_write_REG_DI1_ATTNUATION_LEFT,
-	&app_write_REG_DI2_ATTNUATION_LEFT,
-	&app_write_REG_DI0_ATTENUATION_RIGHT,
-	&app_write_REG_DI1_ATTENUATION_RIGHT,
-	&app_write_REG_DI2_ATTENUATION_RIGHT,
-	&app_write_REG_DI0_ATTENUATION_AND_SOUND_INDEX,
-	&app_write_REG_DI1_ATTENUATION_AND_SOUND_INDEX,
-	&app_write_REG_DI2_ATTENUATION_AND_SOUND_INDEX,
-	&app_write_REG_DI0_ATTENUATION_AND_FREQUENCY,
-	&app_write_REG_DI1_ATTENUATION_AND_FREQUENCY,
-	&app_write_REG_DI2_ATTENUATION_AND_FReQUENCY,
+	&app_write_REG_INPUT_STATE,
+	&app_write_REG_CONFIGURE_DI0,
+	&app_write_REG_CONFIGURE_DI1,
+	&app_write_REG_START_ON_DI0,
+	&app_write_REG_START_ON_DI1,
+	&app_write_REG_ATTENUATION_LEFT_DI0,
+	&app_write_REG_ATTENUATION_LEFT_DI1,
+	&app_write_REG_ATTENUATION_RIGHT_DI0,
+	&app_write_REG_ATTENUATION_RIGHT_DI1,
 	&app_write_REG_RESERVED2,
 	&app_write_REG_RESERVED3,
 	&app_write_REG_RESERVED4,
-	&app_write_REG_DO0_CONF,
-	&app_write_REG_DO1_CONF,
-	&app_write_REG_DO2_CONF,
-	&app_write_REG_DO0_PULSE,
-	&app_write_REG_DO1_PULSE,
-	&app_write_REG_DO2_PULSE,
+	&app_write_REG_CONFIGURE_DO0,
+	&app_write_REG_CONFIGURE_DO1,
+	&app_write_REG_CONFIGURE_DO2,
 	&app_write_REG_RESERVED5,
 	&app_write_REG_RESERVED6,
 	&app_write_REG_RESERVED7,
-	&app_write_REG_DO_SET,
-	&app_write_REG_DO_CLEAR,
-	&app_write_REG_DO_TOGGLE,
-	&app_write_REG_DO_OUT,
+	&app_write_REG_OUTPUT_SET,
+	&app_write_REG_OUTPUT_CLEAR,
+	&app_write_REG_OUTPUT_TOGGLE,
+	&app_write_REG_OUTPUT_STATE,
 	&app_write_REG_RESERVED8,
 	&app_write_REG_RESERVED9,
-	&app_write_REG_ADC_CONF,
-	&app_write_REG_ADC_VALUES,
-	&app_write_REG_COMMANDS,
+	&app_write_REG_ENABLE_ADC_CONTROL_STATE,
+	&app_write_REG_ADC_CONTROL_STATE,
+	&app_write_REG_CONFIGURE_ADC0,
+	&app_write_REG_CONFIGURE_ADC1,
 	&app_write_REG_RESERVED10,
 	&app_write_REG_RESERVED11,
 	&app_write_REG_RESERVED12,
-	&app_write_REG_EVNT_ENABLE
+	&app_write_REG_RESERVED13,
+	&app_write_REG_RESERVED14,
+	&app_write_REG_RESERVED15,
+	&app_write_REG_RESERVED16,
+	&app_write_REG_RESERVED17,
+	&app_write_REG_RESERVED18,
+	&app_write_REG_RESERVED19,
+	&app_write_REG_RESERVED20,
+	&app_write_REG_RESERVED21,
+	&app_write_REG_RESERVED22,
+	&app_write_REG_RESERVED23,
+	&app_write_REG_PIC32_COMMANDS
 };
 
 
 /************************************************************************/
-/* REG_PLAY_SOUND_OR_FREQ                                               */
+/* REG_START                                                            */
 /************************************************************************/
 uint16_t last_sound_triggered = 0;	// 0 means it's stopped
 
-void app_read_REG_PLAY_SOUND_OR_FREQ(void) {}
-bool app_write_REG_PLAY_SOUND_OR_FREQ(void *a)
+void app_read_REG_START(void) {}
+bool app_write_REG_START(void *a)
 {
 	uint16_t reg = *((uint16_t*)a);
    
@@ -143,14 +135,14 @@ bool app_write_REG_PLAY_SOUND_OR_FREQ(void *a)
       /* Previous event was not sent yet */ 
       return false;
 
-	app_regs.REG_SET_ATTENUATION_AND_PLAY_SOUND_OR_FREQ[0] = reg;
+	app_regs.REG_ATTENUATION_START[0] = reg;
 	
-	app_regs.REG_PLAY_SOUND_OR_FREQ = reg;
+	app_regs.REG_START = reg;
 		
 	/* Save the sound being played */
 	last_sound_triggered = reg;
 	
-	//par_cmd_start_sound(reg, app_regs.REG_ATTNUATION_LEFT, app_regs.REG_ATTENUATION_RIGHT);
+	//par_cmd_start_sound(reg, app_regs.REG_ATTENUATION_LEFT, app_regs.REG_ATTENUATION_RIGHT);
 	par_cmd_update_frequency(reg);
 	
 	return true;
@@ -177,17 +169,17 @@ bool app_write_REG_STOP(void *a)
 
 
 /************************************************************************/
-/* REG_ATTNUATION_LEFT                                                  */
+/* REG_ATTENUATION_LEFT                                                  */
 /************************************************************************/
-void app_read_REG_ATTNUATION_LEFT(void) {}
-bool app_write_REG_ATTNUATION_LEFT(void *a)
+void app_read_REG_ATTENUATION_LEFT(void) {}
+bool app_write_REG_ATTENUATION_LEFT(void *a)
 {
 	uint16_t reg = *((uint16_t*)a);
 
 	app_regs.REG_ATTENUATION_BOTH[0] = reg;
-	app_regs.REG_SET_ATTENUATION_AND_PLAY_SOUND_OR_FREQ[1] = reg;
+	app_regs.REG_ATTENUATION_START[1] = reg;
 
-	app_regs.REG_ATTNUATION_LEFT = reg;
+	app_regs.REG_ATTENUATION_LEFT = reg;
 	
 	par_cmd_update_amplitude_left(reg);
 	
@@ -204,7 +196,7 @@ bool app_write_REG_ATTENUATION_RIGHT(void *a)
 	uint16_t reg = *((uint16_t*)a);
 	
 	app_regs.REG_ATTENUATION_BOTH[1] = reg;
-	app_regs.REG_SET_ATTENUATION_AND_PLAY_SOUND_OR_FREQ[2] = reg;
+	app_regs.REG_ATTENUATION_START[2] = reg;
 
 	app_regs.REG_ATTENUATION_RIGHT = reg;
 	
@@ -222,11 +214,11 @@ bool app_write_REG_ATTENUATION_BOTH(void *a)
 {
 	uint16_t *reg = ((uint16_t*)a);
 		
-	app_regs.REG_ATTNUATION_LEFT    = reg[0];
+	app_regs.REG_ATTENUATION_LEFT    = reg[0];
 	app_regs.REG_ATTENUATION_RIGHT  = reg[1];
 	
-	app_regs.REG_SET_ATTENUATION_AND_PLAY_SOUND_OR_FREQ[1] = reg[0];
-	app_regs.REG_SET_ATTENUATION_AND_PLAY_SOUND_OR_FREQ[2] = reg[1];
+	app_regs.REG_ATTENUATION_START[1] = reg[0];
+	app_regs.REG_ATTENUATION_START[2] = reg[1];
 	
 	app_regs.REG_ATTENUATION_BOTH[0] = reg[0];
 	app_regs.REG_ATTENUATION_BOTH[1] = reg[1];
@@ -238,10 +230,10 @@ bool app_write_REG_ATTENUATION_BOTH(void *a)
 
 
 /************************************************************************/
-/* REG_SET_ATTENUATION_AND_PLAY_SOUND_OR_FREQ                           */
+/* REG_ATTENUATION_START                                                */
 /************************************************************************/
-void app_read_REG_SET_ATTENUATION_AND_PLAY_SOUND_OR_FREQ(void) {}
-bool app_write_REG_SET_ATTENUATION_AND_PLAY_SOUND_OR_FREQ(void *a)
+void app_read_REG_ATTENUATION_START(void) {}
+bool app_write_REG_ATTENUATION_START(void *a)
 {
 	uint16_t *reg = ((uint16_t*)a);
 	
@@ -252,15 +244,15 @@ bool app_write_REG_SET_ATTENUATION_AND_PLAY_SOUND_OR_FREQ(void *a)
       /* Previous event was not sent yet */ 
       return false;
 	
-	app_regs.REG_PLAY_SOUND_OR_FREQ = reg[0];
-	app_regs.REG_ATTNUATION_LEFT    = reg[1];
+	app_regs.REG_START = reg[0];
+	app_regs.REG_ATTENUATION_LEFT    = reg[1];
 	app_regs.REG_ATTENUATION_RIGHT  = reg[2];
 	app_regs.REG_ATTENUATION_BOTH[0] = reg[1];
 	app_regs.REG_ATTENUATION_BOTH[1] = reg[2];
 	
-	app_regs.REG_SET_ATTENUATION_AND_PLAY_SOUND_OR_FREQ[0] = reg[0];
-	app_regs.REG_SET_ATTENUATION_AND_PLAY_SOUND_OR_FREQ[1] = reg[1];
-	app_regs.REG_SET_ATTENUATION_AND_PLAY_SOUND_OR_FREQ[2] = reg[2];
+	app_regs.REG_ATTENUATION_START[0] = reg[0];
+	app_regs.REG_ATTENUATION_START[1] = reg[1];
+	app_regs.REG_ATTENUATION_START[2] = reg[2];
 	
 	/* Save the sound being played */
 	last_sound_triggered = reg[0];
@@ -272,830 +264,420 @@ bool app_write_REG_SET_ATTENUATION_AND_PLAY_SOUND_OR_FREQ(void *a)
 
 
 /************************************************************************/
-/* REG_RESERVED0                                                        */
+/* REG_INPUT_STATE                                                      */
 /************************************************************************/
-void app_read_REG_RESERVED0(void)
+void app_read_REG_INPUT_STATE(void)
 {
-	//app_regs.REG_RESERVED0 = 0;
+	app_regs.REG_INPUT_STATE = 0;
+	
+	app_regs.REG_INPUT_STATE |= (read_DIN0) ? B_DI0 : 0;
+	app_regs.REG_INPUT_STATE |= (read_DIN1) ? B_DI1 : 0;
+	app_regs.REG_INPUT_STATE |= (read_DIN2) ? B_DI2 : 0;
+}
+
+bool app_write_REG_INPUT_STATE(void *a)
+{
+	return false;
+}
+
+
+/************************************************************************/
+/* REG_CONFIGURE_DI0                                                    */
+/************************************************************************/
+void app_read_REG_CONFIGURE_DI0(void)
+{
+	//app_regs.REG_CONFIGURE_DI0 = 0;
 
 }
 
-bool app_write_REG_RESERVED0(void *a)
+bool app_write_REG_CONFIGURE_DI0(void *a)
 {
 	uint8_t reg = *((uint8_t*)a);
+	
+	if (reg & (~MSK_DI_MODE)) return false;
 
-	app_regs.REG_RESERVED0 = reg;
+	app_regs.REG_CONFIGURE_DI0 = reg;
 	return true;
 }
 
 
 /************************************************************************/
-/* REG_RESERVED1                                                        */
+/* REG_CONFIGURE_DI1                                                    */
 /************************************************************************/
-void app_read_REG_RESERVED1(void)
+void app_read_REG_CONFIGURE_DI1(void)
 {
-	//app_regs.REG_RESERVED1 = 0;
+	//app_regs.REG_CONFIGURE_DI1 = 0;
 
 }
 
-bool app_write_REG_RESERVED1(void *a)
+bool app_write_REG_CONFIGURE_DI1(void *a)
 {
 	uint8_t reg = *((uint8_t*)a);
+	
+	if (reg & (~MSK_DI_MODE)) return false;
 
-	app_regs.REG_RESERVED1 = reg;
+	app_regs.REG_CONFIGURE_DI1 = reg;
 	return true;
 }
 
 
 /************************************************************************/
-/* REG_DIGITAL_INPUTS                                                   */
+/* REG_START_ON_DI0                                                     */
 /************************************************************************/
-void app_read_REG_DIGITAL_INPUTS(void)
+void app_read_REG_START_ON_DI0(void)
 {
-	//app_regs.REG_DIGITAL_INPUTS = 0;
+	//app_regs.REG_START_ON_DI0 = 0;
 
 }
 
-bool app_write_REG_DIGITAL_INPUTS(void *a)
+bool app_write_REG_START_ON_DI0(void *a)
 {
-	uint8_t reg = *((uint8_t*)a);
+	uint16_t reg = *((uint16_t*)a);
+	
+	if (reg <= 1 || reg > 40000)
+		return false;
 
-	app_regs.REG_DIGITAL_INPUTS = reg;
+	app_regs.REG_START_ON_DI0 = reg;
 	return true;
 }
 
 
 /************************************************************************/
-/* REG_DI0_CONF                                                         */
+/* REG_START_ON_DI1                                                     */
 /************************************************************************/
-void app_read_REG_DI0_CONF(void)
+void app_read_REG_START_ON_DI1(void)
 {
-	//app_regs.REG_DI0_CONF = 0;
+	//app_regs.REG_START_ON_DI1 = 0;
 
 }
 
-bool app_write_REG_DI0_CONF(void *a)
+bool app_write_REG_START_ON_DI1(void *a)
 {
-	uint8_t reg = *((uint8_t*)a);
+	uint16_t reg = *((uint16_t*)a);
+	
+	if (reg <= 1 || reg > 40000)
+		return false;
 
-	app_regs.REG_DI0_CONF = reg;
+	app_regs.REG_START_ON_DI1 = reg;
 	return true;
 }
 
 
 /************************************************************************/
-/* REG_DI1_CONF                                                         */
+/* REG_ATTENUATION_LEFT_DI0                                             */
 /************************************************************************/
-void app_read_REG_DI1_CONF(void)
+void app_read_REG_ATTENUATION_LEFT_DI0(void)
 {
-	//app_regs.REG_DI1_CONF = 0;
+	//app_regs.REG_ATTENUATION_LEFT_DI0 = 0;
 
 }
 
-bool app_write_REG_DI1_CONF(void *a)
-{
-	uint8_t reg = *((uint8_t*)a);
-
-	app_regs.REG_DI1_CONF = reg;
-	return true;
-}
-
-
-/************************************************************************/
-/* REG_DI2_CONF                                                         */
-/************************************************************************/
-void app_read_REG_DI2_CONF(void)
-{
-	//app_regs.REG_DI2_CONF = 0;
-
-}
-
-bool app_write_REG_DI2_CONF(void *a)
-{
-	uint8_t reg = *((uint8_t*)a);
-
-	app_regs.REG_DI2_CONF = reg;
-	return true;
-}
-
-
-/************************************************************************/
-/* REG_DI0_SOUND_INDEX                                                  */
-/************************************************************************/
-void app_read_REG_DI0_SOUND_INDEX(void)
-{
-	//app_regs.REG_DI0_SOUND_INDEX = 0;
-
-}
-
-bool app_write_REG_DI0_SOUND_INDEX(void *a)
-{
-	uint8_t reg = *((uint8_t*)a);
-
-	app_regs.REG_DI0_SOUND_INDEX = reg;
-	return true;
-}
-
-
-/************************************************************************/
-/* REG_DI1_SOUND_INDEX                                                  */
-/************************************************************************/
-void app_read_REG_DI1_SOUND_INDEX(void)
-{
-	//app_regs.REG_DI1_SOUND_INDEX = 0;
-
-}
-
-bool app_write_REG_DI1_SOUND_INDEX(void *a)
-{
-	uint8_t reg = *((uint8_t*)a);
-
-	app_regs.REG_DI1_SOUND_INDEX = reg;
-	return true;
-}
-
-
-/************************************************************************/
-/* REG_DI2_SOUND_INDEX                                                  */
-/************************************************************************/
-void app_read_REG_DI2_SOUND_INDEX(void)
-{
-	//app_regs.REG_DI2_SOUND_INDEX = 0;
-
-}
-
-bool app_write_REG_DI2_SOUND_INDEX(void *a)
-{
-	uint8_t reg = *((uint8_t*)a);
-
-	app_regs.REG_DI2_SOUND_INDEX = reg;
-	return true;
-}
-
-
-/************************************************************************/
-/* REG_DI0_FREQ                                                         */
-/************************************************************************/
-void app_read_REG_DI0_FREQ(void)
-{
-	//app_regs.REG_DI0_FREQ = 0;
-
-}
-
-bool app_write_REG_DI0_FREQ(void *a)
+bool app_write_REG_ATTENUATION_LEFT_DI0(void *a)
 {
 	uint16_t reg = *((uint16_t*)a);
 
-	app_regs.REG_DI0_FREQ = reg;
+	app_regs.REG_ATTENUATION_LEFT_DI0 = reg;
 	return true;
 }
 
 
 /************************************************************************/
-/* REG_DI1_FREQ                                                         */
+/* REG_ATTENUATION_LEFT_DI1                                             */
 /************************************************************************/
-void app_read_REG_DI1_FREQ(void)
+void app_read_REG_ATTENUATION_LEFT_DI1(void)
 {
-	//app_regs.REG_DI1_FREQ = 0;
+	//app_regs.REG_ATTENUATION_LEFT_DI1 = 0;
 
 }
 
-bool app_write_REG_DI1_FREQ(void *a)
+bool app_write_REG_ATTENUATION_LEFT_DI1(void *a)
 {
 	uint16_t reg = *((uint16_t*)a);
 
-	app_regs.REG_DI1_FREQ = reg;
+	app_regs.REG_ATTENUATION_LEFT_DI1 = reg;
 	return true;
 }
 
 
 /************************************************************************/
-/* REG_DI2_FREQ                                                         */
+/* REG_ATTENUATION_RIGHT_DI0                                            */
 /************************************************************************/
-void app_read_REG_DI2_FREQ(void)
+void app_read_REG_ATTENUATION_RIGHT_DI0(void)
 {
-	//app_regs.REG_DI2_FREQ = 0;
+	//app_regs.REG_ATTENUATION_RIGHT_DI0 = 0;
 
 }
 
-bool app_write_REG_DI2_FREQ(void *a)
+bool app_write_REG_ATTENUATION_RIGHT_DI0(void *a)
 {
 	uint16_t reg = *((uint16_t*)a);
 
-	app_regs.REG_DI2_FREQ = reg;
+	app_regs.REG_ATTENUATION_RIGHT_DI0 = reg;
 	return true;
 }
 
 
 /************************************************************************/
-/* REG_DI0_ATTNUATION_LEFT                                              */
+/* REG_ATTENUATION_RIGHT_DI1                                            */
 /************************************************************************/
-void app_read_REG_DI0_ATTNUATION_LEFT(void)
+void app_read_REG_ATTENUATION_RIGHT_DI1(void)
 {
-	//app_regs.REG_DI0_ATTNUATION_LEFT = 0;
+	//app_regs.REG_ATTENUATION_RIGHT_DI1 = 0;
 
 }
 
-bool app_write_REG_DI0_ATTNUATION_LEFT(void *a)
+bool app_write_REG_ATTENUATION_RIGHT_DI1(void *a)
 {
 	uint16_t reg = *((uint16_t*)a);
 
-	app_regs.REG_DI0_ATTNUATION_LEFT = reg;
+	app_regs.REG_ATTENUATION_RIGHT_DI1 = reg;
 	return true;
 }
 
 
 /************************************************************************/
-/* REG_DI1_ATTNUATION_LEFT                                              */
+/* REG_CONFIGURE_DO0                                                    */
 /************************************************************************/
-void app_read_REG_DI1_ATTNUATION_LEFT(void)
+void app_read_REG_CONFIGURE_DO0(void)
 {
-	//app_regs.REG_DI1_ATTNUATION_LEFT = 0;
+	//app_regs.REG_CONFIGURE_DO0 = 0;
 
 }
 
-bool app_write_REG_DI1_ATTNUATION_LEFT(void *a)
-{
-	uint16_t reg = *((uint16_t*)a);
-
-	app_regs.REG_DI1_ATTNUATION_LEFT = reg;
-	return true;
-}
-
-
-/************************************************************************/
-/* REG_DI2_ATTNUATION_LEFT                                              */
-/************************************************************************/
-void app_read_REG_DI2_ATTNUATION_LEFT(void)
-{
-	//app_regs.REG_DI2_ATTNUATION_LEFT = 0;
-
-}
-
-bool app_write_REG_DI2_ATTNUATION_LEFT(void *a)
-{
-	uint16_t reg = *((uint16_t*)a);
-
-	app_regs.REG_DI2_ATTNUATION_LEFT = reg;
-	return true;
-}
-
-
-/************************************************************************/
-/* REG_DI0_ATTENUATION_RIGHT                                            */
-/************************************************************************/
-void app_read_REG_DI0_ATTENUATION_RIGHT(void)
-{
-	//app_regs.REG_DI0_ATTENUATION_RIGHT = 0;
-
-}
-
-bool app_write_REG_DI0_ATTENUATION_RIGHT(void *a)
-{
-	uint16_t reg = *((uint16_t*)a);
-
-	app_regs.REG_DI0_ATTENUATION_RIGHT = reg;
-	return true;
-}
-
-
-/************************************************************************/
-/* REG_DI1_ATTENUATION_RIGHT                                            */
-/************************************************************************/
-void app_read_REG_DI1_ATTENUATION_RIGHT(void)
-{
-	//app_regs.REG_DI1_ATTENUATION_RIGHT = 0;
-
-}
-
-bool app_write_REG_DI1_ATTENUATION_RIGHT(void *a)
-{
-	uint16_t reg = *((uint16_t*)a);
-
-	app_regs.REG_DI1_ATTENUATION_RIGHT = reg;
-	return true;
-}
-
-
-/************************************************************************/
-/* REG_DI2_ATTENUATION_RIGHT                                            */
-/************************************************************************/
-void app_read_REG_DI2_ATTENUATION_RIGHT(void)
-{
-	//app_regs.REG_DI2_ATTENUATION_RIGHT = 0;
-
-}
-
-bool app_write_REG_DI2_ATTENUATION_RIGHT(void *a)
-{
-	uint16_t reg = *((uint16_t*)a);
-
-	app_regs.REG_DI2_ATTENUATION_RIGHT = reg;
-	return true;
-}
-
-
-/************************************************************************/
-/* REG_DI0_ATTENUATION_AND_SOUND_INDEX                                  */
-/************************************************************************/
-// This register is an array with 3 positions
-void app_read_REG_DI0_ATTENUATION_AND_SOUND_INDEX(void)
-{
-	//app_regs.REG_DI0_ATTENUATION_AND_SOUND_INDEX[0] = 0;
-
-}
-
-bool app_write_REG_DI0_ATTENUATION_AND_SOUND_INDEX(void *a)
-{
-	uint16_t *reg = ((uint16_t*)a);
-
-	app_regs.REG_DI0_ATTENUATION_AND_SOUND_INDEX[0] = reg[0];
-	return true;
-}
-
-
-/************************************************************************/
-/* REG_DI1_ATTENUATION_AND_SOUND_INDEX                                  */
-/************************************************************************/
-// This register is an array with 3 positions
-void app_read_REG_DI1_ATTENUATION_AND_SOUND_INDEX(void)
-{
-	//app_regs.REG_DI1_ATTENUATION_AND_SOUND_INDEX[0] = 0;
-
-}
-
-bool app_write_REG_DI1_ATTENUATION_AND_SOUND_INDEX(void *a)
-{
-	uint16_t *reg = ((uint16_t*)a);
-
-	app_regs.REG_DI1_ATTENUATION_AND_SOUND_INDEX[0] = reg[0];
-	return true;
-}
-
-
-/************************************************************************/
-/* REG_DI2_ATTENUATION_AND_SOUND_INDEX                                  */
-/************************************************************************/
-// This register is an array with 3 positions
-void app_read_REG_DI2_ATTENUATION_AND_SOUND_INDEX(void)
-{
-	//app_regs.REG_DI2_ATTENUATION_AND_SOUND_INDEX[0] = 0;
-
-}
-
-bool app_write_REG_DI2_ATTENUATION_AND_SOUND_INDEX(void *a)
-{
-	uint16_t *reg = ((uint16_t*)a);
-
-	app_regs.REG_DI2_ATTENUATION_AND_SOUND_INDEX[0] = reg[0];
-	return true;
-}
-
-
-/************************************************************************/
-/* REG_DI0_ATTENUATION_AND_FREQUENCY                                    */
-/************************************************************************/
-// This register is an array with 2 positions
-void app_read_REG_DI0_ATTENUATION_AND_FREQUENCY(void)
-{
-	//app_regs.REG_DI0_ATTENUATION_AND_FREQUENCY[0] = 0;
-
-}
-
-bool app_write_REG_DI0_ATTENUATION_AND_FREQUENCY(void *a)
-{
-	uint16_t *reg = ((uint16_t*)a);
-
-	app_regs.REG_DI0_ATTENUATION_AND_FREQUENCY[0] = reg[0];
-	return true;
-}
-
-
-/************************************************************************/
-/* REG_DI1_ATTENUATION_AND_FREQUENCY                                    */
-/************************************************************************/
-// This register is an array with 2 positions
-void app_read_REG_DI1_ATTENUATION_AND_FREQUENCY(void)
-{
-	//app_regs.REG_DI1_ATTENUATION_AND_FREQUENCY[0] = 0;
-
-}
-
-bool app_write_REG_DI1_ATTENUATION_AND_FREQUENCY(void *a)
-{
-	uint16_t *reg = ((uint16_t*)a);
-
-	app_regs.REG_DI1_ATTENUATION_AND_FREQUENCY[0] = reg[0];
-	return true;
-}
-
-
-/************************************************************************/
-/* REG_DI2_ATTENUATION_AND_FReQUENCY                                    */
-/************************************************************************/
-// This register is an array with 2 positions
-void app_read_REG_DI2_ATTENUATION_AND_FReQUENCY(void)
-{
-	//app_regs.REG_DI2_ATTENUATION_AND_FReQUENCY[0] = 0;
-
-}
-
-bool app_write_REG_DI2_ATTENUATION_AND_FReQUENCY(void *a)
-{
-	uint16_t *reg = ((uint16_t*)a);
-
-	app_regs.REG_DI2_ATTENUATION_AND_FReQUENCY[0] = reg[0];
-	return true;
-}
-
-
-/************************************************************************/
-/* REG_RESERVED2                                                        */
-/************************************************************************/
-void app_read_REG_RESERVED2(void)
-{
-	//app_regs.REG_RESERVED2 = 0;
-
-}
-
-bool app_write_REG_RESERVED2(void *a)
+bool app_write_REG_CONFIGURE_DO0(void *a)
 {
 	uint8_t reg = *((uint8_t*)a);
+	
+	if (reg & (~MSK_DO_MODE)) return false;
 
-	app_regs.REG_RESERVED2 = reg;
+	app_regs.REG_CONFIGURE_DO0 = reg;
 	return true;
 }
 
 
 /************************************************************************/
-/* REG_RESERVED3                                                        */
+/* REG_CONFIGURE_DO1                                                    */
 /************************************************************************/
-void app_read_REG_RESERVED3(void)
+void app_read_REG_CONFIGURE_DO1(void)
 {
-	//app_regs.REG_RESERVED3 = 0;
+	//app_regs.REG_CONFIGURE_DO1 = 0;
 
 }
 
-bool app_write_REG_RESERVED3(void *a)
+bool app_write_REG_CONFIGURE_DO1(void *a)
 {
 	uint8_t reg = *((uint8_t*)a);
+	
+	if (reg & (~MSK_DO_MODE)) return false;
 
-	app_regs.REG_RESERVED3 = reg;
+	app_regs.REG_CONFIGURE_DO1 = reg;
 	return true;
 }
 
 
 /************************************************************************/
-/* REG_RESERVED4                                                        */
+/* REG_CONFIGURE_DO2                                                    */
 /************************************************************************/
-void app_read_REG_RESERVED4(void)
+void app_read_REG_CONFIGURE_DO2(void)
 {
-	//app_regs.REG_RESERVED4 = 0;
+	//app_regs.REG_CONFIGURE_DO2 = 0;
 
 }
 
-bool app_write_REG_RESERVED4(void *a)
+bool app_write_REG_CONFIGURE_DO2(void *a)
 {
-	uint8_t reg = *((uint8_t*)a);
+	uint8_t reg = *((uint8_t*)a);	
+	
+	if (reg & (~MSK_DO_MODE)) return false;
 
-	app_regs.REG_RESERVED4 = reg;
+	app_regs.REG_CONFIGURE_DO2 = reg;
 	return true;
 }
 
 
 /************************************************************************/
-/* REG_DO0_CONF                                                         */
+/* REG_OUTPUT_SET                                                       */
 /************************************************************************/
-void app_read_REG_DO0_CONF(void)
+void app_read_REG_OUTPUT_SET(void)
 {
-	//app_regs.REG_DO0_CONF = 0;
-
+   app_regs.REG_OUTPUT_SET = 0;
 }
-
-bool app_write_REG_DO0_CONF(void *a)
-{
-	uint8_t reg = *((uint8_t*)a);
-
-	app_regs.REG_DO0_CONF = reg;
-	return true;
-}
-
-
-/************************************************************************/
-/* REG_DO1_CONF                                                         */
-/************************************************************************/
-void app_read_REG_DO1_CONF(void)
-{
-	//app_regs.REG_DO1_CONF = 0;
-
-}
-
-bool app_write_REG_DO1_CONF(void *a)
-{
-	uint8_t reg = *((uint8_t*)a);
-
-	app_regs.REG_DO1_CONF = reg;
-	return true;
-}
-
-
-/************************************************************************/
-/* REG_DO2_CONF                                                         */
-/************************************************************************/
-void app_read_REG_DO2_CONF(void)
-{
-	//app_regs.REG_DO2_CONF = 0;
-
-}
-
-bool app_write_REG_DO2_CONF(void *a)
-{
-	uint8_t reg = *((uint8_t*)a);
-
-	app_regs.REG_DO2_CONF = reg;
-	return true;
-}
-
-
-/************************************************************************/
-/* REG_DO0_PULSE                                                        */
-/************************************************************************/
-void app_read_REG_DO0_PULSE(void)
-{
-	//app_regs.REG_DO0_PULSE = 0;
-
-}
-
-bool app_write_REG_DO0_PULSE(void *a)
-{
-	uint8_t reg = *((uint8_t*)a);
-
-	app_regs.REG_DO0_PULSE = reg;
-	return true;
-}
-
-
-/************************************************************************/
-/* REG_DO1_PULSE                                                        */
-/************************************************************************/
-void app_read_REG_DO1_PULSE(void)
-{
-	//app_regs.REG_DO1_PULSE = 0;
-
-}
-
-bool app_write_REG_DO1_PULSE(void *a)
-{
-	uint8_t reg = *((uint8_t*)a);
-
-	app_regs.REG_DO1_PULSE = reg;
-	return true;
-}
-
-
-/************************************************************************/
-/* REG_DO2_PULSE                                                        */
-/************************************************************************/
-void app_read_REG_DO2_PULSE(void)
-{
-	//app_regs.REG_DO2_PULSE = 0;
-
-}
-
-bool app_write_REG_DO2_PULSE(void *a)
-{
-	uint8_t reg = *((uint8_t*)a);
-
-	app_regs.REG_DO2_PULSE = reg;
-	return true;
-}
-
-
-/************************************************************************/
-/* REG_RESERVED5                                                        */
-/************************************************************************/
-void app_read_REG_RESERVED5(void)
-{
-	//app_regs.REG_RESERVED5 = 0;
-
-}
-
-bool app_write_REG_RESERVED5(void *a)
-{
-	uint8_t reg = *((uint8_t*)a);
-
-	app_regs.REG_RESERVED5 = reg;
-	return true;
-}
-
-
-/************************************************************************/
-/* REG_RESERVED6                                                        */
-/************************************************************************/
-void app_read_REG_RESERVED6(void)
-{
-	//app_regs.REG_RESERVED6 = 0;
-
-}
-
-bool app_write_REG_RESERVED6(void *a)
-{
-	uint8_t reg = *((uint8_t*)a);
-
-	app_regs.REG_RESERVED6 = reg;
-	return true;
-}
-
-
-/************************************************************************/
-/* REG_RESERVED7                                                        */
-/************************************************************************/
-void app_read_REG_RESERVED7(void)
-{
-	//app_regs.REG_RESERVED7 = 0;
-
-}
-
-bool app_write_REG_RESERVED7(void *a)
-{
-	uint8_t reg = *((uint8_t*)a);
-
-	app_regs.REG_RESERVED7 = reg;
-	return true;
-}
-
-
-/************************************************************************/
-/* REG_DO_SET                                                           */
-/************************************************************************/
-void app_read_REG_DO_SET(void)
-{
-   app_regs.REG_DO_SET = 0;
-}
-bool app_write_REG_DO_SET(void *a)
+bool app_write_REG_OUTPUT_SET(void *a)
 {
 	uint8_t reg = *((uint8_t*)a);
    
-   if (reg & B_DO0) set_DOUT0;
-   if (reg & B_DO1) set_DOUT1;
-   if (reg & B_DO2) set_DOUT2;
+	if (reg & B_DO0) set_DOUT0;
+	if (reg & B_DO1) set_DOUT1;
+	if (reg & B_DO2) set_DOUT2;
 
-	app_regs.REG_DO_SET = reg;
+	app_regs.REG_OUTPUT_SET = reg;
 	return true;
 }
 
 
 /************************************************************************/
-/* REG_DO_CLEAR                                                         */
+/* REG_OUTPUT_CLEAR                                                     */
 /************************************************************************/
-void app_read_REG_DO_CLEAR(void)
+void app_read_REG_OUTPUT_CLEAR(void)
 {
-   app_regs.REG_DO_CLEAR = 0;
+   app_regs.REG_OUTPUT_CLEAR = 0;
 }
-bool app_write_REG_DO_CLEAR(void *a)
+bool app_write_REG_OUTPUT_CLEAR(void *a)
 {
 	uint8_t reg = *((uint8_t*)a);
 	
 	if (reg & B_DO0) clr_DOUT0;
 	if (reg & B_DO1) clr_DOUT1;
-	if (reg & B_DO1) clr_DOUT1;
+	if (reg & B_DO2) clr_DOUT2;
 
-	app_regs.REG_DO_CLEAR = reg;
+	app_regs.REG_OUTPUT_CLEAR = reg;
 	return true;
 }
 
 
 /************************************************************************/
-/* REG_DO_TOGGLE                                                        */
+/* REG_OUTPUT_TOGGLE                                                    */
 /************************************************************************/
-void app_read_REG_DO_TOGGLE(void)
+void app_read_REG_OUTPUT_TOGGLE(void)
 {
-   app_regs.REG_DO_TOGGLE = 0;
+   app_regs.REG_OUTPUT_TOGGLE = 0;
 }
-bool app_write_REG_DO_TOGGLE(void *a)
+bool app_write_REG_OUTPUT_TOGGLE(void *a)
 {
 	uint8_t reg = *((uint8_t*)a);
 	
 	if (reg & B_DO0) tgl_DOUT0;
 	if (reg & B_DO1) tgl_DOUT1;
-	if (reg & B_DO1) tgl_DOUT1;
+	if (reg & B_DO2) tgl_DOUT2;
 
-	app_regs.REG_DO_TOGGLE = reg;
+	app_regs.REG_OUTPUT_TOGGLE = reg;
 	return true;
 }
 
 
 /************************************************************************/
-/* REG_DO_OUT                                                           */
+/* REG_OUTPUT_STATE                                                     */
 /************************************************************************/
-void app_read_REG_DO_OUT(void)
+void app_read_REG_OUTPUT_STATE(void)
 {
-	app_regs.REG_DO_OUT  = read_DOUT0 ? B_DO0 : 0;
-   app_regs.REG_DO_OUT |= read_DOUT1 ? B_DO1 : 0;
-   app_regs.REG_DO_OUT |= read_DOUT2 ? B_DO2 : 0;
+	app_regs.REG_OUTPUT_STATE  = read_DOUT0 ? B_DO0 : 0;
+	app_regs.REG_OUTPUT_STATE |= read_DOUT1 ? B_DO1 : 0;
+	app_regs.REG_OUTPUT_STATE |= read_DOUT2 ? B_DO2 : 0;
 }
 
-bool app_write_REG_DO_OUT(void *a)
+bool app_write_REG_OUTPUT_STATE(void *a)
 {
 	uint8_t reg = *((uint8_t*)a);
    
-   if (reg & B_DO0) set_DOUT0; else clr_DOUT0;
-   if (reg & B_DO1) set_DOUT1; else clr_DOUT1;
-   if (reg & B_DO2) set_DOUT2; else clr_DOUT2;
+	if (reg & B_DO0) set_DOUT0; else clr_DOUT0;
+	if (reg & B_DO1) set_DOUT1; else clr_DOUT1;
+	if (reg & B_DO2) set_DOUT2; else clr_DOUT2;
 
-	app_regs.REG_DO_OUT = reg;
+	app_regs.REG_OUTPUT_STATE = reg;
 	return true;
 }
 
 
 /************************************************************************/
-/* REG_RESERVED8                                                        */
+/* REG_ENABLE_ADC_CONTROL_STATE                                         */
 /************************************************************************/
-void app_read_REG_RESERVED8(void)
+void app_read_REG_ENABLE_ADC_CONTROL_STATE(void)
 {
-	//app_regs.REG_RESERVED8 = 0;
+	//app_regs.REG_ENABLE_ADC_CONTROL_STATE = 0;
 
 }
 
-bool app_write_REG_RESERVED8(void *a)
+bool app_write_REG_ENABLE_ADC_CONTROL_STATE(void *a)
 {
 	uint8_t reg = *((uint8_t*)a);
+	
+	if (reg & (~0x01))
+	{
+		return false;
+	}
 
-	app_regs.REG_RESERVED8 = reg;
+	app_regs.REG_ENABLE_ADC_CONTROL_STATE = reg;
 	return true;
 }
 
 
 /************************************************************************/
-/* REG_RESERVED9                                                        */
-/************************************************************************/
-void app_read_REG_RESERVED9(void)
-{
-	//app_regs.REG_RESERVED9 = 0;
-
-}
-
-bool app_write_REG_RESERVED9(void *a)
-{
-	uint8_t reg = *((uint8_t*)a);
-
-	app_regs.REG_RESERVED9 = reg;
-	return true;
-}
-
-
-/************************************************************************/
-/* REG_ADC_CONF                                                         */
-/************************************************************************/
-void app_read_REG_ADC_CONF(void)
-{
-	//app_regs.REG_ADC_CONF = 0;
-
-}
-
-bool app_write_REG_ADC_CONF(void *a)
-{
-	uint8_t reg = *((uint8_t*)a);
-
-	app_regs.REG_ADC_CONF = reg;
-	return true;
-}
-
-
-/************************************************************************/
-/* REG_ADC_VALUES                                                       */
+/* REG_ADC_CONTROL_STATE                                                */
 /************************************************************************/
 // This register is an array with 5 positions
-void app_read_REG_ADC_VALUES(void)
+void app_read_REG_ADC_CONTROL_STATE(void)
 {
-	//app_regs.REG_ADC_VALUES[0] = 0;
+	//app_regs.REG_ADC_CONTROL_STATE[0] = 0;
 
 }
 
-bool app_write_REG_ADC_VALUES(void *a)
+bool app_write_REG_ADC_CONTROL_STATE(void *a)
 {
-	uint16_t *reg = ((uint16_t*)a);
+	return false;
+}
 
-	app_regs.REG_ADC_VALUES[0] = reg[0];
+
+/************************************************************************/
+/* REG_CONFIGURE_ADC0                                                   */
+/************************************************************************/
+void app_read_REG_CONFIGURE_ADC0(void)
+{
+	//app_regs.REG_CONFIGURE_ADC0 = 0;
+
+}
+
+bool app_write_REG_CONFIGURE_ADC0(void *a)
+{
+	uint8_t reg = *((uint8_t*)a);
+	
+	if (reg & (~MSK_ADC_MODE))
+	{
+		return false;
+	}
+
+	app_regs.REG_CONFIGURE_ADC0 = reg;
 	return true;
 }
 
 
 /************************************************************************/
-/* REG_COMMANDS                                                         */
+/* REG_CONFIGURE_ADC1                                                   */
 /************************************************************************/
-void app_read_REG_COMMANDS(void) {}
-bool app_write_REG_COMMANDS(void *a)
+void app_read_REG_CONFIGURE_ADC1(void)
+{
+	//app_regs.REG_CONFIGURE_ADC1 = 0;
+
+}
+
+bool app_write_REG_CONFIGURE_ADC1(void *a)
+{
+	uint8_t reg = *((uint8_t*)a);
+	
+	if (reg & (~MSK_ADC_MODE))
+	{
+		return false;
+	}
+
+	app_regs.REG_CONFIGURE_ADC1 = reg;
+	return true;
+}
+
+
+/************************************************************************/
+/* REG_PIC32_COMMANDS                                                   */
+/************************************************************************/
+void app_read_REG_PIC32_COMMANDS(void) {}
+bool app_write_REG_PIC32_COMMANDS(void *a)
 {
    uint8_t reg = *((uint8_t*)a);   
    
-   if (reg == GM_DIS_BOOTLOADER)
+   if (reg == GM_PIC32_COMMAND_DISABLE_BOOTLOADER)
       clr_BOOTLOADER_EN;
       
-   if (reg == GM_EN_BOOTLOADER)
+   if (reg == GM_PIC32_COMMAND_ENABLE_BOOTLOADER)
       set_BOOTLOADER_EN;
    
-   if (reg == GM_DEL_ALL_SOUNDS)
+   if (reg == GM_PIC32_COMMAND_DELETE_ALL_SOUNDS)
        par_cmd_delete_sound(0, true);
    
    if (reg >= 0+2+2 && reg <= 32+2)
@@ -1106,72 +688,54 @@ bool app_write_REG_COMMANDS(void *a)
 
 
 /************************************************************************/
-/* REG_RESERVED10                                                       */
+/* All REG_RESERVEDx                                                    */
 /************************************************************************/
-void app_read_REG_RESERVED10(void)
-{
-	//app_regs.REG_RESERVED10 = 0;
+void 	app_read_REG_RESERVED0	(void) {}
+void 	app_read_REG_RESERVED1	(void) {}
+void 	app_read_REG_RESERVED2	(void) {}
+void 	app_read_REG_RESERVED3	(void) {}
+void 	app_read_REG_RESERVED4	(void) {}
+void 	app_read_REG_RESERVED5	(void) {}
+void 	app_read_REG_RESERVED6	(void) {}
+void 	app_read_REG_RESERVED7	(void) {}
+void 	app_read_REG_RESERVED8	(void) {}
+void 	app_read_REG_RESERVED9	(void) {}
+void 	app_read_REG_RESERVED10	(void) {}
+void 	app_read_REG_RESERVED11	(void) {}
+void 	app_read_REG_RESERVED12	(void) {}
+void 	app_read_REG_RESERVED13	(void) {}
+void 	app_read_REG_RESERVED14	(void) {}
+void 	app_read_REG_RESERVED15	(void) {}
+void 	app_read_REG_RESERVED16	(void) {}
+void 	app_read_REG_RESERVED17	(void) {}
+void 	app_read_REG_RESERVED18	(void) {}
+void 	app_read_REG_RESERVED19	(void) {}
+void 	app_read_REG_RESERVED20	(void) {}
+void 	app_read_REG_RESERVED21	(void) {}
+void 	app_read_REG_RESERVED22	(void) {}
+void 	app_read_REG_RESERVED23	(void) {}
 
-}
-
-bool app_write_REG_RESERVED10(void *a)
-{
-	uint8_t reg = *((uint8_t*)a);
-
-	app_regs.REG_RESERVED10 = reg;
-	return true;
-}
-
-
-/************************************************************************/
-/* REG_RESERVED11                                                       */
-/************************************************************************/
-void app_read_REG_RESERVED11(void)
-{
-	//app_regs.REG_RESERVED11 = 0;
-
-}
-
-bool app_write_REG_RESERVED11(void *a)
-{
-	uint8_t reg = *((uint8_t*)a);
-
-	app_regs.REG_RESERVED11 = reg;
-	return true;
-}
-
-
-/************************************************************************/
-/* REG_RESERVED12                                                       */
-/************************************************************************/
-void app_read_REG_RESERVED12(void)
-{
-	//app_regs.REG_RESERVED12 = 0;
-
-}
-
-bool app_write_REG_RESERVED12(void *a)
-{
-	uint8_t reg = *((uint8_t*)a);
-
-	app_regs.REG_RESERVED12 = reg;
-	return true;
-}
-
-
-/************************************************************************/
-/* REG_EVNT_ENABLE                                                      */
-/************************************************************************/
-void app_read_REG_EVNT_ENABLE(void)
-{
-	//app_regs.REG_EVNT_ENABLE = 0;
-
-}
-
-bool app_write_REG_EVNT_ENABLE(void *a)
-{
-	uint8_t reg = *((uint8_t*)a);
-
-	app_regs.REG_EVNT_ENABLE = reg;
-	return true;
-}
+bool app_write_REG_RESERVED0	(void *a) { app_regs.REG_RESERVED0	 = *((uint8_t*)a); return true; }
+bool app_write_REG_RESERVED1	(void *a) { app_regs.REG_RESERVED1	 = *((uint8_t*)a); return true; }
+bool app_write_REG_RESERVED2	(void *a) { app_regs.REG_RESERVED2	 = *((uint8_t*)a); return true; }
+bool app_write_REG_RESERVED3	(void *a) { app_regs.REG_RESERVED3	 = *((uint8_t*)a); return true; }
+bool app_write_REG_RESERVED4	(void *a) { app_regs.REG_RESERVED4	 = *((uint8_t*)a); return true; }
+bool app_write_REG_RESERVED5	(void *a) { app_regs.REG_RESERVED5	 = *((uint8_t*)a); return true; }
+bool app_write_REG_RESERVED6	(void *a) { app_regs.REG_RESERVED6	 = *((uint8_t*)a); return true; }
+bool app_write_REG_RESERVED7	(void *a) { app_regs.REG_RESERVED7	 = *((uint8_t*)a); return true; }
+bool app_write_REG_RESERVED8	(void *a) { app_regs.REG_RESERVED8	 = *((uint8_t*)a); return true; }
+bool app_write_REG_RESERVED9	(void *a) { app_regs.REG_RESERVED9	 = *((uint8_t*)a); return true; }
+bool app_write_REG_RESERVED10	(void *a) { app_regs.REG_RESERVED10	 = *((uint8_t*)a); return true; }
+bool app_write_REG_RESERVED11	(void *a) { app_regs.REG_RESERVED11	 = *((uint8_t*)a); return true; }
+bool app_write_REG_RESERVED12	(void *a) { app_regs.REG_RESERVED12	 = *((uint8_t*)a); return true; }
+bool app_write_REG_RESERVED13	(void *a) { app_regs.REG_RESERVED13	 = *((uint8_t*)a); return true; }
+bool app_write_REG_RESERVED14	(void *a) { app_regs.REG_RESERVED14	 = *((uint8_t*)a); return true; }
+bool app_write_REG_RESERVED15	(void *a) { app_regs.REG_RESERVED15	 = *((uint8_t*)a); return true; }
+bool app_write_REG_RESERVED16	(void *a) { app_regs.REG_RESERVED16	 = *((uint8_t*)a); return true; }
+bool app_write_REG_RESERVED17	(void *a) { app_regs.REG_RESERVED17	 = *((uint8_t*)a); return true; }
+bool app_write_REG_RESERVED18	(void *a) { app_regs.REG_RESERVED18	 = *((uint8_t*)a); return true; }
+bool app_write_REG_RESERVED19	(void *a) { app_regs.REG_RESERVED19	 = *((uint8_t*)a); return true; }
+bool app_write_REG_RESERVED20	(void *a) { app_regs.REG_RESERVED20	 = *((uint8_t*)a); return true; }
+bool app_write_REG_RESERVED21	(void *a) { app_regs.REG_RESERVED21	 = *((uint8_t*)a); return true; }
+bool app_write_REG_RESERVED22	(void *a) { app_regs.REG_RESERVED22	 = *((uint8_t*)a); return true; }
+bool app_write_REG_RESERVED23	(void *a) { app_regs.REG_RESERVED23	 = *((uint8_t*)a); return true; }
