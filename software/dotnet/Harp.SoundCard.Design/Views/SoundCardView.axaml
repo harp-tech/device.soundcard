@@ -18,6 +18,10 @@
     <conv:EnableFlagConverter x:Key="EnableFlagConverter"/>
     <conv:PayloadFieldConverter x:Key="PayloadFieldConverter"/>
     <conv:VisualStatusColorConverter x:Key="VisualStatusColorConverter"/>
+    <conv:EnumDisplayConverter x:Key="EnumDisplayConverter" />
+    <DataTemplate x:Key="EnumDisplayTemplate" DataType="system:Enum">
+      <TextBlock Text="{Binding Converter={StaticResource EnumDisplayConverter}}" />
+    </DataTemplate>
   </UserControl.Resources>
 
   <Design.DataContext>
@@ -457,6 +461,7 @@
                       </heroIcons:HeroIcon>
                     </StackPanel>
                     <ComboBox SelectedItem="{Binding EnableAdcControlState, Mode=TwoWay}"
+                              ItemTemplate="{StaticResource EnumDisplayTemplate}"
                               IsEnabled="True"
                               Width="200"
                               Margin="0,5,0,0"
@@ -476,25 +481,11 @@
                       </heroIcons:HeroIcon>
                     </StackPanel>
                     <ComboBox SelectedItem="{Binding ConfigureDI0, Mode=TwoWay}"
+                              ItemTemplate="{StaticResource EnumDisplayTemplate}"
                               IsEnabled="True"
                               Width="200"
                               Margin="0,5,0,0"
                               HorizontalAlignment="Left">
-                      <ComboBox.Resources>
-                        <conv:EnumDisplayConverter x:Key="EnumDisplayConverter">
-                          <conv:EnumDisplayConverter.Mappings>
-                            <system:String x:Key="Digital">Used as a pure digital input.</system:String>
-                            <system:String x:Key="StartAndStop">Starts sound index or frequency when rising edge and stop when falling edge (frequency only).</system:String>
-                            <system:String x:Key="Start">Starts sound index or frequency when rising edge.</system:String>
-                            <system:String x:Key="Stop">Stops frequency when rising edge.</system:String>
-                          </conv:EnumDisplayConverter.Mappings>
-                        </conv:EnumDisplayConverter>
-                      </ComboBox.Resources>
-                      <ComboBox.ItemTemplate>
-                        <DataTemplate>
-                          <TextBlock Text="{Binding Converter={StaticResource EnumDisplayConverter}}" />
-                        </DataTemplate>
-                      </ComboBox.ItemTemplate>
                       <x:Static Member="local:DigitalInputConfiguration.Digital" />
                       <x:Static Member="local:DigitalInputConfiguration.StartAndStop" />
                       <x:Static Member="local:DigitalInputConfiguration.Start" />
@@ -512,25 +503,11 @@
                       </heroIcons:HeroIcon>
                     </StackPanel>
                     <ComboBox SelectedItem="{Binding ConfigureDI1, Mode=TwoWay}"
+                              ItemTemplate="{StaticResource EnumDisplayTemplate}"
                               IsEnabled="True"
                               Width="200"
                               Margin="0,5,0,0"
                               HorizontalAlignment="Left">
-                      <ComboBox.Resources>
-                        <conv:EnumDisplayConverter x:Key="EnumDisplayConverter">
-                          <conv:EnumDisplayConverter.Mappings>
-                            <system:String x:Key="Digital">Used as a pure digital input.</system:String>
-                            <system:String x:Key="StartAndStop">Starts sound index or frequency when rising edge and stop when falling edge (frequency only).</system:String>
-                            <system:String x:Key="Start">Starts sound index or frequency when rising edge.</system:String>
-                            <system:String x:Key="Stop">Stops frequency when rising edge.</system:String>
-                          </conv:EnumDisplayConverter.Mappings>
-                        </conv:EnumDisplayConverter>
-                      </ComboBox.Resources>
-                      <ComboBox.ItemTemplate>
-                        <DataTemplate>
-                          <TextBlock Text="{Binding Converter={StaticResource EnumDisplayConverter}}" />
-                        </DataTemplate>
-                      </ComboBox.ItemTemplate>
                       <x:Static Member="local:DigitalInputConfiguration.Digital" />
                       <x:Static Member="local:DigitalInputConfiguration.StartAndStop" />
                       <x:Static Member="local:DigitalInputConfiguration.Start" />
@@ -548,23 +525,11 @@
                       </heroIcons:HeroIcon>
                     </StackPanel>
                     <ComboBox SelectedItem="{Binding ConfigureDO0, Mode=TwoWay}"
+                              ItemTemplate="{StaticResource EnumDisplayTemplate}"
                               IsEnabled="True"
                               Width="200"
                               Margin="0,5,0,0"
                               HorizontalAlignment="Left">
-                      <ComboBox.Resources>
-                        <conv:EnumDisplayConverter x:Key="EnumDisplayConverter">
-                          <conv:EnumDisplayConverter.Mappings>
-                            <system:String x:Key="Digital">Used as a pure digital output.</system:String>
-                            <system:String x:Key="PulseOnStart">Positive 400us pulse when a sound or frequency starts.</system:String>
-                          </conv:EnumDisplayConverter.Mappings>
-                        </conv:EnumDisplayConverter>
-                      </ComboBox.Resources>
-                      <ComboBox.ItemTemplate>
-                        <DataTemplate>
-                          <TextBlock Text="{Binding Converter={StaticResource EnumDisplayConverter}}" />
-                        </DataTemplate>
-                      </ComboBox.ItemTemplate>
                       <x:Static Member="local:DigitalOutputConfiguration.Digital" />
                       <x:Static Member="local:DigitalOutputConfiguration.PulseOnStart" />
                     </ComboBox>
@@ -580,23 +545,11 @@
                       </heroIcons:HeroIcon>
                     </StackPanel>
                     <ComboBox SelectedItem="{Binding ConfigureDO1, Mode=TwoWay}"
+                              ItemTemplate="{StaticResource EnumDisplayTemplate}"
                               IsEnabled="True"
                               Width="200"
                               Margin="0,5,0,0"
                               HorizontalAlignment="Left">
-                      <ComboBox.Resources>
-                        <conv:EnumDisplayConverter x:Key="EnumDisplayConverter">
-                          <conv:EnumDisplayConverter.Mappings>
-                            <system:String x:Key="Digital">Used as a pure digital output.</system:String>
-                            <system:String x:Key="PulseOnStart">Positive 400us pulse when a sound or frequency starts.</system:String>
-                          </conv:EnumDisplayConverter.Mappings>
-                        </conv:EnumDisplayConverter>
-                      </ComboBox.Resources>
-                      <ComboBox.ItemTemplate>
-                        <DataTemplate>
-                          <TextBlock Text="{Binding Converter={StaticResource EnumDisplayConverter}}" />
-                        </DataTemplate>
-                      </ComboBox.ItemTemplate>
                       <x:Static Member="local:DigitalOutputConfiguration.Digital" />
                       <x:Static Member="local:DigitalOutputConfiguration.PulseOnStart" />
                     </ComboBox>
@@ -612,23 +565,11 @@
                       </heroIcons:HeroIcon>
                     </StackPanel>
                     <ComboBox SelectedItem="{Binding ConfigureDO2, Mode=TwoWay}"
+                              ItemTemplate="{StaticResource EnumDisplayTemplate}"
                               IsEnabled="True"
                               Width="200"
                               Margin="0,5,0,0"
                               HorizontalAlignment="Left">
-                      <ComboBox.Resources>
-                        <conv:EnumDisplayConverter x:Key="EnumDisplayConverter">
-                          <conv:EnumDisplayConverter.Mappings>
-                            <system:String x:Key="Digital">Used as a pure digital output.</system:String>
-                            <system:String x:Key="PulseOnStart">Positive 400us pulse when a sound or frequency starts.</system:String>
-                          </conv:EnumDisplayConverter.Mappings>
-                        </conv:EnumDisplayConverter>
-                      </ComboBox.Resources>
-                      <ComboBox.ItemTemplate>
-                        <DataTemplate>
-                          <TextBlock Text="{Binding Converter={StaticResource EnumDisplayConverter}}" />
-                        </DataTemplate>
-                      </ComboBox.ItemTemplate>
                       <x:Static Member="local:DigitalOutputConfiguration.Digital" />
                       <x:Static Member="local:DigitalOutputConfiguration.PulseOnStart" />
                     </ComboBox>
