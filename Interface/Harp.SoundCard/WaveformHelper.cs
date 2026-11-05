@@ -2,15 +2,13 @@
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
-using LibUsbDotNet;
 using LibUsbDotNet.Main;
+using LibUsbDotNet.LibUsb;
 
 namespace Harp.SoundCard
 {
     internal class WaveformHelper
     {
-        public static UsbDeviceFinder UsbFinder = new(0x04D8, 0xEE6A);
-
         public static unsafe SoundCardErrorCode WriteSoundWaveform(
             int? deviceIndex,
             int soundIndex,
@@ -21,40 +19,54 @@ namespace Harp.SoundCard
         {
             const int MetadataSize = 2048;
             const int MaxBufferSize = 32768;
+
+            var usbFinder = new UsbDeviceFinder{
+                Vid = 0x04D8,
+                Pid = 0xEE6A
+            };
+
             var usbDeviceIndex = deviceIndex.GetValueOrDefault();
-            var usbDevices = UsbDevice.AllDevices.FindAll(UsbFinder);
-            if (usbDevices.Count <= usbDeviceIndex)
+            if (usbDeviceIndex < 0)
             {
                 return SoundCardErrorCode.HarpSoundCardNotDetected;
             }
 
-            using var usbDevice = usbDevices[usbDeviceIndex].Device;
+            using var context = new UsbContext();
+            using var devices = context.FindAll(usbFinder);
+
+            if (devices.Count <= usbDeviceIndex)
+            {
+                return SoundCardErrorCode.HarpSoundCardNotDetected;
+            }
+
+            var usbDevice = devices[usbDeviceIndex];
+
             try
             {
-                // Check if usb device is open and ready
-                if (usbDevice == null)
-                {
-                    return SoundCardErrorCode.HarpSoundCardNotDetected;
-                }
+                usbDevice.Open();
 
                 // If this is a "whole" usb device (libusb-win32, linux libusb)
                 // it will have an IUsbDevice interface. If not (WinUSB) the 
                 // variable will be null indicating this is an interface of a 
                 // device.
-                if (usbDevice is IUsbDevice wholeUsbDevice)
+                IUsbDevice wholeUsbDevice = usbDevice;
+                if (!ReferenceEquals(wholeUsbDevice, null))
                 {
                     // This is a "whole" USB device. Before it can be used, 
                     // the desired configuration and interface must be selected.
 
-                    // Select config #1
-                    wholeUsbDevice.SetConfiguration(1);
+                    // Select config #1 only if not active
+                    if (wholeUsbDevice.Configs[0].ConfigurationValue != wholeUsbDevice.Configuration)
+                    {
+                        wholeUsbDevice.SetConfiguration(1);
+                    }
 
                     // Claim interface #0.
                     wholeUsbDevice.ClaimInterface(0);
                 }
 
-                using var reader = usbDevice.OpenEndpointReader(ReadEndpointID.Ep01);
-                using var writer = usbDevice.OpenEndpointWriter(WriteEndpointID.Ep01);
+                var reader = usbDevice.OpenEndpointReader(ReadEndpointID.Ep01);
+                var writer = usbDevice.OpenEndpointWriter(WriteEndpointID.Ep01);
 
                 /*************************************
                  * Create user metadata byte array with 2048 bytes
@@ -93,17 +105,14 @@ namespace Harp.SoundCard
                  ************************************/
                 /* Metadata command lenght: 'c' 'm' 'd' '0x80' + random + metadata  + 32768 + 2048 + 'f' */
                 /* Data command lenght:     'c' 'm' 'd' '0x81' + random + dataIndex + 32768 + 'f'        */
-                /* Reset command lenght:    'c' 'm' 'd' '0x88' + 'f'                                     */
                 var metadataCmd = new byte[4 + sizeof(int) + sizeof(SoundMetadata) + MaxBufferSize + MetadataSize + 1];
                 var dataCmd = new byte[4 + sizeof(int) + sizeof(int) + MaxBufferSize + 1];
-                var resetCmd = new byte[5];
 
                 int metadataCmdDataIndex = 4 + sizeof(int) + sizeof(SoundMetadata);
                 int dataCmdDataIndex = 4 + sizeof(int) + sizeof(int);
 
                 byte metadataCmdHeader = 0x80;
                 byte dataCmdHeader = 0x81;
-                byte resetCmdHeader = 0x88;
 
                 /*************************************
                  * Create byte array to receive replies
@@ -140,15 +149,6 @@ namespace Harp.SoundCard
                 dataCmd[dataCmd.Length - 1] = Convert.ToByte('f');
 
                 /*************************************
-                 * Prepare reset command
-                 ************************************/
-                resetCmd[0] = Convert.ToByte('c');
-                resetCmd[1] = Convert.ToByte('m');
-                resetCmd[2] = Convert.ToByte('d');
-                resetCmd[3] = resetCmdHeader;
-                resetCmd[4] = Convert.ToByte('f');
-
-                /*************************************
                  * Send metadata command and receive reply
                  ************************************/
                 int bytesSent;
@@ -163,7 +163,7 @@ namespace Harp.SoundCard
                 using var soundFileStream = new MemoryStream(soundWaveform);
                 Buffer.BlockCopy(BitConverter.GetBytes(randomSent), 0, metadataCmd, 4, sizeof(int));
                 soundFileStream.Read(metadataCmd, metadataCmdDataIndex, MaxBufferSize);
-                reader.Flush();
+                reader.ReadFlush();
 
                 var ec = writer.Write(metadataCmd, 0, metadataCmd.Length, writeTimeout, out bytesSent);
                 if (ec != 0) return SoundCardErrorCode.NotAbleToSendMetadata;
@@ -228,15 +228,21 @@ namespace Harp.SoundCard
             }
             finally
             {
-                // If this is a "whole" usb device (libusb-win32, linux libusb-1.0)
-                // it exposes an IUsbDevice interface. If not (WinUSB) the 
-                // 'wholeUsbDevice' variable will be null indicating this is 
-                // an interface of a device; it does not require or support 
-                // configuration and interface selection.
-                if (usbDevice is IUsbDevice wholeUsbDevice)
+                if (usbDevice != null && usbDevice.IsOpen)
                 {
-                    // Release interface #0.
-                    wholeUsbDevice.ReleaseInterface(0);
+                    // If this is a "whole" usb device (libusb-win32, linux libusb-1.0)
+                    // it exposes an IUsbDevice interface. If not (WinUSB) the 
+                    // 'wholeUsbDevice' variable will be null indicating this is 
+                    // an interface of a device; it does not require or support 
+                    // configuration and interface selection.
+                    IUsbDevice wholeUsbDevice = usbDevice;
+                    if (!ReferenceEquals(wholeUsbDevice, null))
+                    {
+                        // Release interface #0.
+                        wholeUsbDevice.ReleaseInterface(0);
+                    }
+
+                    usbDevice.Close();
                 }
             }
         }
