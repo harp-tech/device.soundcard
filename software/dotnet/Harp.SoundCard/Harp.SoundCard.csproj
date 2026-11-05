@@ -33,7 +33,7 @@
     <None Include="$(ProjectDir)$(PackageReadmeFile)" Pack="true" PackagePath="/" Visible="false" />
     <None Include="$(MSBuildThisFileDirectory)..\$(PackageLicenseFile)" Pack="true" PackagePath="/" Visible="false" />
     <None Include="$(MSBuildThisFileDirectory)..\$(PackageIcon)" Pack="true" PackagePath="/" Visible="false" />
-    <EmbeddedResource Include="..\..\device.yml" />
+    <EmbeddedResource Include="..\..\..\device.yml" />
   </ItemGroup>
 
 </Project>

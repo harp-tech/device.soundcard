@@ -36,15 +36,12 @@ jobs:
         with:
           dotnet-version: 8.x
 
-      - name: Set up T4
-        run: dotnet tool install -g dotnet-t4 --version 3.0.0
+      - name: Set up .NET tools
+        run: dotnet tool restore
 
       # ----------------------------------------------------------------------- Regenerate
-      - name: Restore generators
-        run: dotnet restore Generators
-
-      - name: Run generators
-        run: dotnet build Generators --no-restore --configuration ${{matrix.configuration}}
+      - name: Generate C# interface
+        run: dotnet harp.toolkit generate interface csharp -o software/dotnet/${{github.workflow}}
 
       - name: Verify pre-generated code was up-to-date
         id: verify-dist
@@ -54,14 +51,14 @@ jobs:
 
       # ----------------------------------------------------------------------- Build interface package
       - name: Restore interface
-        run: dotnet restore Interface
+        run: dotnet restore software/dotnet
 
       - name: Build interface
-        run: dotnet build Interface --no-restore --configuration ${{matrix.configuration}}
+        run: dotnet build software/dotnet --no-restore --configuration ${{matrix.configuration}}
 
       - name: Pack interface
         id: pack
-        run: dotnet pack Interface --no-restore --no-build --configuration ${{matrix.configuration}}
+        run: dotnet pack software/dotnet --no-restore --no-build --configuration ${{matrix.configuration}}
 
       # ----------------------------------------------------------------------- Collect artifacts
       - name: Collect NuGet packages
@@ -70,7 +67,7 @@ jobs:
         with:
           name: Packages
           if-no-files-found: error
-          path: Interface/bin/${{matrix.configuration}}/**
+          path: software/dotnet/bin/${{matrix.configuration}}/**
 
   publish-packages-nuget-org:
     name: Publish packages to NuGet.org
