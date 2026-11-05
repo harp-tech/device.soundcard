@@ -50,18 +50,6 @@ This is a high performance sound card with two output channels using 24 bits DAC
 
 The interface with the Harp Soundcard can be done through [Bonsai](https://bonsai-rx.org/) or a dedicated GUI (Graphical User Interface).
 
-### Install Graphical User Interface (GUI) ###
-
-In order to use this GUI, there are some software that needs to be installed:
-
-1 - Install the [drivers](https://bitbucket.org/fchampalimaud/downloads/downloads/UsbDriver-2.12.26.zip).
-
-2 - Install the [runtime](https://bitbucket.org/fchampalimaud/downloads/downloads/Runtime-1.0.zip).
-
-3 - Reboot the computer.
-
-4 - Install the [GUI](https://bitbucket.org/fchampalimaud/downloads/downloads/Harp%20Sound%20Card%20v1.2.1.zip).
-
 ### Install Drivers ###
 
 To install the proper drivers to interface with the device, follow the next steps in sequence.

@@ -47,24 +47,13 @@
           <heroIcons:HeroIcon Foreground="{Binding IconColor}" Type="QuestionMarkCircle" Width="14"/>
         </Button>
       </StackPanel>
-        <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Text="Hardware &amp; Software Platform" HorizontalAlignment="Left"
+        <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Text="harp-tech" HorizontalAlignment="Left"
                        Foreground="{StaticResource BlueAccentColor}" MaxWidth="240" VerticalAlignment="Center" FontWeight="Bold" TextWrapping="WrapWithOverflow" FontSize="12" />
-        <ThemeVariantScope Grid.Row="0" Grid.Column="2" Grid.RowSpan="2" Grid.ColumnSpan="2"
-                                 RequestedThemeVariant="Light">
-          <Image VerticalAlignment="Center"
-                 HorizontalAlignment="Right"
-                 Margin="0,5,5,0"
-                 IsVisible="{Binding !IsDarkMode}"
-                 Source="/Assets/cf-logo.png" />
-        </ThemeVariantScope>
-        <ThemeVariantScope Grid.Row="0" Grid.Column="2" Grid.RowSpan="2" Grid.ColumnSpan="2"
-                           RequestedThemeVariant="Dark">
-          <Image VerticalAlignment="Center"
-                 HorizontalAlignment="Right"
-                 Margin="0,5,5,0"
-                 IsVisible="{Binding IsDarkMode}"
-                 Source="/Assets/cf-logo-white-lettering.png" />
-        </ThemeVariantScope>
+        <Image Grid.Row="0" Grid.Column="2" Grid.RowSpan="2" Grid.ColumnSpan="2"
+               VerticalAlignment="Center"
+               HorizontalAlignment="Right"
+               Margin="0,5,5,0"
+               Source="/Assets/logo.png" />
         <ToggleSwitch Grid.Row="0" Grid.Column="4" Grid.RowSpan="2" Margin="10,0,0,0" ToolTip.Tip="Change theme"
                             Content="Theme" FontWeight="Normal" FontSize="14"
                             IsChecked="{Binding IsDarkMode}">
