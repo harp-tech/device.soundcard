@@ -19,6 +19,7 @@
     <conv:PayloadFieldConverter x:Key="PayloadFieldConverter"/>
     <conv:VisualStatusColorConverter x:Key="VisualStatusColorConverter"/>
     <conv:EnumDisplayConverter x:Key="EnumDisplayConverter" />
+    <conv:TypeDescriptionConverter x:Key="TypeDescriptionConverter" />
     <DataTemplate x:Key="EnumDisplayTemplate" DataType="system:Enum">
       <TextBlock Text="{Binding Converter={StaticResource EnumDisplayConverter}}" />
     </DataTemplate>
@@ -183,7 +184,10 @@
                       <heroIcons:HeroIcon Type="InformationCircle" Width="14" Height="14"
                                           Foreground="{Binding IconColor}"
                                           VerticalAlignment="Top">
-                        <ToolTip.Tip>State of the digital inputs</ToolTip.Tip>
+                        <ToolTip.Tip>
+                          <Binding Source="{x:Type local:InputState}"
+                                   Converter="{StaticResource TypeDescriptionConverter}" />
+                        </ToolTip.Tip>
                       </heroIcons:HeroIcon>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Spacing="5">
@@ -200,7 +204,10 @@
                       <heroIcons:HeroIcon Type="InformationCircle" Width="14" Height="14"
                                           Foreground="{Binding IconColor}"
                                           VerticalAlignment="Top">
-                        <ToolTip.Tip>Reports sampled analog input data and current sound parameters.</ToolTip.Tip>
+                        <ToolTip.Tip>
+                          <Binding Source="{x:Type local:AdcControlState}"
+                                   Converter="{StaticResource TypeDescriptionConverter}" />
+                        </ToolTip.Tip>
                       </heroIcons:HeroIcon>
                     </StackPanel>
                     <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto,Auto,Auto,Auto">
@@ -273,7 +280,10 @@
                       <heroIcons:HeroIcon Type="InformationCircle" Width="14" Height="14"
                                           Foreground="{Binding IconColor}"
                                           VerticalAlignment="Top">
-                        <ToolTip.Tip>Specifies attenuation and simultaneously starts the sound index or frequency [Index] [Att L] [Att R]</ToolTip.Tip>
+                        <ToolTip.Tip>
+                          <Binding Source="{x:Type local:AttenuationStart}"
+                                   Converter="{StaticResource TypeDescriptionConverter}" />
+                        </ToolTip.Tip>
                       </heroIcons:HeroIcon>
                     </StackPanel>
                     <Border CornerRadius="3" Padding="5" MaxHeight="200">
@@ -305,7 +315,10 @@
                       <heroIcons:HeroIcon Type="InformationCircle" Width="14" Height="14"
                                           Foreground="{Binding IconColor}"
                                           VerticalAlignment="Top">
-                        <ToolTip.Tip>Configures both attenuation on right and left channels [Att R] [Att L]</ToolTip.Tip>
+                        <ToolTip.Tip>
+                          <Binding Source="{x:Type local:AttenuationBoth}"
+                                   Converter="{StaticResource TypeDescriptionConverter}" />
+                        </ToolTip.Tip>
                       </heroIcons:HeroIcon>
                     </StackPanel>
                     <Border CornerRadius="3" Padding="5" MaxHeight="200">
@@ -337,7 +350,10 @@
                       <heroIcons:HeroIcon Type="InformationCircle" Width="14" Height="14"
                                           Foreground="{Binding IconColor}"
                                           VerticalAlignment="Top">
-                        <ToolTip.Tip>Configure left channel's attenuation (1 LSB is 0.1dB)</ToolTip.Tip>
+                        <ToolTip.Tip>
+                          <Binding Source="{x:Type local:AttenuationLeft}"
+                                   Converter="{StaticResource TypeDescriptionConverter}" />
+                        </ToolTip.Tip>
                       </heroIcons:HeroIcon>
                     </StackPanel>
                     <NumericUpDown Value="{Binding AttenuationLeft}"
@@ -357,7 +373,10 @@
                       <heroIcons:HeroIcon Type="InformationCircle" Width="14" Height="14"
                                           Foreground="{Binding IconColor}"
                                           VerticalAlignment="Top">
-                        <ToolTip.Tip>Left channel's attenuation (1 LSB is 0.5dB) when triggering DI0</ToolTip.Tip>
+                        <ToolTip.Tip>
+                          <Binding Source="{x:Type local:AttenuationLeftDI0}"
+                                   Converter="{StaticResource TypeDescriptionConverter}" />
+                        </ToolTip.Tip>
                       </heroIcons:HeroIcon>
                     </StackPanel>
                     <NumericUpDown Value="{Binding AttenuationLeftDI0}"
@@ -377,7 +396,10 @@
                       <heroIcons:HeroIcon Type="InformationCircle" Width="14" Height="14"
                                           Foreground="{Binding IconColor}"
                                           VerticalAlignment="Top">
-                        <ToolTip.Tip>Left channel's attenuation (1 LSB is 0.5dB) when triggering DI1</ToolTip.Tip>
+                        <ToolTip.Tip>
+                          <Binding Source="{x:Type local:AttenuationLeftDI1}"
+                                   Converter="{StaticResource TypeDescriptionConverter}" />
+                        </ToolTip.Tip>
                       </heroIcons:HeroIcon>
                     </StackPanel>
                     <NumericUpDown Value="{Binding AttenuationLeftDI1}"
@@ -397,7 +419,10 @@
                       <heroIcons:HeroIcon Type="InformationCircle" Width="14" Height="14"
                                           Foreground="{Binding IconColor}"
                                           VerticalAlignment="Top">
-                        <ToolTip.Tip>Configure right channel's attenuation (1 LSB is 0.1dB)</ToolTip.Tip>
+                        <ToolTip.Tip>
+                          <Binding Source="{x:Type local:AttenuationRight}"
+                                   Converter="{StaticResource TypeDescriptionConverter}" />
+                        </ToolTip.Tip>
                       </heroIcons:HeroIcon>
                     </StackPanel>
                     <NumericUpDown Value="{Binding AttenuationRight}"
@@ -417,7 +442,10 @@
                       <heroIcons:HeroIcon Type="InformationCircle" Width="14" Height="14"
                                           Foreground="{Binding IconColor}"
                                           VerticalAlignment="Top">
-                        <ToolTip.Tip>Right channel's attenuation (1 LSB is 0.5dB) when triggering DI0</ToolTip.Tip>
+                        <ToolTip.Tip>
+                          <Binding Source="{x:Type local:AttenuationRightDI0}"
+                                   Converter="{StaticResource TypeDescriptionConverter}" />
+                        </ToolTip.Tip>
                       </heroIcons:HeroIcon>
                     </StackPanel>
                     <NumericUpDown Value="{Binding AttenuationRightDI0}"
@@ -437,7 +465,10 @@
                       <heroIcons:HeroIcon Type="InformationCircle" Width="14" Height="14"
                                           Foreground="{Binding IconColor}"
                                           VerticalAlignment="Top">
-                        <ToolTip.Tip>Right channel's attenuation (1 LSB is 0.5dB) when triggering DI1</ToolTip.Tip>
+                        <ToolTip.Tip>
+                          <Binding Source="{x:Type local:AttenuationRightDI1}"
+                                   Converter="{StaticResource TypeDescriptionConverter}" />
+                        </ToolTip.Tip>
                       </heroIcons:HeroIcon>
                     </StackPanel>
                     <NumericUpDown Value="{Binding AttenuationRightDI1}"
@@ -457,7 +488,10 @@
                       <heroIcons:HeroIcon Type="InformationCircle" Width="14" Height="14"
                                           Foreground="{Binding IconColor}"
                                           VerticalAlignment="Top">
-                        <ToolTip.Tip>Specifies the configuration of the ADC control stream.</ToolTip.Tip>
+                        <ToolTip.Tip>
+                          <Binding Source="{x:Type local:EnableAdcControlState}"
+                                   Converter="{StaticResource TypeDescriptionConverter}" />
+                        </ToolTip.Tip>
                       </heroIcons:HeroIcon>
                     </StackPanel>
                     <ComboBox SelectedItem="{Binding EnableAdcControlState, Mode=TwoWay}"
@@ -477,7 +511,10 @@
                       <heroIcons:HeroIcon Type="InformationCircle" Width="14" Height="14"
                                           Foreground="{Binding IconColor}"
                                           VerticalAlignment="Top">
-                        <ToolTip.Tip>Configuration of the digital input 0 (DI0)</ToolTip.Tip>
+                        <ToolTip.Tip>
+                          <Binding Source="{x:Type local:ConfigureDI0}"
+                                   Converter="{StaticResource TypeDescriptionConverter}" />
+                        </ToolTip.Tip>
                       </heroIcons:HeroIcon>
                     </StackPanel>
                     <ComboBox SelectedItem="{Binding ConfigureDI0, Mode=TwoWay}"
@@ -499,7 +536,10 @@
                       <heroIcons:HeroIcon Type="InformationCircle" Width="14" Height="14"
                                           Foreground="{Binding IconColor}"
                                           VerticalAlignment="Top">
-                        <ToolTip.Tip>Configuration of the digital input 1 (DI1)</ToolTip.Tip>
+                        <ToolTip.Tip>
+                          <Binding Source="{x:Type local:ConfigureDI1}"
+                                   Converter="{StaticResource TypeDescriptionConverter}" />
+                        </ToolTip.Tip>
                       </heroIcons:HeroIcon>
                     </StackPanel>
                     <ComboBox SelectedItem="{Binding ConfigureDI1, Mode=TwoWay}"
@@ -521,7 +561,10 @@
                       <heroIcons:HeroIcon Type="InformationCircle" Width="14" Height="14"
                                           Foreground="{Binding IconColor}"
                                           VerticalAlignment="Top">
-                        <ToolTip.Tip>Configuration of the digital output 0 (DO0)</ToolTip.Tip>
+                        <ToolTip.Tip>
+                          <Binding Source="{x:Type local:ConfigureDO0}"
+                                   Converter="{StaticResource TypeDescriptionConverter}" />
+                        </ToolTip.Tip>
                       </heroIcons:HeroIcon>
                     </StackPanel>
                     <ComboBox SelectedItem="{Binding ConfigureDO0, Mode=TwoWay}"
@@ -541,7 +584,10 @@
                       <heroIcons:HeroIcon Type="InformationCircle" Width="14" Height="14"
                                           Foreground="{Binding IconColor}"
                                           VerticalAlignment="Top">
-                        <ToolTip.Tip>Configuration of the digital output 1 (DO1)</ToolTip.Tip>
+                        <ToolTip.Tip>
+                          <Binding Source="{x:Type local:ConfigureDO1}"
+                                   Converter="{StaticResource TypeDescriptionConverter}" />
+                        </ToolTip.Tip>
                       </heroIcons:HeroIcon>
                     </StackPanel>
                     <ComboBox SelectedItem="{Binding ConfigureDO1, Mode=TwoWay}"
@@ -561,7 +607,10 @@
                       <heroIcons:HeroIcon Type="InformationCircle" Width="14" Height="14"
                                           Foreground="{Binding IconColor}"
                                           VerticalAlignment="Top">
-                        <ToolTip.Tip>Configuration of the digital output 2 (DO2</ToolTip.Tip>
+                        <ToolTip.Tip>
+                          <Binding Source="{x:Type local:ConfigureDO2}"
+                                   Converter="{StaticResource TypeDescriptionConverter}" />
+                        </ToolTip.Tip>
                       </heroIcons:HeroIcon>
                     </StackPanel>
                     <ComboBox SelectedItem="{Binding ConfigureDO2, Mode=TwoWay}"
@@ -581,7 +630,10 @@
                       <heroIcons:HeroIcon Type="InformationCircle" Width="14" Height="14"
                                           Foreground="{Binding IconColor}"
                                           VerticalAlignment="Top">
-                        <ToolTip.Tip>Specifies the sound index or frequency to start when triggering DI0, following the same rules as Start</ToolTip.Tip>
+                        <ToolTip.Tip>
+                          <Binding Source="{x:Type local:StartOnDI0}"
+                                   Converter="{StaticResource TypeDescriptionConverter}" />
+                        </ToolTip.Tip>
                       </heroIcons:HeroIcon>
                     </StackPanel>
                     <NumericUpDown Value="{Binding StartOnDI0}"
@@ -601,7 +653,10 @@
                       <heroIcons:HeroIcon Type="InformationCircle" Width="14" Height="14"
                                           Foreground="{Binding IconColor}"
                                           VerticalAlignment="Top">
-                        <ToolTip.Tip>Specifies the sound index or frequency to start when triggering DI1, following the same rules as Start</ToolTip.Tip>
+                        <ToolTip.Tip>
+                          <Binding Source="{x:Type local:StartOnDI1}"
+                                   Converter="{StaticResource TypeDescriptionConverter}" />
+                        </ToolTip.Tip>
                       </heroIcons:HeroIcon>
                     </StackPanel>
                     <NumericUpDown Value="{Binding StartOnDI1}"
@@ -622,7 +677,10 @@
                       <heroIcons:HeroIcon Type="InformationCircle" Width="14" Height="14"
                                           Foreground="{Binding IconColor}"
                                           VerticalAlignment="Top">
-                        <ToolTip.Tip>Clear the specified digital output lines</ToolTip.Tip>
+                        <ToolTip.Tip>
+                          <Binding Source="{x:Type local:OutputClear}"
+                                   Converter="{StaticResource TypeDescriptionConverter}" />
+                        </ToolTip.Tip>
                       </heroIcons:HeroIcon>
                     </StackPanel>
                     <CheckBox IsChecked="{Binding IsDO0Enabled_OutputClear}"
@@ -645,7 +703,10 @@
                       <heroIcons:HeroIcon Type="InformationCircle" Width="14" Height="14"
                                           Foreground="{Binding IconColor}"
                                           VerticalAlignment="Top">
-                        <ToolTip.Tip>Set the specified digital output lines</ToolTip.Tip>
+                        <ToolTip.Tip>
+                          <Binding Source="{x:Type local:OutputSet}"
+                                   Converter="{StaticResource TypeDescriptionConverter}" />
+                        </ToolTip.Tip>
                       </heroIcons:HeroIcon>
                     </StackPanel>
                     <CheckBox IsChecked="{Binding IsDO0Enabled_OutputSet}"
@@ -668,7 +729,10 @@
                       <heroIcons:HeroIcon Type="InformationCircle" Width="14" Height="14"
                                           Foreground="{Binding IconColor}"
                                           VerticalAlignment="Top">
-                        <ToolTip.Tip>Write the state of all digital output lines</ToolTip.Tip>
+                        <ToolTip.Tip>
+                          <Binding Source="{x:Type local:OutputState}"
+                                   Converter="{StaticResource TypeDescriptionConverter}" />
+                        </ToolTip.Tip>
                       </heroIcons:HeroIcon>
                     </StackPanel>
                     <CheckBox IsChecked="{Binding IsDO0Enabled_OutputState}"
@@ -691,7 +755,10 @@
                       <heroIcons:HeroIcon Type="InformationCircle" Width="14" Height="14"
                                           Foreground="{Binding IconColor}"
                                           VerticalAlignment="Top">
-                        <ToolTip.Tip>Toggle the specified digital output lines</ToolTip.Tip>
+                        <ToolTip.Tip>
+                          <Binding Source="{x:Type local:OutputToggle}"
+                                   Converter="{StaticResource TypeDescriptionConverter}" />
+                        </ToolTip.Tip>
                       </heroIcons:HeroIcon>
                     </StackPanel>
                     <CheckBox IsChecked="{Binding IsDO0Enabled_OutputToggle}"
@@ -714,7 +781,10 @@
                       <heroIcons:HeroIcon Type="InformationCircle" Width="14" Height="14"
                                           Foreground="{Binding IconColor}"
                                           VerticalAlignment="Top">
-                        <ToolTip.Tip>Starts the sound index if the value is less than 32, or otherwise the waveform generator at the specified frequency in Hz</ToolTip.Tip>
+                        <ToolTip.Tip>
+                          <Binding Source="{x:Type local:Start}"
+                                   Converter="{StaticResource TypeDescriptionConverter}" />
+                        </ToolTip.Tip>
                       </heroIcons:HeroIcon>
                     </StackPanel>
                     <NumericUpDown Value="{Binding Start}"
@@ -734,7 +804,10 @@
                       <heroIcons:HeroIcon Type="InformationCircle" Width="14" Height="14"
                                           Foreground="{Binding IconColor}"
                                           VerticalAlignment="Top">
-                        <ToolTip.Tip>Any value will stop the current sound</ToolTip.Tip>
+                        <ToolTip.Tip>
+                          <Binding Source="{x:Type local:Stop}"
+                                   Converter="{StaticResource TypeDescriptionConverter}" />
+                        </ToolTip.Tip>
                       </heroIcons:HeroIcon>
                     </StackPanel>
                     <NumericUpDown Value="{Binding Stop}"
