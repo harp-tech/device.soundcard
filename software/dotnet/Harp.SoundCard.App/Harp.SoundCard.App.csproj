@@ -8,7 +8,6 @@
     <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <OutputPath>..\bin\$(Configuration)</OutputPath>
-    <Version>$(AppVersion)</Version>
     <ApplicationIcon>..\Harp.SoundCard.Design\Assets\cf-logo.ico</ApplicationIcon>
     <Name>Harp.SoundCard.App</Name>
   </PropertyGroup>
