@@ -1,0 +1,64 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:Harp.SoundCard.Design.ViewModels"
+        xmlns:conv="clr-namespace:Harp.SoundCard.Design.Converters"
+        xmlns:system="clr-namespace:System;assembly=System.Runtime"
+        mc:Ignorable="d"
+        d:DesignWidth="320"
+        d:DesignHeight="240"
+        Width="320"
+        Height="240"
+        WindowStartupLocation="CenterOwner"
+        x:Class="Harp.SoundCard.Design.Views.ImportOptionsDialog"
+        x:DataType="vm:ImportOptionsDialogViewModel"
+        Title="Import Options">
+
+  <Window.Resources>
+    <conv:EnumDisplayConverter x:Key="EnumDisplayConverter">
+      <conv:EnumDisplayConverter.Mappings>
+        <system:String x:Key="SampleRate96000Hz">96 kHz</system:String>
+        <system:String x:Key="SampleRate192000Hz">192 kHz</system:String>
+      </conv:EnumDisplayConverter.Mappings>
+    </conv:EnumDisplayConverter>
+  </Window.Resources>
+
+  <Grid RowDefinitions="Auto,Auto,Auto,Auto,*" Margin="16">
+    <TextBlock FontSize="20" FontWeight="SemiBold" Margin="0,0,0,20">Import options</TextBlock>
+    <StackPanel Grid.Row="1" Orientation="Horizontal" Spacing="10" Margin="0,0,0,10">
+      <TextBlock VerticalAlignment="Center" Text="Sample rate" Width="130" />
+      <ComboBox Width="120"
+                ItemsSource="{Binding SampleRates}"
+                SelectedItem="{Binding SelectedSampleRate}">
+        <ComboBox.ItemTemplate>
+          <DataTemplate>
+            <TextBlock Text="{Binding Converter={StaticResource EnumDisplayConverter}}" />
+          </DataTemplate>
+        </ComboBox.ItemTemplate>
+      </ComboBox>
+    </StackPanel>
+
+    <StackPanel Grid.Row="2" Orientation="Horizontal" Spacing="10" Margin="0,0,0,10">
+      <TextBlock VerticalAlignment="Center" Text="Amplification factor" Width="130" />
+      <NumericUpDown Width="120"
+                     Value="{Binding Amplification}"
+                     Minimum="0"
+                     Maximum="120"
+                     Increment="0.1" />
+    </StackPanel>
+
+    <CheckBox Grid.Row="3"
+              IsChecked="{Binding ApplyWindowSettings}"
+              Content="Apply current window settings"
+              Margin="0,0,0,0" />
+
+    <StackPanel Grid.Row="4"
+                Orientation="Horizontal"
+                HorizontalAlignment="Right"
+                Spacing="8">
+      <Button Content="Cancel" Click="OnCancelClick" MinWidth="90" />
+      <Button Content="Import" Click="OnImportClick" MinWidth="90" />
+    </StackPanel>
+  </Grid>
+</Window>

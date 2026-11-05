@@ -1,0 +1,69 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <!--If you are willing to use Windows/MacOS native APIs you will need to create 3 projects.
+    One for Windows with net8.0-windows TFM, one for MacOS with net8.0-macos and one with net8.0 TFM for Linux.-->
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <OutputPath>..\bin\$(Configuration)</OutputPath>
+    <Version>$(AppVersion)</Version>
+    <ApplicationIcon>..\Harp.SoundCard.Design\Assets\cf-logo.ico</ApplicationIcon>
+    <Name>Harp.SoundCard.App</Name>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <CFBundleName>Harp.SoundCard.App</CFBundleName>
+    <CFBundleDisplayName>Harp.SoundCard.App</CFBundleDisplayName>
+    <CFBundleIdentifier>org.fchampalimaud</CFBundleIdentifier>
+    <CFBundleVersion>$(Version)</CFBundleVersion>
+    <CFBundleShortVersionString>$(Version)</CFBundleShortVersionString>
+    <CFBundlePackageType>AAPL</CFBundlePackageType>
+    <CFBundleSignature>.</CFBundleSignature>
+    <CFBundleExecutable>Harp.SoundCard.App</CFBundleExecutable>
+    <CFBundleIconFile>cf-logo.icns</CFBundleIconFile>
+    <NSPrincipalClass>NSApplication</NSPrincipalClass>
+    <NSHighResolutionCapable>true</NSHighResolutionCapable>
+    <Copyright>Champalimaud Foundation</Copyright>
+    <ApplicationIcon>..\Harp.SoundCard.Design\Assets\cf-logo.ico</ApplicationIcon>
+    <PackageReadmeFile>..\README.md</PackageReadmeFile>
+    <RepositoryType>git</RepositoryType>
+    <BaseOutputPath>..\bin\$(Configuration)</BaseOutputPath>
+  </PropertyGroup>
+
+  <Target Name="CopyAssets" AfterTargets="Build">
+    <Copy SourceFiles="..\Harp.SoundCard.Design\Assets\cf-logo.icns" DestinationFolder="$(OutDir)" SkipUnchangedFiles="true"/>
+    <Copy SourceFiles="..\Harp.SoundCard.Design\Assets\cf-logo.ico" DestinationFolder="$(OutDir)" SkipUnchangedFiles="true"/>
+    <Copy SourceFiles="..\Harp.SoundCard.Design\Assets\cf-logo.icns" DestinationFolder="$(PublishDir)" SkipUnchangedFiles="true"/>
+    <Copy SourceFiles="..\Harp.SoundCard.Design\Assets\cf-logo.ico" DestinationFolder="$(PublishDir)" SkipUnchangedFiles="true"/>
+  </Target>
+
+  <UsingTask
+    Condition="$(RuntimeIdentifier.StartsWith('osx'))"
+    TaskName="NeoBundle.BundleAppTask"
+    AssemblyFile="$(PkgNeoBundle)/lib/netstandard2.1/NeoBundle.dll" />
+
+  <Target
+    Name="BundleMacApp"
+    AfterTargets="Publish"
+    Condition="$(RuntimeIdentifier.StartsWith('osx'))">
+    <BundleAppTask
+      OutDir="$(OutDir)"
+      Version="$(Version)"
+      Authors="$(Authors)"
+      PublishDir="$(PublishDir)"
+      AppName="$(AssemblyName)"
+      IconFile="cf-logo.icns"
+      Copyright="$(Copyright)"/>
+  </Target>
+
+  <ItemGroup>
+    <PackageReference Include="Avalonia.Desktop" Version="$(AvaloniaVersion)" />
+    <PackageReference Condition="$(RuntimeIdentifier.StartsWith('osx'))" Include="NeoBundle" Version="1.0.3.1" ExcludeAssets="build;buildTransitive" GeneratePathProperty="true" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Harp.SoundCard.Design\Harp.SoundCard.Design.csproj" />
+  </ItemGroup>
+</Project>

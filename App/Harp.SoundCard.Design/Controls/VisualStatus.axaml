@@ -1,0 +1,11 @@
+<ContentControl
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:Harp.SoundCard.Design.Controls"
+    xmlns:conv="clr-namespace:Harp.SoundCard.Design.Converters"
+    x:Class="Harp.SoundCard.Design.Controls.VisualStatus">
+  <ContentControl.Resources>
+    <conv:VisualStatusColorConverter x:Key="StatusColorConverter"/>
+  </ContentControl.Resources>
+  <Ellipse Fill="{Binding Status, RelativeSource={RelativeSource AncestorType=local:VisualStatus}, Converter={StaticResource StatusColorConverter}}"/>
+</ContentControl>
