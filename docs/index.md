@@ -1,6 +1,6 @@
 # Overview
 
-The Harp [Sound Card](articles/soundcard.md) and [Audio Amplifier](articles/peripherals/audioamplifier.md) are open-source, high-fidelity audio devices specifically designed for behavioral research experiments.
+The Harp [Sound Card](articles/device.md) and [Audio Amplifier](articles/peripherals/audioamplifier.md) are open-source, high-fidelity audio devices specifically designed for behavioral research experiments.
 
 ![Harp Sound Card with its peripherals](images/soundcard-landing.svg)
 
@@ -10,7 +10,7 @@ The Sound Card provides:
 
 - Wideband frequency support up to 80 kHz for experiments involving ultrasonic communication.
 - Low-latency sound playback via onboard waveform storage and digital input triggering for close-loop experiments.
-- Convenient generation of auditory stimuli, with a graphical user interface to create and upload waveforms and an onboard sine wave generator for pure tones.
+- Convenient generation of auditory stimuli, with the [Sound Card app](articles/app.md) to create and upload waveforms and an onboard sine wave generator for pure tones.
 - Hardware timestamping and synchronization with other [Harp](https://harp-tech.org/articles/about.html) devices for seamless alignment of experimental data.
 - [Bonsai](https://bonsai-rx.org/) integration for flexible experiment acquisition and control.
 
@@ -22,6 +22,6 @@ Assembled units are available from the [Open Ephys store](https://open-ephys.org
 
 ## Acknowledgments
 
-Hardware design and GUI contributed by [Champalimaud Foundation](https://www.cf-hw.org/), Bonsai interface by [NeuroGEARS](https://neurogears.org/), testing and feedback by [Allen Institute for Neural Dynamics](https://www.allenneuraldynamics.org/), and documentation by [Open Ephys](https://open-ephys.org/).
+Hardware design and Sound Card app contributed by [Champalimaud Foundation](https://www.cf-hw.org/), Bonsai interface by [NeuroGEARS](https://neurogears.org/), testing and feedback by [Allen Institute for Neural Dynamics](https://www.allenneuraldynamics.org/), and documentation by [Open Ephys](https://open-ephys.org/).
 
 [!INCLUDE [](./includes/version-footer.md)]

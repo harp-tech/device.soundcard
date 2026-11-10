@@ -1,6 +1,6 @@
 # Control digital outputs
 
-The Sound Card can send a TTL pulse from its digital outputs (**OUT0**–**OUT2**) every time a sound starts, and the outputs can also be controlled directly from Bonsai. Upload a sound to sound index 2 with the [Sound Card GUI](./soundcard-gui.md) or in [Bonsai](../tutorials/upload-waveform-bonsai.md). Refer to the [connections](./ports-connections.md?tabs=digitaloutputs#connections) article to connect **OUT0** to a digital input on an external device, which we will use for the rest of these examples.
+The Sound Card can send a TTL pulse from its digital outputs (**OUT0**–**OUT2**) every time a sound starts, and the outputs can also be controlled directly from Bonsai. Upload a sound to sound index 2 with the [Sound Card app](./app.md) or in [Bonsai](../tutorials/upload-waveform-bonsai.md). Refer to the [connections](./ports-connections.md?tabs=digitaloutputs#connections) article to connect **OUT0** to a digital input on an external device, which we will use for the rest of these examples.
 
 [!INCLUDE [](../includes/puretone-rightchannel-note.md)]
 

@@ -1,6 +1,6 @@
 # Bonsai
 
-Bonsai is a visual reactive programming language for building interactive experiments and processing data streams in real time. It supports a growing ecosystem of hardware and software packages that are commonly used in neuroscience. This article will cover how to set up the Sound Card in Bonsai.
+Bonsai is a visual reactive programming language for building interactive experiments and processing data streams in real time. It supports a growing ecosystem of hardware and software packages that are commonly used in neuroscience. This article will cover how to start using the Sound Card in Bonsai.
 
 > [!TIP]
 > More information on Bonsai can be found in the official [documentation](https://bonsai-rx.org/docs/).
@@ -13,7 +13,7 @@ Before beginning:
 - Install [Bonsai](installation.md?tabs=bonsai#software-packages) and add the `Harp.SoundCard` and `Bonsai.StarterPack` packages.
 - Connect an amplifier and speaker to an output channel by following the [audio connection](ports-connections.md?tabs=audio#connections) instructions.
 - Connect the power supply and **USB(Computer)** cable by following the [power and PC connection](ports-connections.md?tabs=powerandpc#connections) instructions.
-- Upload a sound to sound index 2 with the [Sound Card GUI](./soundcard-gui.md) or in [Bonsai](../tutorials/upload-waveform-bonsai.md).
+- Upload a sound to sound index 2 with the [Sound Card app](./app.md) or in [Bonsai](../tutorials/upload-waveform-bonsai.md).
 - Launch "Bonsai" from the Windows Start menu.
 - Hover over the workflow cell below, and click on the "Copy" icon on the top right.
 - Paste the workflow into Bonsai.

@@ -3,7 +3,7 @@
 The [Harp.SoundCard](../articles/installation.md#software-packages) Bonsai package supports preload and update of sound waveforms during runtime. The following exercises will demonstrate how to generate and load various waveforms for upload to the Sound Card in Bonsai.
 
 > [!TIP]
-> Alternatively, you can generate and upload waveforms with the [Sound Card GUI](../articles/soundcard-gui.md) without building a workflow.
+> Alternatively, you can generate and upload waveforms with the [Sound Card app](../articles/app.md) without building a workflow.
 
 Before beginning:
 - Install the `Harp.SoundCard`, `Bonsai.Numerics`, and `Bonsai.StarterPack` packages from the [Bonsai package manager](https://bonsai-rx.org/docs/articles/packages.html).

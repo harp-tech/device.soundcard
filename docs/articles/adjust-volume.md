@@ -1,6 +1,6 @@
 # Adjust volume
 
-By default, the Sound Card plays stored sounds at the amplitude of the stored waveform and pure tones at maximum amplitude. The volume can be adjusted by setting an attenuation for the output channels. Upload a sound to sound index 2 with the [Sound Card GUI](./soundcard-gui.md) or in [Bonsai](../tutorials/upload-waveform-bonsai.md), which we will use for these examples.
+By default, the Sound Card plays stored sounds at the amplitude of the stored waveform and pure tones at maximum amplitude. The volume can be adjusted by setting an attenuation for the output channels. Upload a sound to sound index 2 with the [Sound Card app](./app.md) or in [Bonsai](../tutorials/upload-waveform-bonsai.md), which we will use for these examples.
 
 [!INCLUDE [](../includes/puretone-rightchannel-note.md)]
 

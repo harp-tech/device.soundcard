@@ -1,13 +1,13 @@
 - name: Introduction
 - href: ../index.md
 - name: Specs
-- href: soundcard.md
+- href: device.md
 - name: Peripherals
   href: peripherals/toc.yml
 - name: Getting started
 - href: ports-connections.md
 - href: installation.md
-- href: soundcard-gui.md
+- href: app.md
 - href: bonsai.md
 - name: Examples
 - href: how-the-examples-work.md

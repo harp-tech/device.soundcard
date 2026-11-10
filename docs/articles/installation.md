@@ -6,6 +6,24 @@ This page covers the software you'll need to interact with the Sound Card, as we
 
 These steps are only required the first time you connect the device to a new computer, and you can install just the packages for the functionality you need.
 
+# [App](#tab/app)
+
+The [Sound Card app](app.md) is a desktop app for generating and uploading waveforms to the device without using Bonsai. It is distributed as a [.NET tool](https://learn.microsoft.com/dotnet/core/tools/global-tools).
+
+![Sound Card app](../images/soundcard-app.jpg){width=600}
+
+- Download and install the [.NET SDK](https://dotnet.microsoft.com/download), version 8 or later.
+- Install the Sound Card app from a terminal with:
+
+```cmd
+dotnet tool install -g Harp.SoundCard.App
+```
+
+To update the Sound Card app to the latest release, run `dotnet tool update -g Harp.SoundCard.App`.
+
+> [!NOTE]
+> Alternatively, waveforms can be [generated and uploaded in Bonsai](../tutorials/upload-waveform-bonsai.md).
+
 # [Driver](#tab/driver)
 
 The WinUSB driver is required to upload waveforms to the onboard sound memory bank.
@@ -16,17 +34,6 @@ The WinUSB driver is required to upload waveforms to the onboard sound memory ba
 - Connect the [USB (Soundbank)](ports-connections.md) cable to the computer.
 - Select "Harp Sound Card" from the list. If the device is not available, go to "Options" > "List All Devices".
 - Select the "WinUSB" driver and click "Install Driver".
-
-# [GUI](#tab/gui)
-
-The Sound Card GUI offers a graphical interface for [generating and uploading waveforms](soundcard-gui.md).
-
-![Sound Card GUI](../images/installation-gui.jpg){width=600}
-
-- Download and install the [Sound Card GUI](https://github.com/fchampalimaud/device.soundcard/releases).
-
-> [!NOTE]
-> Alternatively, waveforms can be [generated and uploaded in Bonsai](../tutorials/upload-waveform-bonsai.md).
 
 # [Bonsai](#tab/bonsai)
 
@@ -59,7 +66,7 @@ pip install harp-data
 
 ## Firmware update
 
-New features are added and bugs are fixed with firmware updates which are published on the [release page](https://github.com/harp-tech/device.soundcard/releases) in the device GitHub repository. Each release contains `.hex` files tagged with the firmware (`fw`) and hardware (`hw`) version. For instance, `SoundCard-fw3.0-harp1.15-hw2.2-ass0.hex` is firmware v3.0 for a hardware v2.2 Sound Card. Download these two hex files from the "Assets" section under each release, making sure that the hardware prefix matches the [hardware version](soundcard.md#hardware) of the board:
+New features are added and bugs are fixed with firmware updates which are published on the [release page](https://github.com/harp-tech/device.soundcard/releases) in the device GitHub repository. Each release contains `.hex` files tagged with the firmware (`fw`) and hardware (`hw`) version. For instance, `SoundCard-fw3.0-harp1.15-hw2.2-ass0.hex` is firmware v3.0 for a hardware v2.2 Sound Card. Download these two hex files from the "Assets" section under each release, making sure that the hardware prefix matches the [hardware version](device.md#hardware) of the board:
 
 - `SoundCard-*.hex` - Firmware for the 8-bit device interface microcontroller.
 - `SoundCard.PIC32-*.hex` - Firmware for the 32-bit sound memory microcontroller.

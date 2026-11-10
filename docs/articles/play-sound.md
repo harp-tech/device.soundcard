@@ -1,6 +1,6 @@
 # Play sounds
 
-The Sound Card plays waveforms stored in its onboard memory and pure tones from an internal sine wave generator. Upload a sound to sound index 2 with the [Sound Card GUI](./soundcard-gui.md) or in [Bonsai](../tutorials/upload-waveform-bonsai.md), which we will use for these examples.
+The Sound Card plays waveforms stored in its onboard memory and pure tones from an internal sine wave generator. Upload a sound to sound index 2 with the [Sound Card app](./app.md) or in [Bonsai](../tutorials/upload-waveform-bonsai.md), which we will use for these examples.
 
 [!INCLUDE [](../includes/puretone-rightchannel-note.md)]
 

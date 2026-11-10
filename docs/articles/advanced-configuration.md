@@ -24,7 +24,7 @@ The sounds uploaded to the device persist across power cycles. Writing `DeleteAl
     - `Pic32Commands` - Select `DeleteAllSounds`.
 - Insert a [`MulticastSubject`] operator named `SoundCard Commands`.
 
-Run the workflow and press the <kbd>A</kbd> key to erase the stored sounds. To store new sounds on the device, use the [Sound Card GUI](./soundcard-gui.md) or follow the [Upload waveforms with Bonsai](../tutorials/upload-waveform-bonsai.md) tutorial.
+Run the workflow and press the <kbd>A</kbd> key to erase the stored sounds. To store new sounds on the device, use the [Sound Card app](./app.md) or follow the [Upload waveforms with Bonsai](../tutorials/upload-waveform-bonsai.md) tutorial.
 
 > [!WARNING]
 > Deleting sounds erases the onboard flash memory and restarts the sound memory controller. This cannot be undone, and the device does not respond to sound commands while the controller restarts.

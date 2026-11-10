@@ -12,7 +12,7 @@ This article will cover the ports, controls, and status indicators on the Sound 
 
 **USB (Soundbank, Micro-B)** - This port connects to the device's onboard sound memory bank for uploading waveforms. Once the sounds have been uploaded, the cable can be disconnected, as it is not required for sound playback.
 
-**USB (Computer, Mini-B)** - This port connects to the device's internal controller to control sound playback with [Bonsai](bonsai.md) or the [Sound Card GUI](soundcard-gui.md).
+**USB (Computer, Mini-B)** - This port connects to the device's internal controller to control sound playback with [Bonsai](bonsai.md) or the [Sound Card app](app.md).
 
 **CLK IN (Stereo Jack)** - This [Harp](https://harp-tech.org/articles/about.html) clock input port accepts a clock output from any compatible Harp clock generator or synchronizer (e.g. [Timestamp Generator Gen3](https://github.com/harp-tech/device.timestampgeneratorgen3)), which can be used to synchronize the internal clocks of connected devices.
 
