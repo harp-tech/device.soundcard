@@ -424,15 +424,10 @@ public class SoundGenerationViewModel : ViewModelBase
                 _ => Console.WriteLine("Sound waveform sent successfully."),
                 async void (ex) =>
                 {
-                    if (ex is not SoundCardException)
-                        return;
-
                     Console.WriteLine($"Error sending sound waveform: {ex.Message}");
                     // show error dialog to user
                     var messageBoxStandardWindow = MessageBoxManager
-                        .GetMessageBoxStandard("Error sending to device",
-                            $"SoundCard not detected.{Environment.NewLine}{Environment.NewLine}Is it properly connected and configured?",
-                            icon: Icon.Error);
+                        .GetMessageBoxStandard("Error sending to device", ex.Message, icon: Icon.Error);
                     await messageBoxStandardWindow.ShowAsync();
                 });
     }
