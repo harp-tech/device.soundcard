@@ -6,9 +6,10 @@ The Sound Card app is a desktop app for generating and uploading waveforms to th
 > Alternatively, you can play [pure tones](play-sound.md) with the onboard sine wave generator or [upload waveforms in Bonsai](../tutorials/upload-waveform-bonsai.md), which offers greater flexibility and functionality.
 
 Before beginning:
-- Install the [Sound Card app](installation.md?tabs=app#software-packages).
 - Connect an amplifier and speaker to an output channel by following the [audio connection](ports-connections.md?tabs=audio#connections) instructions.
 - Connect the power supply and both USB cables by following the [power and PC connection](ports-connections.md?tabs=powerandpc#connections) instructions. The Sound Card app needs the **USB (Soundbank)** cable to upload sounds.
+- Install the [driver](installation.md?tabs=driver#software-packages).
+- Install the [Sound Card app](installation.md?tabs=app#software-packages).
 - Launch the Sound Card app by running `harp.soundcard` in a terminal.
 
 ![Sound Card app](../images/soundcard-app-labelled.svg)
