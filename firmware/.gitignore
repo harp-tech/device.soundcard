@@ -5,6 +5,7 @@
 bin
 obj
 Debug
+Release
 packages
 *.componentinfo.xml
 .generated_files
