@@ -2,13 +2,20 @@
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
-using LibUsbDotNet.Main;
-using LibUsbDotNet.LibUsb;
+using Harp.SoundCard.Usb;
 
 namespace Harp.SoundCard
 {
     internal class WaveformHelper
     {
+        const ushort VendorId = 0x04D8;
+        const ushort ProductId = 0xEE6A;
+        const int Configuration = 1;
+        const int Interface = 0;
+        const byte WriteEndpoint = 0x01;
+        const byte ReadEndpoint = LibUsb.EndpointIn | 0x01;
+        const uint FlushTimeout = 10;
+
         public static unsafe SoundCardErrorCode WriteSoundWaveform(
             int? deviceIndex,
             int soundIndex,
@@ -20,53 +27,28 @@ namespace Harp.SoundCard
             const int MetadataSize = 2048;
             const int MaxBufferSize = 32768;
 
-            var usbFinder = new UsbDeviceFinder{
-                Vid = 0x04D8,
-                Pid = 0xEE6A
-            };
-
             var usbDeviceIndex = deviceIndex.GetValueOrDefault();
             if (usbDeviceIndex < 0)
             {
                 return SoundCardErrorCode.HarpSoundCardNotDetected;
             }
 
-            using var context = new UsbContext();
-            using var devices = context.FindAll(usbFinder);
-
-            if (devices.Count <= usbDeviceIndex)
+            using var context = UsbContext.Create();
+            using var usbDevice = FindDevice(context, usbDeviceIndex);
+            if (usbDevice == null)
             {
                 return SoundCardErrorCode.HarpSoundCardNotDetected;
             }
 
-            var usbDevice = devices[usbDeviceIndex];
+            using var handle = usbDevice.Open();
+            if (handle.GetConfiguration() != Configuration)
+            {
+                handle.SetConfiguration(Configuration);
+            }
 
+            handle.ClaimInterface(Interface);
             try
             {
-                usbDevice.Open();
-
-                // If this is a "whole" usb device (libusb-win32, linux libusb)
-                // it will have an IUsbDevice interface. If not (WinUSB) the 
-                // variable will be null indicating this is an interface of a 
-                // device.
-                IUsbDevice wholeUsbDevice = usbDevice;
-                if (!ReferenceEquals(wholeUsbDevice, null))
-                {
-                    // This is a "whole" USB device. Before it can be used, 
-                    // the desired configuration and interface must be selected.
-
-                    // Select config #1 only if not active
-                    if (wholeUsbDevice.Configs[0].ConfigurationValue != wholeUsbDevice.Configuration)
-                    {
-                        wholeUsbDevice.SetConfiguration(1);
-                    }
-
-                    // Claim interface #0.
-                    wholeUsbDevice.ClaimInterface(0);
-                }
-
-                var reader = usbDevice.OpenEndpointReader(ReadEndpointID.Ep01);
-                var writer = usbDevice.OpenEndpointWriter(WriteEndpointID.Ep01);
 
                 /*************************************
                  * Create user metadata byte array with 2048 bytes
@@ -151,25 +133,23 @@ namespace Harp.SoundCard
                 /*************************************
                  * Send metadata command and receive reply
                  ************************************/
-                int bytesSent;
-                int bytesRead;
                 int randomReceived;
                 int errorReceived;
-                int writeTimeout = 2000;
-                int readTimeout = 2000;
+                uint writeTimeout = 2000;
+                uint readTimeout = 2000;
                 Random randomInt = new();
                 int randomSent = randomInt.Next();
 
                 using var soundFileStream = new MemoryStream(soundWaveform);
                 Buffer.BlockCopy(BitConverter.GetBytes(randomSent), 0, metadataCmd, 4, sizeof(int));
                 soundFileStream.Read(metadataCmd, metadataCmdDataIndex, MaxBufferSize);
-                reader.ReadFlush();
+                ReadFlush(handle);
 
-                var ec = writer.Write(metadataCmd, 0, metadataCmd.Length, writeTimeout, out bytesSent);
-                if (ec != 0) return SoundCardErrorCode.NotAbleToSendMetadata;
+                if (!TryTransfer(handle, WriteEndpoint, metadataCmd, writeTimeout))
+                    return SoundCardErrorCode.NotAbleToSendMetadata;
 
-                ec = reader.Read(commandReply, readTimeout, out bytesRead);
-                if (ec != 0) return SoundCardErrorCode.NotAbleToReadMetadataCommandReply;
+                if (!TryTransfer(handle, ReadEndpoint, commandReply, readTimeout))
+                    return SoundCardErrorCode.NotAbleToReadMetadataCommandReply;
 
                 randomReceived = BitConverter.ToInt32(commandReply, 4);
                 errorReceived = BitConverter.ToInt32(commandReply, 8);
@@ -200,11 +180,11 @@ namespace Harp.SoundCard
                     Buffer.BlockCopy(BitConverter.GetBytes(++dataIndex), 0, dataCmd, 8, sizeof(int));
                     bytesFromFile = soundFileStream.Read(dataCmd, dataCmdDataIndex, MaxBufferSize);
 
-                    ec = writer.Write(dataCmd, 0, dataCmd.Length, writeTimeout, out bytesSent);
-                    if (ec != 0) return SoundCardErrorCode.NotAbleToSendData;
+                    if (!TryTransfer(handle, WriteEndpoint, dataCmd, writeTimeout))
+                        return SoundCardErrorCode.NotAbleToSendData;
 
-                    ec = reader.Read(commandReply, readTimeout, out bytesRead);
-                    if (ec != 0) return SoundCardErrorCode.NotAbleToReadDataCommandReply;
+                    if (!TryTransfer(handle, ReadEndpoint, commandReply, readTimeout))
+                        return SoundCardErrorCode.NotAbleToReadDataCommandReply;
 
                     randomReceived = BitConverter.ToInt32(commandReply, 4);
                     errorReceived = BitConverter.ToInt32(commandReply, 8);
@@ -228,22 +208,54 @@ namespace Harp.SoundCard
             }
             finally
             {
-                if (usbDevice != null && usbDevice.IsOpen)
-                {
-                    // If this is a "whole" usb device (libusb-win32, linux libusb-1.0)
-                    // it exposes an IUsbDevice interface. If not (WinUSB) the 
-                    // 'wholeUsbDevice' variable will be null indicating this is 
-                    // an interface of a device; it does not require or support 
-                    // configuration and interface selection.
-                    IUsbDevice wholeUsbDevice = usbDevice;
-                    if (!ReferenceEquals(wholeUsbDevice, null))
-                    {
-                        // Release interface #0.
-                        wholeUsbDevice.ReleaseInterface(0);
-                    }
+                handle.ReleaseInterface(Interface);
+            }
+        }
 
-                    usbDevice.Close();
+        static UsbDevice FindDevice(UsbContext context, int index)
+        {
+            UsbDevice result = null;
+            var devices = context.GetDevices();
+            foreach (var device in devices)
+            {
+                var descriptor = device.GetDescriptor();
+                if (result == null && descriptor.idVendor == VendorId && descriptor.idProduct == ProductId && index-- == 0)
+                {
+                    result = device;
                 }
+                else
+                {
+                    device.Dispose();
+                }
+            }
+
+            return result;
+        }
+
+        static bool TryTransfer(UsbDeviceHandle handle, byte endpoint, byte[] data, uint timeout)
+        {
+            try
+            {
+                handle.BulkTransfer(endpoint, data, data.Length, timeout);
+                return true;
+            }
+            catch (UsbException)
+            {
+                return false;
+            }
+        }
+
+        static void ReadFlush(UsbDeviceHandle handle)
+        {
+            var buffer = new byte[512];
+            try
+            {
+                while (handle.BulkTransfer(ReadEndpoint, buffer, buffer.Length, FlushTimeout) > 0)
+                {
+                }
+            }
+            catch (UsbException ex) when (ex.ErrorCode == LibUsb.ErrorTimeout)
+            {
             }
         }
     }

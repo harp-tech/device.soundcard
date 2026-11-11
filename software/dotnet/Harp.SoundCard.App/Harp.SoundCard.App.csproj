@@ -58,10 +58,16 @@
 
   <ItemGroup>
     <PackageReference Include="Avalonia.Desktop" Version="$(AvaloniaVersion)" />
+    <PackageReference Include="libusb.runtime" Version="1.0.27" GeneratePathProperty="true" />
     <PackageReference Condition="$(RuntimeIdentifier.StartsWith('osx'))" Include="NeoBundle" Version="1.0.3.1" ExcludeAssets="build;buildTransitive" GeneratePathProperty="true" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Harp.SoundCard.Design\Harp.SoundCard.Design.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="$(Pkglibusb_runtime)\NOTICE.txt" Link="licenses\libusb\NOTICE.txt" CopyToOutputDirectory="PreserveNewest" Visible="false" />
+    <None Include="$(Pkglibusb_runtime)\LICENSE" Link="licenses\libusb\LICENSE" CopyToOutputDirectory="PreserveNewest" Visible="false" />
   </ItemGroup>
 </Project>
