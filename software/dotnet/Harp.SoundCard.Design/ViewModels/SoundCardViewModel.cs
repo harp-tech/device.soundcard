@@ -63,22 +63,22 @@ public class SoundCardViewModel : ViewModelBase
     [Reactive] public ushort[] AttenuationBoth { get; set; } = new ushort[2];
     [Reactive] public ushort[] AttenuationStart { get; set; } = new ushort[3];
     [Reactive] public DigitalInputs InputState { get; set; }
-    [Reactive] public DigitalInputConfiguration ConfigureDI0 { get; set; }
-    [Reactive] public DigitalInputConfiguration ConfigureDI1 { get; set; }
+    [Reactive] public DIMode ConfigureDI0 { get; set; }
+    [Reactive] public DIMode ConfigureDI1 { get; set; }
     [Reactive] public ushort StartOnDI0 { get; set; }
     [Reactive] public ushort StartOnDI1 { get; set; }
     [Reactive] public ushort AttenuationLeftDI0 { get; set; }
     [Reactive] public ushort AttenuationLeftDI1 { get; set; }
     [Reactive] public ushort AttenuationRightDI0 { get; set; }
     [Reactive] public ushort AttenuationRightDI1 { get; set; }
-    [Reactive] public DigitalOutputConfiguration ConfigureDO0 { get; set; }
-    [Reactive] public DigitalOutputConfiguration ConfigureDO1 { get; set; }
-    [Reactive] public DigitalOutputConfiguration ConfigureDO2 { get; set; }
+    [Reactive] public DOMode ConfigureDO0 { get; set; }
+    [Reactive] public DOMode ConfigureDO1 { get; set; }
+    [Reactive] public DOMode ConfigureDO2 { get; set; }
     [Reactive] public DigitalOutputs OutputSet { get; set; }
     [Reactive] public DigitalOutputs OutputClear { get; set; }
     [Reactive] public DigitalOutputs OutputToggle { get; set; }
     [Reactive] public DigitalOutputs OutputState { get; set; }
-    [Reactive] public AdcControlStateConfiguration EnableAdcControlState { get; set; }
+    [Reactive] public EnableFlag EnableAdcControlState { get; set; }
     [Reactive] public AdcControlStatePayload AdcControlState { get; set; }
 
     #endregion
