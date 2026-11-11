@@ -6,11 +6,22 @@ This page covers the software you'll need to interact with the Sound Card, as we
 
 These steps are only required the first time you connect the device to a new computer, and you can install just the packages for the functionality you need.
 
+# [Driver](#tab/driver)
+
+The WinUSB driver is required to upload waveforms to the onboard sound memory bank.
+
+![Zadig binding WinUSB driver](../images/installation-zadig.jpg){width=575}
+
+- Download and launch [Zadig](https://zadig.akeo.ie/).
+- Connect the [USB (Soundbank)](ports-connections.md) cable to the computer.
+- Select "Harp Sound Card" from the list. If the device is not available, go to "Options" > "List All Devices".
+- Select the "WinUSB" driver and click "Install Driver".
+
 # [App](#tab/app)
 
 The [Sound Card app](app.md) is a desktop app for generating and uploading waveforms to the device without using Bonsai. It is distributed as a [.NET tool](https://learn.microsoft.com/dotnet/core/tools/global-tools).
 
-![Sound Card app](../images/soundcard-app.jpg){width=600}
+![Sound Card app](../images/soundcard-app.png){width=600}
 
 - Download and install the [.NET SDK](https://dotnet.microsoft.com/download), version 8 or later.
 - Install the Sound Card app from a terminal with:
@@ -23,17 +34,6 @@ To update the Sound Card app to the latest release, run `dotnet tool update -g H
 
 > [!NOTE]
 > Alternatively, waveforms can be [generated and uploaded in Bonsai](../tutorials/upload-waveform-bonsai.md).
-
-# [Driver](#tab/driver)
-
-The WinUSB driver is required to upload waveforms to the onboard sound memory bank.
-
-![Zadig binding WinUSB driver](../images/installation-zadig.jpg){width=575}
-
-- Download and launch [Zadig](https://zadig.akeo.ie/).
-- Connect the [USB (Soundbank)](ports-connections.md) cable to the computer.
-- Select "Harp Sound Card" from the list. If the device is not available, go to "Options" > "List All Devices".
-- Select the "WinUSB" driver and click "Install Driver".
 
 # [Bonsai](#tab/bonsai)
 
