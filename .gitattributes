@@ -1,3 +1,16 @@
 * text=auto
-*.cs text
-*.csproj text
+
+# Line endings required
+*.cmd text eol=crlf
+*.sh text eol=lf
+
+# Language diffs
+*.md diff=markdown
+*.cs diff=csharp
+*.c diff=cpp
+*.h diff=cpp
+*.cpp diff=cpp
+*.py diff=python
+
+# Known formats
+*.svg text
