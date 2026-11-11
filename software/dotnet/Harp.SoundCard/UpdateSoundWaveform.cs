@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Reactive.Linq;
 using Bonsai;
+using Bonsai.Harp;
 using OpenCV.Net;
 
 namespace Harp.SoundCard
@@ -11,7 +12,8 @@ namespace Harp.SoundCard
     /// SoundCard device with each of the sample buffers in the sequence.
     /// </summary>
     [Description("Replaces the specified sound waveform in the SoundCard device with each of the sample buffers in the sequence.")]
-    public class UpdateSoundWaveform : Sink<byte[]>
+    [TypeDescriptionProvider(typeof(DeviceTypeDescriptionProvider<UpdateSoundWaveform>))]
+    public class UpdateSoundWaveform : Sink<byte[]>, INamedElement
     {
         /// <summary>
         /// Gets or sets the index of the SoundCard device to update. If no index
@@ -34,6 +36,16 @@ namespace Harp.SoundCard
         /// </summary>
         [Description("The name of the sound to be stored in the device. This field is optional.")]
         public string SoundName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the description of the sound to be stored in the device.
+        /// This field is optional.
+        /// </summary>
+        [Editor(DesignTypes.MultilineStringEditor, DesignTypes.UITypeEditor)]
+        [Description("The description of the sound to be stored in the device. This field is optional.")]
+        public string Description { get; set; }
+
+        string INamedElement.Name => SoundName;
 
         /// <summary>
         /// Gets or sets a value specifying the sample rate used to playback the
@@ -59,7 +71,7 @@ namespace Harp.SoundCard
         {
             return source.Do(value =>
             {
-                UpdateWaveform(DeviceIndex, SoundIndex, SampleRate, SampleType.Int32, value, SoundName);
+                UpdateWaveform(DeviceIndex, SoundIndex, SampleRate, SampleType.Int32, value, SoundName, Description);
             });
         }
 
@@ -107,7 +119,7 @@ namespace Harp.SoundCard
                     else CV.Transpose(value, waveformHeader);
                 }
 
-                UpdateWaveform(DeviceIndex, SoundIndex, SampleRate, SampleType.Int32, soundWaveform, SoundName);
+                UpdateWaveform(DeviceIndex, SoundIndex, SampleRate, SampleType.Int32, soundWaveform, SoundName, Description);
             });
         }
 
@@ -117,9 +129,10 @@ namespace Harp.SoundCard
             SampleRate sampleRate,
             SampleType sampleType,
             byte[] soundWaveform,
-            string soundName = null)
+            string soundName,
+            string description)
         {
-            var errorCode = WaveformHelper.WriteSoundWaveform(deviceIndex, soundIndex, sampleRate, sampleType, soundWaveform, soundName);
+            var errorCode = WaveformHelper.WriteSoundWaveform(deviceIndex, soundIndex, sampleRate, sampleType, soundWaveform, soundName, description);
             if (errorCode != SoundCardErrorCode.Ok)
             {
                 SoundCardErrorHelper.ThrowExceptionForErrorCode(errorCode);
