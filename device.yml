@@ -4,7 +4,7 @@
 device: SoundCard
 whoAmI: 1280
 firmwareVersion: "3.0"
-hardwareTargets: "1.1"
+hardwareTargets: "2.2"
 registers:
   Start:
     address: 32
