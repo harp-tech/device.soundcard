@@ -20,6 +20,8 @@ namespace Harp.SoundCard
         const int MinSoundIndex = 2;
         const int MaxSoundIndex = 31;
         const int UserMetadataSize = 2048;
+        const int SoundNameSize = 170;
+        const int DescriptionSize = UserMetadataSize - SoundNameSize;
         const int ReadMetadataReplyHeaderSize = 28;
 
         public static unsafe SoundCardErrorCode WriteSoundWaveform(
@@ -28,10 +30,16 @@ namespace Harp.SoundCard
             SampleRate sampleRate,
             SampleType sampleType,
             byte[] soundWaveform,
-            string soundName = null)
+            string soundName = null,
+            string description = null)
         {
-            const int MetadataSize = 2048;
             const int MaxBufferSize = 32768;
+
+            /* [0:169]    sound name  */
+            /* [170:2047] description */
+            var userMetadata = new byte[UserMetadataSize];
+            WriteString(soundName, userMetadata, 0, SoundNameSize, nameof(soundName));
+            WriteString(description, userMetadata, SoundNameSize, DescriptionSize, nameof(description));
 
             var usbDeviceIndex = deviceIndex.GetValueOrDefault();
             if (usbDeviceIndex < 0)
@@ -48,22 +56,6 @@ namespace Harp.SoundCard
 
             try
             {
-
-                /*************************************
-                 * Create user metadata byte array with 2048 bytes
-                 ************************************/
-                /* [0:169]     sound_filename               */
-                /* [170:339]   metadata_filename            */
-                /* [340:511]   description_filename         */
-                /* [512:1535]  metadata_filename content    */
-                /* [1536:2047] description_filename content */
-
-                var userMetadata = new byte[MetadataSize];
-                if (!string.IsNullOrEmpty(soundName))
-                {
-                    Buffer.BlockCopy(Encoding.ASCII.GetBytes(soundName), 0, userMetadata, 0, soundName.Length);
-                }
-
                 /*************************************
                  * Build sound header
                  ************************************/
@@ -86,7 +78,7 @@ namespace Harp.SoundCard
                  ************************************/
                 /* Metadata command lenght: 'c' 'm' 'd' '0x80' + random + metadata  + 32768 + 2048 + 'f' */
                 /* Data command lenght:     'c' 'm' 'd' '0x81' + random + dataIndex + 32768 + 'f'        */
-                var metadataCmd = new byte[4 + sizeof(int) + sizeof(WaveformHeader) + MaxBufferSize + MetadataSize + 1];
+                var metadataCmd = new byte[4 + sizeof(int) + sizeof(WaveformHeader) + MaxBufferSize + UserMetadataSize + 1];
                 var dataCmd = new byte[4 + sizeof(int) + sizeof(int) + MaxBufferSize + 1];
 
                 int metadataCmdDataIndex = 4 + sizeof(int) + sizeof(WaveformHeader);
@@ -304,36 +296,28 @@ namespace Harp.SoundCard
 
         static SoundMetadata ParseSoundMetadata(int index, byte[] reply)
         {
-            /* [0:169]     sound_filename               */
-            /* [170:339]   metadata_filename            */
-            /* [340:511]   description_filename         */
-            /* [512:1535]  metadata_filename content    */
-            /* [1536:2047] description_filename content */
-            const int MetadataNameOffset = ReadMetadataReplyHeaderSize + 170;
-            const int DescriptionNameOffset = ReadMetadataReplyHeaderSize + 340;
-            const int MetadataOffset = ReadMetadataReplyHeaderSize + 512;
-            const int MetadataSize = 1024;
-            const int DescriptionOffset = ReadMetadataReplyHeaderSize + 1536;
-            const int DescriptionSize = 512;
-
-            byte[] metadata = null;
-            if (reply[MetadataNameOffset] != 0)
-            {
-                metadata = new byte[MetadataSize];
-                Buffer.BlockCopy(reply, MetadataOffset, metadata, 0, MetadataSize);
-            }
-
-            var description = reply[DescriptionNameOffset] != 0
-                ? ReadString(reply, DescriptionOffset, DescriptionSize)
-                : null;
-
             return new SoundMetadata(
                 index,
-                ReadString(reply, ReadMetadataReplyHeaderSize, 170),
+                ReadString(reply, ReadMetadataReplyHeaderSize, SoundNameSize),
                 BitConverter.ToInt32(reply, 16),
                 (SampleRate)BitConverter.ToInt32(reply, 20),
-                metadata,
-                description);
+                ReadString(reply, ReadMetadataReplyHeaderSize + SoundNameSize, DescriptionSize));
+        }
+
+        static void WriteString(string value, byte[] buffer, int offset, int count, string paramName)
+        {
+            if (string.IsNullOrEmpty(value))
+            {
+                return;
+            }
+
+            var bytes = Encoding.ASCII.GetBytes(value);
+            if (bytes.Length > count)
+            {
+                throw new ArgumentException($"The text cannot be longer than {count} characters.", paramName);
+            }
+
+            Buffer.BlockCopy(bytes, 0, buffer, offset, bytes.Length);
         }
 
         static string ReadString(byte[] buffer, int offset, int count)

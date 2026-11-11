@@ -10,14 +10,12 @@
             string soundName,
             int soundLength,
             SampleRate sampleRate,
-            byte[] userMetadata,
             string description)
         {
             SoundIndex = soundIndex;
             SoundName = soundName;
             SoundLength = soundLength;
             SampleRate = sampleRate;
-            UserMetadata = userMetadata;
             Description = description;
         }
 
@@ -42,13 +40,7 @@
         public SampleRate SampleRate { get; }
 
         /// <summary>
-        /// Gets the user metadata stored with the sound, or <see langword="null"/> if none
-        /// was stored.
-        /// </summary>
-        public byte[] UserMetadata { get; }
-
-        /// <summary>
-        /// Gets the description stored with the sound, or <see langword="null"/> if none
+        /// Gets the description stored with the sound, or an empty string if no description
         /// was stored.
         /// </summary>
         public string Description { get; }
