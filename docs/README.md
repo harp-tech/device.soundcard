@@ -1,90 +1,25 @@
-## Harp Soundcard
-This is a high performance sound card with two output channels using 24 bits DACs at 192kHz sample rate. 
+# Harp Sound Card
 
-![HarpSoundcard](./images/pcb.png)
+The Harp Sound Card is a high-fidelity audio device for behavioral neuroscience experiments. It plays stereo waveforms stored in its onboard memory, at 24-bit resolution and a sampling rate of up to 192 kHz, and pure tones from an internal sine wave generator. It starts sounds with low latency, from software or from TTL signals on its digital inputs, and timestamps each one on its hardware clock. It pairs with the Harp Audio Amplifier to drive speakers.
 
+![Harp Sound Card](./images/soundcard-landing.svg)
 
-### Hardware Compatibility
+## Documentation
 
-| HW Version | Board                    | Board HW Version  | Notes                             |
-| ---------- | ------------------------ |------------------ | --------------------------------- |
-| **All**    | [Peripheral.AudioAmp][1] | >= 2.0            |                                   |
+The [device documentation](https://harp-tech.org/device.soundcard) covers the specifications, setting up the device, installing the software, examples for each feature, and the register reference.
 
-[1]: https://github.com/harp-tech/peripheral.audioamp
+## Software
 
-### Firmware Compatibility
+The device can be used from [Bonsai](https://bonsai-rx.org/) through the `Harp.SoundCard` package. The Sound Card app is a desktop app for generating waveforms and uploading them to the device without using Bonsai. The [installation](https://harp-tech.org/device.soundcard/articles/installation.html) page describes how to install each of them, along with the driver needed to upload sounds.
 
-| FW Version | Board                 | Board HW Version | Notes                                   |
-| ---------- | --------------------- | ---------------- | --------------------------------------- |
-| **>= 2.2** | [Device.SoundCard][2] | >= 1.0           | Bpod serial communication not supported |
-| **<= 2.2** | [Device.SoundCard][2] | >= 1.0           |                                         |
+## Repository layout
 
-[2]: https://github.com/harp-tech/device.soundcard
+- `device.yml` describes the registers of the device. The .NET interface is generated from it.
+- `firmware` holds the firmware of the device, for both of its microcontrollers.
+- `hardware` holds the PCB and mechanical design files.
+- `software` holds the .NET packages, including the Bonsai package and the app.
+- `docs` holds the documentation site.
 
-### Key Features ###
+## Licensing
 
-* Internal memory to store sounds, enabling low-latency sound delivery
-* Pre-selected sounds can be triggered using an external TTL
-* Internal wave generator allows the user to configure a pure tone without loading a sound file
-* Stereo 24 bit @ 192 kHz maximum sampling rate outputs
-* THD: -111dB (1 kHz @ 2 V rms)
-* Noise Floor:	20 µV rms | -94 dB (20 Hz – 80 kHz)
-* SNR:	100 dB | 113 dbA (20 Hz – 80 kHz @ 2 V rms)
-
-
-### Connectivity ###
-
-* 1x clock sync input (CLKIN) [stereo jack]
-* 1x USB (for computer communication) [USB Mini-B]
-* 1x micro USB (for sounds loading) [USB Micro-B]
-* 1x 12V supply [barrel connector jack]
-* 1x reset button [tactile switch]
-* 1x output for the left channel [RCA]
-* 1x output for the right channel [RCA]
-* 3x general purpose digital outputs (3.3V or 5V) (OUT0-OUT2) [screw terminal]
-* 3x general purpose digital inputs (5V tolerant) (IN0-IN2) [screw terminal]
-* 2x analog inputs (3.3V máx - 5V tolerant) (ADC0-ADC1) [screw terminal]
-
-
-## Interface ##
-
-The interface with the Harp Soundcard can be done through [Bonsai](https://bonsai-rx.org/) or a dedicated GUI (Graphical User Interface).
-
-### Install Drivers ###
-
-To install the proper drivers to interface with the device, follow the next steps in sequence.
-
-1 - Connect both Harp Sound Card's USB ports to the computer.
-
-2 - Launch the previously installed Harp Sound Card GUI.
-
-3 - Click on the button Open Drivers folder and launch the zadig-2.3.exe.
-
-4 - (1) Select the Harp Sound Card from the list. If the device is not available, go to Options -> List All Devices.
-
-5 - (2) Select the WinUSB driver and click Install WCID Driver.
-
-![Zadig](./images/zadig.png)
-
-
-## Firmware ##
-
-### Tagging Scheme ###
-
-|Tag|Description|
-|-|-|
-|SoundCard-*|Firmware for the sound card's microcontroller (8 bits processor)|
-|SoundCard.PIC32-*|Firmware for the sound card's 32 bits processor|
-
-### Firmware Update ###
-
-1 - Install the [Harp Converto to CSV](https://bitbucket.org/fchampalimaud/downloads/downloads/Harp_Convert_To_CSV_v1.8.3.zip).
-
-2 - Open the Harp Convert to CSV application and write *bootloader* under List box on the Options tab
-
-3 - Select the correspondent COM port and then select the firmware to be loaded for both microcontrollers 
-
-
-# Licensing #
-
-Each subdirectory will contain a license or, possibly, a set of licenses if it involves both hardware and software.
+Each part of this repository is released under its own license. The `LICENSE` file at the root of the repository lists the licenses that apply to each folder.
