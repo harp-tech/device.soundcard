@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -15,6 +16,11 @@ namespace Harp.SoundCard
         const byte WriteEndpoint = 0x01;
         const byte ReadEndpoint = LibUsb.EndpointIn | 0x01;
         const uint FlushTimeout = 10;
+        const uint TransferTimeout = 2000;
+        const int MinSoundIndex = 2;
+        const int MaxSoundIndex = 31;
+        const int UserMetadataSize = 2048;
+        const int ReadMetadataReplyHeaderSize = 28;
 
         public static unsafe SoundCardErrorCode WriteSoundWaveform(
             int? deviceIndex,
@@ -34,19 +40,12 @@ namespace Harp.SoundCard
             }
 
             using var context = UsbContext.Create();
-            using var usbDevice = FindDevice(context, usbDeviceIndex);
-            if (usbDevice == null)
+            using var handle = OpenDevice(context, usbDeviceIndex);
+            if (handle == null)
             {
                 return SoundCardErrorCode.HarpSoundCardNotDetected;
             }
 
-            using var handle = usbDevice.Open();
-            if (handle.GetConfiguration() != Configuration)
-            {
-                handle.SetConfiguration(Configuration);
-            }
-
-            handle.ClaimInterface(Interface);
             try
             {
 
@@ -68,16 +67,16 @@ namespace Harp.SoundCard
                 /*************************************
                  * Build sound header
                  ************************************/
-                SoundMetadata soundMetadata;
-                soundMetadata.SoundIndex = soundIndex;
-                soundMetadata.SoundLength = soundWaveform.Length / 4;
-                soundMetadata.SampleRate = sampleRate;
-                soundMetadata.SampleType = sampleType;
+                WaveformHeader waveformHeader;
+                waveformHeader.SoundIndex = soundIndex;
+                waveformHeader.SoundLength = soundWaveform.Length / 4;
+                waveformHeader.SampleRate = sampleRate;
+                waveformHeader.SampleType = sampleType;
 
                 /*************************************
                  * Create auxiliary parameters
                  ************************************/
-                long soundFileSizeInSamples = soundMetadata.SoundLength;
+                long soundFileSizeInSamples = waveformHeader.SoundLength;
                 int commandsToBeSent = (int)(
                     soundFileSizeInSamples * 4 / MaxBufferSize +
                     (((soundFileSizeInSamples * 4 % MaxBufferSize) != 0) ? 1 : 0));
@@ -87,10 +86,10 @@ namespace Harp.SoundCard
                  ************************************/
                 /* Metadata command lenght: 'c' 'm' 'd' '0x80' + random + metadata  + 32768 + 2048 + 'f' */
                 /* Data command lenght:     'c' 'm' 'd' '0x81' + random + dataIndex + 32768 + 'f'        */
-                var metadataCmd = new byte[4 + sizeof(int) + sizeof(SoundMetadata) + MaxBufferSize + MetadataSize + 1];
+                var metadataCmd = new byte[4 + sizeof(int) + sizeof(WaveformHeader) + MaxBufferSize + MetadataSize + 1];
                 var dataCmd = new byte[4 + sizeof(int) + sizeof(int) + MaxBufferSize + 1];
 
-                int metadataCmdDataIndex = 4 + sizeof(int) + sizeof(SoundMetadata);
+                int metadataCmdDataIndex = 4 + sizeof(int) + sizeof(WaveformHeader);
                 int dataCmdDataIndex = 4 + sizeof(int) + sizeof(int);
 
                 byte metadataCmdHeader = 0x80;
@@ -107,7 +106,7 @@ namespace Harp.SoundCard
                 /*************************************
                  * Prepare metadata command
                  ************************************/
-                var soundMetadataValidation = soundMetadata.Validate();
+                var soundMetadataValidation = waveformHeader.Validate();
                 if (soundMetadataValidation != SoundCardErrorCode.Ok)
                 {
                     return soundMetadataValidation;
@@ -117,8 +116,8 @@ namespace Harp.SoundCard
                 metadataCmd[1] = Convert.ToByte('m');
                 metadataCmd[2] = Convert.ToByte('d');
                 metadataCmd[3] = metadataCmdHeader;
-                Marshal.Copy(new IntPtr(&soundMetadata), metadataCmd, 8, sizeof(SoundMetadata));
-                Buffer.BlockCopy(userMetadata, 0, metadataCmd, 8 + sizeof(SoundMetadata) + MaxBufferSize, userMetadata.Length);
+                Marshal.Copy(new IntPtr(&waveformHeader), metadataCmd, 8, sizeof(WaveformHeader));
+                Buffer.BlockCopy(userMetadata, 0, metadataCmd, 8 + sizeof(WaveformHeader) + MaxBufferSize, userMetadata.Length);
                 metadataCmd[metadataCmd.Length - 1] = Convert.ToByte('f');
 
                 /*************************************
@@ -165,7 +164,7 @@ namespace Harp.SoundCard
 
                 if ((SoundCardErrorCode)errorReceived != SoundCardErrorCode.Ok)
                 {
-                    return soundMetadata.Validate();
+                    return waveformHeader.Validate();
                 }
 
                 /*************************************
@@ -200,7 +199,7 @@ namespace Harp.SoundCard
 
                     if ((SoundCardErrorCode)errorReceived != SoundCardErrorCode.Ok)
                     {
-                        return soundMetadata.Validate();
+                        return waveformHeader.Validate();
                     }
                 }
 
@@ -209,6 +208,164 @@ namespace Harp.SoundCard
             finally
             {
                 handle.ReleaseInterface(Interface);
+            }
+        }
+
+        public static SoundCardErrorCode ReadSoundMetadata(int? deviceIndex, int? soundIndex, List<SoundMetadata> sounds)
+        {
+            var usbDeviceIndex = deviceIndex.GetValueOrDefault();
+            if (usbDeviceIndex < 0)
+            {
+                return SoundCardErrorCode.HarpSoundCardNotDetected;
+            }
+
+            if (soundIndex < MinSoundIndex || soundIndex > MaxSoundIndex)
+            {
+                return SoundCardErrorCode.BadSoundIndex;
+            }
+
+            using var context = UsbContext.Create();
+            using var handle = OpenDevice(context, usbDeviceIndex);
+            if (handle == null)
+            {
+                return SoundCardErrorCode.HarpSoundCardNotDetected;
+            }
+
+            try
+            {
+                var reply = new byte[ReadMetadataReplyHeaderSize + UserMetadataSize];
+                var firstIndex = soundIndex ?? MinSoundIndex;
+                var errorCode = ReadMetadata(handle, firstIndex, reply);
+                if (errorCode != SoundCardErrorCode.Ok)
+                {
+                    return errorCode;
+                }
+
+                var storedSounds = BitConverter.ToUInt32(reply, 12);
+                var lastIndex = soundIndex ?? MaxSoundIndex;
+                for (int index = firstIndex; index <= lastIndex; index++)
+                {
+                    if ((storedSounds & (1u << index)) == 0)
+                    {
+                        continue;
+                    }
+
+                    if (index != firstIndex)
+                    {
+                        errorCode = ReadMetadata(handle, index, reply);
+                        if (errorCode != SoundCardErrorCode.Ok)
+                        {
+                            return errorCode;
+                        }
+                    }
+
+                    sounds.Add(ParseSoundMetadata(index, reply));
+                }
+
+                return SoundCardErrorCode.Ok;
+            }
+            finally
+            {
+                handle.ReleaseInterface(Interface);
+            }
+        }
+
+        static SoundCardErrorCode ReadMetadata(UsbDeviceHandle handle, int index, byte[] reply)
+        {
+            /* Read metadata command: 'c' 'm' 'd' '0x84' + random + soundIndex + 'f' */
+            /* Read metadata reply:   'c' 'm' 'd' '0x84' + random + error + storedSounds + soundLength + sampleRate + sampleType + 2048 */
+            var command = new byte[4 + sizeof(int) + sizeof(int) + 1];
+            command[0] = Convert.ToByte('c');
+            command[1] = Convert.ToByte('m');
+            command[2] = Convert.ToByte('d');
+            command[3] = 0x84;
+            var randomSent = new Random().Next();
+            Buffer.BlockCopy(BitConverter.GetBytes(randomSent), 0, command, 4, sizeof(int));
+            Buffer.BlockCopy(BitConverter.GetBytes(index), 0, command, 8, sizeof(int));
+            command[command.Length - 1] = Convert.ToByte('f');
+
+            ReadFlush(handle);
+            if (!TryTransfer(handle, WriteEndpoint, command, TransferTimeout))
+                return SoundCardErrorCode.NotAbleToSendReadMetadata;
+
+            if (!TryTransfer(handle, ReadEndpoint, reply, TransferTimeout))
+                return SoundCardErrorCode.NotAbleToReadReadMetadataCommandRepply;
+
+            for (int i = 0; i < 8; i++)
+            {
+                if (command[i] != reply[i])
+                {
+                    return SoundCardErrorCode.ReadMetadataCommandReplyNotCorrect;
+                }
+            }
+
+            return (SoundCardErrorCode)BitConverter.ToInt32(reply, 8);
+        }
+
+        static SoundMetadata ParseSoundMetadata(int index, byte[] reply)
+        {
+            /* [0:169]     sound_filename               */
+            /* [170:339]   metadata_filename            */
+            /* [340:511]   description_filename         */
+            /* [512:1535]  metadata_filename content    */
+            /* [1536:2047] description_filename content */
+            const int MetadataNameOffset = ReadMetadataReplyHeaderSize + 170;
+            const int DescriptionNameOffset = ReadMetadataReplyHeaderSize + 340;
+            const int MetadataOffset = ReadMetadataReplyHeaderSize + 512;
+            const int MetadataSize = 1024;
+            const int DescriptionOffset = ReadMetadataReplyHeaderSize + 1536;
+            const int DescriptionSize = 512;
+
+            byte[] metadata = null;
+            if (reply[MetadataNameOffset] != 0)
+            {
+                metadata = new byte[MetadataSize];
+                Buffer.BlockCopy(reply, MetadataOffset, metadata, 0, MetadataSize);
+            }
+
+            var description = reply[DescriptionNameOffset] != 0
+                ? ReadString(reply, DescriptionOffset, DescriptionSize)
+                : null;
+
+            return new SoundMetadata(
+                index,
+                ReadString(reply, ReadMetadataReplyHeaderSize, 170),
+                BitConverter.ToInt32(reply, 16),
+                (SampleRate)BitConverter.ToInt32(reply, 20),
+                metadata,
+                description);
+        }
+
+        static string ReadString(byte[] buffer, int offset, int count)
+        {
+            var text = Encoding.ASCII.GetString(buffer, offset, count);
+            var end = text.IndexOf('\0');
+            return end < 0 ? text : text.Substring(0, end);
+        }
+
+        static UsbDeviceHandle OpenDevice(UsbContext context, int index)
+        {
+            using var device = FindDevice(context, index);
+            if (device == null)
+            {
+                return null;
+            }
+
+            var handle = device.Open();
+            try
+            {
+                if (handle.GetConfiguration() != Configuration)
+                {
+                    handle.SetConfiguration(Configuration);
+                }
+
+                handle.ClaimInterface(Interface);
+                return handle;
+            }
+            catch
+            {
+                handle.Dispose();
+                throw;
             }
         }
 

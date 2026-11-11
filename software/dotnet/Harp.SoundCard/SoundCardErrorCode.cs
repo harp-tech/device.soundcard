@@ -37,7 +37,7 @@
             switch (code)
             {
                 case SoundCardErrorCode.Ok:
-                default: return;
+                    return;
 
                 case SoundCardErrorCode.BadUserInput:
                     throw new SoundCardException(
@@ -67,6 +67,15 @@
                 case SoundCardErrorCode.DataCommandReplyNotCorrect:
                     throw new SoundCardException("Data command reply received is not correct.");
 
+                case SoundCardErrorCode.NotAbleToSendReadMetadata:
+                    throw new SoundCardException("Not able to start comunication and request the stored sounds.");
+
+                case SoundCardErrorCode.NotAbleToReadReadMetadataCommandRepply:
+                    throw new SoundCardException("Stored sounds reply not received.");
+
+                case SoundCardErrorCode.ReadMetadataCommandReplyNotCorrect:
+                    throw new SoundCardException("Stored sounds reply received is not correct.");
+
                 case SoundCardErrorCode.BadSoundIndex:
                     throw new SoundCardException("Sound index not correct. Must be beween 0 and 32.");
 
@@ -93,6 +102,9 @@
 
                 case SoundCardErrorCode.NotAbleToOpenFile:
                     throw new SoundCardException("File doesn't exist or is empty.");
+
+                default:
+                    throw new SoundCardException($"The sound card reported error {(int)code}.");
             }
         }
     }

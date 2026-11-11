@@ -1,53 +1,62 @@
-﻿using System.Runtime.InteropServices;
-
-namespace Harp.SoundCard
+﻿namespace Harp.SoundCard
 {
-    [StructLayout(LayoutKind.Sequential)]
-    internal struct SoundMetadata
+    /// <summary>
+    /// Represents the metadata of a sound in the SoundCard device.
+    /// </summary>
+    public class SoundMetadata
     {
-        public int SoundIndex;
-        public int SoundLength;
-        public SampleRate SampleRate;
-        public SampleType SampleType;
-
-        internal readonly SoundCardErrorCode Validate()
+        internal SoundMetadata(
+            int soundIndex,
+            string soundName,
+            int soundLength,
+            SampleRate sampleRate,
+            byte[] userMetadata,
+            string description)
         {
-            if (SoundIndex < 2 || SoundIndex > 32)
-            {
-                return SoundCardErrorCode.BadSoundIndex;
-            }
+            SoundIndex = soundIndex;
+            SoundName = soundName;
+            SoundLength = soundLength;
+            SampleRate = sampleRate;
+            UserMetadata = userMetadata;
+            Description = description;
+        }
 
-            if (SoundLength < 16)
-            {
-                return SoundCardErrorCode.BadSoundLength;
-            }
+        /// <summary>
+        /// Gets the index of the sound in the device.
+        /// </summary>
+        public int SoundIndex { get; }
 
-            if (SampleRate != SampleRate.SampleRate96000Hz && SampleRate != SampleRate.SampleRate192000Hz)
-            {
-                return SoundCardErrorCode.BadSampleRate;
-            }
+        /// <summary>
+        /// Gets the name stored with the sound, or an empty string if no name was stored.
+        /// </summary>
+        public string SoundName { get; }
 
-            if (SampleType != SampleType.Int32 && SampleType != SampleType.Float32)
-            {
-                return SoundCardErrorCode.BadDataType;
-            }
+        /// <summary>
+        /// Gets the number of 32-bit samples in the sound, counting both channels.
+        /// </summary>
+        public int SoundLength { get; }
 
-            if (SoundIndex == 0 && SampleType != SampleType.Float32)
-            {
-                return SoundCardErrorCode.DataTypeDoNotMatch;
-            }
+        /// <summary>
+        /// Gets the sample rate used to play back the sound.
+        /// </summary>
+        public SampleRate SampleRate { get; }
 
-            if (SoundIndex == 1 && SampleType != SampleType.Float32)
-            {
-                return SoundCardErrorCode.DataTypeDoNotMatch;
-            }
+        /// <summary>
+        /// Gets the user metadata stored with the sound, or <see langword="null"/> if none
+        /// was stored.
+        /// </summary>
+        public byte[] UserMetadata { get; }
 
-            if (SoundIndex > 1 && SampleType != SampleType.Int32)
-            {
-                return SoundCardErrorCode.DataTypeDoNotMatch;
-            }
+        /// <summary>
+        /// Gets the description stored with the sound, or <see langword="null"/> if none
+        /// was stored.
+        /// </summary>
+        public string Description { get; }
 
-            return SoundCardErrorCode.Ok;
+        /// <inheritdoc/>
+        public override string ToString()
+        {
+            return $"{SoundIndex}: {SoundName} ({SoundLength} samples, {SampleRate})";
         }
     }
 }
