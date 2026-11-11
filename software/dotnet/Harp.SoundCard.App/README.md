@@ -1,15 +1,11 @@
 # Harp.SoundCard.App
 
-This repository contains the SoundCard GUI application for device configuration, developed by the Hardware & Software
-Platform at the Champalimaud Foundation.
-
-The SoundCard is a Harp device with all the inherent functionalities of Harp devices.
+The Harp SoundCard GUI application can be used to configure and test Harp SoundCard devices.
 
 The GUI was developed using [.NET](https://dotnet.microsoft.com/), [AvaloniaUI](https://avaloniaui.net/) with ReactiveUI
 and makes direct use of the [Bonsai.Harp](https://github.com/bonsai-rx/harp) library.
 
-As with other Harp devices, the Soundcard can also be used in [Bonsai](bonsai-rx.org/) using
-the [Harp.SoundCard](https://github.com/harp-tech/device.soundcard) package.
+As with other Harp devices, the SoundCard can also be used in [Bonsai](https://bonsai-rx.org/).
 
 ## Installation
 
@@ -97,23 +93,3 @@ Then run the following commands to build the tar.gz package:
 dotnet restore -r linux-x64 -p:TargetFramework=net8.0
 dotnet msbuild -p:RuntimeIdentifier=linux-x64 -property:Configuration=Release -p:UseAppHost=true -p:TargetFramework=net8.0 /t:CreateTarball
 ```
-
-## Roadmap
-
-See the [open issues](https://github.com/harp-tech/device.soundcard/issues) for a list of proposed features (and known
-issues).
-
-## Contributing
-
-Contributions are what make the open source community such an amazing place to be learn, inspire, and create. Any
-contributions you make are **greatly appreciated**.
-
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-## Authors
-
-Hardware & Software Platform of the Champalimaud Foundation.

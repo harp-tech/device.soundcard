@@ -16,8 +16,8 @@ public class EnumToBoolConverter : IValueConverter
 
     public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
-        if (value is true && parameter != null)
-            return Enum.Parse(targetType, parameter.ToString());
+        if (value is true && parameter?.ToString() is string name)
+            return Enum.Parse(targetType, name);
         return AvaloniaProperty.UnsetValue;
     }
 }

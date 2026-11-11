@@ -1,11 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <LangVersion>latest</LangVersion>
     <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
     <OutputPath>..\bin\$(Configuration)</OutputPath>
-    <Version>$(AppVersion)</Version>
+    <TargetFrameworks>net8.0</TargetFrameworks>
   </PropertyGroup>
 
   <ItemGroup>
@@ -27,6 +26,6 @@
     <PackageReference Include="ReactiveUI.Fody" Version="19.5.41" />
     <PackageReference Include="ReactiveUI.Validation" Version="4.1.1" />
     <PackageReference Include="ScottPlot.Avalonia" Version="5.0.55" />
-    <ProjectReference Include="..\..\Interface\Harp.SoundCard\Harp.SoundCard.csproj" />
+    <ProjectReference Include="..\Harp.SoundCard\Harp.SoundCard.csproj" />
   </ItemGroup>
 </Project>

@@ -1,7 +1,7 @@
 !define MUI_VERBOSE 1
 !include "FileFunc.nsh"
 
-!define CompanyName "Champalimaud Foundation"
+!define CompanyName "harp-tech"
 !define DeviceName "Harp.SoundCard"
 !define AppName "${DeviceName}.App"
 !define AppNameNoSpaces "${DeviceName}.App"
@@ -25,8 +25,8 @@
 
 Unicode true
 Name "${AppName} v${AppVersion}"
-Icon "${DeviceName}.Design\Assets\cf-logo.ico"
-UninstallIcon "${DeviceName}.Design\Assets\cf-logo.ico"
+Icon "${DeviceName}.Design\Assets\logo.ico"
+UninstallIcon "${DeviceName}.Design\Assets\logo.ico"
 
 ;--------------------------------
 ;Include Modern UI
@@ -55,10 +55,10 @@ RequestExecutionLevel user
 ;--------------------------------
 ;Interface Settings
   !define MUI_ABORTWARNING
-  !define MUI_ICON "${DeviceName}.Design\Assets\cf-logo.ico"
-  !define MUI_UNICON "${DeviceName}.Design\Assets\cf-logo.ico"
+  !define MUI_ICON "${DeviceName}.Design\Assets\logo.ico"
+  !define MUI_UNICON "${DeviceName}.Design\Assets\logo.ico"
   !define MUI_HEADERIMAGE
-  !define MUI_HEADERIMAGE_BITMAP "${DeviceName}.Design\Assets\cf-logo-small.bmp"
+  !define MUI_HEADERIMAGE_BITMAP "${DeviceName}.Design\Assets\logo.png"
   !define MUI_HEADERIMAGE_RIGHT
 ;--------------------------------
 ;Pages
@@ -104,7 +104,7 @@ Section "${AppName} v${AppVersion}" FirstSection
 	WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\${CompanyName} ${AppName}" "DisplayName" "${CompanyName} - ${AppName}"
 	WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\${CompanyName} ${AppName}" "UninstallString" "$\"$INSTDIR\Uninstall.exe$\" /S"
 	WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\${CompanyName} ${AppName}" "InstallLocation" "$\"$INSTDIR$\""
-	WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\${CompanyName} ${AppName}" "DisplayIcon" "$\"$INSTDIR\cf-logo.ico$\""
+	WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\${CompanyName} ${AppName}" "DisplayIcon" "$\"$INSTDIR\logo.ico$\""
 	WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\${CompanyName} ${AppName}" "Publisher" "${CompanyName}"
 	WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\${CompanyName} ${AppName}" "DisplayVersion" "${AppVersion}"
 	WriteRegDWORD HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\${CompanyName} ${AppName}" "VersionMajor" ${VERSION_MAJOR}

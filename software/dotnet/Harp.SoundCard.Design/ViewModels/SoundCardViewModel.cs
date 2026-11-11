@@ -48,164 +48,53 @@ public class SoundCardViewModel : ViewModelBase
 
     [Reactive] public int DeviceID { get; set; }
     [Reactive] public string DeviceName { get; set; } = string.Empty;
-    [Reactive] public HarpVersion HardwareVersion { get; set; }
-    [Reactive] public HarpVersion FirmwareVersion { get; set; }
+    [Reactive] public HarpVersion? HardwareVersion { get; set; }
+    [Reactive] public HarpVersion? FirmwareVersion { get; set; }
     [Reactive] public int SerialNumber { get; set; }
 
     #endregion
 
     #region Registers
 
-    [Reactive] public ushort PlaySoundOrFrequency { get; set; }
+    [Reactive] public ushort Start { get; set; }
     [Reactive] public byte Stop { get; set; }
     [Reactive] public ushort AttenuationLeft { get; set; }
     [Reactive] public ushort AttenuationRight { get; set; }
-    [Reactive] public ushort[] AttenuationBoth { get; set; }
-    [Reactive] public ushort[] AttenuationAndPlaySoundOrFreq { get; set; }
+    [Reactive] public ushort[] AttenuationBoth { get; set; } = new ushort[2];
+    [Reactive] public ushort[] AttenuationStart { get; set; } = new ushort[3];
     [Reactive] public DigitalInputs InputState { get; set; }
     [Reactive] public DigitalInputConfiguration ConfigureDI0 { get; set; }
     [Reactive] public DigitalInputConfiguration ConfigureDI1 { get; set; }
-    [Reactive] public DigitalInputConfiguration ConfigureDI2 { get; set; }
-    [Reactive] public byte SoundIndexDI0 { get; set; }
-    [Reactive] public byte SoundIndexDI1 { get; set; }
-    [Reactive] public byte SoundIndexDI2 { get; set; }
-    [Reactive] public ushort FrequencyDI0 { get; set; }
-    [Reactive] public ushort FrequencyDI1 { get; set; }
-    [Reactive] public ushort FrequencyDI2 { get; set; }
+    [Reactive] public ushort StartOnDI0 { get; set; }
+    [Reactive] public ushort StartOnDI1 { get; set; }
     [Reactive] public ushort AttenuationLeftDI0 { get; set; }
     [Reactive] public ushort AttenuationLeftDI1 { get; set; }
-    [Reactive] public ushort AttenuationLeftDI2 { get; set; }
     [Reactive] public ushort AttenuationRightDI0 { get; set; }
     [Reactive] public ushort AttenuationRightDI1 { get; set; }
-    [Reactive] public ushort AttenuationRightDI2 { get; set; }
-    [Reactive] public ushort[] AttenuationAndSoundIndexDI0 { get; set; }
-    [Reactive] public ushort[] AttenuationAndSoundIndexDI1 { get; set; }
-    [Reactive] public ushort[] AttenuationAndSoundIndexDI2 { get; set; }
-    [Reactive] public ushort[] AttenuationAndFrequencyDI0 { get; set; }
-    [Reactive] public ushort[] AttenuationAndFrequencyDI1 { get; set; }
-    [Reactive] public ushort[] AttenuationAndFrequencyDI2 { get; set; }
     [Reactive] public DigitalOutputConfiguration ConfigureDO0 { get; set; }
     [Reactive] public DigitalOutputConfiguration ConfigureDO1 { get; set; }
     [Reactive] public DigitalOutputConfiguration ConfigureDO2 { get; set; }
-    [Reactive] public byte PulseDO0 { get; set; }
-    [Reactive] public byte PulseDO1 { get; set; }
-    [Reactive] public byte PulseDO2 { get; set; }
     [Reactive] public DigitalOutputs OutputSet { get; set; }
     [Reactive] public DigitalOutputs OutputClear { get; set; }
     [Reactive] public DigitalOutputs OutputToggle { get; set; }
     [Reactive] public DigitalOutputs OutputState { get; set; }
-    [Reactive] public AdcConfiguration ConfigureAdc { get; set; }
-    [Reactive] public AnalogDataPayload AnalogData { get; set; }
-    [Reactive] public ControllerCommand Commands { get; set; }
-    [Reactive] public SoundCardEvents EnableEvents { get; set; }
+    [Reactive] public AdcControlStateConfiguration EnableAdcControlState { get; set; }
+    [Reactive] public AdcControlStatePayload AdcControlState { get; set; }
 
     #endregion
 
     #region Array collections
 
     [Reactive] public ObservableCollection<ArrayItemWrapper<ushort>> AttenuationBothCollection { get; private set; } = new();
-    [Reactive] public ObservableCollection<ArrayItemWrapper<ushort>> AttenuationAndPlaySoundOrFreqCollection { get; private set; } = new();
-    [Reactive] public ObservableCollection<ArrayItemWrapper<ushort>> AttenuationAndSoundIndexDI0Collection { get; private set; } = new();
-    [Reactive] public ObservableCollection<ArrayItemWrapper<ushort>> AttenuationAndSoundIndexDI1Collection { get; private set; } = new();
-    [Reactive] public ObservableCollection<ArrayItemWrapper<ushort>> AttenuationAndSoundIndexDI2Collection { get; private set; } = new();
-    [Reactive] public ObservableCollection<ArrayItemWrapper<ushort>> AttenuationAndFrequencyDI0Collection { get; private set; } = new();
-    [Reactive] public ObservableCollection<ArrayItemWrapper<ushort>> AttenuationAndFrequencyDI1Collection { get; private set; } = new();
-    [Reactive] public ObservableCollection<ArrayItemWrapper<ushort>> AttenuationAndFrequencyDI2Collection { get; private set; } = new();
+    [Reactive] public ObservableCollection<ArrayItemWrapper<ushort>> AttenuationStartCollection { get; private set; } = new();
     #endregion
 
-    #region Events Flags
+    #region Polled Registers
 
-    public bool IsPlaySoundOrFrequencyEnabled
-    {
-        get
-        {
-            return EnableEvents.HasFlag(SoundCardEvents.PlaySoundOrFrequency);
-        }
-        set
-        {
-            if (value)
-            {
-                EnableEvents |= SoundCardEvents.PlaySoundOrFrequency;
-            }
-            else
-            {
-                EnableEvents &= ~SoundCardEvents.PlaySoundOrFrequency;
-            }
-
-            // Notify the UI about the change
-            this.RaisePropertyChanged(nameof(IsPlaySoundOrFrequencyEnabled));
-            this.RaisePropertyChanged(nameof(EnableEvents));
-        }
-    }
-
-    public bool IsStopEnabled
-    {
-        get
-        {
-            return EnableEvents.HasFlag(SoundCardEvents.Stop);
-        }
-        set
-        {
-            if (value)
-            {
-                EnableEvents |= SoundCardEvents.Stop;
-            }
-            else
-            {
-                EnableEvents &= ~SoundCardEvents.Stop;
-            }
-
-            // Notify the UI about the change
-            this.RaisePropertyChanged(nameof(IsStopEnabled));
-            this.RaisePropertyChanged(nameof(EnableEvents));
-        }
-    }
-
-    public bool IsDigitalInputsEnabled
-    {
-        get
-        {
-            return EnableEvents.HasFlag(SoundCardEvents.DigitalInputs);
-        }
-        set
-        {
-            if (value)
-            {
-                EnableEvents |= SoundCardEvents.DigitalInputs;
-            }
-            else
-            {
-                EnableEvents &= ~SoundCardEvents.DigitalInputs;
-            }
-
-            // Notify the UI about the change
-            this.RaisePropertyChanged(nameof(IsDigitalInputsEnabled));
-            this.RaisePropertyChanged(nameof(EnableEvents));
-        }
-    }
-
-    public bool IsAdcValuesEnabled
-    {
-        get
-        {
-            return EnableEvents.HasFlag(SoundCardEvents.AdcValues);
-        }
-        set
-        {
-            if (value)
-            {
-                EnableEvents |= SoundCardEvents.AdcValues;
-            }
-            else
-            {
-                EnableEvents &= ~SoundCardEvents.AdcValues;
-            }
-
-            // Notify the UI about the change
-            this.RaisePropertyChanged(nameof(IsAdcValuesEnabled));
-            this.RaisePropertyChanged(nameof(EnableEvents));
-        }
-    }
+    [Reactive] public bool IsStartEnabled { get; set; } = true;
+    [Reactive] public bool IsStopEnabled { get; set; } = true;
+    [Reactive] public bool IsDigitalInputsEnabled { get; set; } = true;
+    [Reactive] public bool IsAdcControlStateEnabled { get; set; } = true;
 
     #endregion
 
@@ -536,7 +425,6 @@ public class SoundCardViewModel : ViewModelBase
     [ObservableAsProperty] public bool IsSaving { get; }
 
     [Reactive] public bool ShowWriteMessages { get; set; }
-    [Reactive] public ObservableCollection<string> HarpEvents { get; set; } = new();
     [Reactive] public ObservableCollection<string> SentMessages { get; set; } = new();
 
     public ReactiveCommand<Unit, Unit> ShowAboutCommand { get; private set; }
@@ -551,7 +439,7 @@ public class SoundCardViewModel : ViewModelBase
     #endregion
 
     private Harp.SoundCard.AsyncDevice? _device;
-    private IObservable<string> _deviceEventsObservable;
+    private IObservable<string>? _deviceEventsObservable;
     private IDisposable? _deviceEventsSubscription;
 
     public SoundCardViewModel()
@@ -574,13 +462,13 @@ public class SoundCardViewModel : ViewModelBase
 
             try
             {
-                await _device.WritePlaySoundOrFrequencyAsync((ushort)PlaySoundIndex);
-                SentMessages.Add($"Wrote PlaySoundOrFrequency with value: {PlaySoundIndex}");
+                await _device.WriteStartAsync((ushort)PlaySoundIndex);
+                SentMessages.Add($"Wrote Start with value: {PlaySoundIndex}");
             }
             catch (HarpException ex)
             {
-                Console.WriteLine($"Error writing PlaySoundOrFrequency with exception: {ex.Message}");
-                //Log.Error(ex, "Error writing PlaySoundOrFrequency with exception: {Exception}", ex));
+                Console.WriteLine($"Error writing Start with exception: {ex.Message}");
+                //Log.Error(ex, "Error writing Start with exception: {Exception}", ex));
             }
         });
 
@@ -629,26 +517,15 @@ public class SoundCardViewModel : ViewModelBase
         this.WhenAnyValue(x => x.Connected)
             .Subscribe(x => { ConnectButtonText = x ? "Disconnect" : "Connect"; });
 
-        this.WhenAnyValue(x => x.EnableEvents)
-            .Subscribe(x =>
-            {
-                IsPlaySoundOrFrequencyEnabled = x.HasFlag(SoundCardEvents.PlaySoundOrFrequency);
-                IsStopEnabled = x.HasFlag(SoundCardEvents.Stop);
-                IsDigitalInputsEnabled = x.HasFlag(SoundCardEvents.DigitalInputs);
-                IsAdcValuesEnabled = x.HasFlag(SoundCardEvents.AdcValues);
-            });
-
-
         // handle the events from the device
         // When Connected changes subscribe/unsubscribe the device events.
         this.WhenAnyValue(x => x.Connected)
             .ObserveOn(RxApp.MainThreadScheduler)
             .Subscribe(isConnected =>
             {
-                if (isConnected && _deviceEventsObservable != null)
+                if (isConnected && _deviceEventsObservable is not null)
                 {
-                    // Subscribe on the UI thread so that the HarpEvents collection can be updated safely.
-                    SubscribeToEvents();
+                    SubscribeToEvents(_deviceEventsObservable);
                 }
                 else
                 {
@@ -808,57 +685,33 @@ public class SoundCardViewModel : ViewModelBase
             // Device does not have a serial number, simply continue by ignoring the exception
         }
 
-        PlaySoundOrFrequency = await _device.ReadPlaySoundOrFrequencyAsync();
+        Start = await _device.ReadStartAsync();
         Stop = await _device.ReadStopAsync();
         AttenuationLeft = await _device.ReadAttenuationLeftAsync();
         AttenuationRight = await _device.ReadAttenuationRightAsync();
         AttenuationBoth = await _device.ReadAttenuationBothAsync();
-        AttenuationAndPlaySoundOrFreq = await _device.ReadAttenuationAndPlaySoundOrFreqAsync();
+        AttenuationStart = await _device.ReadAttenuationStartAsync();
         InputState = await _device.ReadInputStateAsync();
         ConfigureDI0 = await _device.ReadConfigureDI0Async();
         ConfigureDI1 = await _device.ReadConfigureDI1Async();
-        ConfigureDI2 = await _device.ReadConfigureDI2Async();
-        SoundIndexDI0 = await _device.ReadSoundIndexDI0Async();
-        SoundIndexDI1 = await _device.ReadSoundIndexDI1Async();
-        SoundIndexDI2 = await _device.ReadSoundIndexDI2Async();
-        FrequencyDI0 = await _device.ReadFrequencyDI0Async();
-        FrequencyDI1 = await _device.ReadFrequencyDI1Async();
-        FrequencyDI2 = await _device.ReadFrequencyDI2Async();
+        StartOnDI0 = await _device.ReadStartOnDI0Async();
+        StartOnDI1 = await _device.ReadStartOnDI1Async();
         AttenuationLeftDI0 = await _device.ReadAttenuationLeftDI0Async();
         AttenuationLeftDI1 = await _device.ReadAttenuationLeftDI1Async();
-        AttenuationLeftDI2 = await _device.ReadAttenuationLeftDI2Async();
         AttenuationRightDI0 = await _device.ReadAttenuationRightDI0Async();
         AttenuationRightDI1 = await _device.ReadAttenuationRightDI1Async();
-        AttenuationRightDI2 = await _device.ReadAttenuationRightDI2Async();
-        AttenuationAndSoundIndexDI0 = await _device.ReadAttenuationAndSoundIndexDI0Async();
-        AttenuationAndSoundIndexDI1 = await _device.ReadAttenuationAndSoundIndexDI1Async();
-        AttenuationAndSoundIndexDI2 = await _device.ReadAttenuationAndSoundIndexDI2Async();
-        AttenuationAndFrequencyDI0 = await _device.ReadAttenuationAndFrequencyDI0Async();
-        AttenuationAndFrequencyDI1 = await _device.ReadAttenuationAndFrequencyDI1Async();
-        AttenuationAndFrequencyDI2 = await _device.ReadAttenuationAndFrequencyDI2Async();
         ConfigureDO0 = await _device.ReadConfigureDO0Async();
         ConfigureDO1 = await _device.ReadConfigureDO1Async();
         ConfigureDO2 = await _device.ReadConfigureDO2Async();
-        PulseDO0 = await _device.ReadPulseDO0Async();
-        PulseDO1 = await _device.ReadPulseDO1Async();
-        PulseDO2 = await _device.ReadPulseDO2Async();
         OutputSet = await _device.ReadOutputSetAsync();
         OutputClear = await _device.ReadOutputClearAsync();
         OutputToggle = await _device.ReadOutputToggleAsync();
         OutputState = await _device.ReadOutputStateAsync();
-        ConfigureAdc = await _device.ReadConfigureAdcAsync();
-        AnalogData = await _device.ReadAnalogDataAsync();
-        Commands = await _device.ReadCommandsAsync();
-        EnableEvents = await _device.ReadEnableEventsAsync();
+        EnableAdcControlState = await _device.ReadEnableAdcControlStateAsync();
+        AdcControlState = await _device.ReadAdcControlStateAsync();
 
         UpdateAttenuationCollection(AttenuationBoth, AttenuationBothCollection);
-        UpdateAttenuationCollection(AttenuationAndPlaySoundOrFreq, AttenuationAndPlaySoundOrFreqCollection);
-        UpdateAttenuationCollection(AttenuationAndSoundIndexDI0, AttenuationAndSoundIndexDI0Collection);
-        UpdateAttenuationCollection(AttenuationAndSoundIndexDI1, AttenuationAndSoundIndexDI1Collection);
-        UpdateAttenuationCollection(AttenuationAndSoundIndexDI2, AttenuationAndSoundIndexDI2Collection);
-        UpdateAttenuationCollection(AttenuationAndFrequencyDI0, AttenuationAndFrequencyDI0Collection);
-        UpdateAttenuationCollection(AttenuationAndFrequencyDI1, AttenuationAndFrequencyDI1Collection);
-        UpdateAttenuationCollection(AttenuationAndFrequencyDI2, AttenuationAndFrequencyDI2Collection);
+        UpdateAttenuationCollection(AttenuationStart, AttenuationStartCollection);
 
         // generate observable for the _deviceSync
         _deviceEventsObservable = GenerateEventMessages();
@@ -886,12 +739,12 @@ public class SoundCardViewModel : ViewModelBase
 
                 try
                 {
-                    // Check if PlaySoundOrFrequency event is enabled
-                    if (IsPlaySoundOrFrequencyEnabled)
+                    // Check if Start event is enabled
+                    if (IsStartEnabled)
                     {
-                        var result = await device.ReadPlaySoundOrFrequencyAsync(cancellationToken);
-                        PlaySoundOrFrequency = result;
-                        observer.OnNext($"PlaySoundOrFrequency: {result}");
+                        var result = await device.ReadStartAsync(cancellationToken);
+                        Start = result;
+                        observer.OnNext($"Start: {result}");
                     }
 
                     // Check if Stop event is enabled
@@ -910,12 +763,12 @@ public class SoundCardViewModel : ViewModelBase
                         observer.OnNext($"InputState: {result}");
                     }
 
-                    // Check if AdcValues event is enabled
-                    if (IsAdcValuesEnabled)
+                    // Check if AdcControlState event is enabled
+                    if (IsAdcControlStateEnabled)
                     {
-                        var result = await device.ReadAnalogDataAsync(cancellationToken);
-                        AnalogData = result;
-                        observer.OnNext($"AnalogData: {result}");
+                        var result = await device.ReadAdcControlStateAsync(cancellationToken);
+                        AdcControlState = result;
+                        observer.OnNext($"AdcControlState: {result}");
                     }
 
                     // Wait a short while before polling again. Adjust delay as necessary.
@@ -947,9 +800,9 @@ public class SoundCardViewModel : ViewModelBase
             * TODO: Please REVIEW all these registers and update the values
             * ****************************************************************/
             await WriteAndLogAsync(
-                value => _device.WritePlaySoundOrFrequencyAsync(value),
-                PlaySoundOrFrequency,
-                "PlaySoundOrFrequency");
+                value => _device.WriteStartAsync(value),
+                Start,
+                "Start");
             await WriteAndLogAsync(
                 value => _device.WriteStopAsync(value),
                 Stop,
@@ -967,9 +820,9 @@ public class SoundCardViewModel : ViewModelBase
                 AttenuationBoth,
                 "AttenuationBoth");
             await WriteAndLogAsync(
-                value => _device.WriteAttenuationAndPlaySoundOrFreqAsync(value),
-                AttenuationAndPlaySoundOrFreq,
-                "AttenuationAndPlaySoundOrFreq");
+                value => _device.WriteAttenuationStartAsync(value),
+                AttenuationStart,
+                "AttenuationStart");
             await WriteAndLogAsync(
                 value => _device.WriteConfigureDI0Async(value),
                 ConfigureDI0,
@@ -979,33 +832,13 @@ public class SoundCardViewModel : ViewModelBase
                 ConfigureDI1,
                 "ConfigureDI1");
             await WriteAndLogAsync(
-                value => _device.WriteConfigureDI2Async(value),
-                ConfigureDI2,
-                "ConfigureDI2");
+                value => _device.WriteStartOnDI0Async(value),
+                StartOnDI0,
+                "StartOnDI0");
             await WriteAndLogAsync(
-                value => _device.WriteSoundIndexDI0Async(value),
-                SoundIndexDI0,
-                "SoundIndexDI0");
-            await WriteAndLogAsync(
-                value => _device.WriteSoundIndexDI1Async(value),
-                SoundIndexDI1,
-                "SoundIndexDI1");
-            await WriteAndLogAsync(
-                value => _device.WriteSoundIndexDI2Async(value),
-                SoundIndexDI2,
-                "SoundIndexDI2");
-            await WriteAndLogAsync(
-                value => _device.WriteFrequencyDI0Async(value),
-                FrequencyDI0,
-                "FrequencyDI0");
-            await WriteAndLogAsync(
-                value => _device.WriteFrequencyDI1Async(value),
-                FrequencyDI1,
-                "FrequencyDI1");
-            await WriteAndLogAsync(
-                value => _device.WriteFrequencyDI2Async(value),
-                FrequencyDI2,
-                "FrequencyDI2");
+                value => _device.WriteStartOnDI1Async(value),
+                StartOnDI1,
+                "StartOnDI1");
             await WriteAndLogAsync(
                 value => _device.WriteAttenuationLeftDI0Async(value),
                 AttenuationLeftDI0,
@@ -1015,10 +848,6 @@ public class SoundCardViewModel : ViewModelBase
                 AttenuationLeftDI1,
                 "AttenuationLeftDI1");
             await WriteAndLogAsync(
-                value => _device.WriteAttenuationLeftDI2Async(value),
-                AttenuationLeftDI2,
-                "AttenuationLeftDI2");
-            await WriteAndLogAsync(
                 value => _device.WriteAttenuationRightDI0Async(value),
                 AttenuationRightDI0,
                 "AttenuationRightDI0");
@@ -1026,34 +855,6 @@ public class SoundCardViewModel : ViewModelBase
                 value => _device.WriteAttenuationRightDI1Async(value),
                 AttenuationRightDI1,
                 "AttenuationRightDI1");
-            await WriteAndLogAsync(
-                value => _device.WriteAttenuationRightDI2Async(value),
-                AttenuationRightDI2,
-                "AttenuationRightDI2");
-            await WriteAndLogAsync(
-                value => _device.WriteAttenuationAndSoundIndexDI0Async(value),
-                AttenuationAndSoundIndexDI0,
-                "AttenuationAndSoundIndexDI0");
-            await WriteAndLogAsync(
-                value => _device.WriteAttenuationAndSoundIndexDI1Async(value),
-                AttenuationAndSoundIndexDI1,
-                "AttenuationAndSoundIndexDI1");
-            await WriteAndLogAsync(
-                value => _device.WriteAttenuationAndSoundIndexDI2Async(value),
-                AttenuationAndSoundIndexDI2,
-                "AttenuationAndSoundIndexDI2");
-            await WriteAndLogAsync(
-                value => _device.WriteAttenuationAndFrequencyDI0Async(value),
-                AttenuationAndFrequencyDI0,
-                "AttenuationAndFrequencyDI0");
-            await WriteAndLogAsync(
-                value => _device.WriteAttenuationAndFrequencyDI1Async(value),
-                AttenuationAndFrequencyDI1,
-                "AttenuationAndFrequencyDI1");
-            await WriteAndLogAsync(
-                value => _device.WriteAttenuationAndFrequencyDI2Async(value),
-                AttenuationAndFrequencyDI2,
-                "AttenuationAndFrequencyDI2");
             await WriteAndLogAsync(
                 value => _device.WriteConfigureDO0Async(value),
                 ConfigureDO0,
@@ -1066,18 +867,6 @@ public class SoundCardViewModel : ViewModelBase
                 value => _device.WriteConfigureDO2Async(value),
                 ConfigureDO2,
                 "ConfigureDO2");
-            await WriteAndLogAsync(
-                value => _device.WritePulseDO0Async(value),
-                PulseDO0,
-                "PulseDO0");
-            await WriteAndLogAsync(
-                value => _device.WritePulseDO1Async(value),
-                PulseDO1,
-                "PulseDO1");
-            await WriteAndLogAsync(
-                value => _device.WritePulseDO2Async(value),
-                PulseDO2,
-                "PulseDO2");
             await WriteAndLogAsync(
                 value => _device.WriteOutputSetAsync(value),
                 OutputSet,
@@ -1095,20 +884,12 @@ public class SoundCardViewModel : ViewModelBase
                 OutputState,
                 "OutputState");
             await WriteAndLogAsync(
-                value => _device.WriteConfigureAdcAsync(value),
-                ConfigureAdc,
-                "ConfigureAdc");
-            await WriteAndLogAsync(
-                value => _device.WriteCommandsAsync(value),
-                Commands,
-                "Commands");
-            await WriteAndLogAsync(
-                value => _device.WriteEnableEventsAsync(value),
-                EnableEvents,
-                "EnableEvents");
+                value => _device.WriteEnableAdcControlStateAsync(value),
+                EnableAdcControlState,
+                "EnableAdcControlState");
 
             // Save the configuration to the device permanently
-            if (savePermanently)
+            if (savePermanently && _deviceEventsObservable is not null)
             {
                 // To prevent multiple calls to the device while it is resetting
                 _deviceEventsSubscription?.Dispose();
@@ -1123,7 +904,7 @@ public class SoundCardViewModel : ViewModelBase
                 await Task.Delay(4000);
 
                 // Re-subscribe to the device events observable
-                SubscribeToEvents();
+                SubscribeToEvents(_deviceEventsObservable);
             }
         });
     }
@@ -1156,12 +937,11 @@ public class SoundCardViewModel : ViewModelBase
         });
     }
 
-    private void SubscribeToEvents()
+    private void SubscribeToEvents(IObservable<string> deviceEvents)
     {
-        _deviceEventsSubscription = _deviceEventsObservable
-            .ObserveOn(RxApp.MainThreadScheduler)
+        _deviceEventsSubscription = deviceEvents
             .Subscribe(
-                msg => HarpEvents.Add(msg.ToString()),
+                _ => { },
                 ex => Debug.WriteLine($"Error in device events: {ex}")
             );
     }
