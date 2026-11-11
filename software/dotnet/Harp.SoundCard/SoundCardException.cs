@@ -41,10 +41,12 @@ namespace Harp.SoundCard
         {
         }
 
+#if NETFRAMEWORK
         /// <inheritdoc/>
         protected SoundCardException(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
         }
+#endif
     }
 }

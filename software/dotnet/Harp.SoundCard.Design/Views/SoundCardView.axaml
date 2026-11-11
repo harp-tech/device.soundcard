@@ -1,0 +1,840 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:controls="clr-namespace:Harp.SoundCard.Design.Controls"
+             xmlns:conv="clr-namespace:Harp.SoundCard.Design.Converters"
+             xmlns:heroIcons="clr-namespace:HeroIconsAvalonia.Controls;assembly=HeroIconsAvalonia"
+             xmlns:local="clr-namespace:Harp.SoundCard;assembly=Harp.SoundCard"
+             xmlns:md="clr-namespace:Markdown.Avalonia;assembly=Markdown.Avalonia"
+             xmlns:system="clr-namespace:System;assembly=System.Runtime"
+             xmlns:views="clr-namespace:Harp.SoundCard.Design.Views;assembly=Harp.SoundCard.Design"
+             xmlns:vm="clr-namespace:Harp.SoundCard.Design.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="1400" d:DesignHeight="450"
+             x:Class="Harp.SoundCard.Design.Views.SoundCardView"
+             x:DataType="vm:SoundCardViewModel">
+
+  <UserControl.Resources>
+    <conv:EnableFlagConverter x:Key="EnableFlagConverter"/>
+    <conv:PayloadFieldConverter x:Key="PayloadFieldConverter"/>
+    <conv:VisualStatusColorConverter x:Key="VisualStatusColorConverter"/>
+    <conv:EnumDisplayConverter x:Key="EnumDisplayConverter" />
+    <conv:TypeDescriptionConverter x:Key="TypeDescriptionConverter" />
+    <DataTemplate x:Key="EnumDisplayTemplate" DataType="system:Enum">
+      <TextBlock Text="{Binding Converter={StaticResource EnumDisplayConverter}}" />
+    </DataTemplate>
+  </UserControl.Resources>
+
+  <Design.DataContext>
+    <!-- This only sets the DataContext for the previewer in an IDE,
+         to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+    <vm:SoundCardViewModel />
+  </Design.DataContext>
+
+  <DockPanel>
+    <Grid Margin="10" DockPanel.Dock="Top"
+          ColumnDefinitions="Auto, Auto, *, Auto, Auto"
+          RowDefinitions="30,25,*,*">
+      <TextBlock Grid.Row="0"
+                 Text="Sound Card"
+                 HorizontalAlignment="Left"
+                 VerticalAlignment="Bottom"
+                 FontWeight="Bold"
+                 FontSize="17" />
+      <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" Spacing="2">
+        <TextBlock Text="{Binding AppVersion}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Bottom"
+                   FontWeight="Bold"
+                   FontSize="17"
+                   Margin="5,0,0,0" />
+        <Button Background="Transparent" Command="{Binding ShowAboutCommand}">
+          <heroIcons:HeroIcon Foreground="{Binding IconColor}" Type="QuestionMarkCircle" Width="14"/>
+        </Button>
+      </StackPanel>
+        <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Text="harp-tech" HorizontalAlignment="Left"
+                       Foreground="{StaticResource BlueAccentColor}" MaxWidth="240" VerticalAlignment="Center" FontWeight="Bold" TextWrapping="WrapWithOverflow" FontSize="12" />
+        <Image Grid.Row="0" Grid.Column="2" Grid.RowSpan="2" Grid.ColumnSpan="2"
+               VerticalAlignment="Center"
+               HorizontalAlignment="Right"
+               Margin="0,5,5,0"
+               Source="/Assets/logo.png" />
+        <ToggleSwitch Grid.Row="0" Grid.Column="4" Grid.RowSpan="2" Margin="10,0,0,0" ToolTip.Tip="Change theme"
+                            Content="Theme" FontWeight="Normal" FontSize="14"
+                            IsChecked="{Binding IsDarkMode}">
+          <ToggleSwitch.OnContent>
+            <heroIcons:HeroIcon Foreground="{Binding IconColor}" Type="Moon" Width="16" Height="16" />
+          </ToggleSwitch.OnContent>
+          <ToggleSwitch.OffContent>
+            <heroIcons:HeroIcon Foreground="{Binding IconColor}" Type="Sun" Width="16" Height="16" />
+          </ToggleSwitch.OffContent>
+        </ToggleSwitch>
+    </Grid>
+
+    <!-- Hidden until firmware 3.0 is released -->
+    <Grid DockPanel.Dock="Bottom" RowDefinitions="Auto" ColumnDefinitions="Auto,*,Auto,Auto" Margin="10" IsVisible="False">
+      <Button Grid.Row="0" Grid.Column="3"
+              Command="{Binding SaveConfigurationCommand}"
+              Content="Save configuration"
+              Margin="10,0,0,0"
+              Background="{StaticResource BlueAccentColor}"
+              Foreground="White">
+        <Button.CommandParameter>
+          <system:Boolean>false</system:Boolean>
+        </Button.CommandParameter>
+      </Button>
+      <Button Grid.Row="0" Grid.Column="2" Command="{Binding SaveConfigurationCommand}"
+              Content="Save configuration permanently">
+        <Button.CommandParameter>
+          <system:Boolean>true</system:Boolean>
+        </Button.CommandParameter>
+      </Button>
+      <Button Grid.Row="0" Grid.Column="0" Command="{Binding ResetConfigurationCommand}"
+              Content="Reset to defaults" />
+    </Grid>
+
+    <ScrollViewer HorizontalScrollBarVisibility="Auto" Padding="0">
+      <StackPanel Spacing="12" Margin="0,20,0,0">
+        <Panel Height="36">
+          <TextBlock Text="Device connection" VerticalAlignment="Center" FontSize="20" FontWeight="SemiBold"
+                     Margin="10,0" />
+        </Panel>
+        <Grid ColumnDefinitions="450,250,250,*,*" RowDefinitions="*,*" Margin="0" MinHeight="60">
+          <StackPanel Grid.RowSpan="2" VerticalAlignment="Bottom" Margin="10,0" Orientation="Horizontal"
+                      Spacing="20">
+            <TextBlock Text="Select a device" VerticalAlignment="Center" />
+            <ComboBox Name="Ports" ItemsSource="{Binding Ports}" SelectedItem="{Binding SelectedPort}"
+                      MinWidth="70" />
+            <Button Command="{Binding LoadDeviceInformation}">
+              <heroIcons:HeroIcon Foreground="{Binding IconColor}" Type="ArrowPath" Width="16" Height="16" />
+            </Button>
+            <Button Content="{Binding ConnectButtonText}"
+                    Command="{Binding ConnectAndGetBaseInfoCommand}" />
+            <ToggleButton Grid.Row="0" Grid.Column="2"
+                    Command="{Binding ShowMessagesCommand}">
+              <heroIcons:HeroIcon Foreground="{Binding IconColor}" Type="DocumentText" Width="16" Height="16" />
+            </ToggleButton>
+          </StackPanel>
+          <Grid Grid.Row="0" Grid.Column="1" ColumnDefinitions="25,25,30,*" RowDefinitions="*,*,*"
+                Margin="20, 0, 0, 0" IsVisible="{Binding Connected}">
+            <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" VerticalAlignment="Center"
+                       HorizontalAlignment="Left" Text="{Binding DeviceName}" FontWeight="Bold"
+                       FontSize="20" />
+            <TextBlock Grid.Row="1" Grid.Column="0" Text="Hw " VerticalAlignment="Bottom" />
+            <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding HardwareVersion}" FontWeight="Bold"
+                       VerticalAlignment="Bottom" />
+            <TextBlock Grid.Row="2" Grid.Column="0" Text="Fw " VerticalAlignment="Top" />
+            <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding FirmwareVersion}" FontWeight="Bold"
+                       VerticalAlignment="Top" />
+            <TextBlock Grid.Row="1" Grid.Column="2" Grid.RowSpan="2" Text="S/N " VerticalAlignment="Center" />
+            <TextBlock Grid.Row="1" Grid.Column="3" Grid.RowSpan="2" Text="{Binding SerialNumber}"
+                       FontWeight="Bold" VerticalAlignment="Center" />
+          </Grid>
+          <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Vertical" Spacing="10" HorizontalAlignment="Left" VerticalAlignment="Bottom"
+                      IsVisible="{Binding Connected}">
+            <TextBlock FontSize="16" FontWeight="SemiBold">Play sound index</TextBlock>
+            <StackPanel IsEnabled="{Binding Connected}"
+                        Orientation="Horizontal" Spacing="10" VerticalAlignment="Bottom">
+              <NumericUpDown Value="{Binding PlaySoundIndex}" Width="110" Increment="1" Minimum="2" Maximum="31" />
+              <Button Command="{Binding PlaySoundIndexCommand}" VerticalAlignment="Bottom">Play</Button>
+            </StackPanel>
+          </StackPanel>
+        </Grid>
+        <StackPanel Orientation="Horizontal">
+          <TabControl Margin="0,10,0,0" SelectedIndex="1">
+            <!-- Hidden until firmware 3.0 is released -->
+            <TabItem Header="Configuration" FontSize="20" FontWeight="SemiBold" IsVisible="False">
+              <Grid Margin="10,0,0,10" ColumnDefinitions="Auto,Auto,Auto" RowDefinitions="*,*,*,*">
+                <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal" Spacing="5">
+                  <Label FontWeight="SemiBold" FontSize="16" Padding="0">Events</Label>
+                  <heroIcons:HeroIcon Type="InformationCircle" Width="14" Height="14"
+                                      Foreground="{Binding IconColor}"
+                                      VerticalAlignment="Top">
+                    <ToolTip.Tip>Specifies which registers are polled from the SoundCard device</ToolTip.Tip>
+                  </heroIcons:HeroIcon>
+                </StackPanel>
+                <TextBlock Grid.Row="0" Grid.Column="1" Text="Other" FontSize="16" FontWeight="SemiBold" />
+
+                <!-- Events Column -->
+                <StackPanel Grid.Row="1" Grid.Column="0" Spacing="10" Margin="0,10,20,0">
+                  <!-- Polled registers -->
+                  <StackPanel Orientation="Vertical" Spacing="6">
+                    <CheckBox IsChecked="{Binding IsStartEnabled}"
+                              IsEnabled="True">
+                      Start
+                    </CheckBox>
+                    <CheckBox IsChecked="{Binding IsStopEnabled}"
+                              IsEnabled="True">
+                      Stop
+                    </CheckBox>
+                    <CheckBox IsChecked="{Binding IsDigitalInputsEnabled}"
+                              IsEnabled="True">
+                      DigitalInputs
+                    </CheckBox>
+                    <CheckBox IsChecked="{Binding IsAdcControlStateEnabled}"
+                              IsEnabled="True">
+                      AdcControlState
+                    </CheckBox>
+                  </StackPanel>
+
+                  <!-- Register: InputState (Read-Only, Event) -->
+                  <StackPanel Orientation="Vertical" Spacing="10">
+                    <StackPanel Orientation="Horizontal" Spacing="5">
+                      <Label FontWeight="Bold" FontSize="14" Padding="0">InputState</Label>
+                      <heroIcons:HeroIcon Type="InformationCircle" Width="14" Height="14"
+                                          Foreground="{Binding IconColor}"
+                                          VerticalAlignment="Top">
+                        <ToolTip.Tip>
+                          <Binding Source="{x:Type local:InputState}"
+                                   Converter="{StaticResource TypeDescriptionConverter}" />
+                        </ToolTip.Tip>
+                      </heroIcons:HeroIcon>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Spacing="5">
+                      <controls:VisualStatus Status="{Binding IsDI0Enabled_InputState}"
+                                             Width="15" Height="15" />
+                      <TextBlock Text="DI0" VerticalAlignment="Center" />
+                    </StackPanel>
+                  </StackPanel>
+                  
+                  <!-- Register: AdcControlState (Read-Only, Event) -->
+                  <StackPanel Orientation="Vertical" Spacing="10">
+                    <StackPanel Orientation="Horizontal" Spacing="5">
+                      <Label FontWeight="Bold" FontSize="14" Padding="0">AdcControlState</Label>
+                      <heroIcons:HeroIcon Type="InformationCircle" Width="14" Height="14"
+                                          Foreground="{Binding IconColor}"
+                                          VerticalAlignment="Top">
+                        <ToolTip.Tip>
+                          <Binding Source="{x:Type local:AdcControlState}"
+                                   Converter="{StaticResource TypeDescriptionConverter}" />
+                        </ToolTip.Tip>
+                      </heroIcons:HeroIcon>
+                    </StackPanel>
+                    <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto,Auto,Auto,Auto">
+                      <TextBlock Grid.Row="0" Grid.Column="0"
+                                 Text="Adc0:"
+                                 VerticalAlignment="Center"
+                                 Margin="0,5,10,5" />
+                      <TextBlock Grid.Row="0" Grid.Column="1"
+                                 Text="{Binding AdcControlState,
+                                Converter={StaticResource PayloadFieldConverter},
+                                ConverterParameter='Adc0'}"
+                                 VerticalAlignment="Center"
+                                 Margin="0,5,0,5"
+                                 FontSize="14" />
+                      <TextBlock Grid.Row="1" Grid.Column="0"
+                                 Text="Adc1:"
+                                 VerticalAlignment="Center"
+                                 Margin="0,5,10,5" />
+                    <TextBlock Grid.Row="1" Grid.Column="1" 
+                               Text="{Binding AdcControlState,
+                                Converter={StaticResource PayloadFieldConverter},
+                                ConverterParameter='Adc1'}"
+                               VerticalAlignment="Center"
+                               Margin="0,5,0,5"
+                               FontSize="14" />
+                      <TextBlock Grid.Row="2" Grid.Column="0"
+                                 Text="AttenuationLeft:"
+                                 VerticalAlignment="Center"
+                                 Margin="0,5,10,5" />
+                      <TextBlock Grid.Row="2" Grid.Column="1"
+                                 Text="{Binding AdcControlState,
+                                Converter={StaticResource PayloadFieldConverter},
+                                ConverterParameter='AttenuationLeft'}"
+                                 VerticalAlignment="Center"
+                                 Margin="0,5,0,5"
+                                 FontSize="14" />
+                      <TextBlock Grid.Row="3" Grid.Column="0"
+                                 Text="AttenuationRight:"
+                                 VerticalAlignment="Center"
+                                 Margin="0,5,10,5" />
+                      <TextBlock Grid.Row="3" Grid.Column="1"
+                                 Text="{Binding AdcControlState,
+                                Converter={StaticResource PayloadFieldConverter},
+                                ConverterParameter='AttenuationRight'}"
+                                 VerticalAlignment="Center"
+                                 Margin="0,5,0,5"
+                                 FontSize="14" />
+                      <TextBlock Grid.Row="4" Grid.Column="0"
+                                 Text="Frequency:"
+                                 VerticalAlignment="Center"
+                                 Margin="0,5,10,5" />
+                      <TextBlock Grid.Row="4" Grid.Column="1"
+                                 Text="{Binding AdcControlState,
+                                Converter={StaticResource PayloadFieldConverter},
+                                ConverterParameter='Frequency'}"
+                                 VerticalAlignment="Center"
+                                 Margin="0,5,0,5"
+                                 FontSize="14" />
+                    </Grid>
+                  </StackPanel>
+                </StackPanel>
+
+                <!-- Other Column -->
+                <StackPanel Grid.Row="1" Grid.Column="1" Spacing="20" Margin="0,10,0,0">
+                  
+                  <!-- Register: AttenuationStart (Write) -->
+                  <StackPanel Orientation="Vertical" Spacing="10">
+                    <StackPanel Orientation="Horizontal" Spacing="5">
+                      <Label FontWeight="Bold" FontSize="14" Padding="0">AttenuationStart</Label>
+                      <heroIcons:HeroIcon Type="InformationCircle" Width="14" Height="14"
+                                          Foreground="{Binding IconColor}"
+                                          VerticalAlignment="Top">
+                        <ToolTip.Tip>
+                          <Binding Source="{x:Type local:AttenuationStart}"
+                                   Converter="{StaticResource TypeDescriptionConverter}" />
+                        </ToolTip.Tip>
+                      </heroIcons:HeroIcon>
+                    </StackPanel>
+                    <Border CornerRadius="3" Padding="5" MaxHeight="200">
+                      <ScrollViewer>
+                        <ItemsControl ItemsSource="{Binding AttenuationStartCollection}">
+                          <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                              <Grid ColumnDefinitions="50,*" Margin="0,2">
+                                <TextBlock Grid.Column="0" Text="{Binding Index, StringFormat='[{0}]:'}"
+                                           VerticalAlignment="Center" />
+                                <NumericUpDown Grid.Column="1" Value="{Binding Value}"
+                                               Minimum="0"
+                                               Maximum="65535"
+                                               Increment="1"
+                                               FormatString="F0"
+                                               ClipValueToMinMax="True"
+                                               Width="150" />
+                              </Grid>
+                            </DataTemplate>
+                          </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                      </ScrollViewer>
+                    </Border>
+                  </StackPanel>
+                  <!-- Register: AttenuationBoth (Write) -->
+                  <StackPanel Orientation="Vertical" Spacing="10">
+                    <StackPanel Orientation="Horizontal" Spacing="5">
+                      <Label FontWeight="Bold" FontSize="14" Padding="0">AttenuationBoth</Label>
+                      <heroIcons:HeroIcon Type="InformationCircle" Width="14" Height="14"
+                                          Foreground="{Binding IconColor}"
+                                          VerticalAlignment="Top">
+                        <ToolTip.Tip>
+                          <Binding Source="{x:Type local:AttenuationBoth}"
+                                   Converter="{StaticResource TypeDescriptionConverter}" />
+                        </ToolTip.Tip>
+                      </heroIcons:HeroIcon>
+                    </StackPanel>
+                    <Border CornerRadius="3" Padding="5" MaxHeight="200">
+                      <ScrollViewer>
+                        <ItemsControl ItemsSource="{Binding AttenuationBothCollection}">
+                          <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                              <Grid ColumnDefinitions="50,*" Margin="0,2">
+                                <TextBlock Grid.Column="0" Text="{Binding Index, StringFormat='[{0}]:'}"
+                                           VerticalAlignment="Center" />
+                                <NumericUpDown Grid.Column="1" Value="{Binding Value}"
+                                               Minimum="0"
+                                               Maximum="65535"
+                                               Increment="1"
+                                               FormatString="F0"
+                                               ClipValueToMinMax="True"
+                                               Width="150" />
+                              </Grid>
+                            </DataTemplate>
+                          </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                      </ScrollViewer>
+                    </Border>
+                  </StackPanel>
+                  <!-- Register: AttenuationLeft (Write) -->
+                  <StackPanel Orientation="Vertical" Spacing="10">
+                    <StackPanel Orientation="Horizontal" Spacing="5">
+                      <Label FontWeight="Bold" FontSize="14" Padding="0">AttenuationLeft</Label>
+                      <heroIcons:HeroIcon Type="InformationCircle" Width="14" Height="14"
+                                          Foreground="{Binding IconColor}"
+                                          VerticalAlignment="Top">
+                        <ToolTip.Tip>
+                          <Binding Source="{x:Type local:AttenuationLeft}"
+                                   Converter="{StaticResource TypeDescriptionConverter}" />
+                        </ToolTip.Tip>
+                      </heroIcons:HeroIcon>
+                    </StackPanel>
+                    <NumericUpDown Value="{Binding AttenuationLeft}"
+                                   Minimum="0"
+                                   Maximum="65535"
+                                   ClipValueToMinMax="True"
+                                   Increment="1"
+                                   FormatString="F0"
+                                   Width="200"
+                                   HorizontalAlignment="Left"
+                                   Margin="0,5,0,0" />
+                  </StackPanel>
+                  <!-- Register: AttenuationLeftDI0 (Write) -->
+                  <StackPanel Orientation="Vertical" Spacing="10">
+                    <StackPanel Orientation="Horizontal" Spacing="5">
+                      <Label FontWeight="Bold" FontSize="14" Padding="0">AttenuationLeftDI0</Label>
+                      <heroIcons:HeroIcon Type="InformationCircle" Width="14" Height="14"
+                                          Foreground="{Binding IconColor}"
+                                          VerticalAlignment="Top">
+                        <ToolTip.Tip>
+                          <Binding Source="{x:Type local:AttenuationLeftDI0}"
+                                   Converter="{StaticResource TypeDescriptionConverter}" />
+                        </ToolTip.Tip>
+                      </heroIcons:HeroIcon>
+                    </StackPanel>
+                    <NumericUpDown Value="{Binding AttenuationLeftDI0}"
+                                   Minimum="0"
+                                   Maximum="65535"
+                                   ClipValueToMinMax="True"
+                                   Increment="1"
+                                   FormatString="F0"
+                                   Width="200"
+                                   HorizontalAlignment="Left"
+                                   Margin="0,5,0,0" />
+                  </StackPanel>
+                  <!-- Register: AttenuationLeftDI1 (Write) -->
+                  <StackPanel Orientation="Vertical" Spacing="10">
+                    <StackPanel Orientation="Horizontal" Spacing="5">
+                      <Label FontWeight="Bold" FontSize="14" Padding="0">AttenuationLeftDI1</Label>
+                      <heroIcons:HeroIcon Type="InformationCircle" Width="14" Height="14"
+                                          Foreground="{Binding IconColor}"
+                                          VerticalAlignment="Top">
+                        <ToolTip.Tip>
+                          <Binding Source="{x:Type local:AttenuationLeftDI1}"
+                                   Converter="{StaticResource TypeDescriptionConverter}" />
+                        </ToolTip.Tip>
+                      </heroIcons:HeroIcon>
+                    </StackPanel>
+                    <NumericUpDown Value="{Binding AttenuationLeftDI1}"
+                                   Minimum="0"
+                                   Maximum="65535"
+                                   ClipValueToMinMax="True"
+                                   Increment="1"
+                                   FormatString="F0"
+                                   Width="200"
+                                   HorizontalAlignment="Left"
+                                   Margin="0,5,0,0" />
+                  </StackPanel>
+                  <!-- Register: AttenuationRight (Write) -->
+                  <StackPanel Orientation="Vertical" Spacing="10">
+                    <StackPanel Orientation="Horizontal" Spacing="5">
+                      <Label FontWeight="Bold" FontSize="14" Padding="0">AttenuationRight</Label>
+                      <heroIcons:HeroIcon Type="InformationCircle" Width="14" Height="14"
+                                          Foreground="{Binding IconColor}"
+                                          VerticalAlignment="Top">
+                        <ToolTip.Tip>
+                          <Binding Source="{x:Type local:AttenuationRight}"
+                                   Converter="{StaticResource TypeDescriptionConverter}" />
+                        </ToolTip.Tip>
+                      </heroIcons:HeroIcon>
+                    </StackPanel>
+                    <NumericUpDown Value="{Binding AttenuationRight}"
+                                   Minimum="0"
+                                   Maximum="65535"
+                                   ClipValueToMinMax="True"
+                                   Increment="1"
+                                   FormatString="F0"
+                                   Width="200"
+                                   HorizontalAlignment="Left"
+                                   Margin="0,5,0,0" />
+                  </StackPanel>
+                  <!-- Register: AttenuationRightDI0 (Write) -->
+                  <StackPanel Orientation="Vertical" Spacing="10">
+                    <StackPanel Orientation="Horizontal" Spacing="5">
+                      <Label FontWeight="Bold" FontSize="14" Padding="0">AttenuationRightDI0</Label>
+                      <heroIcons:HeroIcon Type="InformationCircle" Width="14" Height="14"
+                                          Foreground="{Binding IconColor}"
+                                          VerticalAlignment="Top">
+                        <ToolTip.Tip>
+                          <Binding Source="{x:Type local:AttenuationRightDI0}"
+                                   Converter="{StaticResource TypeDescriptionConverter}" />
+                        </ToolTip.Tip>
+                      </heroIcons:HeroIcon>
+                    </StackPanel>
+                    <NumericUpDown Value="{Binding AttenuationRightDI0}"
+                                   Minimum="0"
+                                   Maximum="65535"
+                                   ClipValueToMinMax="True"
+                                   Increment="1"
+                                   FormatString="F0"
+                                   Width="200"
+                                   HorizontalAlignment="Left"
+                                   Margin="0,5,0,0" />
+                  </StackPanel>
+                  <!-- Register: AttenuationRightDI1 (Write) -->
+                  <StackPanel Orientation="Vertical" Spacing="10">
+                    <StackPanel Orientation="Horizontal" Spacing="5">
+                      <Label FontWeight="Bold" FontSize="14" Padding="0">AttenuationRightDI1</Label>
+                      <heroIcons:HeroIcon Type="InformationCircle" Width="14" Height="14"
+                                          Foreground="{Binding IconColor}"
+                                          VerticalAlignment="Top">
+                        <ToolTip.Tip>
+                          <Binding Source="{x:Type local:AttenuationRightDI1}"
+                                   Converter="{StaticResource TypeDescriptionConverter}" />
+                        </ToolTip.Tip>
+                      </heroIcons:HeroIcon>
+                    </StackPanel>
+                    <NumericUpDown Value="{Binding AttenuationRightDI1}"
+                                   Minimum="0"
+                                   Maximum="65535"
+                                   ClipValueToMinMax="True"
+                                   Increment="1"
+                                   FormatString="F0"
+                                   Width="200"
+                                   HorizontalAlignment="Left"
+                                   Margin="0,5,0,0" />
+                  </StackPanel>
+                  <!-- Register: EnableAdcControlState (Write) -->
+                  <StackPanel Orientation="Vertical" Spacing="10">
+                    <StackPanel Orientation="Horizontal" Spacing="5">
+                      <Label FontWeight="Bold" FontSize="14" Padding="0">EnableAdcControlState</Label>
+                      <heroIcons:HeroIcon Type="InformationCircle" Width="14" Height="14"
+                                          Foreground="{Binding IconColor}"
+                                          VerticalAlignment="Top">
+                        <ToolTip.Tip>
+                          <Binding Source="{x:Type local:EnableAdcControlState}"
+                                   Converter="{StaticResource TypeDescriptionConverter}" />
+                        </ToolTip.Tip>
+                      </heroIcons:HeroIcon>
+                    </StackPanel>
+                    <ComboBox SelectedItem="{Binding EnableAdcControlState, Mode=TwoWay}"
+                              ItemTemplate="{StaticResource EnumDisplayTemplate}"
+                              IsEnabled="True"
+                              Width="200"
+                              Margin="0,5,0,0"
+                              HorizontalAlignment="Left">
+                      <x:Static Member="local:AdcControlStateConfiguration.Disabled" />
+                      <x:Static Member="local:AdcControlStateConfiguration.SampleRate1000Hz" />
+                    </ComboBox>
+                  </StackPanel>
+                  <!-- Register: ConfigureDI0 (Write) -->
+                  <StackPanel Orientation="Vertical" Spacing="10">
+                    <StackPanel Orientation="Horizontal" Spacing="5">
+                      <Label FontWeight="Bold" FontSize="14" Padding="0">ConfigureDI0</Label>
+                      <heroIcons:HeroIcon Type="InformationCircle" Width="14" Height="14"
+                                          Foreground="{Binding IconColor}"
+                                          VerticalAlignment="Top">
+                        <ToolTip.Tip>
+                          <Binding Source="{x:Type local:ConfigureDI0}"
+                                   Converter="{StaticResource TypeDescriptionConverter}" />
+                        </ToolTip.Tip>
+                      </heroIcons:HeroIcon>
+                    </StackPanel>
+                    <ComboBox SelectedItem="{Binding ConfigureDI0, Mode=TwoWay}"
+                              ItemTemplate="{StaticResource EnumDisplayTemplate}"
+                              IsEnabled="True"
+                              Width="200"
+                              Margin="0,5,0,0"
+                              HorizontalAlignment="Left">
+                      <x:Static Member="local:DigitalInputConfiguration.Digital" />
+                      <x:Static Member="local:DigitalInputConfiguration.StartAndStop" />
+                      <x:Static Member="local:DigitalInputConfiguration.Start" />
+                      <x:Static Member="local:DigitalInputConfiguration.Stop" />
+                    </ComboBox>
+                  </StackPanel>
+                  <!-- Register: ConfigureDI1 (Write) -->
+                  <StackPanel Orientation="Vertical" Spacing="10">
+                    <StackPanel Orientation="Horizontal" Spacing="5">
+                      <Label FontWeight="Bold" FontSize="14" Padding="0">ConfigureDI1</Label>
+                      <heroIcons:HeroIcon Type="InformationCircle" Width="14" Height="14"
+                                          Foreground="{Binding IconColor}"
+                                          VerticalAlignment="Top">
+                        <ToolTip.Tip>
+                          <Binding Source="{x:Type local:ConfigureDI1}"
+                                   Converter="{StaticResource TypeDescriptionConverter}" />
+                        </ToolTip.Tip>
+                      </heroIcons:HeroIcon>
+                    </StackPanel>
+                    <ComboBox SelectedItem="{Binding ConfigureDI1, Mode=TwoWay}"
+                              ItemTemplate="{StaticResource EnumDisplayTemplate}"
+                              IsEnabled="True"
+                              Width="200"
+                              Margin="0,5,0,0"
+                              HorizontalAlignment="Left">
+                      <x:Static Member="local:DigitalInputConfiguration.Digital" />
+                      <x:Static Member="local:DigitalInputConfiguration.StartAndStop" />
+                      <x:Static Member="local:DigitalInputConfiguration.Start" />
+                      <x:Static Member="local:DigitalInputConfiguration.Stop" />
+                    </ComboBox>
+                  </StackPanel>
+                  <!-- Register: ConfigureDO0 (Write) -->
+                  <StackPanel Orientation="Vertical" Spacing="10">
+                    <StackPanel Orientation="Horizontal" Spacing="5">
+                      <Label FontWeight="Bold" FontSize="14" Padding="0">ConfigureDO0</Label>
+                      <heroIcons:HeroIcon Type="InformationCircle" Width="14" Height="14"
+                                          Foreground="{Binding IconColor}"
+                                          VerticalAlignment="Top">
+                        <ToolTip.Tip>
+                          <Binding Source="{x:Type local:ConfigureDO0}"
+                                   Converter="{StaticResource TypeDescriptionConverter}" />
+                        </ToolTip.Tip>
+                      </heroIcons:HeroIcon>
+                    </StackPanel>
+                    <ComboBox SelectedItem="{Binding ConfigureDO0, Mode=TwoWay}"
+                              ItemTemplate="{StaticResource EnumDisplayTemplate}"
+                              IsEnabled="True"
+                              Width="200"
+                              Margin="0,5,0,0"
+                              HorizontalAlignment="Left">
+                      <x:Static Member="local:DigitalOutputConfiguration.Digital" />
+                      <x:Static Member="local:DigitalOutputConfiguration.PulseOnStart" />
+                    </ComboBox>
+                  </StackPanel>
+                  <!-- Register: ConfigureDO1 (Write) -->
+                  <StackPanel Orientation="Vertical" Spacing="10">
+                    <StackPanel Orientation="Horizontal" Spacing="5">
+                      <Label FontWeight="Bold" FontSize="14" Padding="0">ConfigureDO1</Label>
+                      <heroIcons:HeroIcon Type="InformationCircle" Width="14" Height="14"
+                                          Foreground="{Binding IconColor}"
+                                          VerticalAlignment="Top">
+                        <ToolTip.Tip>
+                          <Binding Source="{x:Type local:ConfigureDO1}"
+                                   Converter="{StaticResource TypeDescriptionConverter}" />
+                        </ToolTip.Tip>
+                      </heroIcons:HeroIcon>
+                    </StackPanel>
+                    <ComboBox SelectedItem="{Binding ConfigureDO1, Mode=TwoWay}"
+                              ItemTemplate="{StaticResource EnumDisplayTemplate}"
+                              IsEnabled="True"
+                              Width="200"
+                              Margin="0,5,0,0"
+                              HorizontalAlignment="Left">
+                      <x:Static Member="local:DigitalOutputConfiguration.Digital" />
+                      <x:Static Member="local:DigitalOutputConfiguration.PulseOnStart" />
+                    </ComboBox>
+                  </StackPanel>
+                  <!-- Register: ConfigureDO2 (Write) -->
+                  <StackPanel Orientation="Vertical" Spacing="10">
+                    <StackPanel Orientation="Horizontal" Spacing="5">
+                      <Label FontWeight="Bold" FontSize="14" Padding="0">ConfigureDO2</Label>
+                      <heroIcons:HeroIcon Type="InformationCircle" Width="14" Height="14"
+                                          Foreground="{Binding IconColor}"
+                                          VerticalAlignment="Top">
+                        <ToolTip.Tip>
+                          <Binding Source="{x:Type local:ConfigureDO2}"
+                                   Converter="{StaticResource TypeDescriptionConverter}" />
+                        </ToolTip.Tip>
+                      </heroIcons:HeroIcon>
+                    </StackPanel>
+                    <ComboBox SelectedItem="{Binding ConfigureDO2, Mode=TwoWay}"
+                              ItemTemplate="{StaticResource EnumDisplayTemplate}"
+                              IsEnabled="True"
+                              Width="200"
+                              Margin="0,5,0,0"
+                              HorizontalAlignment="Left">
+                      <x:Static Member="local:DigitalOutputConfiguration.Digital" />
+                      <x:Static Member="local:DigitalOutputConfiguration.PulseOnStart" />
+                    </ComboBox>
+                  </StackPanel>
+                  <!-- Register: StartOnDI0 (Write) -->
+                  <StackPanel Orientation="Vertical" Spacing="10">
+                    <StackPanel Orientation="Horizontal" Spacing="5">
+                      <Label FontWeight="Bold" FontSize="14" Padding="0">StartOnDI0</Label>
+                      <heroIcons:HeroIcon Type="InformationCircle" Width="14" Height="14"
+                                          Foreground="{Binding IconColor}"
+                                          VerticalAlignment="Top">
+                        <ToolTip.Tip>
+                          <Binding Source="{x:Type local:StartOnDI0}"
+                                   Converter="{StaticResource TypeDescriptionConverter}" />
+                        </ToolTip.Tip>
+                      </heroIcons:HeroIcon>
+                    </StackPanel>
+                    <NumericUpDown Value="{Binding StartOnDI0}"
+                                   Minimum="2"
+                                   Maximum="40000"
+                                   ClipValueToMinMax="True"
+                                   Increment="1"
+                                   FormatString="F0"
+                                   Width="200"
+                                   HorizontalAlignment="Left"
+                                   Margin="0,5,0,0" />
+                  </StackPanel>
+                  <!-- Register: StartOnDI1 (Write) -->
+                  <StackPanel Orientation="Vertical" Spacing="10">
+                    <StackPanel Orientation="Horizontal" Spacing="5">
+                      <Label FontWeight="Bold" FontSize="14" Padding="0">StartOnDI1</Label>
+                      <heroIcons:HeroIcon Type="InformationCircle" Width="14" Height="14"
+                                          Foreground="{Binding IconColor}"
+                                          VerticalAlignment="Top">
+                        <ToolTip.Tip>
+                          <Binding Source="{x:Type local:StartOnDI1}"
+                                   Converter="{StaticResource TypeDescriptionConverter}" />
+                        </ToolTip.Tip>
+                      </heroIcons:HeroIcon>
+                    </StackPanel>
+                    <NumericUpDown Value="{Binding StartOnDI1}"
+                                   Minimum="2"
+                                   Maximum="40000"
+                                   ClipValueToMinMax="True"
+                                   Increment="1"
+                                   FormatString="F0"
+                                   Width="200"
+                                   HorizontalAlignment="Left"
+                                   Margin="0,5,0,0" />
+                  </StackPanel>
+                  
+                  <!-- Register: OutputClear (Write) -->
+                  <StackPanel Orientation="Vertical" Spacing="10">
+                    <StackPanel Orientation="Horizontal" Spacing="5">
+                      <Label FontWeight="Bold" FontSize="14" Padding="0">OutputClear</Label>
+                      <heroIcons:HeroIcon Type="InformationCircle" Width="14" Height="14"
+                                          Foreground="{Binding IconColor}"
+                                          VerticalAlignment="Top">
+                        <ToolTip.Tip>
+                          <Binding Source="{x:Type local:OutputClear}"
+                                   Converter="{StaticResource TypeDescriptionConverter}" />
+                        </ToolTip.Tip>
+                      </heroIcons:HeroIcon>
+                    </StackPanel>
+                    <CheckBox IsChecked="{Binding IsDO0Enabled_OutputClear}"
+                              IsEnabled="True">
+                      DO0
+                    </CheckBox>
+                    <CheckBox IsChecked="{Binding IsDO1Enabled_OutputClear}"
+                              IsEnabled="True">
+                      DO1
+                    </CheckBox>
+                    <CheckBox IsChecked="{Binding IsDO2Enabled_OutputClear}"
+                              IsEnabled="True">
+                      DO2
+                    </CheckBox>
+                  </StackPanel>
+                  <!-- Register: OutputSet (Write) -->
+                  <StackPanel Orientation="Vertical" Spacing="10">
+                    <StackPanel Orientation="Horizontal" Spacing="5">
+                      <Label FontWeight="Bold" FontSize="14" Padding="0">OutputSet</Label>
+                      <heroIcons:HeroIcon Type="InformationCircle" Width="14" Height="14"
+                                          Foreground="{Binding IconColor}"
+                                          VerticalAlignment="Top">
+                        <ToolTip.Tip>
+                          <Binding Source="{x:Type local:OutputSet}"
+                                   Converter="{StaticResource TypeDescriptionConverter}" />
+                        </ToolTip.Tip>
+                      </heroIcons:HeroIcon>
+                    </StackPanel>
+                    <CheckBox IsChecked="{Binding IsDO0Enabled_OutputSet}"
+                              IsEnabled="True">
+                      DO0
+                    </CheckBox>
+                    <CheckBox IsChecked="{Binding IsDO1Enabled_OutputSet}"
+                              IsEnabled="True">
+                      DO1
+                    </CheckBox>
+                    <CheckBox IsChecked="{Binding IsDO2Enabled_OutputSet}"
+                              IsEnabled="True">
+                      DO2
+                    </CheckBox>
+                  </StackPanel>
+                  <!-- Register: OutputState (Write) -->
+                  <StackPanel Orientation="Vertical" Spacing="10">
+                    <StackPanel Orientation="Horizontal" Spacing="5">
+                      <Label FontWeight="Bold" FontSize="14" Padding="0">OutputState</Label>
+                      <heroIcons:HeroIcon Type="InformationCircle" Width="14" Height="14"
+                                          Foreground="{Binding IconColor}"
+                                          VerticalAlignment="Top">
+                        <ToolTip.Tip>
+                          <Binding Source="{x:Type local:OutputState}"
+                                   Converter="{StaticResource TypeDescriptionConverter}" />
+                        </ToolTip.Tip>
+                      </heroIcons:HeroIcon>
+                    </StackPanel>
+                    <CheckBox IsChecked="{Binding IsDO0Enabled_OutputState}"
+                              IsEnabled="True">
+                      DO0
+                    </CheckBox>
+                    <CheckBox IsChecked="{Binding IsDO1Enabled_OutputState}"
+                              IsEnabled="True">
+                      DO1
+                    </CheckBox>
+                    <CheckBox IsChecked="{Binding IsDO2Enabled_OutputState}"
+                              IsEnabled="True">
+                      DO2
+                    </CheckBox>
+                  </StackPanel>
+                  <!-- Register: OutputToggle (Write) -->
+                  <StackPanel Orientation="Vertical" Spacing="10">
+                    <StackPanel Orientation="Horizontal" Spacing="5">
+                      <Label FontWeight="Bold" FontSize="14" Padding="0">OutputToggle</Label>
+                      <heroIcons:HeroIcon Type="InformationCircle" Width="14" Height="14"
+                                          Foreground="{Binding IconColor}"
+                                          VerticalAlignment="Top">
+                        <ToolTip.Tip>
+                          <Binding Source="{x:Type local:OutputToggle}"
+                                   Converter="{StaticResource TypeDescriptionConverter}" />
+                        </ToolTip.Tip>
+                      </heroIcons:HeroIcon>
+                    </StackPanel>
+                    <CheckBox IsChecked="{Binding IsDO0Enabled_OutputToggle}"
+                              IsEnabled="True">
+                      DO0
+                    </CheckBox>
+                    <CheckBox IsChecked="{Binding IsDO1Enabled_OutputToggle}"
+                              IsEnabled="True">
+                      DO1
+                    </CheckBox>
+                    <CheckBox IsChecked="{Binding IsDO2Enabled_OutputToggle}"
+                              IsEnabled="True">
+                      DO2
+                    </CheckBox>
+                  </StackPanel>
+                  <!-- Register: Start (Write) -->
+                  <StackPanel Orientation="Vertical" Spacing="10">
+                    <StackPanel Orientation="Horizontal" Spacing="5">
+                      <Label FontWeight="Bold" FontSize="14" Padding="0">Start</Label>
+                      <heroIcons:HeroIcon Type="InformationCircle" Width="14" Height="14"
+                                          Foreground="{Binding IconColor}"
+                                          VerticalAlignment="Top">
+                        <ToolTip.Tip>
+                          <Binding Source="{x:Type local:Start}"
+                                   Converter="{StaticResource TypeDescriptionConverter}" />
+                        </ToolTip.Tip>
+                      </heroIcons:HeroIcon>
+                    </StackPanel>
+                    <NumericUpDown Value="{Binding Start}"
+                                   Minimum="2"
+                                   Maximum="40000"
+                                   ClipValueToMinMax="True"
+                                   Increment="1"
+                                   FormatString="F0"
+                                   Width="200"
+                                   HorizontalAlignment="Left"
+                                   Margin="0,5,0,0" />
+                  </StackPanel>
+                  <!-- Register: Stop (Write) -->
+                  <StackPanel Orientation="Vertical" Spacing="10">
+                    <StackPanel Orientation="Horizontal" Spacing="5">
+                      <Label FontWeight="Bold" FontSize="14" Padding="0">Stop</Label>
+                      <heroIcons:HeroIcon Type="InformationCircle" Width="14" Height="14"
+                                          Foreground="{Binding IconColor}"
+                                          VerticalAlignment="Top">
+                        <ToolTip.Tip>
+                          <Binding Source="{x:Type local:Stop}"
+                                   Converter="{StaticResource TypeDescriptionConverter}" />
+                        </ToolTip.Tip>
+                      </heroIcons:HeroIcon>
+                    </StackPanel>
+                    <NumericUpDown Value="{Binding Stop}"
+                                   Minimum="0"
+                                   Maximum="255"
+                                   ClipValueToMinMax="True"
+                                   Increment="1"
+                                   FormatString="F0"
+                                   Width="200"
+                                   HorizontalAlignment="Left"
+                                   Margin="0,5,0,0" />
+                  </StackPanel>
+                </StackPanel>
+              </Grid>
+            </TabItem>
+            <TabItem Header="Sound generation" FontSize="20" FontWeight="SemiBold">
+                <views:SoundGenerationView DataContext="{Binding SoundGenerationViewModel}"/>
+            </TabItem>
+          </TabControl>
+          <!-- Message Control -->
+          <StackPanel>
+            <controls:WriteMessagesControl MinWidth="500" IsVisible="{Binding ShowWriteMessages}" />
+          </StackPanel>
+        </StackPanel>
+      </StackPanel>
+    </ScrollViewer>
+  </DockPanel>
+</UserControl>
+
+
