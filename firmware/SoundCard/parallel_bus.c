@@ -98,7 +98,11 @@ ISR(PORTC_INT1_vect, ISR_NAKED)
                break;
                
             case CMD_DELETE_SOUND:
-               par_cmd_delete_sound_callback();
+               if (par_cmd_delete_sound_callback() == true)
+
+                  /* Deleting a sound stops any sound being played */
+                  last_sound_triggered = 0;
+
                break;
                
             case CMD_UPDATE_AMPLITUDE:

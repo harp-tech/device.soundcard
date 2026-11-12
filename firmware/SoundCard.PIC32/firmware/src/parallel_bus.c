@@ -7,8 +7,11 @@
 
 bool check_cmd_start(int index);
 bool playback_is_active(void);
+void delete_sound(int index);
+void delete_all_sounds(void);
 
 extern bool audio_sound_exists[32];
+extern unsigned int audio_sound_exists_bitmask;
 
 unsigned char cmd_stop[CMD_STOP_LEN]                                     = {CMD_STOP, 0};
 unsigned char cmd_delete_sound[CMD_DELETE_SOUND_LEN]                     = {CMD_DELETE_SOUND, 0, 0};
@@ -121,40 +124,20 @@ int par_bus_check_if_command_is_available(void)
                 {
                     if ((cmd_delete_sound[1] < 32) || (cmd_delete_sound[1] == 0xAA))
                     {
-                        /* Return success */
-                        PAR_RECEIVE_LAST_BYTE_REPLY(false);
-                    
-                        if (cmd_delete_sound[1] < 32)
+                        bool delete_all = cmd_delete_sound[1] == 0xAA;
+                        bool sound_to_delete = delete_all ?
+                            audio_sound_exists_bitmask != 0 :
+                            audio_sound_exists[cmd_delete_sound[1]];
+
+                        /* Return success only if there is a sound to delete */
+                        PAR_RECEIVE_LAST_BYTE_REPLY(!sound_to_delete);
+
+                        if (sound_to_delete)
                         {
-                            if (audio_sound_exists[cmd_delete_sound[1]] == true)
-                            {
-                                block_erase(cmd_delete_sound[1] * BLOCKS_PER_SOUND);
-                                
-                                clr_AUDIO_RESET;
-                                reset_PIC32();
-                                while(1);
-                            }
-                        }
-                        
-                        if (cmd_delete_sound[1] == 0xAA)
-                        {
-                            bool have_sounds = false;
-                            
-                            for (i = 0; i < get_available_sounds(); i++)
-                            {
-                                if (audio_sound_exists[i] == true)
-                                {
-                                    block_erase(i * BLOCKS_PER_SOUND);
-                                    have_sounds = true;
-                                }
-                            }
-                            
-                            if (have_sounds)
-                            {
-                                clr_AUDIO_RESET;
-                                reset_PIC32();
-                                while(1);
-                            }
+                            if (delete_all)
+                                delete_all_sounds();
+                            else
+                                delete_sound(cmd_delete_sound[1]);
                         }
 
                         return 0;

@@ -692,9 +692,9 @@ namespace Harp.SoundCard
 
     /// <summary>
     /// Provides methods for manipulating Stop register messages. Stops the sound or frequency being
-    /// played if the value is non-zero.
+    /// played when the written value is non-zero.
     /// </summary>
-    [Description("Stops the sound or frequency being played if the value is non-zero.")]
+    [Description("Stops the sound or frequency being played when the written value is non-zero.")]
     public partial class Stop
     {
         /// <summary>
@@ -765,10 +765,10 @@ namespace Harp.SoundCard
 
     /// <summary>
     /// Provides methods that return the timestamped payload of Stop register messages. Stops the sound
-    /// or frequency being played if the value is non-zero.
+    /// or frequency being played when the written value is non-zero.
     /// </summary>
     /// <seealso cref="Stop"/>
-    [Description("Stops the sound or frequency being played if the value is non-zero.")]
+    [Description("Stops the sound or frequency being played when the written value is non-zero.")]
     public partial class TimestampedStop : ITimestampedRegister
     {
         Type ITimestampedRegister.RegisterType => typeof(Stop);
@@ -1189,9 +1189,9 @@ namespace Harp.SoundCard
 
     /// <summary>
     /// Provides methods for manipulating DeleteSound register messages. Deletes the sound stored at the
-    /// specified index. Deleting a sound resets the PIC32 micro-controller.
+    /// specified index.
     /// </summary>
-    [Description("Deletes the sound stored at the specified index. Deleting a sound resets the PIC32 micro-controller.")]
+    [Description("Deletes the sound stored at the specified index.")]
     public partial class DeleteSound
     {
         /// <summary>
@@ -1262,10 +1262,10 @@ namespace Harp.SoundCard
 
     /// <summary>
     /// Provides methods that return the timestamped payload of DeleteSound register messages. Deletes
-    /// the sound stored at the specified index. Deleting a sound resets the PIC32 micro-controller.
+    /// the sound stored at the specified index.
     /// </summary>
     /// <seealso cref="DeleteSound"/>
-    [Description("Deletes the sound stored at the specified index. Deleting a sound resets the PIC32 micro-controller.")]
+    [Description("Deletes the sound stored at the specified index.")]
     public partial class TimestampedDeleteSound : ITimestampedRegister
     {
         Type ITimestampedRegister.RegisterType => typeof(DeleteSound);
@@ -1288,9 +1288,9 @@ namespace Harp.SoundCard
 
     /// <summary>
     /// Provides methods for manipulating DeleteAllSounds register messages. Deletes all sounds stored
-    /// in the device if the value is non-zero. Deleting sounds resets the PIC32 micro-controller.
+    /// in the device when the written value is non-zero.
     /// </summary>
-    [Description("Deletes all sounds stored in the device if the value is non-zero. Deleting sounds resets the PIC32 micro-controller.")]
+    [Description("Deletes all sounds stored in the device when the written value is non-zero.")]
     public partial class DeleteAllSounds
     {
         /// <summary>
@@ -1361,11 +1361,10 @@ namespace Harp.SoundCard
 
     /// <summary>
     /// Provides methods that return the timestamped payload of DeleteAllSounds register messages.
-    /// Deletes all sounds stored in the device if the value is non-zero. Deleting sounds resets the
-    /// PIC32 micro-controller.
+    /// Deletes all sounds stored in the device when the written value is non-zero.
     /// </summary>
     /// <seealso cref="DeleteAllSounds"/>
-    [Description("Deletes all sounds stored in the device if the value is non-zero. Deleting sounds resets the PIC32 micro-controller.")]
+    [Description("Deletes all sounds stored in the device when the written value is non-zero.")]
     public partial class TimestampedDeleteAllSounds : ITimestampedRegister
     {
         Type ITimestampedRegister.RegisterType => typeof(DeleteAllSounds);
@@ -3922,19 +3921,19 @@ namespace Harp.SoundCard
 
     /// <summary>
     /// Represents an operator that creates Stop register messages. Stops the sound or frequency being
-    /// played if the value is non-zero.
+    /// played when the written value is non-zero.
     /// </summary>
     [DisplayName("StopPayload")]
-    [Description("Stops the sound or frequency being played if the value is non-zero.")]
+    [Description("Stops the sound or frequency being played when the written value is non-zero.")]
     public partial class CreateStopPayload : IRegisterPayload
     {
         Type IRegisterPayload.RegisterType => typeof(Stop);
 
         /// <summary>
-        /// Gets or sets the value for the Stop register. Stops the sound or frequency being played if the
-        /// value is non-zero.
+        /// Gets or sets the value for the Stop register. Stops the sound or frequency being played when the
+        /// written value is non-zero.
         /// </summary>
-        [Description("Stops the sound or frequency being played if the value is non-zero.")]
+        [Description("Stops the sound or frequency being played when the written value is non-zero.")]
         public byte Stop { get; set; }
 
         /// <summary>
@@ -3959,10 +3958,10 @@ namespace Harp.SoundCard
 
     /// <summary>
     /// Represents an operator that creates timestamped Stop register messages. Stops the sound or
-    /// frequency being played if the value is non-zero.
+    /// frequency being played when the written value is non-zero.
     /// </summary>
     [DisplayName("TimestampedStopPayload")]
-    [Description("Stops the sound or frequency being played if the value is non-zero.")]
+    [Description("Stops the sound or frequency being played when the written value is non-zero.")]
     public partial class CreateTimestampedStopPayload : CreateStopPayload, ITimestampedRegister
     {
         Type ITimestampedRegister.RegisterType => typeof(Stop);
@@ -4217,21 +4216,21 @@ namespace Harp.SoundCard
 
     /// <summary>
     /// Represents an operator that creates DeleteSound register messages. Deletes the sound stored at
-    /// the specified index. Deleting a sound resets the PIC32 micro-controller.
+    /// the specified index.
     /// </summary>
     [DisplayName("DeleteSoundPayload")]
-    [Description("Deletes the sound stored at the specified index. Deleting a sound resets the PIC32 micro-controller.")]
+    [Description("Deletes the sound stored at the specified index.")]
     public partial class CreateDeleteSoundPayload : IRegisterPayload
     {
         Type IRegisterPayload.RegisterType => typeof(DeleteSound);
 
         /// <summary>
         /// Gets or sets the value for the DeleteSound register. Deletes the sound stored at the specified
-        /// index. Deleting a sound resets the PIC32 micro-controller.
+        /// index.
         /// </summary>
         [Range(min: 2, max: 31)]
         [Editor(DesignTypes.NumericUpDownEditor, DesignTypes.UITypeEditor)]
-        [Description("Deletes the sound stored at the specified index. Deleting a sound resets the PIC32 micro-controller.")]
+        [Description("Deletes the sound stored at the specified index.")]
         public byte DeleteSound { get; set; } = 2;
 
         /// <summary>
@@ -4256,10 +4255,10 @@ namespace Harp.SoundCard
 
     /// <summary>
     /// Represents an operator that creates timestamped DeleteSound register messages. Deletes the sound
-    /// stored at the specified index. Deleting a sound resets the PIC32 micro-controller.
+    /// stored at the specified index.
     /// </summary>
     [DisplayName("TimestampedDeleteSoundPayload")]
-    [Description("Deletes the sound stored at the specified index. Deleting a sound resets the PIC32 micro-controller.")]
+    [Description("Deletes the sound stored at the specified index.")]
     public partial class CreateTimestampedDeleteSoundPayload : CreateDeleteSoundPayload, ITimestampedRegister
     {
         Type ITimestampedRegister.RegisterType => typeof(DeleteSound);
@@ -4278,19 +4277,19 @@ namespace Harp.SoundCard
 
     /// <summary>
     /// Represents an operator that creates DeleteAllSounds register messages. Deletes all sounds stored
-    /// in the device if the value is non-zero. Deleting sounds resets the PIC32 micro-controller.
+    /// in the device when the written value is non-zero.
     /// </summary>
     [DisplayName("DeleteAllSoundsPayload")]
-    [Description("Deletes all sounds stored in the device if the value is non-zero. Deleting sounds resets the PIC32 micro-controller.")]
+    [Description("Deletes all sounds stored in the device when the written value is non-zero.")]
     public partial class CreateDeleteAllSoundsPayload : IRegisterPayload
     {
         Type IRegisterPayload.RegisterType => typeof(DeleteAllSounds);
 
         /// <summary>
         /// Gets or sets the value for the DeleteAllSounds register. Deletes all sounds stored in the device
-        /// if the value is non-zero. Deleting sounds resets the PIC32 micro-controller.
+        /// when the written value is non-zero.
         /// </summary>
-        [Description("Deletes all sounds stored in the device if the value is non-zero. Deleting sounds resets the PIC32 micro-controller.")]
+        [Description("Deletes all sounds stored in the device when the written value is non-zero.")]
         public byte DeleteAllSounds { get; set; }
 
         /// <summary>
@@ -4315,11 +4314,10 @@ namespace Harp.SoundCard
 
     /// <summary>
     /// Represents an operator that creates timestamped DeleteAllSounds register messages. Deletes all
-    /// sounds stored in the device if the value is non-zero. Deleting sounds resets the PIC32
-    /// micro-controller.
+    /// sounds stored in the device when the written value is non-zero.
     /// </summary>
     [DisplayName("TimestampedDeleteAllSoundsPayload")]
-    [Description("Deletes all sounds stored in the device if the value is non-zero. Deleting sounds resets the PIC32 micro-controller.")]
+    [Description("Deletes all sounds stored in the device when the written value is non-zero.")]
     public partial class CreateTimestampedDeleteAllSoundsPayload : CreateDeleteAllSoundsPayload, ITimestampedRegister
     {
         Type ITimestampedRegister.RegisterType => typeof(DeleteAllSounds);

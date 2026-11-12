@@ -178,13 +178,13 @@ typedef struct
 /************************************************************************/
 /* Registers */
 #define ADD_REG_START                       32 // U16    Starts the sound index if the value is less than 32, or otherwise the waveform generator at the specified frequency in Hz.
-#define ADD_REG_STOP                        33 // U8     Stops the sound or frequency being played if the value is non-zero.
+#define ADD_REG_STOP                        33 // U8     Stops the sound or frequency being played when the written value is non-zero.
 #define ADD_REG_ATTENUATION_LEFT            34 // U16    Specifies the attenuation for the left channel (1 LSB is 0.1dB).
 #define ADD_REG_ATTENUATION_RIGHT           35 // U16    Specifies the attenuation for the right channel (1 LSB is 0.1dB).
 #define ADD_REG_ATTENUATION_BOTH            36 // U16    Specifies the attenuation for the left and right channels simultaneously [Att L] [Att R] (1 LSB is 0.1dB).
 #define ADD_REG_ATTENUATION_START           37 // U16    Specifies attenuation and simultaneously starts the sound index or frequency [Index] [Att L] [Att R].
-#define ADD_REG_DELETE_SOUND                38 // U8     Deletes the sound stored at the specified index. Deleting a sound resets the PIC32 micro-controller.
-#define ADD_REG_DELETE_ALL_SOUNDS           39 // U8     Deletes all sounds stored in the device if the value is non-zero. Deleting sounds resets the PIC32 micro-controller.
+#define ADD_REG_DELETE_SOUND                38 // U8     Deletes the sound stored at the specified index.
+#define ADD_REG_DELETE_ALL_SOUNDS           39 // U8     Deletes all sounds stored in the device when the written value is non-zero.
 #define ADD_REG_INPUT_STATE                 40 // U8     Reports the state of the digital inputs. Events are sent only for inputs configured in Digital mode.
 #define ADD_REG_CONFIGURE_DI0               41 // U8     Specifies the operation mode of the digital input 0 (DI0).
 #define ADD_REG_CONFIGURE_DI1               42 // U8     Specifies the operation mode of the digital input 1 (DI1).

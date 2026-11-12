@@ -18,7 +18,7 @@ registers:
     address: 33
     type: U8
     access: [Write, Event]
-    description: Stops the sound or frequency being played if the value is non-zero.
+    description: Stops the sound or frequency being played when the written value is non-zero.
   AttenuationLeft: &attenuation
     address: 34
     type: U16
@@ -45,12 +45,12 @@ registers:
     minValue: 2
     maxValue: 31
     defaultValue: 2
-    description: Deletes the sound stored at the specified index. Deleting a sound resets the PIC32 micro-controller.
+    description: Deletes the sound stored at the specified index.
   DeleteAllSounds:
     address: 39
     type: U8
     access: Write
-    description: Deletes all sounds stored in the device if the value is non-zero. Deleting sounds resets the PIC32 micro-controller.
+    description: Deletes all sounds stored in the device when the written value is non-zero.
   InputState:
     address: 40
     type: U8
