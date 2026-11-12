@@ -82,7 +82,11 @@ ISR(PORTC_INT1_vect, ISR_NAKED)
          {
                
             case CMD_STOP:
-               par_cmd_stop_callback();
+               if (par_cmd_stop_callback() == false)
+
+                  /* If there was nothing for the PIC32 to stop */
+                  timer_type0_stop(&TCC0);
+
                break;
             
 			case CMD_START:

@@ -6,6 +6,7 @@
 #include "sounds_allocation.h"
 
 bool check_cmd_start(int index);
+bool playback_is_active(void);
 
 extern bool audio_sound_exists[32];
 
@@ -105,7 +106,7 @@ int par_bus_check_if_command_is_available(void)
                 
                 if (cmd_stop[0] == cmd_stop[1])
                 {
-                    PAR_RECEIVE_LAST_BYTE_REPLY(false);
+                    PAR_RECEIVE_LAST_BYTE_REPLY(!playback_is_active());
                     
                     return command_received;
                 }
@@ -295,12 +296,6 @@ int par_bus_process_command_start(void)
     
     /* Return sound index */
     return index;
-}
-
-void par_bus_process_command_stop(void)
-{    
-    /* Mute the device */
-    //set_AUDIO_MUTE;
 }
 
 int par_bus_process_command_update_frequency(void)

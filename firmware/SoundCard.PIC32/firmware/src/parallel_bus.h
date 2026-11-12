@@ -61,7 +61,6 @@ void initialize_par_ios(void);
 int par_bus_check_if_command_is_available(void);
 
 int par_bus_process_command_start(void);
-void par_bus_process_command_stop(void);
 int par_bus_process_command_update_frequency(void);
 
 #endif	/* PARALLEL_BUS_H */
