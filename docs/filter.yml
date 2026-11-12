@@ -2,12 +2,9 @@ apiRules:
 - exclude:
     hasAttribute:
       uid: System.ObsoleteAttribute
-<<<<<<< HEAD
 - include:
     uidRegex: ^Harp\.SoundCard\.(AsyncDevice|CreateMessage|DeviceDataWriter|FilterRegister|Format|GetDeviceMetadata|GroupByRegister|Parse|ReadSoundMetadata|SampleRate|SoundCardException|SoundMetadata|UpdateSoundWaveform)$
     type: Type
 - exclude:
     uidRegex: ^Harp\.SoundCard\.[^.]+$
     type: Type
-=======
->>>>>>> d2f34f9 (Initial docs draft based on fw2.2)

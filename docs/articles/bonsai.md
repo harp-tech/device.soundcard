@@ -35,7 +35,7 @@ The device is ready to use! If, instead, you hear nothing or an error appears in
 
 Next, we suggest going through the "Examples" section if you are not familiar with using Harp devices in Bonsai.
 
-Alternatively, if you have experience with Harp devices, you can check the [register table](xref:Harp.SoundCard) in the reference to access the device functionality directly.
+Alternatively, if you have experience with Harp devices, you can check the [register table](xref:Harp.SoundCard.Device) in the reference to access the device functionality directly.
 
 [!INCLUDE [](../includes/version-footer.md)]
 
