@@ -38,15 +38,19 @@ registers:
     address: 37
     length: 3
     description: Specifies attenuation and simultaneously starts the sound index or frequency [Index] [Att L] [Att R].
-  Reserved0: &reserved
+  DeleteSound:
     address: 38
     type: U8
-    access: Read
-    description: Reserved for future use.
-    visibility: private
-  Reserved1:
-    <<: *reserved
+    access: Write
+    minValue: 2
+    maxValue: 31
+    defaultValue: 2
+    description: Deletes the sound stored at the specified index. Deleting a sound resets the PIC32 micro-controller.
+  DeleteAllSounds:
     address: 39
+    type: U8
+    access: Write
+    description: Deletes all sounds stored in the device if the value is non-zero. Deleting sounds resets the PIC32 micro-controller.
   InputState:
     address: 40
     type: U8
@@ -92,9 +96,12 @@ registers:
     <<: *attenuation
     address: 48
     description: Specifies the attenuation to set on the right channel (1 LSB is 0.1dB) when triggering DI1.
-  Reserved2:
-    <<: *reserved
+  Reserved2: &reserved
     address: 49
+    type: U8
+    access: Read
+    description: Reserved for future use.
+    visibility: private
   Reserved3:
     <<: *reserved
     address: 50
@@ -229,12 +236,13 @@ registers:
   Reserved23:
     <<: *reserved
     address: 81
-  Pic32Commands:
+  Pic32Bootloader:
     address: 82
     type: U8
     access: Write
-    maskType: Pic32Command
-    description: Sends commands to the PIC32 micro-controller
+    maskType: EnableFlag
+    visibility: private
+    description: Specifies whether the PIC32 micro-controller bootloader is enabled. While enabled, the serial port is connected to the PIC32 bootloader.
 bitMasks:
   DigitalInputs:
     description: Specifies the state of the digital input lines.
@@ -268,9 +276,3 @@ groupMasks:
       Attenuation: {value: 1, description: Controls the attenuation of the left channel from ADC0 and of the right channel from ADC1.}
       AttenuationBoth: {value: 2, description: Controls the attenuation of both channels.}
       Frequency: {value: 3, description: Controls the frequency of the waveform generator from ADC1 only.}
-  Pic32Command:
-    description: Specifies commands to send to the PIC32 micro-controller
-    values:
-      DisableBootloader: {value: 0, description: Disable the PIC32 bootloader mode.}
-      EnableBootloader: {value: 1, description: Enable the PIC32 bootloader mode.}
-      DeleteAllSounds: {value: 255, description: Delete all sounds stored in the PIC32 micro-controller.}

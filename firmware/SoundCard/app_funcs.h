@@ -26,8 +26,8 @@ void app_read_REG_ATTENUATION_LEFT(void);
 void app_read_REG_ATTENUATION_RIGHT(void);
 void app_read_REG_ATTENUATION_BOTH(void);
 void app_read_REG_ATTENUATION_START(void);
-void app_read_REG_RESERVED0(void);
-void app_read_REG_RESERVED1(void);
+void app_read_REG_DELETE_SOUND(void);
+void app_read_REG_DELETE_ALL_SOUNDS(void);
 void app_read_REG_INPUT_STATE(void);
 void app_read_REG_CONFIGURE_DI0(void);
 void app_read_REG_CONFIGURE_DI1(void);
@@ -70,7 +70,7 @@ void app_read_REG_RESERVED20(void);
 void app_read_REG_RESERVED21(void);
 void app_read_REG_RESERVED22(void);
 void app_read_REG_RESERVED23(void);
-void app_read_REG_PIC32_COMMANDS(void);
+void app_read_REG_PIC32_BOOTLOADER(void);
 
 bool app_write_REG_START(void *a);
 bool app_write_REG_STOP(void *a);
@@ -78,8 +78,8 @@ bool app_write_REG_ATTENUATION_LEFT(void *a);
 bool app_write_REG_ATTENUATION_RIGHT(void *a);
 bool app_write_REG_ATTENUATION_BOTH(void *a);
 bool app_write_REG_ATTENUATION_START(void *a);
-bool app_write_REG_RESERVED0(void *a);
-bool app_write_REG_RESERVED1(void *a);
+bool app_write_REG_DELETE_SOUND(void *a);
+bool app_write_REG_DELETE_ALL_SOUNDS(void *a);
 bool app_write_REG_INPUT_STATE(void *a);
 bool app_write_REG_CONFIGURE_DI0(void *a);
 bool app_write_REG_CONFIGURE_DI1(void *a);
@@ -122,7 +122,7 @@ bool app_write_REG_RESERVED20(void *a);
 bool app_write_REG_RESERVED21(void *a);
 bool app_write_REG_RESERVED22(void *a);
 bool app_write_REG_RESERVED23(void *a);
-bool app_write_REG_PIC32_COMMANDS(void *a);
+bool app_write_REG_PIC32_BOOTLOADER(void *a);
 
 
 #endif /* _APP_FUNCTIONS_H_ */

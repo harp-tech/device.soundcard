@@ -126,8 +126,8 @@ typedef struct
     uint16_t REG_ATTENUATION_RIGHT;
     uint16_t REG_ATTENUATION_BOTH[2];
     uint16_t REG_ATTENUATION_START[3];
-    uint8_t REG_RESERVED0;
-    uint8_t REG_RESERVED1;
+    uint8_t REG_DELETE_SOUND;
+    uint8_t REG_DELETE_ALL_SOUNDS;
     uint8_t REG_INPUT_STATE;
     uint8_t REG_CONFIGURE_DI0;
     uint8_t REG_CONFIGURE_DI1;
@@ -170,7 +170,7 @@ typedef struct
     uint8_t REG_RESERVED21;
     uint8_t REG_RESERVED22;
     uint8_t REG_RESERVED23;
-    uint8_t REG_PIC32_COMMANDS;
+    uint8_t REG_PIC32_BOOTLOADER;
 } AppRegs;
 
 /************************************************************************/
@@ -183,8 +183,8 @@ typedef struct
 #define ADD_REG_ATTENUATION_RIGHT           35 // U16    Specifies the attenuation for the right channel (1 LSB is 0.1dB).
 #define ADD_REG_ATTENUATION_BOTH            36 // U16    Specifies the attenuation for the left and right channels simultaneously [Att L] [Att R] (1 LSB is 0.1dB).
 #define ADD_REG_ATTENUATION_START           37 // U16    Specifies attenuation and simultaneously starts the sound index or frequency [Index] [Att L] [Att R].
-#define ADD_REG_RESERVED0                   38 // U8     Reserved for future use.
-#define ADD_REG_RESERVED1                   39 // U8     Reserved for future use.
+#define ADD_REG_DELETE_SOUND                38 // U8     Deletes the sound stored at the specified index. Deleting a sound resets the PIC32 micro-controller.
+#define ADD_REG_DELETE_ALL_SOUNDS           39 // U8     Deletes all sounds stored in the device if the value is non-zero. Deleting sounds resets the PIC32 micro-controller.
 #define ADD_REG_INPUT_STATE                 40 // U8     Reports the state of the digital inputs. Events are sent only for inputs configured in Digital mode.
 #define ADD_REG_CONFIGURE_DI0               41 // U8     Specifies the operation mode of the digital input 0 (DI0).
 #define ADD_REG_CONFIGURE_DI1               42 // U8     Specifies the operation mode of the digital input 1 (DI1).
@@ -227,7 +227,7 @@ typedef struct
 #define ADD_REG_RESERVED21                  79 // U8     Reserved for future use.
 #define ADD_REG_RESERVED22                  80 // U8     Reserved for future use.
 #define ADD_REG_RESERVED23                  81 // U8     Reserved for future use.
-#define ADD_REG_PIC32_COMMANDS              82 // U8     Sends commands to the PIC32 micro-controller
+#define ADD_REG_PIC32_BOOTLOADER            82 // U8     Specifies whether the PIC32 micro-controller bootloader is enabled. While enabled, the serial port is connected to the PIC32 bootloader.
 
 /************************************************************************/
 /* SoundCard registers' memory limits                                   */
@@ -243,28 +243,24 @@ typedef struct
 /************************************************************************/
 /* Registers' bits                                                      */
 /************************************************************************/
-#define B_DI0                                  (1<<0)       // Digital input 0.
-#define B_DI1                                  (1<<1)       // Digital input 1.
-#define B_DI2                                  (1<<2)       // Digital input 2 (no associated event).
-#define B_DO0                                  (1<<0)       // Digital output 0.
-#define B_DO1                                  (1<<1)       // Digital output 1.
-#define B_DO2                                  (1<<2)       // Digital output 2.
-#define MSK_DI_MODE                            0x03         //
-#define GM_DI_MODE_DIGITAL                     0x00         // Used as a pure digital input.
-#define GM_DI_MODE_START_AND_STOP              0x01         // Starts sound index (if less than 32) or frequency (if greater or equal than 32) when rising edge and stop when falling edge (frequency only).
-#define GM_DI_MODE_START                       0x02         // Starts sound index (if less than 32) or frequency (if greater or equal than 32) when rising edge.
-#define GM_DI_MODE_STOP                        0x03         // Stops frequency when rising edge.
-#define MSK_DO_MODE                            0x01         //
-#define GM_DO_MODE_DIGITAL                     0x00         // Used as a pure digital output.
-#define GM_DO_MODE_PULSE_ON_START              0x01         // Positive 400us pulse when a sound or frequency starts.
-#define MSK_ADC_MODE                           0x03         //
-#define GM_ADC_MODE_ANALOG_INPUT               0x00         // Used as a pure analog input.
-#define GM_ADC_MODE_ATTENUATION                0x01         // Controls the attenuation of the left channel from ADC0 and of the right channel from ADC1.
-#define GM_ADC_MODE_ATTENUATION_BOTH           0x02         // Controls the attenuation of both channels.
-#define GM_ADC_MODE_FREQUENCY                  0x03         // Controls the frequency of the waveform generator from ADC1 only.
-#define MSK_PIC32_COMMAND                      0xFF         //
-#define GM_PIC32_COMMAND_DISABLE_BOOTLOADER    0x00         // Disable the PIC32 bootloader mode.
-#define GM_PIC32_COMMAND_ENABLE_BOOTLOADER     0x01         // Enable the PIC32 bootloader mode.
-#define GM_PIC32_COMMAND_DELETE_ALL_SOUNDS     0xFF         // Delete all sounds stored in the PIC32 micro-controller.
+#define B_DI0                           (1<<0)       // Digital input 0.
+#define B_DI1                           (1<<1)       // Digital input 1.
+#define B_DI2                           (1<<2)       // Digital input 2 (no associated event).
+#define B_DO0                           (1<<0)       // Digital output 0.
+#define B_DO1                           (1<<1)       // Digital output 1.
+#define B_DO2                           (1<<2)       // Digital output 2.
+#define MSK_DI_MODE                     0x03         //
+#define GM_DI_MODE_DIGITAL              0x00         // Used as a pure digital input.
+#define GM_DI_MODE_START_AND_STOP       0x01         // Starts sound index (if less than 32) or frequency (if greater or equal than 32) when rising edge and stop when falling edge (frequency only).
+#define GM_DI_MODE_START                0x02         // Starts sound index (if less than 32) or frequency (if greater or equal than 32) when rising edge.
+#define GM_DI_MODE_STOP                 0x03         // Stops frequency when rising edge.
+#define MSK_DO_MODE                     0x01         //
+#define GM_DO_MODE_DIGITAL              0x00         // Used as a pure digital output.
+#define GM_DO_MODE_PULSE_ON_START       0x01         // Positive 400us pulse when a sound or frequency starts.
+#define MSK_ADC_MODE                    0x03         //
+#define GM_ADC_MODE_ANALOG_INPUT        0x00         // Used as a pure analog input.
+#define GM_ADC_MODE_ATTENUATION         0x01         // Controls the attenuation of the left channel from ADC0 and of the right channel from ADC1.
+#define GM_ADC_MODE_ATTENUATION_BOTH    0x02         // Controls the attenuation of both channels.
+#define GM_ADC_MODE_FREQUENCY           0x03         // Controls the frequency of the waveform generator from ADC1 only.
 
 #endif /* _APP_REGS_H_ */

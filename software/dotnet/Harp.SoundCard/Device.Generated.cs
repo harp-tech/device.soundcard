@@ -50,8 +50,8 @@ namespace Harp.SoundCard
             { 35, typeof(AttenuationRight) },
             { 36, typeof(AttenuationBoth) },
             { 37, typeof(AttenuationStart) },
-            { 38, typeof(Reserved0) },
-            { 39, typeof(Reserved1) },
+            { 38, typeof(DeleteSound) },
+            { 39, typeof(DeleteAllSounds) },
             { 40, typeof(InputState) },
             { 41, typeof(ConfigureDI0) },
             { 42, typeof(ConfigureDI1) },
@@ -94,7 +94,7 @@ namespace Harp.SoundCard
             { 79, typeof(Reserved21) },
             { 80, typeof(Reserved22) },
             { 81, typeof(Reserved23) },
-            { 82, typeof(Pic32Commands) }
+            { 82, typeof(Pic32Bootloader) }
         };
 
         /// <summary>
@@ -353,6 +353,8 @@ namespace Harp.SoundCard
     /// <seealso cref="AttenuationRight"/>
     /// <seealso cref="AttenuationBoth"/>
     /// <seealso cref="AttenuationStart"/>
+    /// <seealso cref="DeleteSound"/>
+    /// <seealso cref="DeleteAllSounds"/>
     /// <seealso cref="InputState"/>
     /// <seealso cref="ConfigureDI0"/>
     /// <seealso cref="ConfigureDI1"/>
@@ -371,13 +373,14 @@ namespace Harp.SoundCard
     /// <seealso cref="OutputState"/>
     /// <seealso cref="EnableAdcControlState"/>
     /// <seealso cref="AdcControlState"/>
-    /// <seealso cref="Pic32Commands"/>
     [XmlInclude(typeof(Start))]
     [XmlInclude(typeof(Stop))]
     [XmlInclude(typeof(AttenuationLeft))]
     [XmlInclude(typeof(AttenuationRight))]
     [XmlInclude(typeof(AttenuationBoth))]
     [XmlInclude(typeof(AttenuationStart))]
+    [XmlInclude(typeof(DeleteSound))]
+    [XmlInclude(typeof(DeleteAllSounds))]
     [XmlInclude(typeof(InputState))]
     [XmlInclude(typeof(ConfigureDI0))]
     [XmlInclude(typeof(ConfigureDI1))]
@@ -396,7 +399,6 @@ namespace Harp.SoundCard
     [XmlInclude(typeof(OutputState))]
     [XmlInclude(typeof(EnableAdcControlState))]
     [XmlInclude(typeof(AdcControlState))]
-    [XmlInclude(typeof(Pic32Commands))]
     [Description("Filters register-specific messages reported by the SoundCard device.")]
     public class FilterRegister : FilterRegisterBuilder, INamedElement, ICustomTypeDescriptor
     {
@@ -424,6 +426,8 @@ namespace Harp.SoundCard
     /// <seealso cref="AttenuationRight"/>
     /// <seealso cref="AttenuationBoth"/>
     /// <seealso cref="AttenuationStart"/>
+    /// <seealso cref="DeleteSound"/>
+    /// <seealso cref="DeleteAllSounds"/>
     /// <seealso cref="InputState"/>
     /// <seealso cref="ConfigureDI0"/>
     /// <seealso cref="ConfigureDI1"/>
@@ -442,13 +446,14 @@ namespace Harp.SoundCard
     /// <seealso cref="OutputState"/>
     /// <seealso cref="EnableAdcControlState"/>
     /// <seealso cref="AdcControlState"/>
-    /// <seealso cref="Pic32Commands"/>
     [XmlInclude(typeof(Start))]
     [XmlInclude(typeof(Stop))]
     [XmlInclude(typeof(AttenuationLeft))]
     [XmlInclude(typeof(AttenuationRight))]
     [XmlInclude(typeof(AttenuationBoth))]
     [XmlInclude(typeof(AttenuationStart))]
+    [XmlInclude(typeof(DeleteSound))]
+    [XmlInclude(typeof(DeleteAllSounds))]
     [XmlInclude(typeof(InputState))]
     [XmlInclude(typeof(ConfigureDI0))]
     [XmlInclude(typeof(ConfigureDI1))]
@@ -467,13 +472,14 @@ namespace Harp.SoundCard
     [XmlInclude(typeof(OutputState))]
     [XmlInclude(typeof(EnableAdcControlState))]
     [XmlInclude(typeof(AdcControlState))]
-    [XmlInclude(typeof(Pic32Commands))]
     [XmlInclude(typeof(TimestampedStart))]
     [XmlInclude(typeof(TimestampedStop))]
     [XmlInclude(typeof(TimestampedAttenuationLeft))]
     [XmlInclude(typeof(TimestampedAttenuationRight))]
     [XmlInclude(typeof(TimestampedAttenuationBoth))]
     [XmlInclude(typeof(TimestampedAttenuationStart))]
+    [XmlInclude(typeof(TimestampedDeleteSound))]
+    [XmlInclude(typeof(TimestampedDeleteAllSounds))]
     [XmlInclude(typeof(TimestampedInputState))]
     [XmlInclude(typeof(TimestampedConfigureDI0))]
     [XmlInclude(typeof(TimestampedConfigureDI1))]
@@ -492,7 +498,6 @@ namespace Harp.SoundCard
     [XmlInclude(typeof(TimestampedOutputState))]
     [XmlInclude(typeof(TimestampedEnableAdcControlState))]
     [XmlInclude(typeof(TimestampedAdcControlState))]
-    [XmlInclude(typeof(TimestampedPic32Commands))]
     [Description("Filters and selects specific messages reported by the SoundCard device.")]
     public partial class Parse : ParseBuilder, INamedElement, ICustomTypeDescriptor
     {
@@ -522,6 +527,8 @@ namespace Harp.SoundCard
     /// <seealso cref="AttenuationRight"/>
     /// <seealso cref="AttenuationBoth"/>
     /// <seealso cref="AttenuationStart"/>
+    /// <seealso cref="DeleteSound"/>
+    /// <seealso cref="DeleteAllSounds"/>
     /// <seealso cref="InputState"/>
     /// <seealso cref="ConfigureDI0"/>
     /// <seealso cref="ConfigureDI1"/>
@@ -540,13 +547,14 @@ namespace Harp.SoundCard
     /// <seealso cref="OutputState"/>
     /// <seealso cref="EnableAdcControlState"/>
     /// <seealso cref="AdcControlState"/>
-    /// <seealso cref="Pic32Commands"/>
     [XmlInclude(typeof(Start))]
     [XmlInclude(typeof(Stop))]
     [XmlInclude(typeof(AttenuationLeft))]
     [XmlInclude(typeof(AttenuationRight))]
     [XmlInclude(typeof(AttenuationBoth))]
     [XmlInclude(typeof(AttenuationStart))]
+    [XmlInclude(typeof(DeleteSound))]
+    [XmlInclude(typeof(DeleteAllSounds))]
     [XmlInclude(typeof(InputState))]
     [XmlInclude(typeof(ConfigureDI0))]
     [XmlInclude(typeof(ConfigureDI1))]
@@ -565,7 +573,6 @@ namespace Harp.SoundCard
     [XmlInclude(typeof(OutputState))]
     [XmlInclude(typeof(EnableAdcControlState))]
     [XmlInclude(typeof(AdcControlState))]
-    [XmlInclude(typeof(Pic32Commands))]
     [Description("Formats a sequence of values as specific SoundCard register messages.")]
     public partial class Format : FormatBuilder, INamedElement, ICustomTypeDescriptor
     {
@@ -1181,47 +1188,202 @@ namespace Harp.SoundCard
     }
 
     /// <summary>
-    /// Provides methods for manipulating Reserved0 register messages. Reserved for future use.
+    /// Provides methods for manipulating DeleteSound register messages. Deletes the sound stored at the
+    /// specified index. Deleting a sound resets the PIC32 micro-controller.
     /// </summary>
-    [Description("Reserved for future use.")]
-    internal partial class Reserved0
+    [Description("Deletes the sound stored at the specified index. Deleting a sound resets the PIC32 micro-controller.")]
+    public partial class DeleteSound
     {
         /// <summary>
-        /// Represents the address of the <see cref="Reserved0"/> register. This field is constant.
+        /// Represents the address of the <see cref="DeleteSound"/> register. This field is constant.
         /// </summary>
         public const int Address = 38;
 
         /// <summary>
-        /// Represents the payload type of the <see cref="Reserved0"/> register. This field is constant.
+        /// Represents the payload type of the <see cref="DeleteSound"/> register. This field is constant.
         /// </summary>
         public const PayloadType RegisterType = PayloadType.U8;
 
         /// <summary>
-        /// Represents the length of the <see cref="Reserved0"/> register. This field is constant.
+        /// Represents the length of the <see cref="DeleteSound"/> register. This field is constant.
         /// </summary>
         public const int RegisterLength = 1;
+
+        /// <summary>
+        /// Returns the payload of the specified <see cref="DeleteSound"/> register message.
+        /// </summary>
+        /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
+        /// <returns>A value representing the message payload.</returns>
+        public static byte GetPayload(HarpMessage message)
+        {
+            return message.GetPayloadByte();
+        }
+
+        /// <summary>
+        /// Returns the timestamped payload of the specified <see cref="DeleteSound"/> register message.
+        /// </summary>
+        /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
+        /// <returns>A value representing the timestamped message payload.</returns>
+        public static Timestamped<byte> GetTimestampedPayload(HarpMessage message)
+        {
+            return message.GetTimestampedPayloadByte();
+        }
+
+        /// <summary>
+        /// Returns a Harp message for the <see cref="DeleteSound"/> register.
+        /// </summary>
+        /// <param name="messageType">The type of the Harp message.</param>
+        /// <param name="value">The payload of the message.</param>
+        /// <returns>
+        /// A <see cref="HarpMessage"/> object for the <see cref="DeleteSound"/> register
+        /// with the specified message type and payload.
+        /// </returns>
+        public static HarpMessage FromPayload(MessageType messageType, byte value)
+        {
+            return HarpMessage.FromByte(Address, messageType, value);
+        }
+
+        /// <summary>
+        /// Returns a timestamped Harp message for the <see cref="DeleteSound"/>
+        /// register.
+        /// </summary>
+        /// <param name="timestamp">The timestamp of the message, in seconds.</param>
+        /// <param name="messageType">The type of the Harp message.</param>
+        /// <param name="value">The payload of the message.</param>
+        /// <returns>
+        /// A <see cref="HarpMessage"/> object for the <see cref="DeleteSound"/> register
+        /// with the specified message type, timestamp, and payload.
+        /// </returns>
+        public static HarpMessage FromPayload(double timestamp, MessageType messageType, byte value)
+        {
+            return HarpMessage.FromByte(Address, timestamp, messageType, value);
+        }
     }
 
     /// <summary>
-    /// Provides methods for manipulating Reserved1 register messages. Reserved for future use.
+    /// Provides methods that return the timestamped payload of DeleteSound register messages. Deletes
+    /// the sound stored at the specified index. Deleting a sound resets the PIC32 micro-controller.
     /// </summary>
-    [Description("Reserved for future use.")]
-    internal partial class Reserved1
+    /// <seealso cref="DeleteSound"/>
+    [Description("Deletes the sound stored at the specified index. Deleting a sound resets the PIC32 micro-controller.")]
+    public partial class TimestampedDeleteSound : ITimestampedRegister
+    {
+        Type ITimestampedRegister.RegisterType => typeof(DeleteSound);
+
+        /// <summary>
+        /// Represents the address of the <see cref="DeleteSound"/> register. This field is constant.
+        /// </summary>
+        public const int Address = DeleteSound.Address;
+
+        /// <summary>
+        /// Returns the timestamped payload of the specified <see cref="DeleteSound"/> register message.
+        /// </summary>
+        /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
+        /// <returns>A value representing the timestamped message payload.</returns>
+        public static Timestamped<byte> GetPayload(HarpMessage message)
+        {
+            return DeleteSound.GetTimestampedPayload(message);
+        }
+    }
+
+    /// <summary>
+    /// Provides methods for manipulating DeleteAllSounds register messages. Deletes all sounds stored
+    /// in the device if the value is non-zero. Deleting sounds resets the PIC32 micro-controller.
+    /// </summary>
+    [Description("Deletes all sounds stored in the device if the value is non-zero. Deleting sounds resets the PIC32 micro-controller.")]
+    public partial class DeleteAllSounds
     {
         /// <summary>
-        /// Represents the address of the <see cref="Reserved1"/> register. This field is constant.
+        /// Represents the address of the <see cref="DeleteAllSounds"/> register. This field is constant.
         /// </summary>
         public const int Address = 39;
 
         /// <summary>
-        /// Represents the payload type of the <see cref="Reserved1"/> register. This field is constant.
+        /// Represents the payload type of the <see cref="DeleteAllSounds"/> register. This field is constant.
         /// </summary>
         public const PayloadType RegisterType = PayloadType.U8;
 
         /// <summary>
-        /// Represents the length of the <see cref="Reserved1"/> register. This field is constant.
+        /// Represents the length of the <see cref="DeleteAllSounds"/> register. This field is constant.
         /// </summary>
         public const int RegisterLength = 1;
+
+        /// <summary>
+        /// Returns the payload of the specified <see cref="DeleteAllSounds"/> register message.
+        /// </summary>
+        /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
+        /// <returns>A value representing the message payload.</returns>
+        public static byte GetPayload(HarpMessage message)
+        {
+            return message.GetPayloadByte();
+        }
+
+        /// <summary>
+        /// Returns the timestamped payload of the specified <see cref="DeleteAllSounds"/> register message.
+        /// </summary>
+        /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
+        /// <returns>A value representing the timestamped message payload.</returns>
+        public static Timestamped<byte> GetTimestampedPayload(HarpMessage message)
+        {
+            return message.GetTimestampedPayloadByte();
+        }
+
+        /// <summary>
+        /// Returns a Harp message for the <see cref="DeleteAllSounds"/> register.
+        /// </summary>
+        /// <param name="messageType">The type of the Harp message.</param>
+        /// <param name="value">The payload of the message.</param>
+        /// <returns>
+        /// A <see cref="HarpMessage"/> object for the <see cref="DeleteAllSounds"/> register
+        /// with the specified message type and payload.
+        /// </returns>
+        public static HarpMessage FromPayload(MessageType messageType, byte value)
+        {
+            return HarpMessage.FromByte(Address, messageType, value);
+        }
+
+        /// <summary>
+        /// Returns a timestamped Harp message for the <see cref="DeleteAllSounds"/>
+        /// register.
+        /// </summary>
+        /// <param name="timestamp">The timestamp of the message, in seconds.</param>
+        /// <param name="messageType">The type of the Harp message.</param>
+        /// <param name="value">The payload of the message.</param>
+        /// <returns>
+        /// A <see cref="HarpMessage"/> object for the <see cref="DeleteAllSounds"/> register
+        /// with the specified message type, timestamp, and payload.
+        /// </returns>
+        public static HarpMessage FromPayload(double timestamp, MessageType messageType, byte value)
+        {
+            return HarpMessage.FromByte(Address, timestamp, messageType, value);
+        }
+    }
+
+    /// <summary>
+    /// Provides methods that return the timestamped payload of DeleteAllSounds register messages.
+    /// Deletes all sounds stored in the device if the value is non-zero. Deleting sounds resets the
+    /// PIC32 micro-controller.
+    /// </summary>
+    /// <seealso cref="DeleteAllSounds"/>
+    [Description("Deletes all sounds stored in the device if the value is non-zero. Deleting sounds resets the PIC32 micro-controller.")]
+    public partial class TimestampedDeleteAllSounds : ITimestampedRegister
+    {
+        Type ITimestampedRegister.RegisterType => typeof(DeleteAllSounds);
+
+        /// <summary>
+        /// Represents the address of the <see cref="DeleteAllSounds"/> register. This field is constant.
+        /// </summary>
+        public const int Address = DeleteAllSounds.Address;
+
+        /// <summary>
+        /// Returns the timestamped payload of the specified <see cref="DeleteAllSounds"/> register message.
+        /// </summary>
+        /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
+        /// <returns>A value representing the timestamped message payload.</returns>
+        public static Timestamped<byte> GetPayload(HarpMessage message)
+        {
+            return DeleteAllSounds.GetTimestampedPayload(message);
+        }
     }
 
     /// <summary>
@@ -3572,103 +3734,27 @@ namespace Harp.SoundCard
     }
 
     /// <summary>
-    /// Provides methods for manipulating Pic32Commands register messages. Sends commands to the PIC32
-    /// micro-controller.
+    /// Provides methods for manipulating Pic32Bootloader register messages. Specifies whether the PIC32
+    /// micro-controller bootloader is enabled. While enabled, the serial port is connected to the PIC32
+    /// bootloader.
     /// </summary>
-    [Description("Sends commands to the PIC32 micro-controller.")]
-    public partial class Pic32Commands
+    [Description("Specifies whether the PIC32 micro-controller bootloader is enabled. While enabled, the serial port is connected to the PIC32 bootloader.")]
+    internal partial class Pic32Bootloader
     {
         /// <summary>
-        /// Represents the address of the <see cref="Pic32Commands"/> register. This field is constant.
+        /// Represents the address of the <see cref="Pic32Bootloader"/> register. This field is constant.
         /// </summary>
         public const int Address = 82;
 
         /// <summary>
-        /// Represents the payload type of the <see cref="Pic32Commands"/> register. This field is constant.
+        /// Represents the payload type of the <see cref="Pic32Bootloader"/> register. This field is constant.
         /// </summary>
         public const PayloadType RegisterType = PayloadType.U8;
 
         /// <summary>
-        /// Represents the length of the <see cref="Pic32Commands"/> register. This field is constant.
+        /// Represents the length of the <see cref="Pic32Bootloader"/> register. This field is constant.
         /// </summary>
         public const int RegisterLength = 1;
-
-        /// <summary>
-        /// Returns the payload of the specified <see cref="Pic32Commands"/> register message.
-        /// </summary>
-        /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
-        /// <returns>A value representing the message payload.</returns>
-        public static Pic32Command GetPayload(HarpMessage message)
-        {
-            return (Pic32Command)message.GetPayloadByte();
-        }
-
-        /// <summary>
-        /// Returns the timestamped payload of the specified <see cref="Pic32Commands"/> register message.
-        /// </summary>
-        /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
-        /// <returns>A value representing the timestamped message payload.</returns>
-        public static Timestamped<Pic32Command> GetTimestampedPayload(HarpMessage message)
-        {
-            var (payload, timestamp) = message.GetTimestampedPayloadByte();
-            return Timestamped.Create((Pic32Command)payload, timestamp);
-        }
-
-        /// <summary>
-        /// Returns a Harp message for the <see cref="Pic32Commands"/> register.
-        /// </summary>
-        /// <param name="messageType">The type of the Harp message.</param>
-        /// <param name="value">The payload of the message.</param>
-        /// <returns>
-        /// A <see cref="HarpMessage"/> object for the <see cref="Pic32Commands"/> register
-        /// with the specified message type and payload.
-        /// </returns>
-        public static HarpMessage FromPayload(MessageType messageType, Pic32Command value)
-        {
-            return HarpMessage.FromByte(Address, messageType, (byte)value);
-        }
-
-        /// <summary>
-        /// Returns a timestamped Harp message for the <see cref="Pic32Commands"/>
-        /// register.
-        /// </summary>
-        /// <param name="timestamp">The timestamp of the message, in seconds.</param>
-        /// <param name="messageType">The type of the Harp message.</param>
-        /// <param name="value">The payload of the message.</param>
-        /// <returns>
-        /// A <see cref="HarpMessage"/> object for the <see cref="Pic32Commands"/> register
-        /// with the specified message type, timestamp, and payload.
-        /// </returns>
-        public static HarpMessage FromPayload(double timestamp, MessageType messageType, Pic32Command value)
-        {
-            return HarpMessage.FromByte(Address, timestamp, messageType, (byte)value);
-        }
-    }
-
-    /// <summary>
-    /// Provides methods that return the timestamped payload of Pic32Commands register messages. Sends
-    /// commands to the PIC32 micro-controller.
-    /// </summary>
-    /// <seealso cref="Pic32Commands"/>
-    [Description("Sends commands to the PIC32 micro-controller.")]
-    public partial class TimestampedPic32Commands : ITimestampedRegister
-    {
-        Type ITimestampedRegister.RegisterType => typeof(Pic32Commands);
-
-        /// <summary>
-        /// Represents the address of the <see cref="Pic32Commands"/> register. This field is constant.
-        /// </summary>
-        public const int Address = Pic32Commands.Address;
-
-        /// <summary>
-        /// Returns the timestamped payload of the specified <see cref="Pic32Commands"/> register message.
-        /// </summary>
-        /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
-        /// <returns>A value representing the timestamped message payload.</returns>
-        public static Timestamped<Pic32Command> GetPayload(HarpMessage message)
-        {
-            return Pic32Commands.GetTimestampedPayload(message);
-        }
     }
 
     /// <summary>
@@ -3681,6 +3767,8 @@ namespace Harp.SoundCard
     /// <seealso cref="CreateAttenuationRightPayload"/>
     /// <seealso cref="CreateAttenuationBothPayload"/>
     /// <seealso cref="CreateAttenuationStartPayload"/>
+    /// <seealso cref="CreateDeleteSoundPayload"/>
+    /// <seealso cref="CreateDeleteAllSoundsPayload"/>
     /// <seealso cref="CreateInputStatePayload"/>
     /// <seealso cref="CreateConfigureDI0Payload"/>
     /// <seealso cref="CreateConfigureDI1Payload"/>
@@ -3699,13 +3787,14 @@ namespace Harp.SoundCard
     /// <seealso cref="CreateOutputStatePayload"/>
     /// <seealso cref="CreateEnableAdcControlStatePayload"/>
     /// <seealso cref="CreateAdcControlStatePayload"/>
-    /// <seealso cref="CreatePic32CommandsPayload"/>
     [XmlInclude(typeof(CreateStartPayload))]
     [XmlInclude(typeof(CreateStopPayload))]
     [XmlInclude(typeof(CreateAttenuationLeftPayload))]
     [XmlInclude(typeof(CreateAttenuationRightPayload))]
     [XmlInclude(typeof(CreateAttenuationBothPayload))]
     [XmlInclude(typeof(CreateAttenuationStartPayload))]
+    [XmlInclude(typeof(CreateDeleteSoundPayload))]
+    [XmlInclude(typeof(CreateDeleteAllSoundsPayload))]
     [XmlInclude(typeof(CreateInputStatePayload))]
     [XmlInclude(typeof(CreateConfigureDI0Payload))]
     [XmlInclude(typeof(CreateConfigureDI1Payload))]
@@ -3724,13 +3813,14 @@ namespace Harp.SoundCard
     [XmlInclude(typeof(CreateOutputStatePayload))]
     [XmlInclude(typeof(CreateEnableAdcControlStatePayload))]
     [XmlInclude(typeof(CreateAdcControlStatePayload))]
-    [XmlInclude(typeof(CreatePic32CommandsPayload))]
     [XmlInclude(typeof(CreateTimestampedStartPayload))]
     [XmlInclude(typeof(CreateTimestampedStopPayload))]
     [XmlInclude(typeof(CreateTimestampedAttenuationLeftPayload))]
     [XmlInclude(typeof(CreateTimestampedAttenuationRightPayload))]
     [XmlInclude(typeof(CreateTimestampedAttenuationBothPayload))]
     [XmlInclude(typeof(CreateTimestampedAttenuationStartPayload))]
+    [XmlInclude(typeof(CreateTimestampedDeleteSoundPayload))]
+    [XmlInclude(typeof(CreateTimestampedDeleteAllSoundsPayload))]
     [XmlInclude(typeof(CreateTimestampedInputStatePayload))]
     [XmlInclude(typeof(CreateTimestampedConfigureDI0Payload))]
     [XmlInclude(typeof(CreateTimestampedConfigureDI1Payload))]
@@ -3749,7 +3839,6 @@ namespace Harp.SoundCard
     [XmlInclude(typeof(CreateTimestampedOutputStatePayload))]
     [XmlInclude(typeof(CreateTimestampedEnableAdcControlStatePayload))]
     [XmlInclude(typeof(CreateTimestampedAdcControlStatePayload))]
-    [XmlInclude(typeof(CreateTimestampedPic32CommandsPayload))]
     [Description("Creates standard messages for the SoundCard device.")]
     public partial class CreateMessage : CreateMessageBuilder, INamedElement, ICustomTypeDescriptor
     {
@@ -4123,6 +4212,127 @@ namespace Harp.SoundCard
         public HarpMessage GetMessage(double timestamp, MessageType messageType)
         {
             return Harp.SoundCard.AttenuationStart.FromPayload(timestamp, messageType, GetPayload());
+        }
+    }
+
+    /// <summary>
+    /// Represents an operator that creates DeleteSound register messages. Deletes the sound stored at
+    /// the specified index. Deleting a sound resets the PIC32 micro-controller.
+    /// </summary>
+    [DisplayName("DeleteSoundPayload")]
+    [Description("Deletes the sound stored at the specified index. Deleting a sound resets the PIC32 micro-controller.")]
+    public partial class CreateDeleteSoundPayload : IRegisterPayload
+    {
+        Type IRegisterPayload.RegisterType => typeof(DeleteSound);
+
+        /// <summary>
+        /// Gets or sets the value for the DeleteSound register. Deletes the sound stored at the specified
+        /// index. Deleting a sound resets the PIC32 micro-controller.
+        /// </summary>
+        [Range(min: 2, max: 31)]
+        [Editor(DesignTypes.NumericUpDownEditor, DesignTypes.UITypeEditor)]
+        [Description("Deletes the sound stored at the specified index. Deleting a sound resets the PIC32 micro-controller.")]
+        public byte DeleteSound { get; set; } = 2;
+
+        /// <summary>
+        /// Creates a message payload for the DeleteSound register.
+        /// </summary>
+        /// <returns>The created message payload value.</returns>
+        public byte GetPayload()
+        {
+            return DeleteSound;
+        }
+
+        /// <summary>
+        /// Creates a message for the DeleteSound register.
+        /// </summary>
+        /// <param name="messageType">Specifies the type of the created message.</param>
+        /// <returns>A new message for the DeleteSound register.</returns>
+        public HarpMessage GetMessage(MessageType messageType)
+        {
+            return Harp.SoundCard.DeleteSound.FromPayload(messageType, GetPayload());
+        }
+    }
+
+    /// <summary>
+    /// Represents an operator that creates timestamped DeleteSound register messages. Deletes the sound
+    /// stored at the specified index. Deleting a sound resets the PIC32 micro-controller.
+    /// </summary>
+    [DisplayName("TimestampedDeleteSoundPayload")]
+    [Description("Deletes the sound stored at the specified index. Deleting a sound resets the PIC32 micro-controller.")]
+    public partial class CreateTimestampedDeleteSoundPayload : CreateDeleteSoundPayload, ITimestampedRegister
+    {
+        Type ITimestampedRegister.RegisterType => typeof(DeleteSound);
+
+        /// <summary>
+        /// Creates a timestamped message for the DeleteSound register.
+        /// </summary>
+        /// <param name="timestamp">The timestamp of the message, in seconds.</param>
+        /// <param name="messageType">Specifies the type of the created message.</param>
+        /// <returns>A new timestamped message for the DeleteSound register.</returns>
+        public HarpMessage GetMessage(double timestamp, MessageType messageType)
+        {
+            return Harp.SoundCard.DeleteSound.FromPayload(timestamp, messageType, GetPayload());
+        }
+    }
+
+    /// <summary>
+    /// Represents an operator that creates DeleteAllSounds register messages. Deletes all sounds stored
+    /// in the device if the value is non-zero. Deleting sounds resets the PIC32 micro-controller.
+    /// </summary>
+    [DisplayName("DeleteAllSoundsPayload")]
+    [Description("Deletes all sounds stored in the device if the value is non-zero. Deleting sounds resets the PIC32 micro-controller.")]
+    public partial class CreateDeleteAllSoundsPayload : IRegisterPayload
+    {
+        Type IRegisterPayload.RegisterType => typeof(DeleteAllSounds);
+
+        /// <summary>
+        /// Gets or sets the value for the DeleteAllSounds register. Deletes all sounds stored in the device
+        /// if the value is non-zero. Deleting sounds resets the PIC32 micro-controller.
+        /// </summary>
+        [Description("Deletes all sounds stored in the device if the value is non-zero. Deleting sounds resets the PIC32 micro-controller.")]
+        public byte DeleteAllSounds { get; set; }
+
+        /// <summary>
+        /// Creates a message payload for the DeleteAllSounds register.
+        /// </summary>
+        /// <returns>The created message payload value.</returns>
+        public byte GetPayload()
+        {
+            return DeleteAllSounds;
+        }
+
+        /// <summary>
+        /// Creates a message for the DeleteAllSounds register.
+        /// </summary>
+        /// <param name="messageType">Specifies the type of the created message.</param>
+        /// <returns>A new message for the DeleteAllSounds register.</returns>
+        public HarpMessage GetMessage(MessageType messageType)
+        {
+            return Harp.SoundCard.DeleteAllSounds.FromPayload(messageType, GetPayload());
+        }
+    }
+
+    /// <summary>
+    /// Represents an operator that creates timestamped DeleteAllSounds register messages. Deletes all
+    /// sounds stored in the device if the value is non-zero. Deleting sounds resets the PIC32
+    /// micro-controller.
+    /// </summary>
+    [DisplayName("TimestampedDeleteAllSoundsPayload")]
+    [Description("Deletes all sounds stored in the device if the value is non-zero. Deleting sounds resets the PIC32 micro-controller.")]
+    public partial class CreateTimestampedDeleteAllSoundsPayload : CreateDeleteAllSoundsPayload, ITimestampedRegister
+    {
+        Type ITimestampedRegister.RegisterType => typeof(DeleteAllSounds);
+
+        /// <summary>
+        /// Creates a timestamped message for the DeleteAllSounds register.
+        /// </summary>
+        /// <param name="timestamp">The timestamp of the message, in seconds.</param>
+        /// <param name="messageType">Specifies the type of the created message.</param>
+        /// <returns>A new timestamped message for the DeleteAllSounds register.</returns>
+        public HarpMessage GetMessage(double timestamp, MessageType messageType)
+        {
+            return Harp.SoundCard.DeleteAllSounds.FromPayload(timestamp, messageType, GetPayload());
         }
     }
 
@@ -5223,65 +5433,6 @@ namespace Harp.SoundCard
     }
 
     /// <summary>
-    /// Represents an operator that creates Pic32Commands register messages. Sends commands to the PIC32
-    /// micro-controller.
-    /// </summary>
-    [DisplayName("Pic32CommandsPayload")]
-    [Description("Sends commands to the PIC32 micro-controller.")]
-    public partial class CreatePic32CommandsPayload : IRegisterPayload
-    {
-        Type IRegisterPayload.RegisterType => typeof(Pic32Commands);
-
-        /// <summary>
-        /// Gets or sets the value for the Pic32Commands register. Sends commands to the PIC32
-        /// micro-controller.
-        /// </summary>
-        [Description("Sends commands to the PIC32 micro-controller.")]
-        public Pic32Command Pic32Commands { get; set; }
-
-        /// <summary>
-        /// Creates a message payload for the Pic32Commands register.
-        /// </summary>
-        /// <returns>The created message payload value.</returns>
-        public Pic32Command GetPayload()
-        {
-            return Pic32Commands;
-        }
-
-        /// <summary>
-        /// Creates a message for the Pic32Commands register.
-        /// </summary>
-        /// <param name="messageType">Specifies the type of the created message.</param>
-        /// <returns>A new message for the Pic32Commands register.</returns>
-        public HarpMessage GetMessage(MessageType messageType)
-        {
-            return Harp.SoundCard.Pic32Commands.FromPayload(messageType, GetPayload());
-        }
-    }
-
-    /// <summary>
-    /// Represents an operator that creates timestamped Pic32Commands register messages. Sends commands
-    /// to the PIC32 micro-controller.
-    /// </summary>
-    [DisplayName("TimestampedPic32CommandsPayload")]
-    [Description("Sends commands to the PIC32 micro-controller.")]
-    public partial class CreateTimestampedPic32CommandsPayload : CreatePic32CommandsPayload, ITimestampedRegister
-    {
-        Type ITimestampedRegister.RegisterType => typeof(Pic32Commands);
-
-        /// <summary>
-        /// Creates a timestamped message for the Pic32Commands register.
-        /// </summary>
-        /// <param name="timestamp">The timestamp of the message, in seconds.</param>
-        /// <param name="messageType">Specifies the type of the created message.</param>
-        /// <returns>A new timestamped message for the Pic32Commands register.</returns>
-        public HarpMessage GetMessage(double timestamp, MessageType messageType)
-        {
-            return Harp.SoundCard.Pic32Commands.FromPayload(timestamp, messageType, GetPayload());
-        }
-    }
-
-    /// <summary>
     /// Represents the payload of the AdcControlState register.
     /// </summary>
     public struct AdcControlStatePayload
@@ -5496,30 +5647,6 @@ namespace Harp.SoundCard
         /// </summary>
         [Description("Controls the frequency of the waveform generator from ADC1 only.")]
         Frequency = 3
-    }
-
-    /// <summary>
-    /// Specifies commands to send to the PIC32 micro-controller.
-    /// </summary>
-    public enum Pic32Command : byte
-    {
-        /// <summary>
-        /// Disable the PIC32 bootloader mode.
-        /// </summary>
-        [Description("Disable the PIC32 bootloader mode.")]
-        DisableBootloader = 0,
-
-        /// <summary>
-        /// Enable the PIC32 bootloader mode.
-        /// </summary>
-        [Description("Enable the PIC32 bootloader mode.")]
-        EnableBootloader = 1,
-
-        /// <summary>
-        /// Delete all sounds stored in the PIC32 micro-controller.
-        /// </summary>
-        [Description("Delete all sounds stored in the PIC32 micro-controller.")]
-        DeleteAllSounds = 255
     }
 
     internal static partial class PayloadMarshal

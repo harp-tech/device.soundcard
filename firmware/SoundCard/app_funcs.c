@@ -16,8 +16,8 @@ void (*app_func_rd_pointer[])(void) = {
 	&app_read_REG_ATTENUATION_RIGHT,
 	&app_read_REG_ATTENUATION_BOTH,
 	&app_read_REG_ATTENUATION_START,
-	&app_read_REG_RESERVED0,
-	&app_read_REG_RESERVED1,
+	&app_read_REG_DELETE_SOUND,
+	&app_read_REG_DELETE_ALL_SOUNDS,
 	&app_read_REG_INPUT_STATE,
 	&app_read_REG_CONFIGURE_DI0,
 	&app_read_REG_CONFIGURE_DI1,
@@ -60,7 +60,7 @@ void (*app_func_rd_pointer[])(void) = {
 	&app_read_REG_RESERVED21,
 	&app_read_REG_RESERVED22,
 	&app_read_REG_RESERVED23,
-	&app_read_REG_PIC32_COMMANDS
+	&app_read_REG_PIC32_BOOTLOADER
 };
 
 bool (*app_func_wr_pointer[])(void*) = {
@@ -70,8 +70,8 @@ bool (*app_func_wr_pointer[])(void*) = {
 	&app_write_REG_ATTENUATION_RIGHT,
 	&app_write_REG_ATTENUATION_BOTH,
 	&app_write_REG_ATTENUATION_START,
-	&app_write_REG_RESERVED0,
-	&app_write_REG_RESERVED1,
+	&app_write_REG_DELETE_SOUND,
+	&app_write_REG_DELETE_ALL_SOUNDS,
 	&app_write_REG_INPUT_STATE,
 	&app_write_REG_CONFIGURE_DI0,
 	&app_write_REG_CONFIGURE_DI1,
@@ -114,7 +114,7 @@ bool (*app_func_wr_pointer[])(void*) = {
 	&app_write_REG_RESERVED21,
 	&app_write_REG_RESERVED22,
 	&app_write_REG_RESERVED23,
-	&app_write_REG_PIC32_COMMANDS
+	&app_write_REG_PIC32_BOOTLOADER
 };
 
 
@@ -258,7 +258,40 @@ bool app_write_REG_ATTENUATION_START(void *a)
 	last_sound_triggered = reg[0];
 	
 	par_cmd_start_sound(reg[0], reg[1], reg[2]);
-	
+
+	return true;
+}
+
+
+/************************************************************************/
+/* REG_DELETE_SOUND                                                     */
+/************************************************************************/
+void app_read_REG_DELETE_SOUND(void) {}
+bool app_write_REG_DELETE_SOUND(void *a)
+{
+	uint8_t reg = *((uint8_t*)a);
+
+	if (reg < 2 || reg > 31)
+		return false;
+
+	app_regs.REG_DELETE_SOUND = reg;
+	par_cmd_delete_sound(reg, false);
+	return true;
+}
+
+
+/************************************************************************/
+/* REG_DELETE_ALL_SOUNDS                                                */
+/************************************************************************/
+void app_read_REG_DELETE_ALL_SOUNDS(void) {}
+bool app_write_REG_DELETE_ALL_SOUNDS(void *a)
+{
+	uint8_t reg = *((uint8_t*)a);
+
+	app_regs.REG_DELETE_ALL_SOUNDS = reg;
+	if (reg)
+		par_cmd_delete_sound(0, true);
+
 	return true;
 }
 
@@ -664,34 +697,29 @@ bool app_write_REG_CONFIGURE_ADC1(void *a)
 
 
 /************************************************************************/
-/* REG_PIC32_COMMANDS                                                   */
+/* REG_PIC32_BOOTLOADER                                                 */
 /************************************************************************/
-void app_read_REG_PIC32_COMMANDS(void) {}
-bool app_write_REG_PIC32_COMMANDS(void *a)
+void app_read_REG_PIC32_BOOTLOADER(void) {}
+bool app_write_REG_PIC32_BOOTLOADER(void *a)
 {
-   uint8_t reg = *((uint8_t*)a);   
-   
-   if (reg == GM_PIC32_COMMAND_DISABLE_BOOTLOADER)
-      clr_BOOTLOADER_EN;
-      
-   if (reg == GM_PIC32_COMMAND_ENABLE_BOOTLOADER)
-      set_BOOTLOADER_EN;
-   
-   if (reg == GM_PIC32_COMMAND_DELETE_ALL_SOUNDS)
-       par_cmd_delete_sound(0, true);
-   
-   if (reg >= 0+2+2 && reg <= 32+2)
-       par_cmd_delete_sound(reg-2, false);   
-      
-   return true;
+	uint8_t reg = *((uint8_t*)a);
+
+	if (reg & (~0x01))
+		return false;
+
+	if (reg)
+		set_BOOTLOADER_EN;
+	else
+		clr_BOOTLOADER_EN;
+
+	app_regs.REG_PIC32_BOOTLOADER = reg;
+	return true;
 }
 
 
 /************************************************************************/
 /* All REG_RESERVEDx                                                    */
 /************************************************************************/
-void 	app_read_REG_RESERVED0	(void) {}
-void 	app_read_REG_RESERVED1	(void) {}
 void 	app_read_REG_RESERVED2	(void) {}
 void 	app_read_REG_RESERVED3	(void) {}
 void 	app_read_REG_RESERVED4	(void) {}
@@ -715,8 +743,6 @@ void 	app_read_REG_RESERVED21	(void) {}
 void 	app_read_REG_RESERVED22	(void) {}
 void 	app_read_REG_RESERVED23	(void) {}
 
-bool app_write_REG_RESERVED0	(void *a) { app_regs.REG_RESERVED0	 = *((uint8_t*)a); return true; }
-bool app_write_REG_RESERVED1	(void *a) { app_regs.REG_RESERVED1	 = *((uint8_t*)a); return true; }
 bool app_write_REG_RESERVED2	(void *a) { app_regs.REG_RESERVED2	 = *((uint8_t*)a); return true; }
 bool app_write_REG_RESERVED3	(void *a) { app_regs.REG_RESERVED3	 = *((uint8_t*)a); return true; }
 bool app_write_REG_RESERVED4	(void *a) { app_regs.REG_RESERVED4	 = *((uint8_t*)a); return true; }

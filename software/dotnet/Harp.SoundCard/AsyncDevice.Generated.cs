@@ -504,6 +504,146 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
+        /// Asynchronously reads the payload of the <see cref="DeleteSound"/> register.
+        /// </summary>
+        /// <param name="cancellationToken">
+        /// The token to monitor for cancellation requests. The default value is
+        /// <see cref="CancellationToken.None"/>.
+        /// </param>
+        /// <returns>
+        /// A task that represents the asynchronous read operation. The value of its
+        /// <see cref="Task{TResult}.Result"/> property contains the register payload.
+        /// </returns>
+        /// <exception cref="HarpException">
+        /// The device replied to the read request with an error. This exception is stored into
+        /// the returned task.
+        /// </exception>
+        /// <exception cref="System.OperationCanceledException">
+        /// The cancellation token was canceled. This exception is stored into the returned task.
+        /// </exception>
+        public async Task<byte> ReadDeleteSoundAsync(CancellationToken cancellationToken = default)
+        {
+            var reply = await CommandAsync(HarpCommand.ReadByte(DeleteSound.Address), cancellationToken);
+            return DeleteSound.GetPayload(reply);
+        }
+
+        /// <summary>
+        /// Asynchronously reads the timestamped payload of the <see cref="DeleteSound"/> register.
+        /// </summary>
+        /// <param name="cancellationToken">
+        /// The token to monitor for cancellation requests. The default value is
+        /// <see cref="CancellationToken.None"/>.
+        /// </param>
+        /// <returns>
+        /// A task that represents the asynchronous read operation. The value of its
+        /// <see cref="Task{TResult}.Result"/> property contains the timestamped register payload.
+        /// </returns>
+        /// <exception cref="HarpException">
+        /// The device replied to the read request with an error. This exception is stored into
+        /// the returned task.
+        /// </exception>
+        /// <exception cref="System.OperationCanceledException">
+        /// The cancellation token was canceled. This exception is stored into the returned task.
+        /// </exception>
+        public async Task<Timestamped<byte>> ReadTimestampedDeleteSoundAsync(CancellationToken cancellationToken = default)
+        {
+            var reply = await CommandAsync(HarpCommand.ReadByte(DeleteSound.Address), cancellationToken);
+            return DeleteSound.GetTimestampedPayload(reply);
+        }
+
+        /// <summary>
+        /// Asynchronously writes the specified payload to the <see cref="DeleteSound"/> register.
+        /// </summary>
+        /// <param name="value">The payload to write to the register.</param>
+        /// <param name="cancellationToken">
+        /// The token to monitor for cancellation requests. The default value is
+        /// <see cref="CancellationToken.None"/>.
+        /// </param>
+        /// <returns>A task that represents the asynchronous write operation.</returns>
+        /// <exception cref="HarpException">
+        /// The device replied to the write request with an error. This exception is stored into
+        /// the returned task.
+        /// </exception>
+        /// <exception cref="System.OperationCanceledException">
+        /// The cancellation token was canceled. This exception is stored into the returned task.
+        /// </exception>
+        public async Task WriteDeleteSoundAsync(byte value, CancellationToken cancellationToken = default)
+        {
+            var request = DeleteSound.FromPayload(MessageType.Write, value);
+            await CommandAsync(request, cancellationToken);
+        }
+
+        /// <summary>
+        /// Asynchronously reads the payload of the <see cref="DeleteAllSounds"/> register.
+        /// </summary>
+        /// <param name="cancellationToken">
+        /// The token to monitor for cancellation requests. The default value is
+        /// <see cref="CancellationToken.None"/>.
+        /// </param>
+        /// <returns>
+        /// A task that represents the asynchronous read operation. The value of its
+        /// <see cref="Task{TResult}.Result"/> property contains the register payload.
+        /// </returns>
+        /// <exception cref="HarpException">
+        /// The device replied to the read request with an error. This exception is stored into
+        /// the returned task.
+        /// </exception>
+        /// <exception cref="System.OperationCanceledException">
+        /// The cancellation token was canceled. This exception is stored into the returned task.
+        /// </exception>
+        public async Task<byte> ReadDeleteAllSoundsAsync(CancellationToken cancellationToken = default)
+        {
+            var reply = await CommandAsync(HarpCommand.ReadByte(DeleteAllSounds.Address), cancellationToken);
+            return DeleteAllSounds.GetPayload(reply);
+        }
+
+        /// <summary>
+        /// Asynchronously reads the timestamped payload of the <see cref="DeleteAllSounds"/> register.
+        /// </summary>
+        /// <param name="cancellationToken">
+        /// The token to monitor for cancellation requests. The default value is
+        /// <see cref="CancellationToken.None"/>.
+        /// </param>
+        /// <returns>
+        /// A task that represents the asynchronous read operation. The value of its
+        /// <see cref="Task{TResult}.Result"/> property contains the timestamped register payload.
+        /// </returns>
+        /// <exception cref="HarpException">
+        /// The device replied to the read request with an error. This exception is stored into
+        /// the returned task.
+        /// </exception>
+        /// <exception cref="System.OperationCanceledException">
+        /// The cancellation token was canceled. This exception is stored into the returned task.
+        /// </exception>
+        public async Task<Timestamped<byte>> ReadTimestampedDeleteAllSoundsAsync(CancellationToken cancellationToken = default)
+        {
+            var reply = await CommandAsync(HarpCommand.ReadByte(DeleteAllSounds.Address), cancellationToken);
+            return DeleteAllSounds.GetTimestampedPayload(reply);
+        }
+
+        /// <summary>
+        /// Asynchronously writes the specified payload to the <see cref="DeleteAllSounds"/> register.
+        /// </summary>
+        /// <param name="value">The payload to write to the register.</param>
+        /// <param name="cancellationToken">
+        /// The token to monitor for cancellation requests. The default value is
+        /// <see cref="CancellationToken.None"/>.
+        /// </param>
+        /// <returns>A task that represents the asynchronous write operation.</returns>
+        /// <exception cref="HarpException">
+        /// The device replied to the write request with an error. This exception is stored into
+        /// the returned task.
+        /// </exception>
+        /// <exception cref="System.OperationCanceledException">
+        /// The cancellation token was canceled. This exception is stored into the returned task.
+        /// </exception>
+        public async Task WriteDeleteAllSoundsAsync(byte value, CancellationToken cancellationToken = default)
+        {
+            var request = DeleteAllSounds.FromPayload(MessageType.Write, value);
+            await CommandAsync(request, cancellationToken);
+        }
+
+        /// <summary>
         /// Asynchronously reads the payload of the <see cref="InputState"/> register.
         /// </summary>
         /// <param name="cancellationToken">
@@ -1717,76 +1857,6 @@ namespace Harp.SoundCard
         {
             var reply = await CommandAsync(HarpCommand.ReadUInt16(AdcControlState.Address), cancellationToken);
             return AdcControlState.GetTimestampedPayload(reply);
-        }
-
-        /// <summary>
-        /// Asynchronously reads the payload of the <see cref="Pic32Commands"/> register.
-        /// </summary>
-        /// <param name="cancellationToken">
-        /// The token to monitor for cancellation requests. The default value is
-        /// <see cref="CancellationToken.None"/>.
-        /// </param>
-        /// <returns>
-        /// A task that represents the asynchronous read operation. The value of its
-        /// <see cref="Task{TResult}.Result"/> property contains the register payload.
-        /// </returns>
-        /// <exception cref="HarpException">
-        /// The device replied to the read request with an error. This exception is stored into
-        /// the returned task.
-        /// </exception>
-        /// <exception cref="System.OperationCanceledException">
-        /// The cancellation token was canceled. This exception is stored into the returned task.
-        /// </exception>
-        public async Task<Pic32Command> ReadPic32CommandsAsync(CancellationToken cancellationToken = default)
-        {
-            var reply = await CommandAsync(HarpCommand.ReadByte(Pic32Commands.Address), cancellationToken);
-            return Pic32Commands.GetPayload(reply);
-        }
-
-        /// <summary>
-        /// Asynchronously reads the timestamped payload of the <see cref="Pic32Commands"/> register.
-        /// </summary>
-        /// <param name="cancellationToken">
-        /// The token to monitor for cancellation requests. The default value is
-        /// <see cref="CancellationToken.None"/>.
-        /// </param>
-        /// <returns>
-        /// A task that represents the asynchronous read operation. The value of its
-        /// <see cref="Task{TResult}.Result"/> property contains the timestamped register payload.
-        /// </returns>
-        /// <exception cref="HarpException">
-        /// The device replied to the read request with an error. This exception is stored into
-        /// the returned task.
-        /// </exception>
-        /// <exception cref="System.OperationCanceledException">
-        /// The cancellation token was canceled. This exception is stored into the returned task.
-        /// </exception>
-        public async Task<Timestamped<Pic32Command>> ReadTimestampedPic32CommandsAsync(CancellationToken cancellationToken = default)
-        {
-            var reply = await CommandAsync(HarpCommand.ReadByte(Pic32Commands.Address), cancellationToken);
-            return Pic32Commands.GetTimestampedPayload(reply);
-        }
-
-        /// <summary>
-        /// Asynchronously writes the specified payload to the <see cref="Pic32Commands"/> register.
-        /// </summary>
-        /// <param name="value">The payload to write to the register.</param>
-        /// <param name="cancellationToken">
-        /// The token to monitor for cancellation requests. The default value is
-        /// <see cref="CancellationToken.None"/>.
-        /// </param>
-        /// <returns>A task that represents the asynchronous write operation.</returns>
-        /// <exception cref="HarpException">
-        /// The device replied to the write request with an error. This exception is stored into
-        /// the returned task.
-        /// </exception>
-        /// <exception cref="System.OperationCanceledException">
-        /// The cancellation token was canceled. This exception is stored into the returned task.
-        /// </exception>
-        public async Task WritePic32CommandsAsync(Pic32Command value, CancellationToken cancellationToken = default)
-        {
-            var request = Pic32Commands.FromPayload(MessageType.Write, value);
-            await CommandAsync(request, cancellationToken);
         }
     }
 }

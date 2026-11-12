@@ -156,6 +156,8 @@ int par_bus_check_if_command_is_available(void)
                                 while(1);
                             }
                         }
+
+                        return 0;
                     }
                 }
                 
