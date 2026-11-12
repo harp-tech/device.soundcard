@@ -684,13 +684,10 @@ namespace Harp.SoundCard
     }
 
     /// <summary>
-    /// Provides methods for manipulating Stop register messages. Stops the frequency generator process
-    /// with any non-zero input value. Silencing a sound index is not implemented. Any non-zero write
-    /// clears a pending start, so a new sound can be started immediately. The time precision of this
-    /// event is frequency dependent: +/- 2500 us at 500 Hz, +/- 750 us at 1000 Hz, +/- 250 us at 2000
-    /// Hz, and under +/- 210 us for any frequency above 5000 Hz.
+    /// Provides methods for manipulating Stop register messages. Stops the sound or frequency being
+    /// played if the value is non-zero.
     /// </summary>
-    [Description("Stops the frequency generator process with any non-zero input value. Silencing a sound index is not implemented. Any non-zero write clears a pending start, so a new sound can be started immediately. The time precision of this event is frequency dependent: +/- 2500 us at 500 Hz, +/- 750 us at 1000 Hz, +/- 250 us at 2000 Hz, and under +/- 210 us for any frequency above 5000 Hz.")]
+    [Description("Stops the sound or frequency being played if the value is non-zero.")]
     public partial class Stop
     {
         /// <summary>
@@ -760,14 +757,11 @@ namespace Harp.SoundCard
     }
 
     /// <summary>
-    /// Provides methods that return the timestamped payload of Stop register messages. Stops the
-    /// frequency generator process with any non-zero input value. Silencing a sound index is not
-    /// implemented. Any non-zero write clears a pending start, so a new sound can be started
-    /// immediately. The time precision of this event is frequency dependent: +/- 2500 us at 500 Hz, +/-
-    /// 750 us at 1000 Hz, +/- 250 us at 2000 Hz, and under +/- 210 us for any frequency above 5000 Hz.
+    /// Provides methods that return the timestamped payload of Stop register messages. Stops the sound
+    /// or frequency being played if the value is non-zero.
     /// </summary>
     /// <seealso cref="Stop"/>
-    [Description("Stops the frequency generator process with any non-zero input value. Silencing a sound index is not implemented. Any non-zero write clears a pending start, so a new sound can be started immediately. The time precision of this event is frequency dependent: +/- 2500 us at 500 Hz, +/- 750 us at 1000 Hz, +/- 250 us at 2000 Hz, and under +/- 210 us for any frequency above 5000 Hz.")]
+    [Description("Stops the sound or frequency being played if the value is non-zero.")]
     public partial class TimestampedStop : ITimestampedRegister
     {
         Type ITimestampedRegister.RegisterType => typeof(Stop);
@@ -3838,26 +3832,20 @@ namespace Harp.SoundCard
     }
 
     /// <summary>
-    /// Represents an operator that creates Stop register messages. Stops the frequency generator
-    /// process with any non-zero input value. Silencing a sound index is not implemented. Any non-zero
-    /// write clears a pending start, so a new sound can be started immediately. The time precision of
-    /// this event is frequency dependent: +/- 2500 us at 500 Hz, +/- 750 us at 1000 Hz, +/- 250 us at
-    /// 2000 Hz, and under +/- 210 us for any frequency above 5000 Hz.
+    /// Represents an operator that creates Stop register messages. Stops the sound or frequency being
+    /// played if the value is non-zero.
     /// </summary>
     [DisplayName("StopPayload")]
-    [Description("Stops the frequency generator process with any non-zero input value. Silencing a sound index is not implemented. Any non-zero write clears a pending start, so a new sound can be started immediately. The time precision of this event is frequency dependent: +/- 2500 us at 500 Hz, +/- 750 us at 1000 Hz, +/- 250 us at 2000 Hz, and under +/- 210 us for any frequency above 5000 Hz.")]
+    [Description("Stops the sound or frequency being played if the value is non-zero.")]
     public partial class CreateStopPayload : IRegisterPayload
     {
         Type IRegisterPayload.RegisterType => typeof(Stop);
 
         /// <summary>
-        /// Gets or sets the value for the Stop register. Stops the frequency generator process with any
-        /// non-zero input value. Silencing a sound index is not implemented. Any non-zero write clears a
-        /// pending start, so a new sound can be started immediately. The time precision of this event is
-        /// frequency dependent: +/- 2500 us at 500 Hz, +/- 750 us at 1000 Hz, +/- 250 us at 2000 Hz, and
-        /// under +/- 210 us for any frequency above 5000 Hz.
+        /// Gets or sets the value for the Stop register. Stops the sound or frequency being played if the
+        /// value is non-zero.
         /// </summary>
-        [Description("Stops the frequency generator process with any non-zero input value. Silencing a sound index is not implemented. Any non-zero write clears a pending start, so a new sound can be started immediately. The time precision of this event is frequency dependent: +/- 2500 us at 500 Hz, +/- 750 us at 1000 Hz, +/- 250 us at 2000 Hz, and under +/- 210 us for any frequency above 5000 Hz.")]
+        [Description("Stops the sound or frequency being played if the value is non-zero.")]
         public byte Stop { get; set; }
 
         /// <summary>
@@ -3881,14 +3869,11 @@ namespace Harp.SoundCard
     }
 
     /// <summary>
-    /// Represents an operator that creates timestamped Stop register messages. Stops the frequency
-    /// generator process with any non-zero input value. Silencing a sound index is not implemented. Any
-    /// non-zero write clears a pending start, so a new sound can be started immediately. The time
-    /// precision of this event is frequency dependent: +/- 2500 us at 500 Hz, +/- 750 us at 1000 Hz,
-    /// +/- 250 us at 2000 Hz, and under +/- 210 us for any frequency above 5000 Hz.
+    /// Represents an operator that creates timestamped Stop register messages. Stops the sound or
+    /// frequency being played if the value is non-zero.
     /// </summary>
     [DisplayName("TimestampedStopPayload")]
-    [Description("Stops the frequency generator process with any non-zero input value. Silencing a sound index is not implemented. Any non-zero write clears a pending start, so a new sound can be started immediately. The time precision of this event is frequency dependent: +/- 2500 us at 500 Hz, +/- 750 us at 1000 Hz, +/- 250 us at 2000 Hz, and under +/- 210 us for any frequency above 5000 Hz.")]
+    [Description("Stops the sound or frequency being played if the value is non-zero.")]
     public partial class CreateTimestampedStopPayload : CreateStopPayload, ITimestampedRegister
     {
         Type ITimestampedRegister.RegisterType => typeof(Stop);

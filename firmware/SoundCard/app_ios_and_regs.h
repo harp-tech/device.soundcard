@@ -178,7 +178,7 @@ typedef struct
 /************************************************************************/
 /* Registers */
 #define ADD_REG_START                       32 // U16    Starts the sound index if the value is less than 32, or otherwise the waveform generator at the specified frequency in Hz.
-#define ADD_REG_STOP                        33 // U8     Stops the frequency generator process with any non-zero input value. Silencing a sound index is not implemented. Any non-zero write clears a pending start, so a new sound can be started immediately. The time precision of this event is frequency dependent: +/- 2500 us at 500 Hz, +/- 750 us at 1000 Hz, +/- 250 us at 2000 Hz, and under +/- 210 us for any frequency above 5000 Hz.
+#define ADD_REG_STOP                        33 // U8     Stops the sound or frequency being played if the value is non-zero.
 #define ADD_REG_ATTENUATION_LEFT            34 // U16    Specifies the attenuation for the left channel (1 LSB is 0.1dB).
 #define ADD_REG_ATTENUATION_RIGHT           35 // U16    Specifies the attenuation for the right channel (1 LSB is 0.1dB).
 #define ADD_REG_ATTENUATION_BOTH            36 // U16    Specifies the attenuation for the left and right channels simultaneously [Att L] [Att R] (1 LSB is 0.1dB).

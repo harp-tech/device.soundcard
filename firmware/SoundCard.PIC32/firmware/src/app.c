@@ -324,8 +324,22 @@ int launch_sound_v3(void/*int index*/)
     new_sound_to_start = NEW_SOUND_STATE_IS_AVAILABLE;    
     //new_sound_index = index;
     play_metadata = audio_all_metadata[new_sound_index];
-    
+
     return 0;
+}
+
+bool sound_is_active(void)
+{
+    return sound_is_playing || new_sound_to_start != NEW_SOUND_STATE_STANDBY;
+}
+
+void stop_sound(void)
+{
+    new_sound_to_start = NEW_SOUND_STATE_STANDBY;
+    sound_length_produced = play_metadata.sound_length;
+    set_sound_is_on_when_possible = SET_SOUND_IS_ON_DONE;
+    clr_sound_is_on_num_samples = 0;
+    clr_sound_is_on_when_possible = CLR_SOUND_IS_ON_WHEN_POSSIBLE;
 }
 
 
@@ -374,6 +388,11 @@ int left_sinewave_freq = 0;
 int new_right_sinewave_freq;
 bool new_sine_gen_frequency_is_available = false;
 bool stop_sine_gen = false;
+
+bool playback_is_active(void)
+{
+    return sound_is_active() || right_sinewave_freq != 0;
+}
 
 int right_mult = 1;
 int left_mult = 1;
@@ -707,6 +726,12 @@ void update_sound_buffers (void)
     
     if (!sound_is_playing)
     {
+        if (new_sine_gen_frequency_is_available && current_sample_rate != 96000)
+        {
+            config_audio_dac(96000, true);
+            current_sample_rate = 96000;
+        }
+
         if (audio_buffer0_state == AUDIO_BUFFER_IS_EMPTY)
         {
             if (current_sample_rate == 96000)
@@ -1253,11 +1278,11 @@ void APP_Tasks ( void )
                 break;
             
             case CMD_STOP:
-                if (right_sinewave_freq == 0)   // Sinewave generator is not working
+                if (sound_is_active())
                 {
-                    par_bus_process_command_stop();
+                    stop_sound();
                 }
-                else
+                else if (right_sinewave_freq != 0)
                 {
                     stop_sine_gen = true;
                 }
