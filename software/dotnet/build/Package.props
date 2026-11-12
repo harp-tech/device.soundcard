@@ -1,0 +1,9 @@
+<Project>
+  <PropertyGroup>
+    <PackageTags>Harp SoundCard</PackageTags>
+    <PackageProjectUrl>https://harp-tech.org/device.soundcard</PackageProjectUrl>
+
+    <Authors>harp-tech</Authors>
+    <Copyright>Copyright © harp-tech and Contributors</Copyright>
+  </PropertyGroup>
+</Project>
