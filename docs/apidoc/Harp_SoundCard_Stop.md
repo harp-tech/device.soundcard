@@ -2,6 +2,12 @@
 uid: Harp.SoundCard.Stop
 ---
 
+### Play sound index
+
+:::workflow
+![Play sound index](../workflows/playsound-indexkeydown.bonsai)
+:::
+
 ### Play pure tone
 
 :::workflow
