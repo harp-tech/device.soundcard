@@ -6,9 +6,10 @@
         xmlns:views="clr-namespace:Harp.SoundCard.Design.Views"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="Harp.SoundCard.Design.Views.MainWindow"
+        x:DataType="vm:SoundCardViewModel"
         Icon="/Assets/logo.ico"
         WindowStartupLocation="CenterScreen"
         SizeToContent="WidthAndHeight"
-        Title="Harp.SoundCard">
+        Title="{Binding WindowTitle}">
         <views:SoundCardView />
 </Window>

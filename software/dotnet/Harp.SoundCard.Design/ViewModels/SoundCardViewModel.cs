@@ -1,6 +1,7 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.IO;
 using System.IO.Ports;
 using System.Linq;
 using System.Reactive;
@@ -24,6 +25,9 @@ namespace Harp.SoundCard.Design.ViewModels;
 
 public class SoundCardViewModel : ViewModelBase
 {
+    const int ConnectTimeoutMilliseconds = 500;
+    const int BootloaderFallThroughMilliseconds = 3500;
+
     public string AppVersion { get; set; } = string.Empty;
     public ReactiveCommand<Unit, Unit> LoadDeviceInformation { get; }
 
@@ -31,8 +35,11 @@ public class SoundCardViewModel : ViewModelBase
 
     [Reactive] public ObservableCollection<string> Ports { get; set; }
     [Reactive] public string SelectedPort { get; set; } = string.Empty;
+    [Reactive] public bool CanSelectPort { get; set; } = true;
     [Reactive] public bool Connected { get; set; }
     [Reactive] public string ConnectButtonText { get; set; } = "Connect";
+    [Reactive] public string PortLabelText { get; set; } = string.Empty;
+    [Reactive] public string WindowTitle { get; set; } = string.Empty;
     public ReactiveCommand<Unit, Unit> ConnectAndGetBaseInfoCommand { get; }
 
     #endregion
@@ -435,6 +442,7 @@ public class SoundCardViewModel : ViewModelBase
     // play sound index
     [Reactive] public int PlaySoundIndex { get; set; } = 2;
     public ReactiveCommand<Unit, Unit> PlaySoundIndexCommand { get; private set; }
+    public ReactiveCommand<Unit, Unit> StopSoundCommand { get; private set; }
 
     #endregion
 
@@ -469,6 +477,22 @@ public class SoundCardViewModel : ViewModelBase
             {
                 Console.WriteLine($"Error writing Start with exception: {ex.Message}");
                 //Log.Error(ex, "Error writing Start with exception: {Exception}", ex));
+            }
+        });
+
+        StopSoundCommand = ReactiveCommand.CreateFromTask(async () =>
+        {
+            if (_device == null)
+                return;
+
+            try
+            {
+                await _device.WriteStopAsync(1);
+                SentMessages.Add("Wrote Stop with value: 1");
+            }
+            catch (HarpException ex)
+            {
+                Console.WriteLine($"Error writing Stop with exception: {ex.Message}");
             }
         });
 
@@ -516,6 +540,13 @@ public class SoundCardViewModel : ViewModelBase
 
         this.WhenAnyValue(x => x.Connected)
             .Subscribe(x => { ConnectButtonText = x ? "Disconnect" : "Connect"; });
+
+        this.WhenAnyValue(x => x.CanSelectPort, x => x.SelectedPort)
+            .Subscribe(x =>
+            {
+                PortLabelText = x.Item1 ? "Select a device" : "Selected port";
+                WindowTitle = x.Item1 ? "Harp SoundCard" : $"Harp SoundCard ({x.Item2})";
+            });
 
         // handle the events from the device
         // When Connected changes subscribe/unsubscribe the device events.
@@ -603,6 +634,29 @@ public class SoundCardViewModel : ViewModelBase
         });
     }
 
+    public void ConnectToPort(string portName)
+    {
+        Ports = new ObservableCollection<string> { portName };
+        SelectedPort = portName;
+        CanSelectPort = false;
+        ConnectAndGetBaseInfoCommand.Execute().Catch(Observable.Empty<Unit>()).Subscribe();
+    }
+
+    private static async Task<Harp.SoundCard.AsyncDevice> CreateDeviceAsync(string portName)
+    {
+        try
+        {
+            using var cts = new CancellationTokenSource(ConnectTimeoutMilliseconds);
+            return await Harp.SoundCard.Device.CreateAsync(portName, cts.Token);
+        }
+        catch (OperationCanceledException)
+        {
+            await Task.Delay(BootloaderFallThroughMilliseconds);
+            using var cts = new CancellationTokenSource(ConnectTimeoutMilliseconds);
+            return await Harp.SoundCard.Device.CreateAsync(portName, cts.Token);
+        }
+    }
+
     private async Task ConnectAndGetBaseInfo()
     {
         if (string.IsNullOrEmpty(SelectedPort))
@@ -619,16 +673,16 @@ public class SoundCardViewModel : ViewModelBase
 
         try
         {
-            using var cts = new CancellationTokenSource(TimeSpan.FromMilliseconds(500));
-            _device = await Harp.SoundCard.Device.CreateAsync(SelectedPort, cts.Token);
+            _device = await CreateDeviceAsync(SelectedPort);
         }
         catch (OperationCanceledException ex)
         {
             Console.WriteLine($"Error connecting to device with error: {ex}");
             //Log.Error(ex, "Error connecting to device with error: {Exception}", ex);
             var messageBoxStandardWindow = MessageBoxManager
-                .GetMessageBoxStandard("Unexpected device found",
-                    "Timeout when trying to connect to a device. Most likely not an Harp device.",
+                .GetMessageBoxStandard("Device not responding",
+                    $"The device on port {SelectedPort} did not respond. If it was just connected or restarted, " +
+                    "wait a few seconds and press Connect again. Otherwise, it may not be a Harp device.",
                     icon: Icon.Error);
             await messageBoxStandardWindow.ShowAsync();
             _device?.Dispose();
@@ -657,6 +711,20 @@ public class SoundCardViewModel : ViewModelBase
             var messageBoxStandardWindow = MessageBoxManager
                 .GetMessageBoxStandard("Unexpected device found",
                     $"COM port still in use and most likely not the expected Harp device.{Environment.NewLine}Specific error: {ex.Message}",
+                    icon: Icon.Error);
+            await messageBoxStandardWindow.ShowAsync();
+
+            _device?.Dispose();
+            _device = null;
+            return;
+        }
+        catch (Exception ex) when (ex is IOException or ArgumentException)
+        {
+            Console.WriteLine($"Error opening port {SelectedPort} with error: {ex}");
+            var messageBoxStandardWindow = MessageBoxManager
+                .GetMessageBoxStandard("Port not available",
+                    $"The port {SelectedPort} could not be opened. Check that the device is connected to this port." +
+                    $"{Environment.NewLine}Specific error: {ex.Message}",
                     icon: Icon.Error);
             await messageBoxStandardWindow.ShowAsync();
 
@@ -774,7 +842,7 @@ public class SoundCardViewModel : ViewModelBase
                     // Wait a short while before polling again. Adjust delay as necessary.
                     await Task.Delay(TimeSpan.FromMilliseconds(10), cancellationToken);
                 }
-                catch (OperationCanceledException)
+                catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
                 {
                     break;
                 }
@@ -940,10 +1008,42 @@ public class SoundCardViewModel : ViewModelBase
     private void SubscribeToEvents(IObservable<string> deviceEvents)
     {
         _deviceEventsSubscription = deviceEvents
+            .ObserveOn(RxApp.MainThreadScheduler)
             .Subscribe(
                 _ => { },
-                ex => Debug.WriteLine($"Error in device events: {ex}")
+                ex =>
+                {
+                    Debug.WriteLine($"Error in device events: {ex}");
+                    if (ex is not HarpException)
+                        OnConnectionLost(ex);
+                }
             );
+    }
+
+    private void OnConnectionLost(Exception error)
+    {
+        if (!Connected)
+            return;
+
+        Console.WriteLine($"Connection to port {SelectedPort} lost with error: {error}");
+        try
+        {
+            _device?.Dispose();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error closing port {SelectedPort} with error: {ex}");
+        }
+
+        _device = null;
+        Connected = false;
+        SentMessages.Clear();
+
+        var messageBoxStandardWindow = MessageBoxManager
+            .GetMessageBoxStandard("Connection lost",
+                $"The connection to the device on port {SelectedPort} was lost. Check that the device is connected, then press Connect.",
+                icon: Icon.Error);
+        _ = messageBoxStandardWindow.ShowAsync();
     }
     
     private static void UpdateAttenuationCollection(ushort[]? array, ObservableCollection<ArrayItemWrapper<ushort>> collection)

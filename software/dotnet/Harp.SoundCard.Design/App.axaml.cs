@@ -19,10 +19,15 @@ public partial class App : Application
     {
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
+            var viewModel = new SoundCardViewModel();
             desktop.MainWindow = new MainWindow
             {
-                DataContext = new SoundCardViewModel()
+                DataContext = viewModel
             };
+
+            var portName = GetPortName(desktop.Args);
+            if (portName is not null)
+                desktop.MainWindow.Opened += (_, _) => viewModel.ConnectToPort(portName);
         }
         else if (ApplicationLifetime is ISingleViewApplicationLifetime singleViewPlatform)
         {
@@ -45,5 +50,14 @@ public partial class App : Application
         {
             about.ShowDialog(desktop.MainWindow);
         }
+    }
+
+    private static string? GetPortName(string[]? args)
+    {
+        if (args is null)
+            return null;
+
+        var index = Array.IndexOf(args, "--port");
+        return index >= 0 && index < args.Length - 1 ? args[index + 1] : null;
     }
 }
