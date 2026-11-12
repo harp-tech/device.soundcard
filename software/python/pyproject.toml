@@ -1,0 +1,62 @@
+[project]
+name = "harp-soundcard"
+dynamic = ["version"]
+description = "Interface for data acquisition and control of Harp SoundCard devices."
+authors = [{ name = "harp-tech", email = "contact@harp-tech.org" }]
+license = "MIT"
+license-files = ["LICENSE"]
+readme = "README.md"
+keywords = [
+    "harp",
+    "soundcard",
+    "audio",
+    "hardware",
+    "device-control",
+]
+requires-python = ">=3.11"
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "Intended Audience :: Developers",
+    "Operating System :: Microsoft :: Windows",
+    "Operating System :: POSIX :: Linux",
+    "Operating System :: MacOS",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Scientific/Engineering",
+    "Topic :: System :: Hardware :: Hardware Drivers",
+]
+dependencies = [
+    "harp-protocol>=0.5",
+    "harp-device>=0.5",
+    "numpy>=1.24",
+]
+
+[project.urls]
+Homepage = "https://harp-tech.org/device.soundcard"
+Repository = "https://github.com/harp-tech/device.soundcard"
+"Bug Tracker" = "https://github.com/harp-tech/device.soundcard/issues"
+Changelog = "https://github.com/harp-tech/device.soundcard/releases"
+
+[build-system]
+requires = ["setuptools>=77", "setuptools-scm>=8"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools_scm]
+root = "../.."
+git_describe_command = "git describe --dirty --tags --long --match v[0-9]*.[0-9]*.[0-9]*"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["harp*"]
+
+[dependency-groups]
+dev = ["pytest>=8"]
+
+[tool.docfx-tools]
+inventories = [
+    "https://harp-tech.org/python/objects.inv",
+    "https://numpy.org/doc/stable/objects.inv",
+]
