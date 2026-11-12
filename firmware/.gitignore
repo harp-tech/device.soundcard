@@ -4,8 +4,8 @@
 .nuget
 bin
 obj
-Debug
-Release
+/SoundCard/Debug/
+/SoundCard/Release/
 packages
 *.componentinfo.xml
 .generated_files
