@@ -53,6 +53,12 @@ The [Harp](https://harp-tech.org/python/) library provides a Python interface fo
 pip install harp
 ```
 
+To install the interface for the Sound Card:
+
+```cmd
+pip install harp-soundcard
+```
+
 To install only the package necessary for loading data:
 
 ```cmd

@@ -10,14 +10,14 @@ The [device documentation](https://harp-tech.org/device.soundcard) covers the sp
 
 ## Software
 
-The device can be used from [Bonsai](https://bonsai-rx.org/) through the `Harp.SoundCard` package. The Sound Card app is a desktop app for generating waveforms and uploading them to the device without using Bonsai. The [installation](https://harp-tech.org/device.soundcard/articles/installation.html) page describes how to install each of them, along with the driver needed to upload sounds.
+The device can be used from [Bonsai](https://bonsai-rx.org/) through the `Harp.SoundCard` package, or from Python through the `harp-soundcard` package. The Sound Card app is a desktop app for generating waveforms and uploading them to the device without using Bonsai. The [installation](https://harp-tech.org/device.soundcard/articles/installation.html) page describes how to install each of them, along with the driver needed to upload sounds.
 
 ## Repository layout
 
-- `device.yml` describes the registers of the device. The .NET interface is generated from it.
+- `device.yml` describes the registers of the device. The firmware headers and the .NET and Python interfaces are generated from it.
 - `firmware` holds the firmware of the device, for both of its microcontrollers.
 - `hardware` holds the PCB and mechanical design files.
-- `software` holds the .NET packages, including the Bonsai package and the app.
+- `software` holds the .NET packages, including the Bonsai package and the app, and the Python package.
 - `docs` holds the documentation site.
 
 ## Licensing
