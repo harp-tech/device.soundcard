@@ -7,7 +7,7 @@ the folder each file is in:
 * hardware/Mechanical: TAPR Open Hardware License, see
   hardware/Mechanical/LICENSE
 * firmware: MIT, see firmware/LICENSE
-* software: MIT, see software/dotnet/LICENSE
+* software: MIT, see software/dotnet/LICENSE and software/python/LICENSE
 * Third-party components, such as the Microchip Harmony framework in
   firmware/SoundCard.PIC32/microchip and firmware/Bootloader.PIC32/microchip,
   are licensed under the terms provided by their authors.
