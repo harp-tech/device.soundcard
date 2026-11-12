@@ -18,6 +18,12 @@ Once installed, the app is launched from a terminal:
 harp.soundcard
 ```
 
+To connect to a device as soon as the app opens, pass its serial port:
+
+```text
+harp.soundcard --port COM3
+```
+
 ### Linux
 
 The app accesses the serial port, so the user account needs to belong to the `dialout` group or equivalent. On Ubuntu and Fedora the command to add an account to that group is:

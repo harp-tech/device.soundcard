@@ -421,7 +421,14 @@ public class SoundGenerationViewModel : ViewModelBase
         };
         updater.Process(Observable.Return(soundWaveform))
             .Subscribe(
-                _ => Console.WriteLine("Sound waveform sent successfully."),
+                async void (_) =>
+                {
+                    Console.WriteLine("Sound waveform sent successfully.");
+                    var messageBoxStandardWindow = MessageBoxManager
+                        .GetMessageBoxStandard("Sound uploaded",
+                            $"The sound was uploaded to index {SaveSoundIndex}.", icon: Icon.Success);
+                    await messageBoxStandardWindow.ShowAsync();
+                },
                 async void (ex) =>
                 {
                     Console.WriteLine($"Error sending sound waveform: {ex.Message}");
