@@ -394,6 +394,38 @@ bool playback_is_active(void)
     return sound_is_active() || right_sinewave_freq != 0;
 }
 
+void stop_playback(void)
+{
+    if (sound_is_active())
+    {
+        stop_sound();
+    }
+    else if (right_sinewave_freq != 0)
+    {
+        stop_sine_gen = true;
+    }
+}
+
+void delete_sound(int index)
+{
+    stop_playback();
+    block_erase(index * BLOCKS_PER_SOUND);
+    audio_sound_exists[index] = false;
+    audio_sound_exists_bitmask &= ~(1u << index);
+}
+
+void delete_all_sounds(void)
+{
+    int i;
+    for (i = 0; i < get_available_sounds(); i++)
+    {
+        if (audio_sound_exists[i])
+        {
+            delete_sound(i);
+        }
+    }
+}
+
 int right_mult = 1;
 int left_mult = 1;
 
@@ -1278,14 +1310,7 @@ void APP_Tasks ( void )
                 break;
             
             case CMD_STOP:
-                if (sound_is_active())
-                {
-                    stop_sound();
-                }
-                else if (right_sinewave_freq != 0)
-                {
-                    stop_sine_gen = true;
-                }
+                stop_playback();
                 break;
         }
         

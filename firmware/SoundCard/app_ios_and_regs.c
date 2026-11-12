@@ -174,8 +174,8 @@ uint8_t *app_regs_pointer[] = {
     (uint8_t*)(&app_regs.REG_ATTENUATION_RIGHT),
     (uint8_t*)(&app_regs.REG_ATTENUATION_BOTH),
     (uint8_t*)(&app_regs.REG_ATTENUATION_START),
-    (uint8_t*)(&app_regs.REG_RESERVED0),
-    (uint8_t*)(&app_regs.REG_RESERVED1),
+    (uint8_t*)(&app_regs.REG_DELETE_SOUND),
+    (uint8_t*)(&app_regs.REG_DELETE_ALL_SOUNDS),
     (uint8_t*)(&app_regs.REG_INPUT_STATE),
     (uint8_t*)(&app_regs.REG_CONFIGURE_DI0),
     (uint8_t*)(&app_regs.REG_CONFIGURE_DI1),
@@ -218,5 +218,5 @@ uint8_t *app_regs_pointer[] = {
     (uint8_t*)(&app_regs.REG_RESERVED21),
     (uint8_t*)(&app_regs.REG_RESERVED22),
     (uint8_t*)(&app_regs.REG_RESERVED23),
-    (uint8_t*)(&app_regs.REG_PIC32_COMMANDS)
+    (uint8_t*)(&app_regs.REG_PIC32_BOOTLOADER)
 };
