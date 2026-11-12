@@ -25,8 +25,8 @@ static const uint8_t default_device_name[] = DEVICE_NAME;
 void hwbp_app_initialize(void)
 {
    /* Define versions */
-   uint8_t hwH = 2;
-   uint8_t hwL = 2;
+   uint8_t hwH = MAJOR_HW_VERSION;
+   uint8_t hwL = MINOR_HW_VERSION;
    uint8_t fwH = MAJOR_FW_VERSION;
    uint8_t fwL = MINOR_FW_VERSION;
    uint8_t ass = 0;

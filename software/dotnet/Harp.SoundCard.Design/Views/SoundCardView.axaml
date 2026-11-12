@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:controls="clr-namespace:Harp.SoundCard.Design.Controls"
              xmlns:conv="clr-namespace:Harp.SoundCard.Design.Converters"
+             xmlns:harp="clr-namespace:Bonsai.Harp;assembly=Bonsai.Harp"
              xmlns:heroIcons="clr-namespace:HeroIconsAvalonia.Controls;assembly=HeroIconsAvalonia"
              xmlns:local="clr-namespace:Harp.SoundCard;assembly=Harp.SoundCard"
              xmlns:md="clr-namespace:Markdown.Avalonia;assembly=Markdown.Avalonia"
@@ -500,8 +501,8 @@
                               Width="200"
                               Margin="0,5,0,0"
                               HorizontalAlignment="Left">
-                      <x:Static Member="local:AdcControlStateConfiguration.Disabled" />
-                      <x:Static Member="local:AdcControlStateConfiguration.SampleRate1000Hz" />
+                      <x:Static Member="harp:EnableFlag.Disabled" />
+                      <x:Static Member="harp:EnableFlag.Enabled" />
                     </ComboBox>
                   </StackPanel>
                   <!-- Register: ConfigureDI0 (Write) -->
@@ -523,10 +524,10 @@
                               Width="200"
                               Margin="0,5,0,0"
                               HorizontalAlignment="Left">
-                      <x:Static Member="local:DigitalInputConfiguration.Digital" />
-                      <x:Static Member="local:DigitalInputConfiguration.StartAndStop" />
-                      <x:Static Member="local:DigitalInputConfiguration.Start" />
-                      <x:Static Member="local:DigitalInputConfiguration.Stop" />
+                      <x:Static Member="local:DIMode.Digital" />
+                      <x:Static Member="local:DIMode.StartAndStop" />
+                      <x:Static Member="local:DIMode.Start" />
+                      <x:Static Member="local:DIMode.Stop" />
                     </ComboBox>
                   </StackPanel>
                   <!-- Register: ConfigureDI1 (Write) -->
@@ -548,10 +549,10 @@
                               Width="200"
                               Margin="0,5,0,0"
                               HorizontalAlignment="Left">
-                      <x:Static Member="local:DigitalInputConfiguration.Digital" />
-                      <x:Static Member="local:DigitalInputConfiguration.StartAndStop" />
-                      <x:Static Member="local:DigitalInputConfiguration.Start" />
-                      <x:Static Member="local:DigitalInputConfiguration.Stop" />
+                      <x:Static Member="local:DIMode.Digital" />
+                      <x:Static Member="local:DIMode.StartAndStop" />
+                      <x:Static Member="local:DIMode.Start" />
+                      <x:Static Member="local:DIMode.Stop" />
                     </ComboBox>
                   </StackPanel>
                   <!-- Register: ConfigureDO0 (Write) -->
@@ -573,8 +574,8 @@
                               Width="200"
                               Margin="0,5,0,0"
                               HorizontalAlignment="Left">
-                      <x:Static Member="local:DigitalOutputConfiguration.Digital" />
-                      <x:Static Member="local:DigitalOutputConfiguration.PulseOnStart" />
+                      <x:Static Member="local:DOMode.Digital" />
+                      <x:Static Member="local:DOMode.PulseOnStart" />
                     </ComboBox>
                   </StackPanel>
                   <!-- Register: ConfigureDO1 (Write) -->
@@ -596,8 +597,8 @@
                               Width="200"
                               Margin="0,5,0,0"
                               HorizontalAlignment="Left">
-                      <x:Static Member="local:DigitalOutputConfiguration.Digital" />
-                      <x:Static Member="local:DigitalOutputConfiguration.PulseOnStart" />
+                      <x:Static Member="local:DOMode.Digital" />
+                      <x:Static Member="local:DOMode.PulseOnStart" />
                     </ComboBox>
                   </StackPanel>
                   <!-- Register: ConfigureDO2 (Write) -->
@@ -619,8 +620,8 @@
                               Width="200"
                               Margin="0,5,0,0"
                               HorizontalAlignment="Left">
-                      <x:Static Member="local:DigitalOutputConfiguration.Digital" />
-                      <x:Static Member="local:DigitalOutputConfiguration.PulseOnStart" />
+                      <x:Static Member="local:DOMode.Digital" />
+                      <x:Static Member="local:DOMode.PulseOnStart" />
                     </ComboBox>
                   </StackPanel>
                   <!-- Register: StartOnDI0 (Write) -->

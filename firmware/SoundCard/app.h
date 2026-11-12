@@ -14,10 +14,10 @@
 /* Define versions                                                      */
 /************************************************************************/
 #ifndef MAJOR_HW_VERSION
-#define MAJOR_HW_VERSION 1
+#define MAJOR_HW_VERSION 2
 #endif
 #ifndef MINOR_HW_VERSION
-#define MINOR_HW_VERSION 1
+#define MINOR_HW_VERSION 2
 #endif
 #ifndef PATCH_HW_VERSION
 #define PATCH_HW_VERSION 0

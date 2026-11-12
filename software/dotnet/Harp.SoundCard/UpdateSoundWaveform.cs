@@ -35,7 +35,7 @@ namespace Harp.SoundCard
         /// This field is optional.
         /// </summary>
         [Description("The name of the sound to be stored in the device. This field is optional.")]
-        public string SoundName { get; set; }
+        public string? SoundName { get; set; }
 
         /// <summary>
         /// Gets or sets the description of the sound to be stored in the device.
@@ -43,9 +43,9 @@ namespace Harp.SoundCard
         /// </summary>
         [Editor(DesignTypes.MultilineStringEditor, DesignTypes.UITypeEditor)]
         [Description("The description of the sound to be stored in the device. This field is optional.")]
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
-        string INamedElement.Name => SoundName;
+        string INamedElement.Name => SoundName ?? string.Empty;
 
         /// <summary>
         /// Gets or sets a value specifying the sample rate used to playback the
@@ -129,8 +129,8 @@ namespace Harp.SoundCard
             SampleRate sampleRate,
             SampleType sampleType,
             byte[] soundWaveform,
-            string soundName,
-            string description)
+            string? soundName,
+            string? description)
         {
             var errorCode = WaveformHelper.WriteSoundWaveform(deviceIndex, soundIndex, sampleRate, sampleType, soundWaveform, soundName, description);
             if (errorCode != SoundCardErrorCode.Ok)

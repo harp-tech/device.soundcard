@@ -1,8 +1,21 @@
+# =======================================================================================================================================================================
+# Harp.SoundCard CI/CD
+# =======================================================================================================================================================================
+# Index:
+# * Verify generated code
+# * Build PIC32 firmware
+# * Build firmware
+# * Build interface
+# * Publish packages to GitHub
+# * Publish packages to NuGet.org
+# =======================================================================================================================================================================
+# Note that this is a generic workflow meant for all Harp devices. Minor local modifications are fine, see https://github.com/bonsai-rx/prefect for more information.
+# =======================================================================================================================================================================
 name: Harp.SoundCard
 on:
   push:
     # This prevents tag pushes from triggering this workflow
-    branches: ['*']
+    branches: ['**']
   pull_request:
   release:
     types: [published]
@@ -12,27 +25,30 @@ env:
   DOTNET_CLI_TELEMETRY_OPTOUT: true
   DOTNET_GENERATE_ASPNET_CERTIFICATE: false
   ContinuousIntegrationBuild: true
-  CiBuildVersion: ${{github.event.release.tag_name || 'api42.42.42'}}
+  AVR_TOOLCHAIN_URL: https://ww1.microchip.com/downloads/aemDocuments/documents/OTH/ProductDocuments/SoftwareTools/avr8-gnu-toolchain-3.6.2.1778-win32.any.x86.zip
+  AVR_TOOLCHAIN_SHA256: eeef51253ef8e24260dfef50f8e735eb5a950c3bd559899dd60ba1a24eb38ab9
+  XC32_INSTALLER_URL: https://ww1.microchip.com/downloads/en/DeviceDoc/xc32-v2.10-full-install-windows-installer.exe
+  XC32_INSTALLER_SHA256: 08818b1743e1d1749d0168c9486501f00905cb42d12b911c76875b4368a70100
 jobs:
-  build:
-    strategy:
-      fail-fast: false
-      matrix:
-        configuration: ['Release']
-        include:
-          - configuration: Release
-            collect-packages: true
-    name: Build
-    runs-on: windows-latest
-    if: github.event_name != 'release' || startsWith(github.event.release.tag_name, 'api')
+  # =====================================================================================================================================================================
+  # Verify generated code
+  # __   __       _  __                                   _          _              _
+  # \ \ / /__ _ _(_)/ _|_  _   __ _ ___ _ _  ___ _ _ __ _| |_ ___ __| |  __ ___  __| |___
+  #  \ V / -_) '_| |  _| || | / _` / -_) ' \/ -_) '_/ _` |  _/ -_) _` | / _/ _ \/ _` / -_)
+  #   \_/\___|_| |_|_|  \_, | \__, \___|_||_\___|_| \__,_|\__\___\__,_| \__\___/\__,_\___|
+  #                     |__/  |___/
+  # =====================================================================================================================================================================
+  verify-generated:
+    name: Verify generated code
+    runs-on: ubuntu-latest
     steps:
       # ----------------------------------------------------------------------- Checkout
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       # ----------------------------------------------------------------------- Set up tools
       - name: Set up .NET
-        uses: actions/setup-dotnet@v4
+        uses: actions/setup-dotnet@v5
         with:
           dotnet-version: 8.x
 
@@ -40,14 +56,189 @@ jobs:
         run: dotnet tool restore
 
       # ----------------------------------------------------------------------- Regenerate
+      - name: Generate firmware headers
+        run: dotnet harp.toolkit generate firmware atxmega --ios firmware/SoundCard/ios.yml -o firmware/SoundCard
+
       - name: Generate C# interface
         run: dotnet harp.toolkit generate interface csharp -o software/dotnet/${{github.workflow}}
 
+      # ----------------------------------------------------------------------- Verify
       - name: Verify pre-generated code was up-to-date
         id: verify-dist
         run: |
           git add . --intent-to-add --ignore-removal
           git diff --name-status --exit-code
+
+  # =====================================================================================================================================================================
+  # Build PIC32 firmware
+  #  ___      _ _    _   ___ ___ ___ _______    __ _
+  # | _ )_  _(_) |__| | | _ \_ _/ __|__ /_  )  / _(_)_ _ _ ____ __ ____ _ _ _ ___
+  # | _ \ || | | / _` | |  _/| | (__ |_ \/ /  |  _| | '_| '  \ V  V / _` | '_/ -_)
+  # |___/\_,_|_|_\__,_| |_| |___\___|___/___| |_| |_|_| |_|_|_\_/\_/\__,_|_| \___|
+  # =====================================================================================================================================================================
+  build-firmware-pic32:
+    name: Build Firmware (PIC32)
+    runs-on: windows-latest
+    needs: verify-generated
+    defaults:
+      run:
+        shell: bash
+    steps:
+      # ----------------------------------------------------------------------- Checkout
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      # ----------------------------------------------------------------------- Set up tools
+      - name: Download XC32
+        run: |
+          curl --fail --silent --show-error --location --output xc32-installer.exe "$XC32_INSTALLER_URL"
+          echo "$XC32_INSTALLER_SHA256 xc32-installer.exe" | sha256sum --check --strict
+
+      - name: Install XC32
+        shell: pwsh
+        timeout-minutes: 20
+        run: |
+          $prefix = Join-Path $env:RUNNER_TEMP xc32
+          $installer = Start-Process -FilePath .\xc32-installer.exe -Wait -PassThru -ArgumentList '--mode', 'unattended', '--unattendedmodeui', 'none', '--LicenseType', 'FreeMode', '--netservername', '""', '--ModifyAll', '0', '--prefix', "`"$prefix`""
+          if ($installer.ExitCode -ne 0) { exit $installer.ExitCode }
+          Join-Path $prefix bin >> $env:GITHUB_PATH
+
+      # ----------------------------------------------------------------------- Configure build
+      - name: Configure build
+        id: configure-build
+        uses: harp-tech/configure-build@v2
+
+      # ----------------------------------------------------------------------- Build firmware
+      - name: Build firmware
+        working-directory: firmware/SoundCard.PIC32
+        id: build
+        run: make all FIRMWARE_VERSION=${{env.CiBuildVersion}} PREVIEW_VERSION=${{env.CiFirmwarePreviewVersion}}
+
+      # ----------------------------------------------------------------------- Collect artifacts
+      - name: Collect Firmware image
+        uses: actions/upload-artifact@v7
+        if: steps.build.outcome == 'success' && always()
+        with:
+          name: PIC32-${{env.CiBuildVersion}}
+          if-no-files-found: error
+          path: firmware/SoundCard.PIC32/bin/obj/SoundCard.PIC32.hex
+
+  # =====================================================================================================================================================================
+  # Build firmware
+  #  ___      _ _    _    __ _
+  # | _ )_  _(_) |__| |  / _(_)_ _ _ ____ __ ____ _ _ _ ___
+  # | _ \ || | | / _` | |  _| | '_| '  \ V  V / _` | '_/ -_)
+  # |___/\_,_|_|_\__,_| |_| |_|_| |_|_|_\_/\_/\__,_|_| \___|
+  # =====================================================================================================================================================================
+  build-firmware:
+    strategy:
+      fail-fast: false
+      matrix:
+        hardware-target: ['1.1', '2.1', '2.2']
+    name: Build Firmware (hw${{matrix.hardware-target}})
+    runs-on: windows-latest
+    needs: build-firmware-pic32
+    defaults:
+      run:
+        shell: bash
+    steps:
+      # ----------------------------------------------------------------------- Checkout
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      # ----------------------------------------------------------------------- Set up tools
+      - name: Restore tool cache
+        id: tool-cache
+        uses: actions/cache@v5
+        with:
+          path: avr8-gnu-toolchain.zip
+          key: avr8-gnu-toolchain-${{env.AVR_TOOLCHAIN_SHA256}}
+
+      - name: Download AVR-GCC
+        if: steps.tool-cache.outputs.cache-hit != 'true'
+        run: curl --fail --silent --show-error --location --output avr8-gnu-toolchain.zip "$AVR_TOOLCHAIN_URL"
+
+      - name: Install AVR-GCC
+        run: |
+          echo "$AVR_TOOLCHAIN_SHA256 avr8-gnu-toolchain.zip" | sha256sum --check --strict
+          unzip -q -o avr8-gnu-toolchain.zip -d "$(cygpath -u "$RUNNER_TEMP")"
+          cygpath -w "$(cygpath -u "$RUNNER_TEMP")/avr8-gnu-toolchain-win32_x86/bin" >> "$GITHUB_PATH"
+
+      # ----------------------------------------------------------------------- Configure build
+      - name: Configure build
+        id: configure-build
+        uses: harp-tech/configure-build@v2
+
+      # ----------------------------------------------------------------------- Build firmware
+      - name: Build firmware
+        working-directory: firmware/SoundCard
+        id: build
+        run: make all FIRMWARE_VERSION=${{env.CiBuildVersion}} HARDWARE_VERSION=${{matrix.hardware-target}} PREVIEW_VERSION=${{env.CiFirmwarePreviewVersion}}
+
+      - name: Download PIC32 firmware
+        uses: actions/download-artifact@v8
+        with:
+          name: PIC32-${{env.CiBuildVersion}}
+          path: artifacts/pic32/
+
+      - name: Name PIC32 firmware
+        working-directory: firmware/SoundCard.PIC32
+        run: make all FIRMWARE_VERSION=${{env.CiBuildVersion}} HARDWARE_VERSION=${{matrix.hardware-target}} PREVIEW_VERSION=${{env.CiFirmwarePreviewVersion}} IMAGE=../../artifacts/pic32/SoundCard.PIC32.hex BUILD_DIR=../SoundCard/bin
+
+      # ----------------------------------------------------------------------- Collect artifacts
+      - name: Collect Firmware binaries
+        uses: actions/upload-artifact@v7
+        if: steps.build.outcome == 'success' && always()
+        with:
+          name: Firmware-${{env.CiBuildVersion}}-hw${{matrix.hardware-target}}
+          if-no-files-found: error
+          path: firmware/SoundCard/bin/*.hex
+
+  # =====================================================================================================================================================================
+  # Build .NET
+  #  ___      _ _    _     _  _ ___ _____
+  # | _ )_  _(_) |__| |   | \| | __|_   _|
+  # | _ \ || | | / _` |  _| .` | _|  | |
+  # |___/\_,_|_|_\__,_| (_)_|\_|___| |_|
+  # =====================================================================================================================================================================
+  build-dotnet:
+    strategy:
+      fail-fast: false
+      matrix:
+        platform:
+          - name: Windows x64
+            os: windows-latest
+          - name: Linux x64
+            os: ubuntu-latest
+          - name: macOS x64
+            os: macos-latest
+        configuration: ['debug', 'release']
+        include:
+          - platform:
+              os: windows-latest
+            configuration: release
+            collect-packages: true
+    name: Build .NET (${{ matrix.platform.name }} ${{ matrix.configuration }})
+    runs-on: ${{ matrix.platform.os }}
+    needs: verify-generated
+    steps:
+      # ----------------------------------------------------------------------- Checkout
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      # ----------------------------------------------------------------------- Set up tools
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: 8.x
+
+      - name: Set up .NET tools
+        run: dotnet tool restore
+
+      # ----------------------------------------------------------------------- Configure build
+      - name: Configure build
+        id: configure-build
+        uses: harp-tech/configure-build@v2
 
       # ----------------------------------------------------------------------- Build interface package
       - name: Restore interface
@@ -62,39 +253,99 @@ jobs:
 
       # ----------------------------------------------------------------------- Collect artifacts
       - name: Collect NuGet packages
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         if: matrix.collect-packages && steps.pack.outcome == 'success' && always()
         with:
           name: Packages
           if-no-files-found: error
-          path: software/dotnet/bin/${{matrix.configuration}}/**
+          path: artifacts/package/${{matrix.configuration}}/**
 
-  publish-packages-nuget-org:
-    name: Publish packages to NuGet.org
+  # =====================================================================================================================================================================
+  # Publish packages to GitHub
+  #  ___      _    _ _    _                    _                      _          ___ _ _   _  _      _
+  # | _ \_  _| |__| (_)__| |_    _ __  __ _ __| |____ _ __ _ ___ ___ | |_ ___   / __(_) |_| || |_  _| |__
+  # |  _/ || | '_ \ | (_-< ' \  | '_ \/ _` / _| / / _` / _` / -_|_-< |  _/ _ \ | (_ | |  _| __ | || | '_ \
+  # |_|  \_,_|_.__/_|_/__/_||_| | .__/\__,_\__|_\_\__,_\__, \___/__/  \__\___/  \___|_|\__|_||_|\_,_|_.__/
+  #                             |_|                    |___/
+  # =====================================================================================================================================================================
+  publish-github:
+    name: Publish packages to GitHub
     runs-on: ubuntu-latest
+    needs: [build-firmware, build-firmware-pic32, build-dotnet]
     permissions:
-      # Needed to attach files to releases
-      contents: write
-    environment: public-release
-    needs: build
-    if: github.event_name == 'release'
+      # Needed to upload to GitHub Packages
+      packages: write
+    if: github.event_name == 'push' || github.event_name == 'release'
     steps:
       # ----------------------------------------------------------------------- Set up .NET
       - name: Setup .NET
-        uses: actions/setup-dotnet@v4
+        uses: actions/setup-dotnet@v5
         with:
           dotnet-version: 8.x
 
       # ----------------------------------------------------------------------- Download built packages
       - name: Download built packages
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: Packages
           path: artifacts/packages/
 
-      # ----------------------------------------------------------------------- Push to NuGet.org
-      - name: Push to NuGet.org
-        run: dotnet nuget push "artifacts/packages/*.nupkg" --api-key ${{secrets.NUGET_API_KEY}} --source ${{vars.NUGET_API_URL}}
+      # ----------------------------------------------------------------------- Push to GitHub Packages
+      - name: Push to GitHub Packages
+        run: dotnet nuget push "artifacts/packages/*.nupkg" --skip-duplicate --no-symbols --api-key ${{secrets.GITHUB_TOKEN}} --source https://nuget.pkg.github.com/${{github.repository_owner}}
+
+  # =====================================================================================================================================================================
+  # Publish packages to NuGet.org
+  #  ___      _    _ _    _                    _                      _         _  _       ___     _
+  # | _ \_  _| |__| (_)__| |_    _ __  __ _ __| |____ _ __ _ ___ ___ | |_ ___  | \| |_  _ / __|___| |_   ___ _ _ __ _
+  # |  _/ || | '_ \ | (_-< ' \  | '_ \/ _` / _| / / _` / _` / -_|_-< |  _/ _ \ | .` | || | (_ / -_)  _|_/ _ \ '_/ _` |
+  # |_|  \_,_|_.__/_|_/__/_||_| | .__/\__,_\__|_\_\__,_\__, \___/__/  \__\___/ |_|\_|\_,_|\___\___|\__(_)___/_| \__, |
+  #                             |_|                    |___/                                                    |___/
+  # =====================================================================================================================================================================
+  publish-packages-nuget-org:
+    name: Publish packages to NuGet.org
+    runs-on: ubuntu-latest
+    environment: public-release
+    needs: [build-firmware, build-firmware-pic32, build-dotnet]
+    if: github.event_name == 'release'
+    permissions:
+      # Needed to attach files to releases
+      contents: write
+      # Needed to request the OIDC token for NuGet.org trusted publishing
+      id-token: write
+    steps:
+      # ----------------------------------------------------------------------- Set up .NET
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: 8.x
+
+      # ----------------------------------------------------------------------- Download built packages
+      - name: Download built packages
+        uses: actions/download-artifact@v8
+        with:
+          name: Packages
+          path: artifacts/packages/
+
+      - name: Download firmware binaries
+        uses: actions/download-artifact@v8
+        with:
+          pattern: Firmware-*
+          merge-multiple: true
+          path: artifacts/firmware/
+
+      # ----------------------------------------------------------------------- Upload release assets
+      - name: Upload release assets
+        run: gh release upload --repo ${{github.repository}} ${{github.event.release.tag_name}} artifacts/packages/* artifacts/firmware/*.hex --clobber
         env:
-          # This is a workaround for https://github.com/NuGet/Home/issues/9775
-          DOTNET_SYSTEM_NET_HTTP_USESOCKETSHTTPHANDLER: 0
+          GH_TOKEN: ${{github.token}}
+
+      # ----------------------------------------------------------------------- Push to NuGet.org
+      - name: Log in to NuGet.org with OIDC
+        uses: NuGet/login@v1
+        id: nuget-login
+        with:
+          user: ${{secrets.NUGET_USER}}
+
+      - name: Push to NuGet.org
+        run: dotnet nuget push "artifacts/packages/*.nupkg" --api-key ${{steps.nuget-login.outputs.NUGET_API_KEY}} --source ${{vars.NUGET_API_URL}}

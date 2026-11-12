@@ -4,7 +4,7 @@
 device: SoundCard
 whoAmI: 1280
 firmwareVersion: "3.0"
-hardwareTargets: "1.1"
+hardwareTargets: "2.2"
 registers:
   Start:
     address: 32
@@ -12,6 +12,7 @@ registers:
     access: [Write, Event]
     minValue: 2
     maxValue: 40000
+    defaultValue: 2
     description: Starts the sound index if the value is less than 32, or otherwise the waveform generator at the specified frequency in Hz.
   Stop:
     address: 33
@@ -60,22 +61,24 @@ registers:
     address: 41
     type: U8
     access: Write
-    maskType: DigitalInputConfiguration
-    description: Specifies the configuration for the digital input 0 (DI0).
+    maskType: DIMode
+    description: Specifies the operation mode of the digital input 0 (DI0).
   ConfigureDI1:
     <<: *configureDI
     address: 42
-    description: Specifies the configuration for the digital input 1 (DI1).
+    description: Specifies the operation mode of the digital input 1 (DI1).
   StartOnDI0: &soundIndex
     address: 43
     type: U16
     access: Write
     minValue: 2
     maxValue: 40000
+    defaultValue: 2000
     description: Specifies the sound index or frequency to start when triggering DI0, following the same rules as Start.
   StartOnDI1:
     <<: *soundIndex
     address: 44
+    defaultValue: 4000
     description: Specifies the sound index or frequency to start when triggering DI1, following the same rules as Start.
   AttenuationLeftDI0:
     <<: *attenuation
@@ -106,16 +109,16 @@ registers:
     address: 52
     type: U8
     access: Write
-    maskType: DigitalOutputConfiguration
-    description: Specifies the configuration of the digital output 0 (DO0).
+    maskType: DOMode
+    description: Specifies the operation mode of the digital output 0 (DO0).
   ConfigureDO1:
     <<: *configureDO
     address: 53
-    description: Specifies the configuration of the digital output 1 (DO1).
+    description: Specifies the operation mode of the digital output 1 (DO1).
   ConfigureDO2:
     <<: *configureDO
     address: 54
-    description: Specifies the configuration of the digital output 2 (DO2).
+    description: Specifies the operation mode of the digital output 2 (DO2).
   Reserved5:
     <<: *reserved
     address: 55
@@ -153,8 +156,8 @@ registers:
     address: 64
     type: U8
     access: Write
-    maskType: AdcControlStateConfiguration
-    description: Specifies the configuration of the ADC control stream.
+    maskType: EnableFlag
+    description: Specifies whether the ADC control state is reported, sampled at 1 kHz.
   AdcControlState:
     address: 65
     type: U16
@@ -177,20 +180,17 @@ registers:
       Frequency:
         offset: 4
         description: The last sound index or frequency set by a register write, following the same rules as Start.
-  ConfigureAdc0:
+  ConfigureAdc0: &configureAdc
     address: 66
     type: U8
     access: Write
-    maskType: Adc0Configuration
+    maskType: AdcMode
     visibility: private
-    description: Specifies the configuration of analog input ADC0 (not implemented yet).
+    description: Specifies the operation mode of analog input ADC0 (not implemented yet).
   ConfigureAdc1:
+    <<: *configureAdc
     address: 67
-    type: U8
-    access: Write
-    maskType: Adc1Configuration
-    visibility: private
-    description: Specifies the configuration of analog input ADC1 (not implemented yet).
+    description: Specifies the operation mode of analog input ADC1 (not implemented yet).
   Reserved10:
     <<: *reserved
     address: 68
@@ -253,36 +253,25 @@ bitMasks:
       DO1: {value: 2, description: Digital output 1.}
       DO2: {value: 4, description: Digital output 2.}
 groupMasks:
-  DigitalInputConfiguration:
-    description: Specifies the operation mode of the digital input.
+  DIMode:
+    description: Specifies the operation mode of a digital input.
     values:
       Digital: {value: 0, description: Used as a pure digital input.}
       StartAndStop: {value: 1, description: Starts sound index (if less than 32) or frequency (if greater or equal than 32) when rising edge and stop when falling edge (frequency only).}
       Start: {value: 2, description: Starts sound index (if less than 32) or frequency (if greater or equal than 32) when rising edge.}
       Stop: {value: 3, description: Stops frequency when rising edge.}
-  DigitalOutputConfiguration:
-    description: Specifies the operation mode of the digital output.
+  DOMode:
+    description: Specifies the operation mode of a digital output.
     values:
       Digital: {value: 0, description: Used as a pure digital output.}
       PulseOnStart: {value: 1, description: Positive 400us pulse when a sound or frequency starts. }
-  AdcControlStateConfiguration:
-    description: Specifies the operation mode of the ADC control stream.
+  AdcMode:
+    description: Specifies the operation mode of an analog input.
     values:
-      Disabled: {value: 0, description: The ADC control state register is disabled.}
-      SampleRate1000Hz: {value: 1, description: The ADC control state will be sampled at 1 kHz.}
-  Adc0Configuration:
-    description: Specifies the operation mode of the analog input ADC0.
-    values:
-      AnalogInputOnly: {value: 0, description: Used as a pure analog input.}
-      ControlAttenuationLeft: {value: 1, description: Controls the attenuation of the left channel.}
-      ControlAttenuationBoth: {value: 2, description: Controls the attenuation of both channels.}
-  Adc1Configuration:
-    description: Specifies the operation mode of the analog input ADC1.
-    values:
-      AnalogInputOnly: {value: 0, description: Used as a pure analog input.}
-      ControlAttenuationRight: {value: 1, description: Controls the attenuation of the right channel.}
-      ControlAttenuationBoth: {value: 2, description: Controls the attenuation of both channels.}
-      ControlFrequencyGenerator: {value: 3, description: Controls the frequency of the waveform generator.}
+      AnalogInput: {value: 0, description: Used as a pure analog input.}
+      Attenuation: {value: 1, description: Controls the attenuation of the left channel from ADC0 and of the right channel from ADC1.}
+      AttenuationBoth: {value: 2, description: Controls the attenuation of both channels.}
+      Frequency: {value: 3, description: Controls the frequency of the waveform generator from ADC1 only.}
   Pic32Command:
     description: Specifies commands to send to the PIC32 micro-controller
     values:

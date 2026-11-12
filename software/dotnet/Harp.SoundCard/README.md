@@ -1,6 +1,6 @@
 ## About
 
-`Harp.SoundCard` provides an asynchronous API and reactive operators for data acquisition and control of [Harp SoundCard](https://harp-tech.org/api/Harp.SoundCard.html) devices.
+`Harp.SoundCard` provides an asynchronous API and reactive operators for data acquisition and control of [Harp SoundCard](https://harp-tech.org/device.soundcard) devices.
 
 ## How to Use
 
@@ -19,8 +19,8 @@ Console.WriteLine($"{deviceName} WhoAmI: {whoAmI} Timestamp (s): {timestamp}");
 
 ## Additional Documentation
 
-For additional documentation and examples, refer to the [official Harp documentation](https://harp-tech.org/api/Harp.SoundCard.html).
+For additional documentation and examples, refer to the [official Harp SoundCard documentation](https://harp-tech.org/device.soundcard).
 
 ## Feedback & Contributing
 
-`Harp.SoundCard` is released as open-source under the [MIT license](https://licenses.nuget.org/MIT). Bug reports and contributions are welcome at [the GitHub repository](https://github.com/harp-tech/device.soundcard).
+`Harp.SoundCard` is released as open source under the [MIT license](https://licenses.nuget.org/MIT). Bug reports and contributions are welcome at [the GitHub repository](https://github.com/harp-tech/device.soundcard).

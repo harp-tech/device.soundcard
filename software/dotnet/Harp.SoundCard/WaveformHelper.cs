@@ -30,8 +30,8 @@ namespace Harp.SoundCard
             SampleRate sampleRate,
             SampleType sampleType,
             byte[] soundWaveform,
-            string soundName = null,
-            string description = null)
+            string? soundName = null,
+            string? description = null)
         {
             const int MaxBufferSize = 32768;
 
@@ -304,7 +304,7 @@ namespace Harp.SoundCard
                 ReadString(reply, ReadMetadataReplyHeaderSize + SoundNameSize, DescriptionSize));
         }
 
-        static void WriteString(string value, byte[] buffer, int offset, int count, string paramName)
+        static void WriteString(string? value, byte[] buffer, int offset, int count, string paramName)
         {
             if (string.IsNullOrEmpty(value))
             {
@@ -327,7 +327,7 @@ namespace Harp.SoundCard
             return end < 0 ? text : text.Substring(0, end);
         }
 
-        static UsbDeviceHandle OpenDevice(UsbContext context, int index)
+        static UsbDeviceHandle? OpenDevice(UsbContext context, int index)
         {
             using var device = FindDevice(context, index);
             if (device == null)
@@ -353,9 +353,9 @@ namespace Harp.SoundCard
             }
         }
 
-        static UsbDevice FindDevice(UsbContext context, int index)
+        static UsbDevice? FindDevice(UsbContext context, int index)
         {
-            UsbDevice result = null;
+            UsbDevice? result = null;
             var devices = context.GetDevices();
             foreach (var device in devices)
             {
