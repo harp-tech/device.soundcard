@@ -1,0 +1,10 @@
+apiRules:
+- exclude:
+    hasAttribute:
+      uid: System.ObsoleteAttribute
+- include:
+    uidRegex: ^Harp\.SoundCard\.(AsyncDevice|CreateMessage|DeviceDataWriter|FilterRegister|Format|GetDeviceMetadata|GroupByRegister|Parse|ReadSoundMetadata|SampleRate|SoundCardException|SoundMetadata|UpdateSoundWaveform)$
+    type: Type
+- exclude:
+    uidRegex: ^Harp\.SoundCard\.[^.]+$
+    type: Type

@@ -2,8 +2,15 @@
   "version": 1,
   "isRoot": true,
   "tools": {
+    "docfx": {
+      "version": "2.81.0",
+      "commands": [
+        "docfx"
+      ],
+      "rollForward": false
+    },
     "harp.toolkit": {
-      "version": "0.6.0",
+      "version": "0.6.2",
       "commands": [
         "harp.toolkit"
       ],

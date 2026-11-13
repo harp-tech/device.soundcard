@@ -1,0 +1,25 @@
+[CmdletBinding()] param (
+    [string[]]$docfxArgs
+)
+Set-StrictMode -Version 3.0
+$ErrorActionPreference = 'Stop'
+$PSNativeCommandUseErrorActionPreference = $true
+
+Push-Location $PSScriptRoot
+try {
+    if (Test-Path "..\artifacts\docs") {
+        Remove-Item "..\artifacts\docs\*" -Recurse -Force
+    }
+
+    $libPaths = @()
+    $libPaths += Get-ChildItem "..\artifacts\bin\*\release_net4*" -Directory | Select-Object -Expand FullName
+    $libPaths += "..\artifacts\package\release"
+
+    ./export-images.ps1 $libPaths
+    dotnet harp.toolkit generate documentation docfx ..\device.yml -o ..\artifacts\docs\registers
+    uv run --locked harp-docfx\scripts\generate-python-api.py --search-path software\python\src --flat-toc
+    dotnet docfx metadata
+    dotnet docfx build $docfxArgs
+} finally {
+    Pop-Location
+}

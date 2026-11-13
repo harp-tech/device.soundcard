@@ -48,9 +48,6 @@ __all__ = [
     "OutputStatePayload",
     "EnableAdcControlStatePayload",
     "AdcControlStatePayload",
-    "ConfigureAdc0Payload",
-    "ConfigureAdc1Payload",
-    "Pic32BootloaderPayload",
     "Start",
     "Stop",
     "AttenuationLeft",
@@ -153,97 +150,97 @@ class AdcMode(enum.IntEnum):
 
 
 class StartPayload(AnonymousPayload[np.uint16]):
-    """Represents the payload of the Start register."""
+    """Represents the Start payload."""
 
     __value__: np.uint16 = Field(IdentityConverter(np.uint16), default=np.uint16(2))
 
 
 class DeleteSoundPayload(AnonymousPayload[np.uint8]):
-    """Represents the payload of the DeleteSound register."""
+    """Represents the DeleteSound payload."""
 
     __value__: np.uint8 = Field(IdentityConverter(np.uint8), default=np.uint8(2))
 
 
 class InputStatePayload(AnonymousPayload[np.uint8]):
-    """Represents the payload of the InputState register."""
+    """Represents the InputState payload."""
 
     __value__: DigitalInputs = BitMask(enum=DigitalInputs)
 
 
 class ConfigureDI0Payload(AnonymousPayload[np.uint8]):
-    """Represents the payload of the ConfigureDI0 register."""
+    """Represents the ConfigureDI0 payload."""
 
     __value__: DIMode = GroupMask(enum=DIMode, mask=0xFF)
 
 
 class ConfigureDI1Payload(AnonymousPayload[np.uint8]):
-    """Represents the payload of the ConfigureDI1 register."""
+    """Represents the ConfigureDI1 payload."""
 
     __value__: DIMode = GroupMask(enum=DIMode, mask=0xFF)
 
 
 class StartOnDI0Payload(AnonymousPayload[np.uint16]):
-    """Represents the payload of the StartOnDI0 register."""
+    """Represents the StartOnDI0 payload."""
 
     __value__: np.uint16 = Field(IdentityConverter(np.uint16), default=np.uint16(2000))
 
 
 class StartOnDI1Payload(AnonymousPayload[np.uint16]):
-    """Represents the payload of the StartOnDI1 register."""
+    """Represents the StartOnDI1 payload."""
 
     __value__: np.uint16 = Field(IdentityConverter(np.uint16), default=np.uint16(4000))
 
 
 class ConfigureDO0Payload(AnonymousPayload[np.uint8]):
-    """Represents the payload of the ConfigureDO0 register."""
+    """Represents the ConfigureDO0 payload."""
 
     __value__: DOMode = GroupMask(enum=DOMode, mask=0xFF)
 
 
 class ConfigureDO1Payload(AnonymousPayload[np.uint8]):
-    """Represents the payload of the ConfigureDO1 register."""
+    """Represents the ConfigureDO1 payload."""
 
     __value__: DOMode = GroupMask(enum=DOMode, mask=0xFF)
 
 
 class ConfigureDO2Payload(AnonymousPayload[np.uint8]):
-    """Represents the payload of the ConfigureDO2 register."""
+    """Represents the ConfigureDO2 payload."""
 
     __value__: DOMode = GroupMask(enum=DOMode, mask=0xFF)
 
 
 class OutputSetPayload(AnonymousPayload[np.uint8]):
-    """Represents the payload of the OutputSet register."""
+    """Represents the OutputSet payload."""
 
     __value__: DigitalOutputs = BitMask(enum=DigitalOutputs)
 
 
 class OutputClearPayload(AnonymousPayload[np.uint8]):
-    """Represents the payload of the OutputClear register."""
+    """Represents the OutputClear payload."""
 
     __value__: DigitalOutputs = BitMask(enum=DigitalOutputs)
 
 
 class OutputTogglePayload(AnonymousPayload[np.uint8]):
-    """Represents the payload of the OutputToggle register."""
+    """Represents the OutputToggle payload."""
 
     __value__: DigitalOutputs = BitMask(enum=DigitalOutputs)
 
 
 class OutputStatePayload(AnonymousPayload[np.uint8]):
-    """Represents the payload of the OutputState register."""
+    """Represents the OutputState payload."""
 
     __value__: DigitalOutputs = BitMask(enum=DigitalOutputs)
 
 
 class EnableAdcControlStatePayload(AnonymousPayload[np.uint8]):
-    """Represents the payload of the EnableAdcControlState register."""
+    """Represents the EnableAdcControlState payload."""
 
     __value__: EnableFlag = GroupMask(enum=EnableFlag, mask=0xFF)
 
 
 class AdcControlStatePayload(StructPayload[np.uint16], length=5):
-    """Represents the payload of the AdcControlState register."""
+    """Represents the AdcControlState payload."""
 
     adc0: np.uint16 = Field(IdentityConverter(np.uint16))
     """The sampled analog input value on ADC0."""
@@ -261,20 +258,20 @@ class AdcControlStatePayload(StructPayload[np.uint16], length=5):
     """The last sound index or frequency set by a register write, following the same rules as Start."""
 
 
-class ConfigureAdc0Payload(AnonymousPayload[np.uint8]):
-    """Represents the payload of the ConfigureAdc0 register."""
+class _ConfigureAdc0Payload(AnonymousPayload[np.uint8]):
+    """Represents the ConfigureAdc0 payload."""
 
     __value__: AdcMode = GroupMask(enum=AdcMode, mask=0xFF)
 
 
-class ConfigureAdc1Payload(AnonymousPayload[np.uint8]):
-    """Represents the payload of the ConfigureAdc1 register."""
+class _ConfigureAdc1Payload(AnonymousPayload[np.uint8]):
+    """Represents the ConfigureAdc1 payload."""
 
     __value__: AdcMode = GroupMask(enum=AdcMode, mask=0xFF)
 
 
-class Pic32BootloaderPayload(AnonymousPayload[np.uint8]):
-    """Represents the payload of the Pic32Bootloader register."""
+class _Pic32BootloaderPayload(AnonymousPayload[np.uint8]):
+    """Represents the Pic32Bootloader payload."""
 
     __value__: EnableFlag = GroupMask(enum=EnableFlag, mask=0xFF)
 
@@ -522,7 +519,7 @@ class _ConfigureAdc0(RegisterBase[AdcMode]):
 
     address: ClassVar[int] = 66
     payload_type: ClassVar[PayloadType] = PayloadType.U8
-    payload_class = ConfigureAdc0Payload
+    payload_class = _ConfigureAdc0Payload
 
 
 class _ConfigureAdc1(RegisterBase[AdcMode]):
@@ -530,7 +527,7 @@ class _ConfigureAdc1(RegisterBase[AdcMode]):
 
     address: ClassVar[int] = 67
     payload_type: ClassVar[PayloadType] = PayloadType.U8
-    payload_class = ConfigureAdc1Payload
+    payload_class = _ConfigureAdc1Payload
 
 
 class _Reserved10(RegisterU8):
@@ -622,7 +619,7 @@ class _Pic32Bootloader(RegisterBase[EnableFlag]):
 
     address: ClassVar[int] = 82
     payload_type: ClassVar[PayloadType] = PayloadType.U8
-    payload_class = Pic32BootloaderPayload
+    payload_class = _Pic32BootloaderPayload
 
 
 REGISTER_MAP: dict[int, type[RegisterBase[Any]]] = {

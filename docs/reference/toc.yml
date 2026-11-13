@@ -1,0 +1,8 @@
+- name: Registers
+  href: ../../artifacts/docs/registers/toc.yml
+  topicHref: index.md
+- name: C# API
+  uid: Harp.SoundCard.AsyncDevice
+- name: Python API
+  href: ../../artifacts/docs/python/toc.yml
+  topicUid: harp.device.soundcard

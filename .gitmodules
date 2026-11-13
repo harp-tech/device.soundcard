@@ -1,0 +1,3 @@
+[submodule "docs/harp-docfx"]
+	path = docs/harp-docfx
+	url = https://github.com/harp-tech/docfx-tools
