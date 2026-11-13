@@ -16,7 +16,7 @@
       <Expression xsi:type="p1:CreateMessage">
         <harp:MessageType>Write</harp:MessageType>
         <harp:Payload xsi:type="p1:CreateEnableAdcControlStatePayload">
-          <p1:EnableAdcControlState>SampleRate1000Hz</p1:EnableAdcControlState>
+          <p1:EnableAdcControlState>Enabled</p1:EnableAdcControlState>
         </harp:Payload>
       </Expression>
       <Expression xsi:type="MulticastSubject">

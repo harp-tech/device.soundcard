@@ -23,7 +23,7 @@ The analog data stream is off by default, enable it by configuring [`EnableAdcCo
 - Insert a [`KeyDown`] operator and set the `Filter` property to `A`.
 - Insert a [`CreateMessage`] operator and configure the following properties:
     - `Payload` - Select `EnableAdcControlStatePayload`.
-    - `EnableAdcControlState` - Select `SampleRate1000Hz` to enable the analog data stream. To disable it in the future, select `Disabled`.
+    - `EnableAdcControlState` - Select `Enabled` to enable the analog data stream. To disable it in the future, select `Disabled`.
 - Insert a [`MulticastSubject`] operator named `SoundCard Commands`.
 
 Run the workflow and press <kbd>A</kbd>. The device starts reporting [`AdcControlState`] events, which we will cover in the next section.
