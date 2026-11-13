@@ -5431,7 +5431,7 @@ namespace Harp.SoundCard
     }
 
     /// <summary>
-    /// Represents the payload of the AdcControlState register.
+    /// Represents the AdcControlState payload.
     /// </summary>
     public struct AdcControlStatePayload
     {
@@ -5488,12 +5488,10 @@ namespace Harp.SoundCard
         public ushort Frequency;
 
         /// <summary>
-        /// Returns a <see cref="string"/> that represents the payload of
-        /// the AdcControlState register.
+        /// Returns a <see cref="string"/> that represents the AdcControlState payload.
         /// </summary>
         /// <returns>
-        /// A <see cref="string"/> that represents the payload of the
-        /// AdcControlState register.
+        /// A <see cref="string"/> that represents the AdcControlState payload.
         /// </returns>
         public override string ToString()
         {

@@ -8,9 +8,12 @@ the folder each file is in:
   hardware/Mechanical/LICENSE
 * firmware: MIT, see firmware/LICENSE
 * software: MIT, see software/dotnet/LICENSE and software/python/LICENSE
+* docs: CC BY-SA 4.0 for content, see docs/LICENSE, and MIT for code,
+  including the example workflows, see docs/LICENSE-CODE
 * Third-party components, such as the Microchip Harmony framework in
   firmware/SoundCard.PIC32/microchip and firmware/Bootloader.PIC32/microchip,
-  are licensed under the terms provided by their authors.
+  and the documentation template in docs/harp-docfx, are licensed under the
+  terms provided by their authors.
 * Everything else, including device.yml, the device interface from which
   the firmware registers and the software interfaces are generated, and
   the build configuration, is licensed under the MIT license below.
