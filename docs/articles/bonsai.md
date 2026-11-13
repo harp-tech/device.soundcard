@@ -11,7 +11,7 @@ We will use an introductory example to get started with the device in Bonsai. Th
 
 Before beginning:
 - Connect an amplifier and speaker to an output channel by following the [audio connection](ports-connections.md?tabs=audio#connections) instructions.
-- Connect the power supply and **USB(Computer)** cable by following the [power and PC connection](ports-connections.md?tabs=powerandpc#connections) instructions.
+- Connect the power supply and **USB (Computer)** cable by following the [power and PC connection](ports-connections.md?tabs=powerandpc#connections) instructions.
 - Install [Bonsai](installation.md?tabs=bonsai#software-packages) and add the `Harp.SoundCard` and `Bonsai.StarterPack` packages.
 - Upload a sound to sound index 2 with the [Sound Card app](./app.md) or in [Bonsai](../tutorials/upload-waveform-bonsai.md).
 - Launch "Bonsai" from the Windows Start menu.

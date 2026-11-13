@@ -47,7 +47,7 @@ The block is made up of:
 
 Other blocks are used to read events from the device, select and decode specific messages, and display their contents.
 
-![Receive Events from Device](../images/workflowbasics-receiveevents.svg)
+![Receive events from device](../images/workflowbasics-receiveevents.svg)
 
 The block is made up of:
 

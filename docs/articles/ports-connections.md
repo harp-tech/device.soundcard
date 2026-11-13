@@ -82,7 +82,6 @@ This article will cover the ports, controls, and status indicators on the Sound 
 > [!WARNING]
 > Do not connect a single 12 V supply to both power inputs of the Audio Amplifier. This results in a short circuit.
 
-
 # [Digital inputs](#tab/digitalinputs)
 
 ![Harp Sound Card Digital Input](../images/connection-digitalinputs.svg){width=600}

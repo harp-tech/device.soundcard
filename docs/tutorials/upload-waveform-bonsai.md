@@ -9,6 +9,7 @@ Before beginning:
 - Install the `Harp.SoundCard`, `Bonsai.Numerics`, and `Bonsai.StarterPack` packages from the [Bonsai package manager](https://bonsai-rx.org/docs/articles/packages.html).
 - Connect an amplifier and speaker to an output channel by following the [audio connection](../articles/ports-connections.md?tabs=audio#connections) instructions.
 - Connect the power supply and both USB cables by following the [power and PC connection](../articles/ports-connections.md?tabs=powerandpc#connections) instructions. Uploading needs the **USB (Soundbank)** cable.
+- Install the [driver](../articles/installation.md?tabs=driver#software-packages).
 - Launch "Bonsai" from the Windows Start menu.
 
 ## UpdateSoundWaveform
@@ -23,7 +24,7 @@ For each of the following exercises, configure these properties for the [`Update
 - `Description` - Set the description of the sound to be stored in the device. This field is optional.
 - `DeviceIndex` - Set the index of the `SoundCard` device to update. If no index is specified, the first `SoundCard` will be used.
 - `SampleRate` - Set the sample rate used for playback. Only 96 kHz or 192 kHz are supported.
-- `SoundIndex` - Set the index of the sound to update. The `SoundCard` onboard memory is partitioned into 32 indices, of which index 2-31 can be used for storing waveforms.
+- `SoundIndex` - Set the index of the sound to update. The `SoundCard` onboard memory is partitioned into 32 indices, of which index 2–31 can be used for storing waveforms.
 - `SoundName` - Set the name of the sound to be stored in the device. This field is optional.
 
 Continuous streaming of sample buffers is not supported, so the entire waveform must be sent during upload. Dynamic update of waveforms when another sound is playing is only possible for waveforms with a 96 kHz sample rate.

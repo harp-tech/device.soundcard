@@ -107,7 +107,7 @@ The first number is the non-zero value we used for [`Stop`], and the second numb
 You can replace [`KeyDown`] with other operators to play sounds with other triggers in Bonsai, for instance a [`Timer`] to send triggers after a set time has elapsed.
 
 :::workflow
-![Play sound with Timer](../workflows/playsound-timer.bonsai)
+![Alternative: play sound with Timer](../workflows/playsound-timer.bonsai)
 :::
 
 - Insert a [`Timer`] operator and configure the following properties:
