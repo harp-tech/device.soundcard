@@ -42,8 +42,7 @@
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="p2:UpdateSoundWaveform">
           <p2:DeviceIndex xsi:nil="true" />
-          <p2:SoundIndex>3</p2:SoundIndex>
-          <p2:SoundName>bonsai-whitenoise</p2:SoundName>
+          <p2:SoundIndex>2</p2:SoundIndex>
           <p2:SampleRate>SampleRate96000Hz</p2:SampleRate>
         </Combinator>
       </Expression>

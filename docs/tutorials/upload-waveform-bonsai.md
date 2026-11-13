@@ -1,6 +1,6 @@
 # Upload waveforms with Bonsai
 
-The [Harp.SoundCard](../articles/installation.md#software-packages) Bonsai package supports preload and update of sound waveforms during runtime. The following exercises will demonstrate how to generate and load various waveforms for upload to the Sound Card in Bonsai.
+The [Harp.SoundCard](../articles/installation.md#software-packages) Bonsai package supports preload and update of sound waveforms during runtime. The following exercises will demonstrate how to generate and load various waveforms for upload to the Sound Card in Bonsai. To read sound metadata or delete the sounds stored on the device, refer to the [Manage stored sounds](../articles/manage-storedsounds.md) article.
 
 > [!TIP]
 > Alternatively, you can generate and upload waveforms with the [Sound Card app](../articles/app.md) without building a workflow.
@@ -20,6 +20,7 @@ Uploading of waveforms is done with the [`UpdateSoundWaveform`] operator, which 
 :::
 
 For each of the following exercises, configure these properties for the [`UpdateSoundWaveform`] operator:
+- `Description` - Set the description of the sound to be stored in the device. This field is optional.
 - `DeviceIndex` - Set the index of the `SoundCard` device to update. If no index is specified, the first `SoundCard` will be used.
 - `SampleRate` - Set the sample rate used for playback. Only 96 kHz or 192 kHz are supported.
 - `SoundIndex` - Set the index of the sound to update. The `SoundCard` onboard memory is partitioned into 32 indices, of which index 2-31 can be used for storing waveforms.
