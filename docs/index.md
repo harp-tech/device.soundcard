@@ -9,7 +9,7 @@ Consumer-grade audio systems are designed to operate within the human auditory d
 The Sound Card provides:
 
 - Wideband frequency support up to 80 kHz for experiments involving ultrasonic communication.
-- Low-latency sound playback via onboard waveform storage and digital input triggering for close-loop experiments.
+- Low-latency sound playback via onboard waveform storage and digital input triggering for closed-loop experiments.
 - Convenient generation of auditory stimuli, with the [Sound Card app](articles/app.md) to create and upload waveforms and an onboard sine wave generator for pure tones.
 - Hardware timestamping and synchronization with other [Harp](https://harp-tech.org/articles/about.html) devices for seamless alignment of experimental data.
 - [Bonsai](https://bonsai-rx.org/) integration for flexible experiment acquisition and control.

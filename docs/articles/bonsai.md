@@ -29,7 +29,7 @@ Before beginning:
 - Click on the [`SoundCardDataWriter (DeviceDataWriter)`] operator and set the `Path` property for the name and location of the save folder (e.g. `SoundCard.harp`).
 - Press the "Start" button in Bonsai to run the workflow.
 
-After 5 seconds, the sound plays and the [AUDIO](ports-connections.md#indicators) LED on the board turns on for its duration.
+After 5 seconds, the sound plays and the [AUDIO](ports-connections.md#indicators) LED on the device turns on for its duration.
 
 The device is ready to use! If, instead, you hear nothing or an error appears in Bonsai, check out the [troubleshooting](errors.md) section.
 

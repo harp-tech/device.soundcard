@@ -74,7 +74,7 @@ Run the workflow and press <kbd>D</kbd> to enable `Digital` mode, then press <kb
 > A single command can control several lines at once. To set or clear multiple lines simultaneously, type the names separated by a comma (e.g. `DO1, DO2`) in the `OutputSet` or `OutputClear` field. Lines not specified remain unchanged.
 
 > [!NOTE]
-> Software-triggered outputs are subject to operating system and hardware communication latencies (typically 10-15 ms).
+> Software-triggered outputs are subject to operating system and hardware communication latencies.
 
 ## Toggle outputs
 

@@ -14,7 +14,7 @@ The complete workflow is shown below. Copy and paste it into Bonsai to get start
 
 ## Attenuate and play sound
 
-[`AttenuationStart`] starts playback of a sound index or pure tone and sets the attenuation of the left and right channels at the same time,  in 0.1 dB steps. Each command replaces the previous value rather than adding to it. The attenuation also stays in effect: any sound you play afterwards with [`Start`] plays at that level until you change it.
+[`AttenuationStart`] starts playback of a sound index or pure tone and sets the attenuation of the left and right channels at the same time, in 0.1 dB steps. Each command replaces the previous value rather than adding to it. The attenuation also stays in effect: any sound you play afterwards with [`Start`] plays at that level until you change it.
 
 :::workflow
 ![Attenuate and play sound](../workflows/adjustvolume-attenuation.bonsai)
@@ -59,7 +59,7 @@ Run the workflow and press <kbd>A</kbd> to play the sound with [`AttenuationStar
 > Use [`AttenuationLeft`] or [`AttenuationRight`] to set the attenuation of each channel independently.
 
 > [!NOTE]
-> You can check the attenuation currently set on each channel with the `AttenuationLeft` and `AttenuationRight` fields of the [`AdcControlState`] event. Refer to the [Acquire analog data](./acquire-analog-data.md) article to enable and visualize the event.
+> The `AttenuationLeft` and `AttenuationRight` fields of the [`AdcControlState`] event report the attenuation last set on each channel by a register write. Sounds started from a digital input apply their own attenuation without updating these fields. Refer to the [Acquire analog data](./acquire-analog-data.md) article to enable and visualize the event.
 
 [!INCLUDE [](../includes/version-footer.md)]
 

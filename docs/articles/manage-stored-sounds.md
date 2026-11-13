@@ -1,6 +1,6 @@
 # Manage stored sounds
 
-In addition to controlling sound playback, Bonsai can interface with the device to read sound metadata and manage stored sounds. Refer to the [connections](./ports-connections.md?tabs=power-and-pc#connections) article to connect the **USB (Soundbank)** port to the computer, which we will use to communicate with the sound memory controller.
+In addition to controlling sound playback, Bonsai can read the metadata of the stored sounds and delete them. Reading sound metadata communicates directly with the sound memory controller, so refer to the [connections](./ports-connections.md?tabs=power-and-pc#connections) article to connect the **USB (Soundbank)** port to the computer. Deleting sounds only needs the **USB (Computer)** connection.
 
 This article covers how to read the metadata of the stored sounds, delete a single stored sound, and delete all stored sounds in Bonsai.
 

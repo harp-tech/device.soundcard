@@ -39,7 +39,7 @@ In a separate branch:
 Run the workflow, press the <kbd>A</kbd> key to play the sound, and press the <kbd>S</kbd> key to stop it early.
 
 > [!TIP]
-> Starting another sound index replaces the one that is playing, but starting an empty sound index or a pure tone (covered in the next section) does not interrupt it.
+> Starting another sound index replaces the one that is playing, and starting an empty sound index does not interrupt it. A pure tone, covered in the next section, started while a stored sound is playing waits and starts when the sound ends. Until then, the device refuses further [`Start`] commands.
 
 ## Play pure tone
 
@@ -66,7 +66,7 @@ In a separate branch:
 Run the workflow, press the <kbd>D</kbd> key to play the tone, and press the <kbd>F</kbd> key to stop it.
 
 > [!NOTE]
-> Closing the connection to the device also stops a pure tone.
+> Closing the connection to the device also stops any sound or pure tone that is playing.
 
 ## Visualize sound events
 

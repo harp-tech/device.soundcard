@@ -72,7 +72,7 @@ pip install harp-data
 
 ## Firmware update
 
-New features are added and bugs are fixed with firmware updates which are published on the [release page](https://github.com/harp-tech/device.soundcard/releases) in the device GitHub repository. Each release contains `.hex` files tagged with the firmware (`fw`) and hardware (`hw`) version. For instance, `SoundCard-fw3.0-harp1.15-hw2.2-ass0.hex` is firmware v3.0 for a hardware v2.2 Sound Card. Download these two hex files from the "Assets" section under each release, making sure that the hardware prefix matches the [hardware version](device.md#hardware) of the board:
+New features are added and bugs are fixed with firmware updates which are published on the [release page](https://github.com/harp-tech/device.soundcard/releases) in the device GitHub repository. Each release contains `.hex` files tagged with the firmware (`fw`) and hardware (`hw`) version. For instance, `SoundCard-fw3.0-harp1.15-hw2.2-ass0.hex` is firmware v3.0 for a hardware v2.2 Sound Card. Download these two hex files from the "Assets" section under each release, making sure that the `hw` version matches the [hardware version](device.md#hardware) of the device:
 
 - `SoundCard-*.hex` - Firmware for the 8-bit device interface microcontroller.
 - `SoundCard.PIC32-*.hex` - Firmware for the 32-bit sound memory microcontroller.

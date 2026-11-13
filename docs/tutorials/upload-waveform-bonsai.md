@@ -34,7 +34,7 @@ Continuous streaming of sample buffers is not supported, so the entire waveform 
 - `Type` - The [`UpdateSoundWaveform`] operator accepts `byte[]` and `Mat` type inputs. For these exercises, we will use `Mat`, a matrix format commonly used for audio data in Bonsai, where rows represent channels and columns represent samples.
 - `Bit Depth` - Waveforms must be encoded as 32-bit signed integers (`S32`).
 - `Channels` - Both mono and stereo waveforms are supported.
-- `Size` - Each sound index on the `SoundCard` memory can store an 8 MB file, corresponding to ~2 million samples. Mono waveforms are duplicated for dual-channel playback and occupy the same amount of storage space as stereo waveforms.
+- `Size` - Each sound index on the `SoundCard` memory can store an 8 MiB file, corresponding to ~2 million samples. Mono waveforms are duplicated for dual-channel playback and occupy the same amount of storage space as stereo waveforms.
 
 Given these parameters, sounds are limited to a length of 10.922 s at a 96 kHz sample rate, or 5.461 s at 192 kHz.
 

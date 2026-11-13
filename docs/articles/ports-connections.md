@@ -116,7 +116,7 @@ This article will cover the ports, controls, and status indicators on the Sound 
 ![Harp Sound Card Harp Synchronization](../images/connection-harpsynchronization.svg){width=600}
 
 1. Connect a clock output of a Harp clock generator (e.g. the [Harp Timestamp Generator](https://github.com/harp-tech/device.timestampgeneratorgen3)) to the **CLK IN** jack with a stereo jack cable.
-2. The Sound Card adopts the generator's clock automatically. To verify the connection, check that the **STATE** LEDs of the connected boards blink simultaneously.
+2. The Sound Card adopts the generator's clock automatically. To verify the connection, check that the **STATE** LEDs of the connected devices blink simultaneously.
 3. Refer to the [Harp synchronization clock](https://harp-tech.org/protocol/SynchronizationClock.html) documentation for how devices synchronize.
 
 ---

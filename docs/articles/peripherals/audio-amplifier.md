@@ -29,7 +29,7 @@ The Harp Audio Amplifier is a peripheral for the Sound Card that amplifies one o
 
 | Version | Compatible Sound Card | Notes |
 | ------- | -------------------- | ----- |
-| 2.0 | >= v1.0  | <ul><li>Initial version</li></ul> |
+| 2.0 | >= v1.1  | <ul><li>Initial version</li></ul> |
 
 Assembled units are available from the [Open Ephys store](https://open-ephys.org/harp), or build your own using the hardware design files in the [Audio Amplifier](https://github.com/harp-tech/peripheral.audioamp) repository.
 

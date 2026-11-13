@@ -26,7 +26,7 @@ Before beginning:
 6. Choose the sampling rate and click "Generate". The sampling rate determines the range of reproducible frequencies.
 7. Select the channels to upload.
 8. Configure the sound index to upload and click "Send to device".
-9. Select the sound index and press "Play" to hear the generated sound.
+9. Select the sound index and press "Play" to hear the generated sound, or "Stop" to stop it.
 10. Save the waveform to a binary file, or load a previously saved binary file.
 
 > [!TIP]
