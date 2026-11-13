@@ -15,8 +15,8 @@
       </Expression>
       <Expression xsi:type="p1:CreateMessage">
         <harp:MessageType>Write</harp:MessageType>
-        <harp:Payload xsi:type="p1:CreatePic32CommandsPayload">
-          <p1:Pic32Commands>DeleteAllSounds</p1:Pic32Commands>
+        <harp:Payload xsi:type="p1:CreateDeleteSoundPayload">
+          <p1:DeleteSound>2</p1:DeleteSound>
         </harp:Payload>
       </Expression>
       <Expression xsi:type="MulticastSubject">

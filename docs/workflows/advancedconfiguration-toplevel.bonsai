@@ -39,7 +39,7 @@
         <Name>SoundCard Events</Name>
       </Expression>
       <Expression xsi:type="Annotation">
-        <Name>Delete stored sounds</Name>
+        <Name>Delete sound</Name>
         <Text><![CDATA[]]></Text>
       </Expression>
       <Expression xsi:type="Combinator">
@@ -50,8 +50,27 @@
       </Expression>
       <Expression xsi:type="p1:CreateMessage">
         <harp:MessageType>Write</harp:MessageType>
-        <harp:Payload xsi:type="p1:CreatePic32CommandsPayload">
-          <p1:Pic32Commands>DeleteAllSounds</p1:Pic32Commands>
+        <harp:Payload xsi:type="p1:CreateDeleteSoundPayload">
+          <p1:DeleteSound>2</p1:DeleteSound>
+        </harp:Payload>
+      </Expression>
+      <Expression xsi:type="MulticastSubject">
+        <Name>SoundCard Commands</Name>
+      </Expression>
+      <Expression xsi:type="Annotation">
+        <Name>Delete all sounds</Name>
+        <Text><![CDATA[]]></Text>
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="wie:KeyDown">
+          <wie:Filter>S</wie:Filter>
+          <wie:SuppressRepetitions>false</wie:SuppressRepetitions>
+        </Combinator>
+      </Expression>
+      <Expression xsi:type="p1:CreateMessage">
+        <harp:MessageType>Write</harp:MessageType>
+        <harp:Payload xsi:type="p1:CreateDeleteAllSoundsPayload">
+          <p1:DeleteAllSounds>1</p1:DeleteAllSounds>
         </harp:Payload>
       </Expression>
       <Expression xsi:type="MulticastSubject">
@@ -64,6 +83,8 @@
       <Edge From="3" To="4" Label="Source1" />
       <Edge From="6" To="7" Label="Source1" />
       <Edge From="7" To="8" Label="Source1" />
+      <Edge From="10" To="11" Label="Source1" />
+      <Edge From="11" To="12" Label="Source1" />
     </Edges>
   </Workflow>
 </WorkflowBuilder>
