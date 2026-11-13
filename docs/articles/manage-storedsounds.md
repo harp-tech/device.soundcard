@@ -12,20 +12,20 @@ The complete workflow is shown below. Copy and paste it into Bonsai to get start
 
 ## Read sound metadata
 
-The [`ReadSoundMetadata`] operator reports the metadata for each stored sound.
+Use the [`ReadSoundMetadata`] operator to read the metadata of a single stored sound or of every stored sound.
 
 :::workflow
 ![Read sound metadata](../workflows/managestoredsounds-readsoundmetadata.bonsai)
 :::
 
 - Insert a [`KeyDown`] operator and set the `Filter` property to `A`.
-- Insert a [`SelectMany`] operator.
+- Insert a [`SelectMany`] operator, the nested workflow will run once for every key press.
 - Insert a [`VisualizerWindow`] operator.
 
 Double-click the [`SelectMany`] operator to open its nested workflow, and add the operator shown below:
 
 :::workflow
-![ReadSoundMetadata operator](../workflows/managestoredsounds-readsoundmetadataoperator.bonsai)
+![ReadSoundMetadata operator](../workflows/managestoredsounds-nestedreadsoundmetadata.bonsai)
 :::
 
 - Insert a [`ReadSoundMetadata`] operator and connect it to the `WorkflowOutput` node in place of the `Source1` node. Configure the following properties:

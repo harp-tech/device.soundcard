@@ -17,9 +17,6 @@
       <Expression xsi:type="rx:SelectMany">
         <Workflow>
           <Nodes>
-            <Expression xsi:type="WorkflowInput">
-              <Name>Source1</Name>
-            </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="p1:ReadSoundMetadata">
                 <p1:DeviceIndex xsi:nil="true" />
@@ -29,7 +26,7 @@
             <Expression xsi:type="WorkflowOutput" />
           </Nodes>
           <Edges>
-            <Edge From="1" To="2" Label="Source1" />
+            <Edge From="0" To="1" Label="Source1" />
           </Edges>
         </Workflow>
       </Expression>
