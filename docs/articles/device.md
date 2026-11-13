@@ -47,7 +47,7 @@ title: Device
 
 | Version | Notes |
 | ------- | ----- |
-| 3.0 | <ul><li>Updated Harp core to 1.15</li><li>Reworked the register map</li></ul> |
+| 3.0 | <ul><li>Updated Harp core to 1.15</li><li>Removed unused registers</li><li>Fixed the digital input modes and input state events</li><li>Fixed the digital output modes</li><li>Added the analog data stream</li><li>Added the ReadSoundMetadata operator to the interface</li><li>Implemented the Stop register for stored sounds</li><li>Split PIC32 registers to delete one sound or all sounds</li></ul> |
 | 2.2 | <ul><li>Updated Harp core to 1.13</li><li>Dropped Bpod serial communication support</li></ul> |
 | 2.1 | <ul><li>Added the sine wave generator</li><li>Refactored the interface scripts to take the libusb dependency from NuGet</li><li>Added the prototype device schema and interface</li><li>Updated the interface to use the new generators</li></ul> |
 | 2.0 | <ul><li>Initial version</li></ul> |
