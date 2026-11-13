@@ -28,6 +28,8 @@ Before beginning:
 > [!TIP]
 > dBFS is the standard unit for audio levels and maps more naturally to perceived loudness.
 
+To read sound metadata or delete the sounds stored on the device, refer to the [Manage stored sounds](manage-storedsounds.md) article.
+
 If an error appears in the Sound Card app or you hear nothing, check out the [troubleshooting](errors.md) section.
 
 [!INCLUDE [](../includes/version-footer.md)]

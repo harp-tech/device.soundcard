@@ -16,7 +16,7 @@
 - href: configure-digitalinputs.md
 - href: control-digitaloutputs.md
 - href: acquire-analogdata.md
-- href: advanced-configuration.md
+- href: manage-storedsounds.md
 - name: Data management
 - href: logging-analysis.md
 - name: Troubleshooting

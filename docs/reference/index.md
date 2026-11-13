@@ -23,7 +23,7 @@ Check out the following in-depth guides to learn how to access the device functi
 - [Configure digital inputs](../articles/configure-digitalinputs.md)
 - [Control digital outputs](../articles/control-digitaloutputs.md)
 - [Acquire analog data](../articles/acquire-analogdata.md)
-- [Advanced configuration](../articles/advanced-configuration.md)
+- [Manage stored sounds](../articles/manage-storedsounds.md)
 
 ## Registers
 
