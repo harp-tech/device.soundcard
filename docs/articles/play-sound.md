@@ -70,7 +70,7 @@ Run the workflow, press the <kbd>D</kbd> key to play the tone, and press the <kb
 
 ## Visualize sound events
 
-The Sound Card reports every sound start as a [`Start`] event, and every sound stop as a [`Stop`] event. This includes sounds started or stopped from the [digital inputs](./configure-digitalinputs.md). A stored sound that plays to the end reports no [`Stop`] event, and neither does a stop command sent while nothing is playing. The workflow below will show you how to filter, decode and visualize the events:
+The Sound Card reports every sound start as a [`Start`] event, and every sound stop as a [`Stop`] event. This includes sounds started or stopped from the [digital inputs](./configure-digital-inputs.md). A stored sound that plays to the end reports no [`Stop`] event, and neither does a stop command sent while nothing is playing. The workflow below will show you how to filter, decode and visualize the events:
 
 :::workflow
 ![Visualize sound events](../workflows/playsound-visualizeevents.bonsai)

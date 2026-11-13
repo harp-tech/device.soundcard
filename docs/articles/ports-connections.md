@@ -70,7 +70,7 @@ This article will cover the ports, controls, and status indicators on the Sound 
 
 [!INCLUDE [](../includes/puretone-rightchannel-note.md)]
 
-# [Power and PC](#tab/powerandpc)
+# [Power and PC](#tab/power-and-pc)
 
 ![Harp Sound Card Power and PC](../images/connection-powerandpc.svg){width=600}
 
@@ -82,36 +82,36 @@ This article will cover the ports, controls, and status indicators on the Sound 
 > [!WARNING]
 > Do not connect a single 12 V supply to both power inputs of the Audio Amplifier. This results in a short circuit.
 
-# [Digital inputs](#tab/digitalinputs)
+# [Digital input](#tab/digital-input)
 
 ![Harp Sound Card Digital Input](../images/connection-digitalinputs.svg){width=600}
 
 1. Connect a digital output from an external device to **IN0** or **IN1** on the **Interface** connector. The digital input lines run on 3.3 V logic levels but are 5 V tolerant.
 2. Connect the ground of the external device to any **GND** pin, so that both share a common ground.
-3. Refer to the [Configure digital inputs](configure-digitalinputs.md) article to trigger sounds from the inputs in Bonsai.
+3. Refer to the [Configure digital inputs](configure-digital-inputs.md) article to trigger sounds from the inputs in Bonsai.
 
 [!INCLUDE [](../includes/in2-note.md)]
 
-# [Digital outputs](#tab/digitaloutputs)
+# [Digital output](#tab/digital-output)
 
 ![Harp Sound Card Digital Output](../images/connection-digitaloutputs.svg){width=600}
 
 1. Connect **OUT0**, **OUT1**, or **OUT2** on the **Interface** connector to a digital input on an external device.
 2. Connect the ground of the external device to any **GND** pin, so that both share a common ground.
 3. Set the voltage level of the outputs with the **OUT voltage** jumper located near the **Interface** connector. The default is 5 V and the alternative is 3.3 V; the setting applies to all three outputs.
-4. Refer to the [Control digital outputs](control-digitaloutputs.md) article to control the outputs in Bonsai.
+4. Refer to the [Control digital outputs](control-digital-outputs.md) article to control the outputs in Bonsai.
 
 [!INCLUDE [](../includes/digitaloutputs-load-warning.md)]
 
-# [Analog inputs](#tab/analoginputs)
+# [Analog input](#tab/analog-input)
 
 ![Harp Sound Card Analog Input](../images/connection-analoginputs.svg){width=600}
 
 1. Connect an analog output (0–5 V) from an external device to **ADC0** or **ADC1** on the **Interface** connector.
 2. Connect the ground of the external device to any **GND** pin, so that both share a common ground.
-3. Refer to the [Acquire analog data](acquire-analogdata.md) article to stream the analog inputs in Bonsai.
+3. Refer to the [Acquire analog data](acquire-analog-data.md) article to stream the analog inputs in Bonsai.
 
-# [Harp synchronization](#tab/harpsynchronization)
+# [Harp synchronization](#tab/harp-synchronization)
 
 ![Harp Sound Card Harp Synchronization](../images/connection-harpsynchronization.svg){width=600}
 

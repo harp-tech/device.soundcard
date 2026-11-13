@@ -13,10 +13,10 @@
 - href: how-the-examples-work.md
 - href: play-sound.md
 - href: adjust-volume.md
-- href: configure-digitalinputs.md
-- href: control-digitaloutputs.md
-- href: acquire-analogdata.md
-- href: manage-storedsounds.md
+- href: configure-digital-inputs.md
+- href: control-digital-outputs.md
+- href: acquire-analog-data.md
+- href: manage-stored-sounds.md
 - name: Data management
 - href: logging-analysis.md
 - name: Troubleshooting

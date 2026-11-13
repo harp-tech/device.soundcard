@@ -39,7 +39,7 @@ To update the Sound Card app to the latest release, run `dotnet tool update -g H
 
 [Bonsai](https://bonsai-rx.org/) is a visual reactive programming language that provides flexible and comprehensive control of the Sound Card.
 
-![Bonsai Package Manager](../images/installation-packagemanager.jpg){width=600}
+![Bonsai package manager](../images/installation-packagemanager.jpg){width=600}
 
 - Download and install [Bonsai](https://bonsai-rx.org/docs/articles/installation.html).
 - Launch Bonsai and install the `Harp.SoundCard` package by searching for it in the [Bonsai package manager](https://bonsai-rx.org/docs/articles/packages.html).
@@ -80,21 +80,21 @@ New features are added and bugs are fixed with firmware updates which are publis
 > [!TIP]
 > The hardware version is printed on the board silkscreen (e.g. `harp sound card v2.2`).
 
-To update the firmware, use the [Harp Toolkit](https://harp-tech.org/toolkit/) command line tool:
+The firmware is updated from a terminal with the [Harp Toolkit](https://harp-tech.org/toolkit/), a command-line tool for working with Harp devices. Like the Sound Card app, it is distributed as a .NET tool.
 
-1. Install the [.NET SDK](https://dotnet.microsoft.com/download) if the `dotnet` command is not already available on your computer.
-2. Open a terminal and install the Harp Toolkit. The instructions below are for a system-wide installation:
+- Download and install the [.NET SDK](https://dotnet.microsoft.com/download), version 8 or later.
+- Install the toolkit from a terminal with:
 
-    ```cmd
-    dotnet tool install --global Harp.Toolkit
-    ```
+```cmd
+dotnet tool install -g Harp.Toolkit
+```
 
-3. Navigate to the folder containing the two downloaded `.hex` files and run the update with the COM port of the device and the filename for the device interface microcontroller file. The sound memory microcontroller file is automatically loaded at the same time:
+- Navigate to the folder containing the two downloaded `.hex` files, and update the firmware with the serial port of the device and the file for the device interface microcontroller. The sound memory microcontroller file is loaded automatically at the same time:
 
-    ```cmd
-    harp.toolkit update --port COM3 SoundCard-fw3.0-harp1.15-hw2.2-ass0.hex
-    ```
+```cmd
+harp.toolkit update --port COM3 SoundCard-fw3.0-harp1.15-hw2.2-ass0.hex
+```
 
-After the update, the device will reboot with the new firmware. Refer to the [firmware update](https://harp-tech.org/toolkit/articles/update.html) guide of the Harp Toolkit if you run into any issues.
+The toolkit checks that the file matches the device before writing it, and waits for the device to restart with the new firmware. Run `harp.toolkit list` to find the serial port of the device. The toolkit [firmware update](https://harp-tech.org/toolkit/articles/update.html) documentation describes every option.
 
 [!INCLUDE [](../includes/version-footer.md)]

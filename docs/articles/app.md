@@ -1,3 +1,7 @@
+---
+title: App
+---
+
 # Sound Card app
 
 The Sound Card app is a desktop app for generating and uploading waveforms to the device without using Bonsai.
@@ -7,7 +11,7 @@ The Sound Card app is a desktop app for generating and uploading waveforms to th
 
 Before beginning:
 - Connect an amplifier and speaker to an output channel by following the [audio connection](ports-connections.md?tabs=audio#connections) instructions.
-- Connect the power supply and both USB cables by following the [power and PC connection](ports-connections.md?tabs=powerandpc#connections) instructions. The Sound Card app needs the **USB (Soundbank)** cable to upload sounds.
+- Connect the power supply and both USB cables by following the [power and PC connection](ports-connections.md?tabs=power-and-pc#connections) instructions. The Sound Card app needs the **USB (Soundbank)** cable to upload sounds.
 - Install the [driver](installation.md?tabs=driver#software-packages).
 - Install the [Sound Card app](installation.md?tabs=app#software-packages).
 - Launch the Sound Card app by running `harp.soundcard` in a terminal.
@@ -28,7 +32,7 @@ Before beginning:
 > [!TIP]
 > dBFS is the standard unit for audio levels and maps more naturally to perceived loudness.
 
-To read sound metadata or delete the sounds stored on the device, refer to the [Manage stored sounds](manage-storedsounds.md) article.
+To read sound metadata or delete the sounds stored on the device, refer to the [Manage stored sounds](manage-stored-sounds.md) article.
 
 If an error appears in the Sound Card app or you hear nothing, check out the [troubleshooting](errors.md) section.
 

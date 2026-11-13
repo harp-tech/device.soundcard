@@ -4,7 +4,7 @@ This article covers how to resolve common errors on the Sound Card.
 
 ## COM port errors
 
-**Q: In Bonsai, running the workflow throws an error "The port `ComX` does not exist."**
+**Q: In Bonsai, running the workflow throws an error "The port `ComX` does not exist".**
 
 A: Either the wrong communications port in the `PortName` property in [`Device`] was selected, or the [USB (Computer)](ports-connections.md) cable is not properly connected. Try selecting a different communications port and checking the connection.
 

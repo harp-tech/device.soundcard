@@ -59,7 +59,7 @@ Run the workflow and press <kbd>A</kbd> to play the sound with [`AttenuationStar
 > Use [`AttenuationLeft`] or [`AttenuationRight`] to set the attenuation of each channel independently.
 
 > [!NOTE]
-> You can check the attenuation currently set on each channel with the `AttenuationLeft` and `AttenuationRight` fields of the [`AdcControlState`] event. Refer to the [Acquire analog data](./acquire-analogdata.md) article to enable and visualize the event.
+> You can check the attenuation currently set on each channel with the `AttenuationLeft` and `AttenuationRight` fields of the [`AdcControlState`] event. Refer to the [Acquire analog data](./acquire-analog-data.md) article to enable and visualize the event.
 
 [!INCLUDE [](../includes/version-footer.md)]
 

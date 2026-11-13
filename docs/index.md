@@ -1,6 +1,6 @@
 # Overview
 
-The Harp [Sound Card](articles/device.md) and [Audio Amplifier](articles/peripherals/audioamplifier.md) are open-source, high-fidelity audio devices specifically designed for behavioral research experiments.
+The Harp [Sound Card](articles/device.md) and [Audio Amplifier](articles/peripherals/audio-amplifier.md) are open-source, high-fidelity audio devices specifically designed for behavioral research experiments.
 
 ![Harp Sound Card with its peripherals](images/soundcard-landing.svg)
 

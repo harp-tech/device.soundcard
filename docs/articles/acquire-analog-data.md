@@ -1,6 +1,6 @@
 # Acquire analog data
 
-The Sound Card can sample the voltage on its analog inputs at 1 kHz and stream each sample to Bonsai together with the current sound parameters. Refer to the [connections](./ports-connections.md?tabs=analoginputs#connections) article to set up an analog signal on **ADC0**, which we will use for the rest of these examples.
+The Sound Card can sample the voltage on its analog inputs at 1 kHz and stream each sample to Bonsai together with the current sound parameters. Refer to the [connections](./ports-connections.md?tabs=analog-input#connections) article to set up an analog signal on **ADC0**, which we will use for the rest of these examples.
 
 [!INCLUDE [](../includes/puretone-rightchannel-note.md)]
 
@@ -64,7 +64,7 @@ AdcControlStatePayload { Adc0 = 6, Adc1 = 7, AttenuationLeft = 0, AttenuationRig
 
 The second visualizer plots the `Adc0` value over time as a 12-bit value:
 
-![Acquire Analog Data TimeSeriesVisualizer](../images/acquire-analogdata-timeseriesvisualizer.jpg){width=300}
+![Acquire Analog Data TimeSeriesVisualizer](../images/acquireanalogdata-timeseriesvisualizer.jpg){width=300}
 
 Vary the output voltage of the external device to see the plot change.
 

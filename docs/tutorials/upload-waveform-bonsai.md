@@ -1,6 +1,6 @@
 # Upload waveforms with Bonsai
 
-The [Harp.SoundCard](../articles/installation.md#software-packages) Bonsai package supports preload and update of sound waveforms during runtime. The following exercises will demonstrate how to generate and load various waveforms for upload to the Sound Card in Bonsai. To read sound metadata or delete the sounds stored on the device, refer to the [Manage stored sounds](../articles/manage-storedsounds.md) article.
+The [Harp.SoundCard](../articles/installation.md#software-packages) Bonsai package supports preload and update of sound waveforms during runtime. The following exercises will demonstrate how to generate and load various waveforms for upload to the Sound Card in Bonsai. To read sound metadata or delete the sounds stored on the device, refer to the [Manage stored sounds](../articles/manage-stored-sounds.md) article.
 
 > [!TIP]
 > Alternatively, you can generate and upload waveforms with the [Sound Card app](../articles/app.md) without building a workflow.
@@ -8,7 +8,7 @@ The [Harp.SoundCard](../articles/installation.md#software-packages) Bonsai packa
 Before beginning:
 - Install the `Harp.SoundCard`, `Bonsai.Numerics`, and `Bonsai.StarterPack` packages from the [Bonsai package manager](https://bonsai-rx.org/docs/articles/packages.html).
 - Connect an amplifier and speaker to an output channel by following the [audio connection](../articles/ports-connections.md?tabs=audio#connections) instructions.
-- Connect the power supply and both USB cables by following the [power and PC connection](../articles/ports-connections.md?tabs=powerandpc#connections) instructions. Uploading needs the **USB (Soundbank)** cable.
+- Connect the power supply and both USB cables by following the [power and PC connection](../articles/ports-connections.md?tabs=power-and-pc#connections) instructions. Uploading needs the **USB (Soundbank)** cable.
 - Install the [driver](../articles/installation.md?tabs=driver#software-packages).
 - Launch "Bonsai" from the Windows Start menu.
 

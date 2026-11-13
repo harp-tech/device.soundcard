@@ -1,3 +1,7 @@
+---
+title: Device
+---
+
 # Sound Card
 
 ![Harp Sound Card](../images/soundcard-board.jpg){width=450}
