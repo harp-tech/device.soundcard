@@ -20,10 +20,10 @@ Check out the following in-depth guides to learn how to access the device functi
 
 - [Play sounds](../articles/play-sound.md)
 - [Adjust volume](../articles/adjust-volume.md)
-- [Configure digital inputs](../articles/configure-digitalinputs.md)
-- [Control digital outputs](../articles/control-digitaloutputs.md)
-- [Acquire analog data](../articles/acquire-analogdata.md)
-- [Advanced configuration](../articles/advanced-configuration.md)
+- [Configure digital inputs](../articles/configure-digital-inputs.md)
+- [Control digital outputs](../articles/control-digital-outputs.md)
+- [Acquire analog data](../articles/acquire-analog-data.md)
+- [Manage stored sounds](../articles/manage-stored-sounds.md)
 
 ## Registers
 
