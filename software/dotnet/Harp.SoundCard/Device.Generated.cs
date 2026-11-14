@@ -4648,7 +4648,7 @@ namespace Harp.SoundCard
         /// the left channel (1 LSB is 0.1dB) when triggering DI0.
         /// </summary>
         [Description("Specifies the attenuation to set on the left channel (1 LSB is 0.1dB) when triggering DI0.")]
-        public ushort AttenuationLeftDI0 { get; set; }
+        public ushort AttenuationLeftDI0 { get; set; } = 60;
 
         /// <summary>
         /// Creates a message payload for the AttenuationLeftDI0 register.
@@ -4707,7 +4707,7 @@ namespace Harp.SoundCard
         /// the left channel (1 LSB is 0.1dB) when triggering DI1.
         /// </summary>
         [Description("Specifies the attenuation to set on the left channel (1 LSB is 0.1dB) when triggering DI1.")]
-        public ushort AttenuationLeftDI1 { get; set; }
+        public ushort AttenuationLeftDI1 { get; set; } = 60;
 
         /// <summary>
         /// Creates a message payload for the AttenuationLeftDI1 register.
@@ -4766,7 +4766,7 @@ namespace Harp.SoundCard
         /// the right channel (1 LSB is 0.1dB) when triggering DI0.
         /// </summary>
         [Description("Specifies the attenuation to set on the right channel (1 LSB is 0.1dB) when triggering DI0.")]
-        public ushort AttenuationRightDI0 { get; set; }
+        public ushort AttenuationRightDI0 { get; set; } = 60;
 
         /// <summary>
         /// Creates a message payload for the AttenuationRightDI0 register.
@@ -4825,7 +4825,7 @@ namespace Harp.SoundCard
         /// the right channel (1 LSB is 0.1dB) when triggering DI1.
         /// </summary>
         [Description("Specifies the attenuation to set on the right channel (1 LSB is 0.1dB) when triggering DI1.")]
-        public ushort AttenuationRightDI1 { get; set; }
+        public ushort AttenuationRightDI1 { get; set; } = 60;
 
         /// <summary>
         /// Creates a message payload for the AttenuationRightDI1 register.
@@ -4884,7 +4884,7 @@ namespace Harp.SoundCard
         /// digital output 0 (DO0).
         /// </summary>
         [Description("Specifies the operation mode of the digital output 0 (DO0).")]
-        public DOMode ConfigureDO0 { get; set; }
+        public DOMode ConfigureDO0 { get; set; } = DOMode.PulseOnStart;
 
         /// <summary>
         /// Creates a message payload for the ConfigureDO0 register.
@@ -4943,7 +4943,7 @@ namespace Harp.SoundCard
         /// digital output 1 (DO1).
         /// </summary>
         [Description("Specifies the operation mode of the digital output 1 (DO1).")]
-        public DOMode ConfigureDO1 { get; set; }
+        public DOMode ConfigureDO1 { get; set; } = DOMode.Digital;
 
         /// <summary>
         /// Creates a message payload for the ConfigureDO1 register.
@@ -5002,7 +5002,7 @@ namespace Harp.SoundCard
         /// digital output 2 (DO2).
         /// </summary>
         [Description("Specifies the operation mode of the digital output 2 (DO2).")]
-        public DOMode ConfigureDO2 { get; set; }
+        public DOMode ConfigureDO2 { get; set; } = DOMode.Digital;
 
         /// <summary>
         /// Creates a message payload for the ConfigureDO2 register.

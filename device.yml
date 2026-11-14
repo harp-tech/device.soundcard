@@ -83,18 +83,22 @@ registers:
   AttenuationLeftDI0:
     <<: *attenuation
     address: 45
+    defaultValue: 60
     description: Specifies the attenuation to set on the left channel (1 LSB is 0.1dB) when triggering DI0.
   AttenuationLeftDI1:
     <<: *attenuation
     address: 46
+    defaultValue: 60
     description: Specifies the attenuation to set on the left channel (1 LSB is 0.1dB) when triggering DI1.
   AttenuationRightDI0:
     <<: *attenuation
     address: 47
+    defaultValue: 60
     description: Specifies the attenuation to set on the right channel (1 LSB is 0.1dB) when triggering DI0.
   AttenuationRightDI1:
     <<: *attenuation
     address: 48
+    defaultValue: 60
     description: Specifies the attenuation to set on the right channel (1 LSB is 0.1dB) when triggering DI1.
   Reserved2: &reserved
     address: 49
@@ -113,14 +117,17 @@ registers:
     type: U8
     access: Write
     maskType: DOMode
+    defaultValue: 1
     description: Specifies the operation mode of the digital output 0 (DO0).
   ConfigureDO1:
     <<: *configureDO
     address: 53
+    defaultValue: 0
     description: Specifies the operation mode of the digital output 1 (DO1).
   ConfigureDO2:
     <<: *configureDO
     address: 54
+    defaultValue: 0
     description: Specifies the operation mode of the digital output 2 (DO2).
   Reserved5:
     <<: *reserved

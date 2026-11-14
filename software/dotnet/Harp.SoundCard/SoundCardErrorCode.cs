@@ -4,8 +4,6 @@
     {
         Ok = 0,
 
-        BadUserInput = -1,
-
         HarpSoundCardNotDetected = -1000,
         NotAbleToSendMetadata,
         NotAbleToReadMetadataCommandReply,
@@ -24,9 +22,7 @@
         DataTypeDoNotMatch,
         BadDataIndex,
 
-        ProducingSound = -1030,
-
-        NotAbleToOpenFile = -1040
+        ProducingSound = -1030
     }
 
     internal static class SoundCardErrorHelper
@@ -38,15 +34,8 @@
                 case SoundCardErrorCode.Ok:
                     return;
 
-                case SoundCardErrorCode.BadUserInput:
-                    throw new SoundCardException(
-                        "User input not correct. The format should be \"filename\" [index] [type] [sample rate] \n" +
-                        " -> [index] from 0 to 31\n" +
-                        " -> [type] 0: Int32, 1: Float32\n" +
-                        " -> [sample rate] 96000 or 192000");
-
                 case SoundCardErrorCode.HarpSoundCardNotDetected:
-                    throw new SoundCardException("Sound Card not detected. Check that its soundbank USB port is connected to the computer.");
+                    throw new SoundCardException("Sound Card not detected. Check that its soundbank USB port is connected to the computer and that its driver is installed.");
 
                 case SoundCardErrorCode.NotAbleToSendMetadata:
                     throw new SoundCardException("Not able to start communication and send sound metadata.");
@@ -95,9 +84,6 @@
 
                 case SoundCardErrorCode.ProducingSound:
                     throw new SoundCardException("The Sound Card is playing a sound at 192 kHz and cannot receive a new sound.");
-
-                case SoundCardErrorCode.NotAbleToOpenFile:
-                    throw new SoundCardException("File doesn't exist or is empty.");
 
                 default:
                     throw new SoundCardException($"The sound card reported error {(int)code}.");

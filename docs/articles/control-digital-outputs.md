@@ -16,7 +16,7 @@ The complete workflow is shown below. Copy and paste it into Bonsai to get start
 
 ## Pulse on sound start
 
-Each digital output line has a configuration mode register that sets what the line does (e.g. [`ConfigureDO0`] for **OUT0**). In `PulseOnStart` mode, the line sends a 400 µs pulse every time a sound or pure tone starts and every time the frequency of the pure tone changes. This applies whether the sound was started from Bonsai or from a digital input.
+Each digital output line has a configuration mode register that sets what the line does (e.g. [`ConfigureDO0`] for **OUT0**). In `PulseOnStart` mode, the line sends a 400 µs pulse every time a sound or pure tone starts and every time the frequency of the pure tone changes. This applies whether the sound was started from Bonsai or from a digital input. By default, **OUT0** is in `PulseOnStart` mode, and **OUT1** and **OUT2** are in `Digital` mode.
 
 :::workflow
 ![Pulse on sound start](../workflows/controldigitaloutputs-signalsound.bonsai)
