@@ -10,7 +10,7 @@ A: Either the wrong communications port in the `PortName` property in [`Device`]
 
 **Q: Running the Bonsai workflow or connecting to the device in the Sound Card app throws an error "Access to the port `ComX` is denied".**
 
-A: Only one interface connection to the Sound Card can be opened at one time. Check that Bonsai and the [Sound Card app](app.md) are not running simultaneously, and that multiple instances of either are not running. Sometimes, the port can also be locked by a program that did not terminate correctly; restarting the computer fixes it.
+A: Only one interface connection to the Sound Card can be opened at one time. Check that Bonsai and the [Sound Card app](app.md) are not running simultaneously, and that multiple instances of either are not running. Sometimes, the port can also be locked by a program that did not terminate correctly, and restarting the computer fixes it.
 
 ## Sound upload errors
 

@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Description>App for configuring and testing Harp Sound Card devices.</Description>
+    <Description>App for generating, uploading and playing sounds on Harp Sound Card devices.</Description>
     <PackageTags>$(PackageTags) App</PackageTags>
     <TargetFrameworks>net8.0</TargetFrameworks>
     <RollForward>Major</RollForward>

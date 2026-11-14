@@ -61,8 +61,8 @@ This article will cover the ports, controls, and status indicators on the Sound 
 ![Harp Sound Card Audio Setup](../images/connection-audio.svg){width=600}
 
 1. Connect the **Left Channel** or **Right Channel** port on the Sound Card to the **IN** port of the Audio Amplifier with an RCA cable.
-2. Connect the positive (+) speaker output of the amplifier, usually red, to the positive terminal of the speaker. Any speaker with an impedance from 4 to 8 Ω can be used with the Audio Amplifier; the XT25SC90-04 (Peerless by Tymphany) offers a good frequency response up to 80 kHz.
-3. Connect the negative (−) speaker output of the amplifier, usually black, to the negative terminal of the speaker.
+2. Connect the positive (+) speaker output of the amplifier, usually red, to the positive terminal of the speaker. Any speaker with an impedance from 4 to 8 Ω can be used with the Audio Amplifier. The XT25SC90-04 (Peerless by Tymphany) offers a good frequency response up to 80 kHz.
+3. Connect the negative (-) speaker output of the amplifier, usually black, to the negative terminal of the speaker.
 4. Repeat steps 1 to 3 with a second amplifier and speaker for the other channel for stereo output.
 
 > [!NOTE]
@@ -98,7 +98,7 @@ This article will cover the ports, controls, and status indicators on the Sound 
 
 1. Connect **OUT0**, **OUT1**, or **OUT2** on the **Interface** connector to a digital input on an external device.
 2. Connect the ground of the external device to any **GND** pin, so that both share a common ground.
-3. Set the voltage level of the outputs with the **OUT voltage** jumper located near the **Interface** connector. The default is 5 V and the alternative is 3.3 V; the setting applies to all three outputs.
+3. Set the voltage level of the outputs with the **OUT voltage** jumper located near the **Interface** connector. The default is 5 V and the alternative is 3.3 V. The setting applies to all three outputs.
 4. Refer to the [Control digital outputs](control-digital-outputs.md) article to control the outputs in Bonsai.
 
 [!INCLUDE [](../includes/digitaloutputs-load-warning.md)]

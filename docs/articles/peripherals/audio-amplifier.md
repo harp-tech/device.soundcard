@@ -15,7 +15,7 @@ The Harp Audio Amplifier is a peripheral for the Sound Card that amplifies one o
 - Input voltage: 2 × 12 V DC (positive and negative supply)
 - Maximum output: 4 W @ 8 Ω / 2 W @ 4 Ω
 - Speaker output (with Sound Card): 0.5 W @ 8 Ω / 1 W @ 4 Ω
-- Compatible speakers: 4 Ω impedance or higher; the XT25SC90-04 (Peerless by Tymphany) offers a good frequency response up to 80 kHz
+- Compatible speakers: 4 Ω impedance or higher. The XT25SC90-04 (Peerless by Tymphany) offers a good frequency response up to 80 kHz
 - Input connector: RCA input from sound card
 - Output connector: Banana plug to speaker
 

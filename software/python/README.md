@@ -25,7 +25,7 @@ with serial.open_device(client.Device, port=SERIAL_PORT) as device:
 
 `open_dataset` in `harp.data` takes this module as its second argument, and decodes recorded data through the same register classes.
 
-Uploading sounds to the device is not part of this package. Sounds are uploaded with the Sound Card app or the .NET interface.
+Uploading sounds to the device is not part of this package. Sounds are uploaded with the Sound Card app or with the `UpdateSoundWaveform` operator in the `Harp.SoundCard` Bonsai package.
 
 ## Feedback and contributing
 
