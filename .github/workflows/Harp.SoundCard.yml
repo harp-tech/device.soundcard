@@ -543,7 +543,7 @@ jobs:
     name: Publish to PyPI
     runs-on: ubuntu-latest
     needs: [build-firmware, build-firmware-pic32, build-dotnet, build-python]
-    if: false
+    if: github.event_name == 'release'
     environment: pypi
     permissions:
       # Needed by uv publish to exchange a token with PyPI trusted publishing
