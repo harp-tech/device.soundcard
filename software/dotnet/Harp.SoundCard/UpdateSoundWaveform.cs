@@ -9,17 +9,17 @@ namespace Harp.SoundCard
 {
     /// <summary>
     /// Represents an operator that replaces the specified sound waveform in the
-    /// SoundCard device with each of the sample buffers in the sequence.
+    /// Sound Card with each of the sample buffers in the sequence.
     /// </summary>
-    [Description("Replaces the specified sound waveform in the SoundCard device with each of the sample buffers in the sequence.")]
+    [Description("Replaces the specified sound waveform in the Sound Card with each of the sample buffers in the sequence.")]
     [TypeDescriptionProvider(typeof(DeviceTypeDescriptionProvider<UpdateSoundWaveform>))]
     public class UpdateSoundWaveform : Sink<byte[]>, INamedElement
     {
         /// <summary>
-        /// Gets or sets the index of the SoundCard device to update. If no index
-        /// is specified, the first SoundCard will be used.
+        /// Gets or sets the index of the Sound Card to update. If no index
+        /// is specified, the first Sound Card will be used.
         /// </summary>
-        [Description("The index of the SoundCard device to update. If no index is specified, the first SoundCard will be used.")]
+        [Description("The index of the Sound Card to update. If no index is specified, the first Sound Card will be used.")]
         public int? DeviceIndex { get; set; }
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace Harp.SoundCard
         public SampleRate SampleRate { get; set; }
 
         /// <summary>
-        /// Replaces the specified sound waveform in the SoundCard device with each
+        /// Replaces the specified sound waveform in the Sound Card with each
         /// of the sample buffers in an observable sequence.
         /// </summary>
         /// <param name="source">
@@ -76,7 +76,7 @@ namespace Harp.SoundCard
         }
 
         /// <summary>
-        /// Replaces the specified sound waveform in the SoundCard device with each
+        /// Replaces the specified sound waveform in the Sound Card with each
         /// of the sample buffers in an observable sequence.
         /// </summary>
         /// <param name="source">

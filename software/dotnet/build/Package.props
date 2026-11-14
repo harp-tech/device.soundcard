@@ -1,6 +1,6 @@
 <Project>
   <PropertyGroup>
-    <PackageTags>Harp SoundCard</PackageTags>
+    <PackageTags>Harp Sound Card</PackageTags>
     <PackageProjectUrl>https://harp-tech.org/device.soundcard</PackageProjectUrl>
 
     <Authors>harp-tech</Authors>

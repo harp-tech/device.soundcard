@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 namespace Harp.SoundCard
 {
     /// <summary>
-    /// Represents errors that occur while interacting with the SoundCard loader module.
+    /// Represents errors that occur while interacting with the Sound Card.
     /// </summary>
     [Serializable]
     public class SoundCardException : Exception

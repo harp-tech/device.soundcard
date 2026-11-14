@@ -1,14 +1,15 @@
 [project]
 name = "harp-soundcard"
 dynamic = ["version"]
-description = "Interface for data acquisition and control of Harp SoundCard devices."
+description = "Interface for data acquisition and control of Harp Sound Card devices."
 authors = [{ name = "harp-tech", email = "contact@harp-tech.org" }]
 license = "MIT"
 license-files = ["LICENSE"]
 readme = "README.md"
 keywords = [
     "harp",
-    "soundcard",
+    "sound",
+    "card",
     "audio",
     "hardware",
     "device-control",

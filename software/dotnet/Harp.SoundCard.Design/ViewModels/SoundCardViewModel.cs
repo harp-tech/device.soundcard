@@ -545,7 +545,7 @@ public class SoundCardViewModel : ViewModelBase
             .Subscribe(x =>
             {
                 PortLabelText = x.Item1 ? "Select a device" : "Selected port";
-                WindowTitle = x.Item1 ? "Harp SoundCard" : $"Harp SoundCard ({x.Item2})";
+                WindowTitle = x.Item1 ? "Harp Sound Card" : $"Harp Sound Card ({x.Item2})";
             });
 
         // handle the events from the device

@@ -5577,23 +5577,23 @@ namespace Harp.SoundCard
         Digital = 0,
 
         /// <summary>
-        /// Starts sound index (if less than 32) or frequency (if greater or equal than 32) when rising edge
-        /// and stop when falling edge (frequency only).
+        /// Starts sound index (if less than 32) or frequency (if greater or equal than 32) on a rising edge
+        /// and stops it on a falling edge.
         /// </summary>
-        [Description("Starts sound index (if less than 32) or frequency (if greater or equal than 32) when rising edge and stop when falling edge (frequency only).")]
+        [Description("Starts sound index (if less than 32) or frequency (if greater or equal than 32) on a rising edge and stops it on a falling edge.")]
         StartAndStop = 1,
 
         /// <summary>
-        /// Starts sound index (if less than 32) or frequency (if greater or equal than 32) when rising
+        /// Starts sound index (if less than 32) or frequency (if greater or equal than 32) on a rising
         /// edge.
         /// </summary>
-        [Description("Starts sound index (if less than 32) or frequency (if greater or equal than 32) when rising edge.")]
+        [Description("Starts sound index (if less than 32) or frequency (if greater or equal than 32) on a rising edge.")]
         Start = 2,
 
         /// <summary>
-        /// Stops frequency when rising edge.
+        /// Stops the sound or frequency being played on a rising edge.
         /// </summary>
-        [Description("Stops frequency when rising edge.")]
+        [Description("Stops the sound or frequency being played on a rising edge.")]
         Stop = 3
     }
 

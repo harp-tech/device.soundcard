@@ -7,16 +7,16 @@ using Bonsai;
 namespace Harp.SoundCard
 {
     /// <summary>
-    /// Represents an operator that reads the metadata of the sounds stored in the SoundCard device.
+    /// Represents an operator that reads the metadata of the sounds stored in the Sound Card.
     /// </summary>
-    [Description("Reads the metadata of the sounds stored in the SoundCard device.")]
+    [Description("Reads the metadata of the sounds stored in the Sound Card.")]
     public class ReadSoundMetadata : Source<SoundMetadata>
     {
         /// <summary>
-        /// Gets or sets the index of the SoundCard device to read. If no index
-        /// is specified, the first SoundCard will be used.
+        /// Gets or sets the index of the Sound Card to read. If no index
+        /// is specified, the first Sound Card will be used.
         /// </summary>
-        [Description("The index of the SoundCard device to read. If no index is specified, the first SoundCard will be used.")]
+        [Description("The index of the Sound Card to read. If no index is specified, the first Sound Card will be used.")]
         public int? DeviceIndex { get; set; }
 
         /// <summary>
@@ -28,7 +28,7 @@ namespace Harp.SoundCard
         public int? SoundIndex { get; set; }
 
         /// <summary>
-        /// Generates an observable sequence of the metadata of the sounds stored in the SoundCard device.
+        /// Generates an observable sequence of the metadata of the sounds stored in the Sound Card.
         /// </summary>
         /// <returns>
         /// A sequence of <see cref="SoundMetadata"/> objects, one for each stored sound,

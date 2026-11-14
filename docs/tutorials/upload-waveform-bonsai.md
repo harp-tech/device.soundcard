@@ -14,7 +14,7 @@ Before beginning:
 
 ## UpdateSoundWaveform
 
-Uploading of waveforms is done with the [`UpdateSoundWaveform`] operator, which interfaces directly with the `SoundCard` onboard memory via `libusb` (not [`HarpMessage`] commands).
+Uploading of waveforms is done with the [`UpdateSoundWaveform`] operator, which interfaces directly with the Sound Card onboard memory via `libusb` (not [`HarpMessage`] commands).
 
 :::workflow
 ![UpdateSoundWaveform operator](../workflows/uploadwaveform-updatesoundwaveform.bonsai)
@@ -22,9 +22,9 @@ Uploading of waveforms is done with the [`UpdateSoundWaveform`] operator, which 
 
 For each of the following exercises, configure these properties for the [`UpdateSoundWaveform`] operator:
 - `Description` - Set the description of the sound to be stored in the device. This field is optional.
-- `DeviceIndex` - Set the index of the `SoundCard` device to update. If no index is specified, the first `SoundCard` will be used.
+- `DeviceIndex` - Set the index of the Sound Card to update. If no index is specified, the first Sound Card will be used.
 - `SampleRate` - Set the sample rate used for playback. Only 96 kHz or 192 kHz are supported.
-- `SoundIndex` - Set the index of the sound to update. The `SoundCard` onboard memory is partitioned into 32 indices, of which index 2–31 can be used for storing waveforms.
+- `SoundIndex` - Set the index of the sound to update. The Sound Card onboard memory is partitioned into 32 indices, of which index 2–31 can be used for storing waveforms.
 - `SoundName` - Set the name of the sound to be stored in the device. This field is optional.
 
 Continuous streaming of sample buffers is not supported, so the entire waveform must be sent during upload. Dynamic update of waveforms when another sound is playing is only possible for waveforms with a 96 kHz sample rate.
@@ -34,7 +34,7 @@ Continuous streaming of sample buffers is not supported, so the entire waveform 
 - `Type` - The [`UpdateSoundWaveform`] operator accepts `byte[]` and `Mat` type inputs. For these exercises, we will use `Mat`, a matrix format commonly used for audio data in Bonsai, where rows represent channels and columns represent samples.
 - `Bit Depth` - Waveforms must be encoded as 32-bit signed integers (`S32`).
 - `Channels` - Both mono and stereo waveforms are supported.
-- `Size` - Each sound index on the `SoundCard` memory can store an 8 MiB file, corresponding to ~2 million samples. Mono waveforms are duplicated for dual-channel playback and occupy the same amount of storage space as stereo waveforms.
+- `Size` - Each sound index on the Sound Card memory can store an 8 MiB file, corresponding to ~2 million samples. Mono waveforms are duplicated for dual-channel playback and occupy the same amount of storage space as stereo waveforms.
 
 Given these parameters, sounds are limited to a length of 10.922 s at a 96 kHz sample rate, or 5.461 s at 192 kHz.
 

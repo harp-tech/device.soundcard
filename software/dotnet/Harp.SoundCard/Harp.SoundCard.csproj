@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Description>Bonsai Library containing interfaces for data acquisition and control of Harp SoundCard devices.</Description>
+    <Description>Bonsai Library containing interfaces for data acquisition and control of Harp Sound Card devices.</Description>
     <PackageTags>$(PackageTags) Bonsai Rx</PackageTags>
     <TargetFrameworks>net472;net8.0</TargetFrameworks>
   </PropertyGroup>
