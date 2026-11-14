@@ -20,7 +20,7 @@ Before beginning:
 
 1. Select the port for the Sound Card, and press "Connect". The device details display on the right side once it is connected.
 2. Select the tab for either pure tone or white noise generation.
-3. Adjust the parameters for the sound. Amplitude can be set as a fraction of full scale (linear) or in dBFS (logarithmic); select the radio button for the option you want.
+3. Adjust the parameters for the sound. Amplitude can be set as a fraction of full scale (linear) or in dBFS (logarithmic). Select the radio button for the option you want.
 4. Select the channels to apply a window to. The window fades the sound in and out to prevent pops and clicks from abrupt transitions at sound onset and offset.
 5. Adjust the window properties in this panel.
 6. Choose the sampling rate and click "Generate". The sampling rate determines the range of reproducible frequencies.

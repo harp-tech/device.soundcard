@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Description>Design Library containing UI components for configuring Harp Sound Card devices.</Description>
+    <Description>Design Library containing UI components for the Harp Sound Card app.</Description>
     <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
     <GenerateDocumentationFile>false</GenerateDocumentationFile>
     <TargetFrameworks>net8.0</TargetFrameworks>

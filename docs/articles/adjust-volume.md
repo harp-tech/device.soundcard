@@ -14,7 +14,7 @@ The complete workflow is shown below. Copy and paste it into Bonsai to get start
 
 ## Attenuate and play sound
 
-[`AttenuationStart`] starts playback of a sound index or pure tone and sets the attenuation of the left and right channels at the same time, in 0.1 dB steps. Each command replaces the previous value rather than adding to it. The attenuation also stays in effect: any sound you play afterwards with [`Start`] plays at that level until you change it.
+[`AttenuationStart`] starts playback of a sound index or pure tone and sets the attenuation of the left and right channels at the same time, in 0.1 dB steps. Each command replaces the previous value rather than adding to it. The attenuation also stays in effect. Any sound you play afterward with [`Start`] plays at that level until you change it.
 
 :::workflow
 ![Attenuate and play sound](../workflows/adjustvolume-attenuation.bonsai)
@@ -35,7 +35,7 @@ Run the workflow and press the <kbd>A</kbd> key to play the sound at reduced vol
 > The maximum volume for playback of stored waveforms depends on the recorded amplitude. Upload waveforms at full 24-bit depth to maximize the volume.
 
 > [!NOTE]
-> A pure tone played with [`AttenuationStart`] keeps playing until you send a [`Stop`] command. [`AttenuationStart`] does not have an event of its own; the device reports the command as a [`Start`] event.
+> A pure tone played with [`AttenuationStart`] keeps playing until you send a [`Stop`] command. [`AttenuationStart`] does not have an event of its own. The device reports the command as a [`Start`] event.
 
 ## Attenuate channels
 

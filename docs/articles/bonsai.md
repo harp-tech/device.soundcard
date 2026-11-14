@@ -31,7 +31,7 @@ Before beginning:
 
 After 5 seconds, the sound plays and the [AUDIO](ports-connections.md#indicators) LED on the device turns on for its duration.
 
-The device is ready to use! If, instead, you hear nothing or an error appears in Bonsai, check out the [troubleshooting](errors.md) section.
+The device is ready to use. If, instead, you hear nothing or an error appears in Bonsai, check out the [troubleshooting](errors.md) section.
 
 Next, we suggest going through the "Examples" section if you are not familiar with using Harp devices in Bonsai.
 

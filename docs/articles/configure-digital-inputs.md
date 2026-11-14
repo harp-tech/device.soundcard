@@ -71,7 +71,7 @@ The volume for sounds played through the digital input triggers is set separatel
 Run the workflow, press <kbd>S</kbd>, and trigger **IN0** again. The sound plays at the new volume.
 
 > [!WARNING]
-> A sound triggered from a digital input also overwrites the attenuation set with the registers covered in the [Adjust volume](./adjust-volume.md) article. For example, if [`AttenuationLeft`] is set to 200 (-20 dB), and [`AttenuationLeftDI0`] is set to 100 (-10 dB), the triggered sound plays at -10 dB, and sounds played afterwards with [`Start`] also play at -10 dB. 
+> A sound triggered from a digital input also overwrites the attenuation set with the registers covered in the [Adjust volume](./adjust-volume.md) article. For example, if [`AttenuationLeft`] is set to 200 (-20 dB), and [`AttenuationLeftDI0`] is set to 100 (-10 dB), the triggered sound plays at -10 dB, and sounds played afterward with [`Start`] also play at -10 dB. 
 
 ## Visualize digital input events
 
