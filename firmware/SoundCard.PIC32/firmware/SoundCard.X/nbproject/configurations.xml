@@ -522,7 +522,7 @@
         <property key="memories.programmemory.ranges" value="1d000000-1d1fffff"/>
         <property key="poweroptions.powerenable" value="false"/>
         <property key="programmerToGoFilePath"
-                  value="C:/Users/OEPS/Documents/bitbucket/_fchampalimaud_/Device.SoundCard/device.soundcard/Firmware.PIC32/firmware/SoundCard.X/debug/default/SoundCard_ptg"/>
+                  value="debug/default/SoundCard_ptg"/>
         <property key="programoptions.donoteraseauxmem" value="false"/>
         <property key="programoptions.eraseb4program" value="true"/>
         <property key="programoptions.ledbrightness" value="5"/>
@@ -711,7 +711,7 @@
         <property key="poweroptions.maintainpower" value="false"/>
         <property key="poweroptions.powerenable" value="false"/>
         <property key="programmerToGoFilePath"
-                  value="C:/Users/OEPS/Documents/bitbucket/_fchampalimaud_/Device.SoundCard/device.soundcard/Firmware.PIC32/firmware/SoundCard.X/debug/default/SoundCard_ptg"/>
+                  value="debug/default/SoundCard_ptg"/>
         <property key="programoptions.donoteraseauxmem" value="false"/>
         <property key="programoptions.eraseb4program" value="true"/>
         <property key="programoptions.ledbrightness" value="5"/>

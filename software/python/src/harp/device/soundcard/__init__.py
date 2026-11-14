@@ -39,6 +39,10 @@ __all__ = [
     "ConfigureDI1Payload",
     "StartOnDI0Payload",
     "StartOnDI1Payload",
+    "AttenuationLeftDI0Payload",
+    "AttenuationLeftDI1Payload",
+    "AttenuationRightDI0Payload",
+    "AttenuationRightDI1Payload",
     "ConfigureDO0Payload",
     "ConfigureDO1Payload",
     "ConfigureDO2Payload",
@@ -191,22 +195,46 @@ class StartOnDI1Payload(AnonymousPayload[np.uint16]):
     __value__: np.uint16 = Field(IdentityConverter(np.uint16), default=np.uint16(4000))
 
 
+class AttenuationLeftDI0Payload(AnonymousPayload[np.uint16]):
+    """Represents the AttenuationLeftDI0 payload."""
+
+    __value__: np.uint16 = Field(IdentityConverter(np.uint16), default=np.uint16(60))
+
+
+class AttenuationLeftDI1Payload(AnonymousPayload[np.uint16]):
+    """Represents the AttenuationLeftDI1 payload."""
+
+    __value__: np.uint16 = Field(IdentityConverter(np.uint16), default=np.uint16(60))
+
+
+class AttenuationRightDI0Payload(AnonymousPayload[np.uint16]):
+    """Represents the AttenuationRightDI0 payload."""
+
+    __value__: np.uint16 = Field(IdentityConverter(np.uint16), default=np.uint16(60))
+
+
+class AttenuationRightDI1Payload(AnonymousPayload[np.uint16]):
+    """Represents the AttenuationRightDI1 payload."""
+
+    __value__: np.uint16 = Field(IdentityConverter(np.uint16), default=np.uint16(60))
+
+
 class ConfigureDO0Payload(AnonymousPayload[np.uint8]):
     """Represents the ConfigureDO0 payload."""
 
-    __value__: DOMode = GroupMask(enum=DOMode, mask=0xFF)
+    __value__: DOMode = GroupMask(enum=DOMode, mask=0xFF, default=DOMode.PULSE_ON_START)
 
 
 class ConfigureDO1Payload(AnonymousPayload[np.uint8]):
     """Represents the ConfigureDO1 payload."""
 
-    __value__: DOMode = GroupMask(enum=DOMode, mask=0xFF)
+    __value__: DOMode = GroupMask(enum=DOMode, mask=0xFF, default=DOMode.DIGITAL)
 
 
 class ConfigureDO2Payload(AnonymousPayload[np.uint8]):
     """Represents the ConfigureDO2 payload."""
 
-    __value__: DOMode = GroupMask(enum=DOMode, mask=0xFF)
+    __value__: DOMode = GroupMask(enum=DOMode, mask=0xFF, default=DOMode.DIGITAL)
 
 
 class OutputSetPayload(AnonymousPayload[np.uint8]):
@@ -370,28 +398,36 @@ class StartOnDI1(RegisterBase[np.uint16]):
     payload_class = StartOnDI1Payload
 
 
-class AttenuationLeftDI0(RegisterU16):
+class AttenuationLeftDI0(RegisterBase[np.uint16]):
     """Specifies the attenuation to set on the left channel (1 LSB is 0.1dB) when triggering DI0."""
 
     address: ClassVar[int] = 45
+    payload_type: ClassVar[PayloadType] = PayloadType.U16
+    payload_class = AttenuationLeftDI0Payload
 
 
-class AttenuationLeftDI1(RegisterU16):
+class AttenuationLeftDI1(RegisterBase[np.uint16]):
     """Specifies the attenuation to set on the left channel (1 LSB is 0.1dB) when triggering DI1."""
 
     address: ClassVar[int] = 46
+    payload_type: ClassVar[PayloadType] = PayloadType.U16
+    payload_class = AttenuationLeftDI1Payload
 
 
-class AttenuationRightDI0(RegisterU16):
+class AttenuationRightDI0(RegisterBase[np.uint16]):
     """Specifies the attenuation to set on the right channel (1 LSB is 0.1dB) when triggering DI0."""
 
     address: ClassVar[int] = 47
+    payload_type: ClassVar[PayloadType] = PayloadType.U16
+    payload_class = AttenuationRightDI0Payload
 
 
-class AttenuationRightDI1(RegisterU16):
+class AttenuationRightDI1(RegisterBase[np.uint16]):
     """Specifies the attenuation to set on the right channel (1 LSB is 0.1dB) when triggering DI1."""
 
     address: ClassVar[int] = 48
+    payload_type: ClassVar[PayloadType] = PayloadType.U16
+    payload_class = AttenuationRightDI1Payload
 
 
 class _Reserved2(RegisterU8):

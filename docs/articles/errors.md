@@ -14,9 +14,9 @@ A: Only one interface connection to the Sound Card can be opened at one time. Ch
 
 ## Sound upload errors
 
-**Q: Uploading a sound or reading sound metadata throws an error "Sound Card not detected. Check that its soundbank USB port is connected to the computer.".**
+**Q: Uploading a sound or reading sound metadata throws an error "Sound Card not detected. Check that its soundbank USB port is connected to the computer and that its driver is installed.".**
 
-A: The computer cannot find the sound memory controller. Check that the [USB (Soundbank)](ports-connections.md?tabs=power-and-pc#connections) cable is connected and that the device is powered.
+A: The computer cannot find the sound memory controller. Check that the [USB (Soundbank)](ports-connections.md?tabs=power-and-pc#connections) cable is connected, that the device is powered, and that the [driver](installation.md?tabs=driver#software-packages) is installed. Without the driver, the soundbank is not visible to the computer even when the cable is connected.
 
 **Q: Uploading a sound throws an error "The Sound Card is playing a sound at 192 kHz and cannot receive a new sound.".**
 

@@ -30,8 +30,9 @@ CORE_DIR = core
 BUILD_DIR = bin
 PREVIEW_SUFFIX = $(if $(PREVIEW_VERSION:v%=),-preview$(PREVIEW_VERSION),)
 BUILD_NAME = $(PRJ_NAME)-fw$(FIRMWARE_FORMAT)-harp$(CORE_VERSION)-hw$(HARDWARE_FORMAT)-ass0$(PREVIEW_SUFFIX)
+OUT_DIR = $(BUILD_DIR)/fw$(FIRMWARE_VERSION)-hw$(HARDWARE_VERSION)
 SRCS = $(sort $(wildcard *.c))
-OBJS = $(SRCS:%.c=$(BUILD_DIR)/%.o)
+OBJS = $(SRCS:%.c=$(OUT_DIR)/%.o)
 INCS = -I"$(CORE_DIR)"
 LIBS = -l$(CORE)-$(CORE_VERSION)
 
@@ -79,26 +80,29 @@ OBJCOPY_FLAGS = \
 -R .signature \
 -R .user_signatures
 
-all: $(BUILD_DIR)/$(BUILD_NAME).hex
+all: $(OUT_DIR)/$(BUILD_NAME).hex
 
 clean:
 	rm -f $(OBJS) $(OBJS:.o=.d)
-	rm -f $(BUILD_DIR)/$(BUILD_NAME).elf
-	rm -f $(BUILD_DIR)/$(BUILD_NAME).hex
-	rm -f $(BUILD_DIR)/$(BUILD_NAME).map
+	rm -f $(OUT_DIR)/$(BUILD_NAME).elf
+	rm -f $(OUT_DIR)/$(BUILD_NAME).hex
+	rm -f $(OUT_DIR)/$(BUILD_NAME).map
 
 $(BUILD_DIR):
 	mkdir "$(BUILD_DIR)"
 
-$(BUILD_DIR)/%.o: %.c | $(BUILD_DIR)
+$(OUT_DIR): | $(BUILD_DIR)
+	mkdir "$(OUT_DIR)"
+
+$(OUT_DIR)/%.o: %.c | $(OUT_DIR)
 	$(CC) $(CFLAGS) -c $(INCS) -MD -MP -MF "$(@:.o=.d)" -MT"$@" -o $@ $<
 
-$(BUILD_DIR)/$(BUILD_NAME).elf: $(OBJS)
+$(OUT_DIR)/$(BUILD_NAME).elf: $(OBJS)
 	$(CC) -o $@ $(OBJS) -Wl,-Map="$(@:.elf=.map)" $(LDFLAGS)
 
-$(BUILD_DIR)/$(BUILD_NAME).hex: $(BUILD_DIR)/$(BUILD_NAME).elf
+$(OUT_DIR)/$(BUILD_NAME).hex: $(OUT_DIR)/$(BUILD_NAME).elf
 	$(OBJCOPY) $(OBJCOPY_FLAGS) $< $@
 
--include $(wildcard $(BUILD_DIR)/*.d)
+-include $(wildcard $(OUT_DIR)/*.d)
 
 .PHONY: all clean

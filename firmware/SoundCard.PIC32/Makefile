@@ -27,7 +27,8 @@ BUILD_DIR = bin
 OBJ_DIR = bin/obj
 PREVIEW_SUFFIX = $(if $(PREVIEW_VERSION:v%=),-preview$(PREVIEW_VERSION),)
 BUILD_NAME = $(PRJ_NAME)-fw$(FIRMWARE_FORMAT)-harp$(CORE_VERSION)-hw$(HARDWARE_FORMAT)-ass0$(PREVIEW_SUFFIX)
-ELF = $(OBJ_DIR)/$(PRJ_NAME).elf
+OUT_DIR = $(BUILD_DIR)/fw$(FIRMWARE_VERSION)-hw$(HARDWARE_VERSION)
+ELF =$(OBJ_DIR)/$(PRJ_NAME).elf
 IMAGE ?= $(OBJ_DIR)/$(PRJ_NAME).hex
 LINKER_SCRIPT = $(CONFIG_DIR)/app_mz.ld
 
@@ -98,13 +99,13 @@ LDFLAGS = \
 -no-legacy-libc \
 -Wl,--defsym=__MPLAB_BUILD=1,--script="$(LINKER_SCRIPT)",--defsym=_min_heap_size=0,--gc-sections,--no-code-in-dinit,--no-dinit-in-serial-mem
 
-all: $(BUILD_DIR)/$(BUILD_NAME).hex
+all: $(OUT_DIR)/$(BUILD_NAME).hex
 
 clean:
 	rm -rf "$(OBJ_DIR)"
-	rm -f $(BUILD_DIR)/$(BUILD_NAME).hex
+	rm -f $(OUT_DIR)/$(BUILD_NAME).hex
 
-$(BUILD_DIR) $(OBJ_DIR):
+$(OUT_DIR) $(OBJ_DIR):
 	mkdir -p "$@"
 
 $(OBJ_DIR)/%.o: %.c | $(OBJ_DIR)
@@ -119,7 +120,7 @@ $(ELF): $(OBJS) $(LINKER_SCRIPT)
 $(OBJ_DIR)/$(PRJ_NAME).hex: $(ELF)
 	$(BIN2HEX) $<
 
-$(BUILD_DIR)/$(BUILD_NAME).hex: $(IMAGE) | $(BUILD_DIR)
+$(OUT_DIR)/$(BUILD_NAME).hex: $(IMAGE) | $(OUT_DIR)
 	cp $< $@
 
 -include $(wildcard $(OBJ_DIR)/*.d)

@@ -204,7 +204,7 @@ jobs:
         with:
           name: Firmware-${{env.CiBuildVersion}}-hw${{matrix.hardware-target}}
           if-no-files-found: error
-          path: firmware/SoundCard/bin/*.hex
+          path: firmware/SoundCard/bin/*/*.hex
 
   # =====================================================================================================================================================================
   # Build .NET
