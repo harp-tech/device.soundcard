@@ -152,7 +152,7 @@
                   <heroIcons:HeroIcon Type="InformationCircle" Width="14" Height="14"
                                       Foreground="{Binding IconColor}"
                                       VerticalAlignment="Top">
-                    <ToolTip.Tip>Specifies which registers are polled from the SoundCard device</ToolTip.Tip>
+                    <ToolTip.Tip>Specifies which registers are polled from the Sound Card</ToolTip.Tip>
                   </heroIcons:HeroIcon>
                 </StackPanel>
                 <TextBlock Grid.Row="0" Grid.Column="1" Text="Other" FontSize="16" FontWeight="SemiBold" />

@@ -1,7 +1,7 @@
 ﻿namespace Harp.SoundCard
 {
     /// <summary>
-    /// Represents the metadata of a sound in the SoundCard device.
+    /// Represents the metadata of a sound in the Sound Card.
     /// </summary>
     public class SoundMetadata
     {

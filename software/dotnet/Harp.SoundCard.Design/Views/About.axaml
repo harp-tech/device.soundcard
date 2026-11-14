@@ -17,7 +17,7 @@
            Margin="0,5,5,0"
            Source="/Assets/logo_about.png" />
     <md:MarkdownScrollViewer xml:space="preserve" HorizontalAlignment="Center">
-      The Harp SoundCard app can be used to configure and test Harp SoundCard devices. The app was developed using [.NET](https://dotnet.microsoft.com/), [AvaloniaUI](https://avaloniaui.net/) with ReactiveUI and makes direct use of the [Bonsai.Harp](https://harp-tech.org/articles/operators.html) package.
+      The Harp Sound Card app can be used to configure and test Harp Sound Card devices. The app was developed using [.NET](https://dotnet.microsoft.com/), [AvaloniaUI](https://avaloniaui.net/) with ReactiveUI and makes direct use of the [Bonsai.Harp](https://harp-tech.org/articles/operators.html) package.
 
       The [Harp](https://harp-tech.org/) project exists to provide interoperability standards and tools for accelerating open collaboration, innovation, and discovery in instrumentation for brain and behavior research.
       

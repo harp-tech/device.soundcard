@@ -251,9 +251,9 @@ typedef struct
 #define B_DO2                           (1<<2)       // Digital output 2.
 #define MSK_DI_MODE                     0x03         //
 #define GM_DI_MODE_DIGITAL              0x00         // Used as a pure digital input.
-#define GM_DI_MODE_START_AND_STOP       0x01         // Starts sound index (if less than 32) or frequency (if greater or equal than 32) when rising edge and stop when falling edge (frequency only).
-#define GM_DI_MODE_START                0x02         // Starts sound index (if less than 32) or frequency (if greater or equal than 32) when rising edge.
-#define GM_DI_MODE_STOP                 0x03         // Stops frequency when rising edge.
+#define GM_DI_MODE_START_AND_STOP       0x01         // Starts sound index (if less than 32) or frequency (if greater or equal than 32) on a rising edge and stops it on a falling edge.
+#define GM_DI_MODE_START                0x02         // Starts sound index (if less than 32) or frequency (if greater or equal than 32) on a rising edge.
+#define GM_DI_MODE_STOP                 0x03         // Stops the sound or frequency being played on a rising edge.
 #define MSK_DO_MODE                     0x01         //
 #define GM_DO_MODE_DIGITAL              0x00         // Used as a pure digital output.
 #define GM_DO_MODE_PULSE_ON_START       0x01         // Positive 400us pulse when a sound or frequency starts.

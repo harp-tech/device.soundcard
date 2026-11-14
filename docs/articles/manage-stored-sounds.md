@@ -29,7 +29,7 @@ Double-click the [`SelectMany`] operator to open its nested workflow, and add th
 :::
 
 - Insert a [`ReadSoundMetadata`] operator and connect it to the `WorkflowOutput` node in place of the `Source1` node. Configure the following properties:
-    - `DeviceIndex` - Set the index of the `SoundCard` device to read. If no index is specified, the first `SoundCard` will be used.
+    - `DeviceIndex` - Set the index of the Sound Card to read. If no index is specified, the first Sound Card will be used.
     - `SoundIndex` - Set the index of the sound to read (2–31). If no index is specified, every stored sound is read.
 
 Run the workflow and press the <kbd>A</kbd> key. The visualizer displays one line for each stored sound, for instance:

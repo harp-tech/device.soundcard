@@ -25,7 +25,6 @@
         BadDataIndex,
 
         ProducingSound = -1030,
-        StartedProducingSound,
 
         NotAbleToOpenFile = -1040
     }
@@ -47,10 +46,10 @@
                         " -> [sample rate] 96000 or 192000");
 
                 case SoundCardErrorCode.HarpSoundCardNotDetected:
-                    throw new SoundCardException("Sound card not detected. Is any connected to computer?");
+                    throw new SoundCardException("Sound Card not detected. Check that its soundbank USB port is connected to the computer.");
 
                 case SoundCardErrorCode.NotAbleToSendMetadata:
-                    throw new SoundCardException("Not able to start comunication and send sound metadata.");
+                    throw new SoundCardException("Not able to start communication and send sound metadata.");
 
                 case SoundCardErrorCode.NotAbleToReadMetadataCommandReply:
                     throw new SoundCardException("Sound metadata reply not received.");
@@ -59,7 +58,7 @@
                     throw new SoundCardException("Metadata command reply received is not correct.");
 
                 case SoundCardErrorCode.NotAbleToSendData:
-                    throw new SoundCardException("Not able to start comunication and send sound data.");
+                    throw new SoundCardException("Not able to start communication and send sound data.");
 
                 case SoundCardErrorCode.NotAbleToReadDataCommandReply:
                     throw new SoundCardException("Sound data reply not received.");
@@ -68,7 +67,7 @@
                     throw new SoundCardException("Data command reply received is not correct.");
 
                 case SoundCardErrorCode.NotAbleToSendReadMetadata:
-                    throw new SoundCardException("Not able to start comunication and request the stored sounds.");
+                    throw new SoundCardException("Not able to start communication and request the stored sounds.");
 
                 case SoundCardErrorCode.NotAbleToReadReadMetadataCommandRepply:
                     throw new SoundCardException("Stored sounds reply not received.");
@@ -77,7 +76,7 @@
                     throw new SoundCardException("Stored sounds reply received is not correct.");
 
                 case SoundCardErrorCode.BadSoundIndex:
-                    throw new SoundCardException("Sound index not correct. Must be beween 0 and 32.");
+                    throw new SoundCardException("Sound index not correct. Must be between 2 and 31.");
 
                 case SoundCardErrorCode.BadSoundLength:
                     throw new SoundCardException("Sound length not correct.");
@@ -89,16 +88,13 @@
                     throw new SoundCardException("Data type not correct. Available options are 0 (for integer with 32 bits) and 1 (for float with 32 bits).");
 
                 case SoundCardErrorCode.DataTypeDoNotMatch:
-                    throw new SoundCardException("Data type don't match with selected sound index.");
+                    throw new SoundCardException("Data type does not match the selected sound index.");
 
                 case SoundCardErrorCode.BadDataIndex:
                     throw new SoundCardException("Attempt to write outside memory boundaries.");
 
                 case SoundCardErrorCode.ProducingSound:
-                    throw new SoundCardException("The Sound Board is producing a sound and is not able to receive the new sound.");
-
-                case SoundCardErrorCode.StartedProducingSound:
-                    throw new SoundCardException("The Sound Board started producing a sound which makes it not able to receive the new sound.");
+                    throw new SoundCardException("The Sound Card is playing a sound at 192 kHz and cannot receive a new sound.");
 
                 case SoundCardErrorCode.NotAbleToOpenFile:
                     throw new SoundCardException("File doesn't exist or is empty.");

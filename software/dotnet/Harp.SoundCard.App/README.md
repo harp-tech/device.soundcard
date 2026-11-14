@@ -1,8 +1,8 @@
 ## About
 
-`Harp.SoundCard.App` is a desktop app for configuring and testing [Harp SoundCard](https://harp-tech.org/device.soundcard) devices and for uploading sounds to them.
+`Harp.SoundCard.App` is a desktop app for configuring and testing [Harp Sound Card](https://harp-tech.org/device.soundcard) devices and for uploading sounds to them.
 
-As with other Harp devices, the SoundCard device can also be used from [Bonsai](https://bonsai-rx.org/).
+As with other Harp devices, the Sound Card can also be used from [Bonsai](https://bonsai-rx.org/).
 
 ## How to Use
 
@@ -34,7 +34,7 @@ sudo usermod -a -G dialout <USERNAME>
 
 ## Additional Documentation
 
-For additional documentation and examples, refer to the [official Harp SoundCard documentation](https://harp-tech.org/device.soundcard).
+For additional documentation and examples, refer to the [official Harp Sound Card documentation](https://harp-tech.org/device.soundcard).
 
 ## Feedback & Contributing
 

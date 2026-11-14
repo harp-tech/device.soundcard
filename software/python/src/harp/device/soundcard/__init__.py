@@ -114,13 +114,13 @@ class DIMode(enum.IntEnum):
     """Used as a pure digital input."""
 
     START_AND_STOP = 1
-    """Starts sound index (if less than 32) or frequency (if greater or equal than 32) when rising edge and stop when falling edge (frequency only)."""
+    """Starts sound index (if less than 32) or frequency (if greater or equal than 32) on a rising edge and stops it on a falling edge."""
 
     START = 2
-    """Starts sound index (if less than 32) or frequency (if greater or equal than 32) when rising edge."""
+    """Starts sound index (if less than 32) or frequency (if greater or equal than 32) on a rising edge."""
 
     STOP = 3
-    """Stops frequency when rising edge."""
+    """Stops the sound or frequency being played on a rising edge."""
 
 
 class DOMode(enum.IntEnum):

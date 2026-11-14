@@ -261,9 +261,9 @@ groupMasks:
     description: Specifies the operation mode of a digital input.
     values:
       Digital: {value: 0, description: Used as a pure digital input.}
-      StartAndStop: {value: 1, description: Starts sound index (if less than 32) or frequency (if greater or equal than 32) when rising edge and stop when falling edge (frequency only).}
-      Start: {value: 2, description: Starts sound index (if less than 32) or frequency (if greater or equal than 32) when rising edge.}
-      Stop: {value: 3, description: Stops frequency when rising edge.}
+      StartAndStop: {value: 1, description: Starts sound index (if less than 32) or frequency (if greater or equal than 32) on a rising edge and stops it on a falling edge.}
+      Start: {value: 2, description: Starts sound index (if less than 32) or frequency (if greater or equal than 32) on a rising edge.}
+      Stop: {value: 3, description: Stops the sound or frequency being played on a rising edge.}
   DOMode:
     description: Specifies the operation mode of a digital output.
     values:
